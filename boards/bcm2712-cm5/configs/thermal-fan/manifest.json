@@ -1,0 +1,30 @@
+{
+  "format_version": 1,
+  "kind": "configuration",
+  "id": "cm5-generic-pwm-fan",
+  "target_id": "bcm2712-cm5",
+  "applicability": "tested-scenario",
+  "purpose": "Keep automatic cooling with a tested minimum active level for a Generic four-wire PWM fan.",
+  "source_refs": [
+    "os-acpi-fan-policy",
+    "os-cm5"
+  ],
+  "revision_limits": "CM5 Rev 1.0, BCM2712 D0, 4 GiB, CM5-NANO-B; carrier PCB revision not recorded. UEFI rpi5-20260730.1; exact firmware source pin not recorded. One Generic four-wire PWM fan was tested.",
+  "owner_url": "https://github.com/oxtech-ember/EmberBSD",
+  "install_location": "Merge into /etc/sysctl.conf on the selected EmberBSD device.",
+  "prerequisites": [
+    "Check the actual ACPI thermal-zone name and cooling-device index mapping.",
+    "Confirm fan voltage, wiring and reliable start at the selected duty.",
+    "Use an EmberBSD kernel with the documented fan_min_level control."
+  ],
+  "activation_effect": "Selects minimum active ACPI level 2 while retaining stronger automatic cooling steps; the recorded firmware maps this minimum to 125/255 PWM.",
+  "recovery_route": "Restore the saved sysctl entries. The OS guide defines default automatic values: fan_min_level=-1, fan_max_only=0, force_fan=0. Recheck actual cooling after a policy change.",
+  "files": [
+    {
+      "name": "sysctl.conf",
+      "repository_path": "boards/bcm2712-cm5/configs/thermal-fan/sysctl.conf",
+      "url": "https://raw.githubusercontent.com/oxtech-ember/EmberBSD-DevBoards/main/boards/bcm2712-cm5/configs/thermal-fan/sysctl.conf",
+      "sha256": "38d01ce2aa746ee1068203dba2c04890554234ca035c3e25e436b03881ab3c26"
+    }
+  ]
+}

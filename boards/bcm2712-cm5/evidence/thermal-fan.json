@@ -1,0 +1,66 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "cm5-generic-pwm-fan-minimum",
+  "target_id": "bcm2712-cm5",
+  "recorded_at": "2026-10-12",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "Rev 1.0",
+    "carrier_id": "cm5-nano-b",
+    "carrier_revision": null,
+    "variant": "BCM2712 D0; 4 GiB; Generic four-wire PWM fan"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD EMBERV3DRENDER, GCC 16.2.0",
+      "revision": "ab6f88f04ca73c6958adb39d0e1c717f629e7901",
+      "sha256": null,
+      "reference": "boards/bcm2712-cm5/configs/thermal-fan/manifest.json"
+    },
+    {
+      "name": "UEFI",
+      "revision": "rpi5-20260730.1",
+      "sha256": null,
+      "reference": "boards/bcm2712-cm5/configs/thermal-fan/manifest.json"
+    }
+  ],
+  "scenario": "Apply fan_min_level=2, fan_max_only=0 and force_fan=0. Observe automatic cooling during a bounded CPU workload. Verify persistence after a normal reboot. Imported from the cited OS receipt; not rerun for this catalog entry.",
+  "expected": "The fan starts at the chosen minimum duty, produces tachometer pulses while sampled as active, and retains its policy after reboot.",
+  "observed": "Cooling began at 50.1 degrees Celsius with 125/255 PWM. All 272 active 30 ms windows had tachometer pulses. No maximum-duty sample, undervoltage or throttle flag occurred. All three settings persisted after reboot.",
+  "duration_seconds": 300,
+  "measurements": [
+    {
+      "name": "minimum-active-duty",
+      "value": 125,
+      "unit": "out of 255"
+    },
+    {
+      "name": "peak-acpi-temperature",
+      "value": 57.8,
+      "unit": "degrees Celsius"
+    },
+    {
+      "name": "active-windows-with-tachometer-pulses",
+      "value": 272,
+      "unit": "count"
+    },
+    {
+      "name": "mean-tachometer-pulse-frequency",
+      "value": 64.7,
+      "unit": "Hz"
+    }
+  ],
+  "limits": [
+    "Generic describes the fan class; another fan is not qualified by this result.",
+    "Firmware source pin, carrier revision and fan voltage rating were not established.",
+    "Cold power-on, higher-temperature transitions and long runs were not tested.",
+    "Sampling does not establish continuous rotation between samples. Pulses per revolution are unknown.",
+    "This is an imported bounded observation, not acceptance of a later kernel or reinstallation."
+  ],
+  "source_refs": [
+    "os-acpi-fan-policy",
+    "os-cm5"
+  ]
+}

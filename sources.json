@@ -112,6 +112,14 @@
       "revision": "6245a565b06486186c0159a1315ed89c893148a7",
       "reviewed_at": "2026-10-15",
       "sha256": null
+    },
+    {
+      "id": "os-acpi-fan-policy",
+      "title": "EmberBSD ACPI fan policies and bounded CM5 minimum-level check",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/6245a565b06486186c0159a1315ed89c893148a7/ember/boot/thermal-fan.md",
+      "revision": "6245a565b06486186c0159a1315ed89c893148a7",
+      "reviewed_at": "2026-10-15",
+      "sha256": "7fa79871a8541545a74249e293097e1dd08c78e0ab74003307a723ad527d72ec"
     }
   ]
 }

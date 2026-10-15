@@ -58,6 +58,15 @@
         "os-cm5",
         "cm5-datasheet"
       ]
+    },
+    {
+      "id": "cooling",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "One Generic four-wire PWM fan on CM5-NANO-B passed the recorded minimum-level scenario and policy persistence after reboot. Other fans, cold starts and long runs need separate checks.",
+      "source_refs": [
+        "os-acpi-fan-policy"
+      ]
     }
   ]
 }

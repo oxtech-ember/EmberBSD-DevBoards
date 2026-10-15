@@ -7,7 +7,7 @@
 | Wi-Fi | `bwfm`, vendor radio firmware and `wpa_supplicant` | Required authentication, PMF, reconnect and throughput |
 | GPU | Native V3D DRM path and Mesa in Ports | Rendering is separate from display scanout and a full desktop |
 | GPIO, I2C and camera | Module signals, carrier routing and pinmux | No general application acceptance in the cited board record |
-| Cooling and power control | OS thermal policy and carrier wiring | Fan model, startup level, shutdown and load duration |
+| Cooling and power control | [Generic four-wire PWM fan profile](configs/thermal-fan/README.md), OS thermal policy and carrier wiring | Tested minimum duty and reboot persistence; another fan and cold starts need separate checks |
 
 [The OS board record](https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boards/compute-module-5.md) owns the support evidence and driver links.
 [The module datasheet](https://datasheets.raspberrypi.com/cm5/cm5-datasheet.pdf) owns signal and power constraints.
