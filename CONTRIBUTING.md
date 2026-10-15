@@ -2,7 +2,8 @@
 
 First identify the board, module, carrier, revision and intended device function.
 Check existing IDs and the implementation owner's documentation.
-Add facts where they apply. A shared SoC does not establish shared wiring.
+Add facts at the owning [knowledge layer](README.md#find-information). A shared SoC does not establish shared wiring.
+Keep a loader contract in `bootloaders/`; link each applicable board's actual boot chain to it.
 
 1. Copy the relevant [template](templates/board/README.md).
 2. Add source records with URLs, dates, revisions and available hashes.

@@ -88,6 +88,30 @@
       "revision": "861a703d8b51f42b76bcdff49da3e0f2766966bf",
       "reviewed_at": "2026-10-15",
       "sha256": null
+    },
+    {
+      "id": "os-efiboot-exec",
+      "title": "EmberBSD EFI kernel loading sequence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/6245a565b06486186c0159a1315ed89c893148a7/sys/stand/efiboot/exec.c",
+      "revision": "6245a565b06486186c0159a1315ed89c893148a7",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "os-loadfile-format",
+      "title": "EmberBSD executable format selection and rejection",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/6245a565b06486186c0159a1315ed89c893148a7/sys/lib/libsa/loadfile.c",
+      "revision": "6245a565b06486186c0159a1315ed89c893148a7",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "os-evbarm-kernel-format",
+      "title": "EmberBSD evbarm standalone loader executable formats",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/6245a565b06486186c0159a1315ed89c893148a7/sys/arch/evbarm/include/loadfile_machdep.h",
+      "revision": "6245a565b06486186c0159a1315ed89c893148a7",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
     }
   ]
 }

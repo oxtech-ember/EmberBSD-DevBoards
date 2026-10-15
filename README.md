@@ -28,11 +28,25 @@ boards/<id>/                Board identity, boot, interfaces and design transfer
   evidence/<scenario>.json  Bounded observations with reproducible inputs
 carriers/<id>/              Carrier wiring, connector numbers, buttons and power routing
 socs/                       Shared silicon facts and implementation entry points
+bootloaders/                Shared loader contracts and artifact checks
 interfaces/                 Electrical and software contract worksheets
 schemas/                    Machine-readable profile contract
 templates/                 Starting records for a new board, config or observation
 tools/                     Offline structural validation
 ```
+
+Keep knowledge at the layer that owns it:
+
+| Layer | Owns | Example |
+|---|---|---|
+| Board or module | Populated hardware, variants, exposed interfaces and actual boot chain | [CM5](boards/bcm2712-cm5/README.md) |
+| Carrier | Connector numbering, controls, wiring and power routing | [CM5-NANO-B](carriers/cm5-nano-b/README.md) |
+| SoC | Shared silicon facts and driver entry points | [BCM2712](socs/bcm2712.md) |
+| Bootloader | Executable format, boot-entry selection and deployment checks | [EmberBSD efiboot](bootloaders/efiboot.md) |
+| Interface | Electrical and software contract used to connect a peripheral | [Interface worksheet](interfaces/README.md) |
+
+Board boot guides link to the applicable loader contract.
+A shared SoC or UEFI firmware does not establish the same loader path.
 
 For a new design, use [From a board to your device](docs/device-design.md).
 For a new record, use [CONTRIBUTING](CONTRIBUTING.md) and [the data contract](docs/data-model.md).

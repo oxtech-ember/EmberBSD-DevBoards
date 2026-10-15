@@ -1,8 +1,8 @@
 # Boot and recovery
 
-The recorded EmberBSD path uses module firmware, UEFI, ACPI and an ELF kernel on the root filesystem.
-The documented boot entry loads `/netbsd`. A native firmware image and an ELF kernel are different artifacts.
-Keep the kernel and board modules from the same build.
+The recorded chain is module boot firmware → UEFI → EmberBSD `efiboot` → ELF `/netbsd` on the root filesystem.
+The kernel uses ACPI for this path.
+Follow the shared [efiboot artifact contract](../../bootloaders/efiboot.md) for kernel format, selected entry and matching modules.
 
 | Stage | Design dependency | Diagnostic boundary |
 |---|---|---|
@@ -10,6 +10,8 @@ Keep the kernel and board modules from the same build.
 | UEFI | Firmware build and carrier description | Check selected boot entry and console route |
 | EmberBSD loader/kernel | Root device, ELF image and ACPI interfaces | Record kernel hash and matching modules |
 | Userland | Root filesystem, services and firmware files | Prove the required device operation separately |
+
+## USB recovery access
 
 For inaccessible eMMC, the module supports USB boot with a RAM recovery environment.
 See the [reference USB recovery profile](configs/usb-recovery/README.md).

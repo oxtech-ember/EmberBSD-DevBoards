@@ -1,6 +1,8 @@
 # Boot and recovery
 
-The recorded EmberBSD path uses microSD, UEFI, ACPI and the root-partition ELF `/netbsd`.
+The recorded chain is board boot firmware → UEFI → EmberBSD `efiboot` → ELF `/netbsd` on the microSD root partition.
+The kernel uses ACPI for this path.
+Follow the shared [efiboot artifact contract](../../bootloaders/efiboot.md) for kernel format, selected entry and matching modules.
 Firmware, kernel and module revisions differ between published checks.
 Read the selected receipt before reproducing a result.
 Preserve a working boot medium and identify the replacement medium before writing it.
