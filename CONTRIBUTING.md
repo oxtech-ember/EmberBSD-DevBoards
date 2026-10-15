@@ -16,6 +16,8 @@ Keep a loader contract in `bootloaders/`; link each applicable board's actual bo
 
 For driver or package changes, follow the current rules of EmberBSD or Ports.
 Keep executable checks beside that implementation and link them here.
+Describe the reusable mechanism, prerequisites and limits. Do not add current lab status or a deployment diary.
+A bounded reference experiment can support a design claim; it must not become an inventory of the tested device.
 For upstream contributions, follow the receiving project's rules and disclose AI assistance.
 
 Write short English sentences with exact identifiers and units.

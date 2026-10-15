@@ -16,26 +16,13 @@ The AArch64 EFI loader passes it to `loadfile`, which checks the executable head
 A native ARM64 image named `netbsd.img` belongs to a different boot path.
 Renaming that image to `/netbsd` does not convert it to ELF.
 
-## Recorded installation error
+## Wrong-format failure
 
-A read-only CM5 eMMC inspection on 2026-10-15 found this installation error:
-
-| Item | Observation |
-|---|---|
-| Selected entry | `default=1` selected `hd0b:netbsd` |
-| Active `/netbsd` | Native ARM64 image; first bytes `10 00 00 14`; SHA256 matched the native build output |
-| Retained previous kernel | ELF64, little-endian, AArch64; first bytes `7f 45 4c 46` |
-| Active board modules | Four modules remained from the previous accepted kernel build |
-
-Inspection fingerprints:
-
-- Active `/netbsd`: SHA256 `beb316f4f300d505e8147d49d6bcd6fd8b9209746b032db5c404fb15d4e09189`.
-- Retained previous kernel: SHA256 `c8600af1c6a31404fe6b3a3995196a910efda594c708194369925adb54ff1886`.
-
-These hashes identify the inspected files. They are not download references or current release recommendations.
-This establishes an incorrect artifact at the selected path and an inconsistent installation.
-It does not establish that the GPU buffer-size change caused a kernel crash.
-No successful boot after correction or fresh installation is claimed by this observation.
+An installation can place a native ARM64 image at the filename selected by `boot.cfg`.
+The filename can be correct while the executable format is wrong.
+This is a loader input error; it does not establish a fault in a GPU driver.
+Kernel modules from another build create a separate consistency error.
+Check both conditions before attributing a failed boot to the changed driver.
 
 ## Check a kernel replacement
 

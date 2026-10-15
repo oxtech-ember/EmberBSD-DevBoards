@@ -8,7 +8,7 @@
 6. Read the selected carrier's pin map and control descriptions before wiring.
 7. Open each relevant source and evidence record. Check its date, source pin and actual tested scenario.
 8. Check the current implementation owner for later changes. A documentation snapshot is not the running kernel revision.
-9. Record new results with the same scope and provenance fields.
+9. Add reusable findings with scoped evidence. Keep current device state and ongoing recovery in separate lab records.
 
 ## Locate shared knowledge
 

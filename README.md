@@ -64,5 +64,7 @@ Run `ruby tools/validate.rb` after edits. Reading the catalog requires no tool i
 
 Link to the implementation owner. Do not maintain a second driver, build procedure or support matrix here.
 Pinned sources explain a claim. Current owner documentation shows subsequent changes.
+Keep reusable findings and their applicability here. Do not track an individual lab device's current state.
+Installed packages, recovery progress, deployment hashes and pending lab actions belong in the lab's own records.
 The initial records cover selected interfaces. Missing data means unknown, not absent or working.
 A successful experiment does not qualify a production design or another board revision.

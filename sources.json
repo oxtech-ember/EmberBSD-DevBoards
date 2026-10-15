@@ -28,8 +28,8 @@
     {
       "id": "os-a733-boot",
       "title": "EmberBSD A733 boot script",
-      "url": "https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boot/orangepi-zero4-boot.cmd",
-      "revision": "39547d144888a9286ccc58304048efc68cd8e966",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/ad698a6e40ea89d72249f76d06913be29a5ab90c/ember/boot/orangepi-zero4-boot.cmd",
+      "revision": "ad698a6e40ea89d72249f76d06913be29a5ab90c",
       "reviewed_at": "2026-10-15",
       "sha256": null
     },
@@ -120,6 +120,22 @@
       "revision": "6245a565b06486186c0159a1315ed89c893148a7",
       "reviewed_at": "2026-10-15",
       "sha256": "7fa79871a8541545a74249e293097e1dd08c78e0ab74003307a723ad527d72ec"
+    },
+    {
+      "id": "os-fat-boot-check",
+      "title": "EmberBSD FAT32 primary and backup boot-sector comparison",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/ad698a6e40ea89d72249f76d06913be29a5ab90c/sbin/fsck_msdos/boot.c",
+      "revision": "ad698a6e40ea89d72249f76d06913be29a5ab90c",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "os-fsck-preen",
+      "title": "EmberBSD filesystem-check preen error handling",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/ad698a6e40ea89d72249f76d06913be29a5ab90c/sbin/fsck/fsutil.c",
+      "revision": "ad698a6e40ea89d72249f76d06913be29a5ab90c",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
     }
   ]
 }
