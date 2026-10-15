@@ -1,0 +1,42 @@
+{
+  "format_version": 1,
+  "kind": "configuration",
+  "id": "cm5-usb-recovery",
+  "target_id": "bcm2712-cm5",
+  "applicability": "reference",
+  "purpose": "Expose eMMC and a serial ACM console through a vendor Linux environment loaded into RAM.",
+  "source_refs": [
+    "usbboot-fix",
+    "usbboot-guide"
+  ],
+  "revision_limits": "Physical receipt: CM5 Rev 1.0, BCM2712 D0, 4 GiB, nominal 64 GB eMMC; carrier revision unknown.",
+  "owner_url": "https://github.com/raspberrypi/usbboot",
+  "install_location": "Host-side rpiboot input directory; no installation into EmberBSD.",
+  "prerequisites": [
+    "Identify the exact module, carrier BOOT control and USB data connector.",
+    "Use the coherent pinned bundle below and verify SHA256 before loading it.",
+    "Arrange independent power and USB data according to the carrier specification."
+  ],
+  "activation_effect": "Loads vendor recovery software into RAM and exports raw eMMC; host tools can then write it. This profile requests no storage or EEPROM writes.",
+  "recovery_route": "Exit and unmount host storage access before power removal. Release BOOT for the normal boot path. A working normal OS is not established by this profile.",
+  "files": [
+    {
+      "name": "config.txt",
+      "repository_path": "boards/bcm2712-cm5/configs/usb-recovery/config.txt",
+      "url": "https://raw.githubusercontent.com/raspberrypi/usbboot/861a703d8b51f42b76bcdff49da3e0f2766966bf/mass-storage-gadget64/config.txt",
+      "sha256": "f74a9db07cd32f418e25754134840b138486e39cda2a4e536042b86c5c67b687"
+    },
+    {
+      "name": "boot.img",
+      "repository_path": null,
+      "url": "https://raw.githubusercontent.com/raspberrypi/usbboot/861a703d8b51f42b76bcdff49da3e0f2766966bf/mass-storage-gadget64/boot.img",
+      "sha256": "e68d4614a0cbdb8404670e350b2ab261f4233dfba5e05e6d7dd691fd33bf254f"
+    },
+    {
+      "name": "bootfiles.bin",
+      "repository_path": null,
+      "url": "https://raw.githubusercontent.com/raspberrypi/usbboot/861a703d8b51f42b76bcdff49da3e0f2766966bf/firmware/bootfiles.bin",
+      "sha256": "177cf37ad7f4a1ff2de44ae18b14d67d02cd32c6c44042f3f845278c58e46e89"
+    }
+  ]
+}

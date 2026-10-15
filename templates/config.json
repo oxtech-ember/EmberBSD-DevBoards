@@ -1,0 +1,16 @@
+{
+  "format_version": 1,
+  "kind": "configuration",
+  "id": "replace-with-scenario",
+  "target_id": "replace-with-board-id",
+  "applicability": "template",
+  "purpose": "State the required operation.",
+  "source_refs": [],
+  "revision_limits": "Replace with exact known limits; unknown is not every revision.",
+  "owner_url": "https://github.com/oxtech-ember/EmberBSD",
+  "install_location": null,
+  "prerequisites": [],
+  "activation_effect": "Describe effects before any installation.",
+  "recovery_route": "Describe how to restore the previous state.",
+  "files": []
+}

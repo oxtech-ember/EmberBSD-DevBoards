@@ -1,0 +1,49 @@
+{
+  "format_version": 1,
+  "id": "cm5-nano-b",
+  "kind": "carrier",
+  "vendor_model": "Waveshare CM5-NANO-B",
+  "board_revision": null,
+  "module_ids": [
+    "bcm2712-cm5"
+  ],
+  "reviewed_at": "2026-10-15",
+  "source_refs": [
+    "nano-b-schematic",
+    "cm5-datasheet"
+  ],
+  "documents": {
+    "overview": "carriers/cm5-nano-b/README.md",
+    "pins": "carriers/cm5-nano-b/pins.md",
+    "controls": "carriers/cm5-nano-b/controls.md"
+  },
+  "connectors": [
+    {
+      "id": "PI1",
+      "numbering": "physical-contact",
+      "source_refs": [
+        "nano-b-schematic"
+      ],
+      "pins": [
+        {
+          "contact": 6,
+          "signal": "GND",
+          "direction": "ground",
+          "logic_voltage_v": 0
+        },
+        {
+          "contact": 8,
+          "signal": "GPIO14 / UART0 TX",
+          "direction": "output",
+          "logic_voltage_v": 3.3
+        },
+        {
+          "contact": 10,
+          "signal": "GPIO15 / UART0 RX",
+          "direction": "input",
+          "logic_voltage_v": 3.3
+        }
+      ]
+    }
+  ]
+}

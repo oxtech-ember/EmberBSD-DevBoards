@@ -1,0 +1,45 @@
+{
+  "format_version": 1,
+  "boards": [
+    {
+      "id": "bcm2712-cm5",
+      "aliases": [
+        "cm5",
+        "compute-module-5"
+      ],
+      "profile": "boards/bcm2712-cm5/board.json"
+    },
+    {
+      "id": "bcm2712-rpi5",
+      "aliases": [
+        "rpi5",
+        "pi5"
+      ],
+      "profile": "boards/bcm2712-rpi5/board.json"
+    },
+    {
+      "id": "a733-zero3w",
+      "aliases": [
+        "zero3w",
+        "zero-3w"
+      ],
+      "profile": "boards/a733-zero3w/board.json"
+    }
+  ],
+  "carriers": [
+    {
+      "id": "cm5-nano-b",
+      "profile": "carriers/cm5-nano-b/carrier.json"
+    }
+  ],
+  "socs": [
+    {
+      "id": "bcm2712",
+      "document": "socs/bcm2712.md"
+    },
+    {
+      "id": "allwinner-a733",
+      "document": "socs/allwinner-a733.md"
+    }
+  ]
+}

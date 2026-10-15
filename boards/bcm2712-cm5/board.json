@@ -1,0 +1,63 @@
+{
+  "format_version": 1,
+  "id": "bcm2712-cm5",
+  "kind": "module",
+  "vendor_model": "Raspberry Pi Compute Module 5",
+  "soc": "bcm2712",
+  "board_revision": null,
+  "reviewed_at": "2026-10-15",
+  "carrier_ids": [
+    "cm5-nano-b"
+  ],
+  "documents": {
+    "overview": "boards/bcm2712-cm5/README.md",
+    "boot": "boards/bcm2712-cm5/boot.md",
+    "interfaces": "boards/bcm2712-cm5/interfaces.md",
+    "design": "boards/bcm2712-cm5/design.md"
+  },
+  "source_refs": [
+    "os-cm5",
+    "cm5-datasheet"
+  ],
+  "capabilities": [
+    {
+      "id": "boot-emmc",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "Applies to eMMC-equipped variants only; the cited specimen has 4 GiB RAM and nominal 64 GB eMMC. UEFI/ACPI boot and warm reboot passed for pinned bundles, not every later kernel or Lite variant.",
+      "source_refs": [
+        "os-cm5",
+        "cm5-datasheet"
+      ]
+    },
+    {
+      "id": "wifi",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "Applies to wireless variants only; the cited specimen uses CYW43455. WPA2 and SAE/H2E with required PMF have bounded transfer checks. Non-wireless variants, long runs and general throughput are not covered.",
+      "source_refs": [
+        "os-cm5",
+        "cm5-datasheet"
+      ]
+    },
+    {
+      "id": "gpu",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "V3D render and compute checks exist. Complete accelerated Plasma and general recovery are not accepted by this source.",
+      "source_refs": [
+        "os-cm5"
+      ]
+    },
+    {
+      "id": "gpio-i2c-camera",
+      "hardware": "present",
+      "emberbsd": "unknown",
+      "scope": "Connector availability does not establish a working application or pin configuration.",
+      "source_refs": [
+        "os-cm5",
+        "cm5-datasheet"
+      ]
+    }
+  ]
+}

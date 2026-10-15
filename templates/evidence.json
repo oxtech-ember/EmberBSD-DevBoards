@@ -1,0 +1,25 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "replace-with-scenario",
+  "target_id": "replace-with-board-id",
+  "recorded_at": "YYYY-MM-DD",
+  "layer": "physical",
+  "result": "not-run",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": null
+  },
+  "inputs": [],
+  "scenario": "State the steps or link to the owning reproducible check.",
+  "expected": "State the observable success condition.",
+  "observed": "Not run.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "Complete inputs before claiming a result."
+  ],
+  "source_refs": []
+}

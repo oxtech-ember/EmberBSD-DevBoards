@@ -1,0 +1,57 @@
+{
+  "format_version": 1,
+  "id": "bcm2712-rpi5",
+  "kind": "sbc",
+  "vendor_model": "Raspberry Pi 5 Model B",
+  "soc": "bcm2712",
+  "board_revision": null,
+  "reviewed_at": "2026-10-15",
+  "carrier_ids": [],
+  "documents": {
+    "overview": "boards/bcm2712-rpi5/README.md",
+    "boot": "boards/bcm2712-rpi5/boot.md",
+    "interfaces": "boards/bcm2712-rpi5/interfaces.md",
+    "design": "boards/bcm2712-rpi5/design.md"
+  },
+  "source_refs": [
+    "os-rpi5"
+  ],
+  "capabilities": [
+    {
+      "id": "boot-microsd",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "UEFI/ACPI and microSD boot have recorded hardware checks. Firmware and kernel revisions differ between checks.",
+      "source_refs": [
+        "os-rpi5"
+      ]
+    },
+    {
+      "id": "wifi",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "SAE/PMF and selected k/v scenarios are reported. Read the exact network and firmware limits.",
+      "source_refs": [
+        "os-rpi5"
+      ]
+    },
+    {
+      "id": "audio-i2c",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "A WM8960 HAT scenario is reported. This is not acceptance of an arbitrary I2C peripheral or codec.",
+      "source_refs": [
+        "os-rpi5"
+      ]
+    },
+    {
+      "id": "usb",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "Control reads and STALL recovery are checked. Bulk, isochronous transfers and power management need separate checks.",
+      "source_refs": [
+        "os-rpi5"
+      ]
+    }
+  ]
+}

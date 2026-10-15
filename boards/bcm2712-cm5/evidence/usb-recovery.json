@@ -1,0 +1,56 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "cm5-usb-recovery-enumeration",
+  "target_id": "bcm2712-cm5",
+  "recorded_at": "2026-10-15",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "Rev 1.0",
+    "carrier_id": "cm5-nano-b",
+    "carrier_revision": null,
+    "variant": "BCM2712 D0; 4 GiB RAM; nominal 64 GB eMMC"
+  },
+  "inputs": [
+    {
+      "name": "RAM recovery bundle",
+      "revision": "861a703d8b51f42b76bcdff49da3e0f2766966bf",
+      "sha256": null,
+      "reference": "boards/bcm2712-cm5/configs/usb-recovery/manifest.json"
+    },
+    {
+      "name": "rpiboot executable",
+      "revision": "20261002~115811 / 51006f8d",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Power off, assert carrier BOOT, connect directly to a macOS host, release BOOT and load the fixed official RAM bundle.",
+  "expected": "Host enumerates an eMMC mass-storage device and an ACM console; recovery services report no failed unit.",
+  "observed": "Both USB functions appeared in approximately 10 seconds. ACM provided a recovery console. The eMMC was not mounted by the recovery environment. systemctl --failed reported zero failed units.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "exported-emmc-capacity",
+      "value": 62537072640,
+      "unit": "bytes"
+    },
+    {
+      "name": "failed-systemd-units",
+      "value": 0,
+      "unit": "count"
+    }
+  ],
+  "limits": [
+    "Total observation duration was not recorded.",
+    "Carrier PCB revision, host OS version and rpiboot executable hash were not recorded.",
+    "This receipt covers enumeration and console access only, with no eMMC writes.",
+    "Normal EmberBSD boot, filesystem health and graphics were not tested.",
+    "A prior hub attempt failed, but UART wiring also changed; no isolated hub diagnosis was made."
+  ],
+  "source_refs": [
+    "usbboot-fix",
+    "usbboot-guide"
+  ]
+}

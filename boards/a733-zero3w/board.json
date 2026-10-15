@@ -1,0 +1,66 @@
+{
+  "format_version": 1,
+  "id": "a733-zero3w",
+  "kind": "sbc",
+  "vendor_model": "Orange Pi Zero 3W",
+  "soc": "allwinner-a733",
+  "board_revision": null,
+  "reviewed_at": "2026-10-15",
+  "carrier_ids": [],
+  "documents": {
+    "overview": "boards/a733-zero3w/README.md",
+    "boot": "boards/a733-zero3w/boot.md",
+    "interfaces": "boards/a733-zero3w/interfaces.md",
+    "design": "boards/a733-zero3w/design.md"
+  },
+  "source_refs": [
+    "os-zero3w"
+  ],
+  "capabilities": [
+    {
+      "id": "boot-microsd",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "Vendor boot0, U-Boot and the board-specific DT path boot from microSD.",
+      "source_refs": [
+        "os-zero3w"
+      ]
+    },
+    {
+      "id": "ethernet-port",
+      "hardware": "absent",
+      "emberbsd": "unsupported",
+      "scope": "This board has no Ethernet port. A related A733 board does not establish an Ethernet path here.",
+      "source_refs": [
+        "os-zero3w"
+      ]
+    },
+    {
+      "id": "wifi",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "AIC8800D80 needs vendor firmware. Nonzero initial IGTK IPN is unsupported in the cited snapshot.",
+      "source_refs": [
+        "os-zero3w"
+      ]
+    },
+    {
+      "id": "gpu",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "Native compute and Vulkan enumeration checks have separate scopes. A complete accelerated desktop is not accepted.",
+      "source_refs": [
+        "os-zero3w"
+      ]
+    },
+    {
+      "id": "npu",
+      "hardware": "unknown",
+      "emberbsd": "unknown",
+      "scope": "No model-execution receipt is included in this starter profile. Read current OS work before selecting this for inference.",
+      "source_refs": [
+        "os-zero3w"
+      ]
+    }
+  ]
+}

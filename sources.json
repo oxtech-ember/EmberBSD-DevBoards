@@ -1,0 +1,93 @@
+{
+  "format_version": 1,
+  "sources": [
+    {
+      "id": "os-cm5",
+      "title": "EmberBSD CM5 support and evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boards/compute-module-5.md",
+      "revision": "39547d144888a9286ccc58304048efc68cd8e966",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "os-rpi5",
+      "title": "EmberBSD BCM2712 SBC support and evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boards/raspberry-pi-5.md",
+      "revision": "39547d144888a9286ccc58304048efc68cd8e966",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "os-zero3w",
+      "title": "EmberBSD A733 Zero 3W support and evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boards/orange-pi-zero-3w.md",
+      "revision": "39547d144888a9286ccc58304048efc68cd8e966",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "os-a733-boot",
+      "title": "EmberBSD A733 boot script",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boot/orangepi-zero4-boot.cmd",
+      "revision": "39547d144888a9286ccc58304048efc68cd8e966",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "os-v3d",
+      "title": "EmberBSD BCM2712 V3D validation",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boot/bcm2712-v3d-validation.md",
+      "revision": "39547d144888a9286ccc58304048efc68cd8e966",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "os-pvr",
+      "title": "EmberBSD A733 PowerVR execution",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boot/a733-pvr-execution.md",
+      "revision": "39547d144888a9286ccc58304048efc68cd8e966",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "cm5-datasheet",
+      "title": "CM5 datasheet, release 3, build 2026-06-08",
+      "url": "https://datasheets.raspberrypi.com/cm5/cm5-datasheet.pdf",
+      "revision": "release 3",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "nano-b-schematic",
+      "title": "CM5-NANO-B carrier schematic",
+      "url": "https://files.waveshare.com/wiki/CM5-NANO-B/CM5-NANO-B-Sch.pdf",
+      "revision": null,
+      "reviewed_at": "2026-10-15",
+      "sha256": "3d69000393ce60b6e507510336e756f25df642d9be1f8d1b53c40d44103b04b7"
+    },
+    {
+      "id": "usbboot-fix",
+      "title": "Official RAM gadget image with restored kernel modules",
+      "url": "https://github.com/raspberrypi/usbboot/commit/861a703d8b51f42b76bcdff49da3e0f2766966bf",
+      "revision": "861a703d8b51f42b76bcdff49da3e0f2766966bf",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "usbboot-403",
+      "title": "Missing USB gadget modules in release 20261002-115811",
+      "url": "https://github.com/raspberrypi/usbboot/issues/403",
+      "revision": null,
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    },
+    {
+      "id": "usbboot-guide",
+      "title": "Official RAM gadget procedure",
+      "url": "https://github.com/raspberrypi/usbboot/tree/861a703d8b51f42b76bcdff49da3e0f2766966bf/mass-storage-gadget64",
+      "revision": "861a703d8b51f42b76bcdff49da3e0f2766966bf",
+      "reviewed_at": "2026-10-15",
+      "sha256": null
+    }
+  ]
+}
