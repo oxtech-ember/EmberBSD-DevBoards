@@ -7,7 +7,7 @@
 | I2C | Native controller and board-specific PMIC/Type-C devices | Those devices do not qualify another sensor |
 | GPU | Power, CCU, reset, firmware, native PowerVR DRM and Mesa | Native Vulkan Compute checked; graphics interfaces have host contracts; rendering, Zink and display remain unaccepted |
 | NPU | Kernel, DMA, firmware, user library and model toolchain | No complete inference receipt in this profile |
-| Cooling | PMIC power-off, PWM provider and thermal policy | Physical speed control remains separate from fan power-off |
+| Cooling | PMIC power-off, PWM provider and thermal policy | The stock kit fan is two-wire: the header switches its supply rail, so only off/full cooling works; a four-wire fan needs its own acceptance |
 
 Follow [the OS board record](https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boards/orange-pi-zero-3w.md) for dependencies and acceptance.
 Follow [PowerVR execution](https://github.com/oxtech-ember/EmberBSD/blob/58a0ae471cf2162f6c4add28764761f868f65a3f/ember/boot/a733-pvr-execution.md) for current native driver mechanisms.
