@@ -5,7 +5,7 @@
   "vendor_model": "Orange Pi Zero 3W",
   "soc": "allwinner-a733",
   "board_revision": null,
-  "reviewed_at": "2026-10-15",
+  "reviewed_at": "2026-10-16",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/a733-zero3w/README.md",
@@ -48,9 +48,11 @@
       "id": "gpu",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "Native compute and Vulkan enumeration checks have separate scopes. A complete accelerated desktop is not accepted.",
+      "scope": "Native Vulkan Compute has bounded hardware acceptance. HWRT, firmware event dispatch and paired graphics submissions have host contracts. Graphics execution, Zink, PRIME, display and accelerated Plasma remain unaccepted.",
       "source_refs": [
-        "os-zero3w"
+        "os-zero3w",
+        "os-pvr",
+        "os-pvr-graphics"
       ]
     },
     {

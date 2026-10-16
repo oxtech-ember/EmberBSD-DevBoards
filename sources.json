@@ -44,10 +44,10 @@
     {
       "id": "os-pvr",
       "title": "EmberBSD A733 PowerVR execution",
-      "url": "https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boot/a733-pvr-execution.md",
-      "revision": "39547d144888a9286ccc58304048efc68cd8e966",
-      "reviewed_at": "2026-10-15",
-      "sha256": null
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/58a0ae471cf2162f6c4add28764761f868f65a3f/ember/boot/a733-pvr-execution.md",
+      "revision": "58a0ae471cf2162f6c4add28764761f868f65a3f",
+      "reviewed_at": "2026-10-16",
+      "sha256": "5a481139cba07c605247f6e5178a69cf27ebde0d6a245b20106868b1fc47e601"
     },
     {
       "id": "cm5-datasheet",
@@ -136,6 +136,22 @@
       "revision": "ad698a6e40ea89d72249f76d06913be29a5ab90c",
       "reviewed_at": "2026-10-15",
       "sha256": null
+    },
+    {
+      "id": "os-pvr-graphics",
+      "title": "EmberBSD A733 graphics interfaces and acceptance boundary",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/58a0ae471cf2162f6c4add28764761f868f65a3f/ember/boot/a733-pvr-graphics.md",
+      "revision": "58a0ae471cf2162f6c4add28764761f868f65a3f",
+      "reviewed_at": "2026-10-16",
+      "sha256": "b81aa269c710f5ac8799e15d2daddb10ba315c7975fb1ba254d21b766dd24fc9"
+    },
+    {
+      "id": "ports-plasma-desktop",
+      "title": "EmberBSD bounded Plasma Desktop virtual-output acceptance",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/blob/82308f7eaaeba4772df06f3798cb20353630e440/probes/plasma-mobile/toolkit/tests/plasma-desktop/README.md",
+      "revision": "82308f7eaaeba4772df06f3798cb20353630e440",
+      "reviewed_at": "2026-10-16",
+      "sha256": "1aa54f3013dec507d49e83cad93444835cf9ed8e3bfa02de04a9c32d9c3463ed"
     }
   ]
 }

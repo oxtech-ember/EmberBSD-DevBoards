@@ -5,7 +5,7 @@
   "vendor_model": "Raspberry Pi Compute Module 5",
   "soc": "bcm2712",
   "board_revision": null,
-  "reviewed_at": "2026-10-15",
+  "reviewed_at": "2026-10-16",
   "carrier_ids": [
     "cm5-nano-b"
   ],
@@ -44,9 +44,11 @@
       "id": "gpu",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "V3D render and compute checks exist. Complete accelerated Plasma and general recovery are not accepted by this source.",
+      "scope": "V3D rendering and compute have bounded checks. Plasma Desktop 6.8 passes a separate V3D virtual-output scenario. Full login, physical KMS/HDMI, hotplug and sustained desktop use remain unaccepted.",
       "source_refs": [
-        "os-cm5"
+        "os-cm5",
+        "os-v3d",
+        "ports-plasma-desktop"
       ]
     },
     {
