@@ -72,7 +72,7 @@ Addresses from mainline Linux `s5l8960x.dtsi` (dual-licensed GPL-2.0+ OR MIT).
 | Pin control | — | 0x20e300000 | — | 200 GPIO lines |
 | Power management | — | 0x20e000000 | — | Clock gating, power domains |
 | USB (DWC2) | — | (see FDT) | — | Device-mode for console/network |
-| I2C0–I2C3 | — | 0x20a11000–0x20a11300 | — | |
+| I2C0–I2C3 | `apple,s5l8960x-i2c` | 0x20a110000–0x20a113000 | AIC 154–157 | |
 | Reference clock | `clkref` | — | — | 24 MHz |
 
 ### Interrupt controller (AIC)
@@ -87,12 +87,20 @@ This is the main architectural difference from all other EmberBSD arm64 platform
 
 ### UART console
 
-The `apple,s5l-uart` is a simple register-mapped UART:
-- Similar to 16550 but with 4-byte register spacing
-- No FIFO control in the standard position
-- Accessible early in boot with minimal initialization
-- Physically routed to the Lightning connector on some device variants
-  (requires a specific adapter; see community documentation)
+The `apple,s5l-uart` uses the **Samsung S3C2410 register model**, not 16550:
+
+- Register set: ULCON, UCON, UFCON, UTRSTAT, UTXH, URXH (not THR/RBR/IER/LCR)
+- 32-bit register access (`reg-io-width = 4`)
+- Line control via ULCON (word length, stop bits, parity) — not LCR
+- Status via UTRSTAT (TX empty, RX ready) — not LSR
+- Data via single UTXH/URXH registers — no per-register offset stride
+- FIFO control via UFCON — not FCR
+- Linux binds this to the `serial_s3c.c` driver (`s3c2410` type)
+
+Do not use a 16550 driver; the register layout is entirely different.
+The boot environment leaves clocks enabled; minimal init is sufficient.
+Physically routed to the Lightning connector on some device variants
+(requires a specific adapter; see community documentation).
 
 ### USB device-mode
 
