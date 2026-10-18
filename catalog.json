@@ -24,6 +24,15 @@
         "zero-3w"
       ],
       "profile": "boards/a733-zero3w/board.json"
+    },
+    {
+      "id": "cix-p1-orangepi6plus",
+      "aliases": [
+        "orangepi6plus",
+        "orange-pi-6-plus",
+        "cd8180-sbc"
+      ],
+      "profile": "boards/cix-p1-orangepi6plus/board.json"
     }
   ],
   "carriers": [
@@ -40,6 +49,10 @@
     {
       "id": "allwinner-a733",
       "document": "socs/allwinner-a733.md"
+    },
+    {
+      "id": "cix-p1-cd8180",
+      "document": "socs/cix-p1-cd8180.md"
     }
   ]
 }

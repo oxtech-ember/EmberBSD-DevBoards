@@ -1,0 +1,54 @@
+{
+  "format_version": 1,
+  "id": "cix-p1-orangepi6plus",
+  "kind": "sbc",
+  "vendor_model": "Orange Pi 6 Plus",
+  "soc": "cix-p1-cd8180",
+  "board_revision": null,
+  "reviewed_at": "2026-10-18",
+  "carrier_ids": [],
+  "documents": {
+    "overview": "boards/cix-p1-orangepi6plus/README.md",
+    "boot": "boards/cix-p1-orangepi6plus/boot.md",
+    "interfaces": "boards/cix-p1-orangepi6plus/interfaces.md",
+    "design": "boards/cix-p1-orangepi6plus/design.md"
+  },
+  "source_refs": [
+    "os-cix-p1",
+    "os-cix-spcr",
+    "os-cix-platform",
+    "os-cix-vpu",
+    "os-cix-vpu-attachment"
+  ],
+  "capabilities": [
+    {
+      "id": "debug-console",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "Observed DEBUG UART2 console at 115200 8N1 uses an opt-in RAM SPCR correction from stock UART3. Exact firmware-table matching applies; connector pin numbers and voltage are not established here.",
+      "source_refs": [
+        "os-cix-p1",
+        "os-cix-spcr"
+      ]
+    },
+    {
+      "id": "vpu",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "CIXH3010 describes two 64 KiB windows, GSI 358 and _CCA=0 on the observed firmware. Clock67/identity diagnostics and a 256-owner CPU preparation fixture pass. A firmware trial stops before SWITCHED_IN/PONG and retains exposed owners. No usable codec is established.",
+      "source_refs": [
+        "os-cix-vpu",
+        "os-cix-platform"
+      ]
+    },
+    {
+      "id": "power-controls",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "Short-button shutdown reaches native powerd and filesystem unmount in the cited scenario. Restart by short press after shutdown remains unresolved. Hardware wake, removal of power and OS shutdown are separate contracts.",
+      "source_refs": [
+        "os-cix-p1"
+      ]
+    }
+  ]
+}

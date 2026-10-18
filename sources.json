@@ -192,6 +192,46 @@
       "revision": "live",
       "reviewed_at": "2026-10-13",
       "sha256": null
+    },
+    {
+      "id": "os-cix-p1",
+      "title": "EmberBSD CIX P1 Orange Pi 6 Plus board record",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/75f0decfa1a02288f1bca8520b96811f9d5567a6/ember/boards/orange-pi-6-plus.md",
+      "revision": "75f0decfa1a02288f1bca8520b96811f9d5567a6",
+      "reviewed_at": "2026-10-18",
+      "sha256": "eca2ff7ff6cdc1316f80d024b69f95d3cfd601916cc65193133f194bae089ddd"
+    },
+    {
+      "id": "os-cix-spcr",
+      "title": "EmberBSD CIX SPCR console correction",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/75f0decfa1a02288f1bca8520b96811f9d5567a6/ember/boot/cix-spcr.md",
+      "revision": "75f0decfa1a02288f1bca8520b96811f9d5567a6",
+      "reviewed_at": "2026-10-18",
+      "sha256": "7a7ff56f9df513941d52a4b847f35e72535063cdf7ff73b4419416884e5df1b5"
+    },
+    {
+      "id": "os-cix-platform",
+      "title": "EmberBSD CIX clock, reset and native diagnostics",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/75f0decfa1a02288f1bca8520b96811f9d5567a6/ember/boot/cix-platform.md",
+      "revision": "75f0decfa1a02288f1bca8520b96811f9d5567a6",
+      "reviewed_at": "2026-10-18",
+      "sha256": "e7fb293f8cb311049232abd3131f659858c584a135f4695c506d99ccdaaaccb2"
+    },
+    {
+      "id": "os-cix-vpu",
+      "title": "EmberBSD CIX VPU resources and diagnostic boundaries",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/75f0decfa1a02288f1bca8520b96811f9d5567a6/ember/boot/cix-vpu.md",
+      "revision": "75f0decfa1a02288f1bca8520b96811f9d5567a6",
+      "reviewed_at": "2026-10-18",
+      "sha256": "bd35605f1899c2e19076d8a9e366f87e5fd77da57de0ebbfae0dbb75f7d499db"
+    },
+    {
+      "id": "os-cix-vpu-attachment",
+      "title": "EmberBSD native CIX VPU ACPI attachment",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/75f0decfa1a02288f1bca8520b96811f9d5567a6/sys/dev/acpi/cixvpu_acpi.c",
+      "revision": "75f0decfa1a02288f1bca8520b96811f9d5567a6",
+      "reviewed_at": "2026-10-18",
+      "sha256": "d0a4f15186d9b42c934cc08a94e33f48cb2e2ab82b8443909c515ae8f9f09abc"
     }
   ]
 }
