@@ -152,6 +152,46 @@
       "revision": "82308f7eaaeba4772df06f3798cb20353630e440",
       "reviewed_at": "2026-10-16",
       "sha256": "1aa54f3013dec507d49e83cad93444835cf9ed8e3bfa02de04a9c32d9c3463ed"
+    },
+    {
+      "id": "linux-apple-dts",
+      "title": "Mainline Linux DTS for s5l8960x (Apple A7)",
+      "url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/apple/s5l8960x.dtsi",
+      "revision": "mainline",
+      "reviewed_at": "2026-10-13",
+      "sha256": null
+    },
+    {
+      "id": "pongo-os",
+      "title": "pongoOS pre-boot environment (konradybcio fork with Linux boot)",
+      "url": "https://github.com/konradybcio/pongoOS",
+      "revision": "master",
+      "reviewed_at": "2026-10-13",
+      "sha256": null
+    },
+    {
+      "id": "som-howto",
+      "title": "SoMainline linux-apple-resources boot HOWTO",
+      "url": "https://github.com/SoMainline/linux-apple-resources/blob/master/HOWTO.md",
+      "revision": "master",
+      "reviewed_at": "2026-10-13",
+      "sha256": null
+    },
+    {
+      "id": "pmos-apple",
+      "title": "postmarketOS generic Apple device port",
+      "url": "https://wiki.postmarketos.org/wiki/Apple_iPhone_5s_(apple-n51)",
+      "revision": "live",
+      "reviewed_at": "2026-10-13",
+      "sha256": null
+    },
+    {
+      "id": "netbsd-apple",
+      "title": "NetBSD/evbarm on Apple Silicon (M1) boot architecture reference",
+      "url": "https://wiki.netbsd.org/ports/evbarm/apple/",
+      "revision": "live",
+      "reviewed_at": "2026-10-13",
+      "sha256": null
     }
   ]
 }
