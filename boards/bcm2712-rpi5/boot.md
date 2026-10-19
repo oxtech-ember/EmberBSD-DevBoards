@@ -2,6 +2,7 @@
 
 The recorded chain is board boot firmware → UEFI → EmberBSD `efiboot` → ELF `/netbsd` on the microSD root partition.
 The kernel uses ACPI for this path.
+Read the shared [UEFI console policy](../../bootloaders/rpi5-uefi-console.md) when selecting serial and HDMI output.
 Follow the shared [efiboot artifact contract](../../bootloaders/efiboot.md) for kernel format, selected entry and matching modules.
 Firmware, kernel and module revisions differ between published checks.
 Read the selected receipt before reproducing a result.

@@ -232,6 +232,22 @@
       "revision": "75f0decfa1a02288f1bca8520b96811f9d5567a6",
       "reviewed_at": "2026-10-18",
       "sha256": "d0a4f15186d9b42c934cc08a94e33f48cb2e2ab82b8443909c515ae8f9f09abc"
+    },
+    {
+      "id": "edk2-console-preference",
+      "title": "EDK2 GOP and serial console preference callback",
+      "url": "https://github.com/tianocore/edk2/blob/7bbf1f2022f381f48cfb5411df9e5157ee0291a5/EmbeddedPkg/Drivers/ConsolePrefDxe/ConsolePrefDxe.c",
+      "revision": "7bbf1f2022f381f48cfb5411df9e5157ee0291a5",
+      "reviewed_at": "2026-10-19",
+      "sha256": "77df8eb9eba4b1802a317e1f00f32dd27a363dc1e18c95053b06950131703541"
+    },
+    {
+      "id": "os-rp1-console-gop",
+      "title": "EmberBSD RP1 serial console retention with GOP",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/9caf9c621e2df2de2760e39fc55cca98a49f9b78/ember/firmware/edk2-rp1-console-retain.diff",
+      "revision": "9caf9c621e2df2de2760e39fc55cca98a49f9b78",
+      "reviewed_at": "2026-10-19",
+      "sha256": "a2f0bb96e67df4beb729266a7f3344dea8c486d7ad1a7874876f3b6ed2c6c851"
     }
   ]
 }
