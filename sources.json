@@ -248,6 +248,22 @@
       "revision": "9caf9c621e2df2de2760e39fc55cca98a49f9b78",
       "reviewed_at": "2026-10-19",
       "sha256": "a2f0bb96e67df4beb729266a7f3344dea8c486d7ad1a7874876f3b6ed2c6c851"
+    },
+    {
+      "id": "os-a733-accelerator-boundary",
+      "title": "EmberBSD bounded A733 GPU and display acceptance",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/8735c9333e50d62a33a64a99b39e1af4f0dce3c1/ember/boards/orange-pi-zero-3w.md",
+      "revision": "8735c9333e50d62a33a64a99b39e1af4f0dce3c1",
+      "reviewed_at": "2026-10-21",
+      "sha256": "8b03151b33ff5b04a48a4252d5bb433cd3da32f9312bc2120fc628c57de704ed"
+    },
+    {
+      "id": "os-a733-fixed-nn",
+      "title": "EmberBSD fixed A733 INT8 TASK physical acceptance",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/0ab3a97971ff8fcbeefbaa6f2f88ef39fb1cd7f3/ember/boot/a733-npu-tiny-task-acceptance.json",
+      "revision": "0ab3a97971ff8fcbeefbaa6f2f88ef39fb1cd7f3",
+      "reviewed_at": "2026-10-21",
+      "sha256": "1a42916e865d6e5c759918422cc7c1bbc6ee391bf24d33baef0fa079adfd2114"
     }
   ]
 }

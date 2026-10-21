@@ -5,7 +5,7 @@
   "vendor_model": "Orange Pi Zero 3W",
   "soc": "allwinner-a733",
   "board_revision": null,
-  "reviewed_at": "2026-10-16",
+  "reviewed_at": "2026-10-21",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/a733-zero3w/README.md",
@@ -48,20 +48,18 @@
       "id": "gpu",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "Native Vulkan Compute has bounded hardware acceptance. HWRT, firmware event dispatch and paired graphics submissions have host contracts. Graphics execution, Zink, PRIME, display and accelerated Plasma remain unaccepted.",
+      "scope": "Bounded native Vulkan Compute, offscreen graphics and four KWin/Zink frames have physical acceptance. Physical HDMI, complete Plasma and conformance remain unaccepted.",
       "source_refs": [
-        "os-zero3w",
-        "os-pvr",
-        "os-pvr-graphics"
+        "os-a733-accelerator-boundary"
       ]
     },
     {
       "id": "npu",
-      "hardware": "unknown",
-      "emberbsd": "unknown",
-      "scope": "No model-execution receipt is included in this starter profile. Read current OS work before selecting this for inference.",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "One fixed INT8 convolution matches all 512 numerical output bytes and checks buffer tails, immutable inputs and MMU tables. Exact HWDB identity is required. Arbitrary models, a general runtime, recovery and sustained workloads remain unaccepted.",
       "source_refs": [
-        "os-zero3w"
+        "os-a733-fixed-nn"
       ]
     }
   ]
