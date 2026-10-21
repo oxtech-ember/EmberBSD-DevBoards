@@ -14,7 +14,10 @@
     "design": "boards/a733-zero3w/design.md"
   },
   "source_refs": [
-    "os-zero3w"
+    "os-zero3w",
+    "vendor-zero3w-manual",
+    "vendor-zero3w-schematic",
+    "os-a733-console-dts"
   ],
   "capabilities": [
     {

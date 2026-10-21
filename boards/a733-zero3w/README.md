@@ -11,6 +11,7 @@ Start with the pinned source `os-zero3w` in [sources.json](../../sources.json).
 Then check the current OS board documentation for later changes.
 Firmware, driver attachment, data movement and a complete application are separate evidence levels.
 Connector maps and control sequences that lack a primary source remain unknown.
+The [V1.2 UART0 map](boot.md#uart0-console-v12) has vendor manual and schematic sources.
 
 [The accelerator boundary](interfaces.md) includes bounded GPU rendering and one fixed INT8 NPU task.
 [The SoC note](../../socs/allwinner-a733.md#fixed-npu-profile) explains exact HWDB identity and incomplete raw feature enumeration.

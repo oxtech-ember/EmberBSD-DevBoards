@@ -272,6 +272,30 @@
       "revision": "main",
       "reviewed_at": "2026-10-21",
       "sha256": null
+    },
+    {
+      "id": "vendor-zero3w-manual",
+      "title": "Orange Pi Zero 3W user manual, section 2.11.1 debug connection",
+      "url": "https://drive.google.com/file/d/1R1MC9erKTztd87GvJ_UFE132x6KgPATe/view",
+      "revision": null,
+      "reviewed_at": "2026-10-21",
+      "sha256": null
+    },
+    {
+      "id": "vendor-zero3w-schematic",
+      "title": "Orange Pi Zero 3W V1.2 schematic, sheet 18 physical header",
+      "url": "https://drive.google.com/file/d/1layhtSvMpQo-z_iMJjNfNVvhPhObpsvW/view",
+      "revision": "V1.2",
+      "reviewed_at": "2026-10-21",
+      "sha256": null
+    },
+    {
+      "id": "os-a733-console-dts",
+      "title": "EmberBSD A733 serial0 console inherited by Zero 3W",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/8735c9333e50d62a33a64a99b39e1af4f0dce3c1/sys/external/gpl2/dts/dist/arch/arm64/boot/dts/allwinner/sun60i-a733-orangepi-zero4.dts",
+      "revision": "8735c9333e50d62a33a64a99b39e1af4f0dce3c1",
+      "reviewed_at": "2026-10-21",
+      "sha256": "88d44e25c3a06ac1fd7efda541006dda8f9231cacd26f73974de36ea7e86b843"
     }
   ]
 }

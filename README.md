@@ -12,7 +12,7 @@ The catalog is an index. Each board profile names its sources and the limits of 
 | BCM2712 module, vendor model `CM5` | Custom carrier, eMMC provisioning, thermal design and graphics research | [Profile](boards/bcm2712-cm5/README.md) |
 | BCM2712 SBC, vendor model `RPi5` | Peripheral prototypes and a comparison platform for module designs | [Profile](boards/bcm2712-rpi5/README.md) |
 | CIX P1/CD8180 SBC, vendor model `Orange Pi 6 Plus` | ACPI console routing, power boundaries and VPU integration research | [Profile](boards/cix-p1-orangepi6plus/README.md) |
-| Allwinner A733 SBC, vendor model `Zero 3W` | Compact wireless devices, bounded GPU rendering and fixed INT8 NPU research | [Profile](boards/a733-zero3w/README.md) |
+| Allwinner A733 SBC, vendor model `Zero 3W` | Compact wireless devices, bounded GPU rendering, fixed INT8 NPU research and [V1.2 UART wiring](boards/a733-zero3w/boot.md#uart0-console-v12) | [Profile](boards/a733-zero3w/README.md) |
 
 ## Find information
 
