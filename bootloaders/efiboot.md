@@ -8,6 +8,14 @@ Apply this contract only after establishing that `efiboot` is the active loader.
 The recorded [CM5](../boards/bcm2712-cm5/boot.md) and [RPi5](../boards/bcm2712-rpi5/boot.md) paths use this loader.
 The [A733 Zero 3W path](../boards/a733-zero3w/boot.md) uses U-Boot and has its own image contract.
 
+## Normal boot menu
+
+Current EmberBSD loaders include the ASCII logo. `boot.cfg` selects the menu.
+If the logo is absent, check the installed loader before changing the kernel.
+Keep normal boot, one checked recovery entry and a command prompt in the regular menu.
+Keep experimental entries in a separate diagnostic profile.
+See the [OS loader identity guide](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/boot/installer-branding.md).
+
 ## Match the artifact to the selected entry
 
 For this loader path, `boot.cfg` selects a device, partition and kernel filename.

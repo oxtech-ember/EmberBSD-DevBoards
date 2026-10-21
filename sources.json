@@ -264,6 +264,14 @@
       "revision": "0ab3a97971ff8fcbeefbaa6f2f88ef39fb1cd7f3",
       "reviewed_at": "2026-10-21",
       "sha256": "1a42916e865d6e5c759918422cc7c1bbc6ee391bf24d33baef0fa079adfd2114"
+    },
+    {
+      "id": "ports-plasma-session",
+      "title": "Current EmberBSD Plasma session package and hardware boundary",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/blob/main/probes/plasma-mobile/toolkit/service/README.md",
+      "revision": "main",
+      "reviewed_at": "2026-10-21",
+      "sha256": null
     }
   ]
 }

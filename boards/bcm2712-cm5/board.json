@@ -5,7 +5,7 @@
   "vendor_model": "Raspberry Pi Compute Module 5",
   "soc": "bcm2712",
   "board_revision": null,
-  "reviewed_at": "2026-10-16",
+  "reviewed_at": "2026-10-21",
   "carrier_ids": [
     "cm5-nano-b"
   ],
@@ -44,11 +44,12 @@
       "id": "gpu",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "V3D rendering and compute have bounded checks. Plasma Desktop 6.8 passes a separate V3D virtual-output scenario. Full login, physical KMS/HDMI, hotplug and sustained desktop use remain unaccepted.",
+      "scope": "Hardware-accelerated Wayland Plasma, physical HDMI desktop and automatic session startup have bounded checks on one CM5 carrier. Check input, hotplug, power management and continuous load for each device.",
       "source_refs": [
         "os-cm5",
         "os-v3d",
-        "ports-plasma-desktop"
+        "ports-plasma-desktop",
+        "ports-plasma-session"
       ]
     },
     {

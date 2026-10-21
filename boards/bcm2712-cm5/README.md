@@ -1,7 +1,7 @@
 # BCM2712 module: CM5
 
 Use this module as a reference for a custom carrier, eMMC provisioning and graphics experiments.
-[Machine-readable profile](board.json) · [Boot](boot.md) · [Interfaces](interfaces.md) · [Your device](design.md) · [Generic PWM fan settings](configs/thermal-fan/README.md)
+[Machine-readable profile](board.json) · [Boot](boot.md) · [Interfaces](interfaces.md) · [Your device](design.md) · [Accelerated Plasma](graphics.md) · [Generic PWM fan settings](configs/thermal-fan/README.md)
 
 This is a research reference, not a production qualification or an exhaustive support matrix.
 The profile's revision field is unknown unless a specific hardware revision is established.
