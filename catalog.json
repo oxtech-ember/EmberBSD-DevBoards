@@ -2,6 +2,13 @@
   "format_version": 1,
   "boards": [
     {
+      "id": "ys-m33-a133",
+      "aliases": [
+        "ys-m33"
+      ],
+      "profile": "boards/ys-m33-a133/board.json"
+    },
+    {
       "id": "bcm2712-cm5",
       "aliases": [
         "cm5",
@@ -42,6 +49,10 @@
     }
   ],
   "socs": [
+    {
+      "id": "allwinner-a133",
+      "document": "socs/allwinner-a133.md"
+    },
     {
       "id": "bcm2712",
       "document": "socs/bcm2712.md"

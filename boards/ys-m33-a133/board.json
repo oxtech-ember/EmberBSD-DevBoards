@@ -1,0 +1,43 @@
+{
+  "format_version": 1,
+  "id": "ys-m33-a133",
+  "kind": "sbc",
+  "vendor_model": "YS-M33 wall tablet",
+  "soc": "allwinner-a133",
+  "board_revision": null,
+  "reviewed_at": "2026-10-22",
+  "carrier_ids": [],
+  "documents": {
+    "overview": "boards/ys-m33-a133/README.md",
+    "boot": "boards/ys-m33-a133/boot.md",
+    "interfaces": "boards/ys-m33-a133/interfaces.md",
+    "design": "boards/ys-m33-a133/design.md"
+  },
+  "source_refs": [
+    "os-ys-m33-board",
+    "os-ys-m33-cable-install",
+    "os-ys-m33-cable-receipt"
+  ],
+  "capabilities": [
+    {
+      "id": "usb-cable-install",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "One unopened factory YS-M33 completed backup, unlock, EmberBSD installation and a normal eMMC restart over USB-C with separate DC power and no UART. This does not qualify a fleet installer or another factory image.",
+      "source_refs": [
+        "os-ys-m33-cable-install",
+        "os-ys-m33-cable-receipt"
+      ]
+    },
+    {
+      "id": "emmc-boot",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "An installed FFSv2 root on the UDISK eMMC partition booted on one factory sample. Cold power-cycle acceptance and full Android restoration remain untested.",
+      "source_refs": [
+        "os-ys-m33-board",
+        "os-ys-m33-cable-receipt"
+      ]
+    }
+  ]
+}

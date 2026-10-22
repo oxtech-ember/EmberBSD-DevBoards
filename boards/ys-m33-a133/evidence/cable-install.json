@@ -1,0 +1,51 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "ys-m33-closed-enclosure-cable-install",
+  "target_id": "ys-m33-a133",
+  "recorded_at": "2026-10-08",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Unopened factory YS-M33 tablet; Allwinner A133, 1 GiB DDR4, 32 GB eMMC; Android 10 factory image a133-10.0-20231211.133302"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD board record",
+      "revision": "12c35f22fd899b4d697e20986521226efaf6d8cb",
+      "sha256": "415b32af9c87c0db7a7f7fb8d3959e583447ace4dc529ad52a484fdd69087749",
+      "reference": null
+    },
+    {
+      "name": "EmberBSD cable installation guide",
+      "revision": "12c35f22fd899b4d697e20986521226efaf6d8cb",
+      "sha256": "ee7bc228df77f106460963caf7b11771d20e0be9665df148a49939bd46b04651",
+      "reference": null
+    },
+    {
+      "name": "EmberBSD physical cable installation receipt",
+      "revision": "12c35f22fd899b4d697e20986521226efaf6d8cb",
+      "sha256": "9a4d6a1bd8779ee1f12068b809e669ed97b91f717abad22f4399f1a6408afe4d",
+      "reference": null
+    }
+  ],
+  "scenario": "With the enclosure closed, connect USB-C to the host and separate DC power. Back up the factory device, enter signed USB recovery, unlock and install EmberBSD to the selected eMMC areas without UART. Verify device readback, recover from the first-boot trial, and restart from eMMC.",
+  "expected": "The tablet enters recovery and boots the installed EmberBSD system from eMMC without opening the enclosure or connecting UART.",
+  "observed": "One unopened factory sample completed backup, a locked recovery-to-Android round trip, unlock, scoped boot/root/resource writes with full readback hashes, a recovery return, normal eMMC boot and a subsequent clean restart.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "This is one physical factory-image scenario, not a reusable fleet installer.",
+    "The exact board revision and panel assembly revision are unknown.",
+    "Cold power-cycle acceptance, complete Android restoration and recovery from a corrupt loader environment remain untested.",
+    "This evidence does not apply to another A133 tablet or a changed factory image."
+  ],
+  "source_refs": [
+    "os-ys-m33-board",
+    "os-ys-m33-cable-install",
+    "os-ys-m33-cable-receipt"
+  ]
+}

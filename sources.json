@@ -2,6 +2,30 @@
   "format_version": 1,
   "sources": [
     {
+      "id": "os-ys-m33-board",
+      "title": "EmberBSD YS-M33 / Allwinner A133 board record",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/12c35f22fd899b4d697e20986521226efaf6d8cb/ember/boards/ys-m33-a133.md",
+      "revision": "12c35f22fd899b4d697e20986521226efaf6d8cb",
+      "reviewed_at": "2026-10-22",
+      "sha256": "415b32af9c87c0db7a7f7fb8d3959e583447ace4dc529ad52a484fdd69087749"
+    },
+    {
+      "id": "os-ys-m33-cable-install",
+      "title": "EmberBSD YS-M33 cable installation and boot-loader boundaries",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/12c35f22fd899b4d697e20986521226efaf6d8cb/ember/boards/ys-m33-a133-cable-install.md",
+      "revision": "12c35f22fd899b4d697e20986521226efaf6d8cb",
+      "reviewed_at": "2026-10-22",
+      "sha256": "ee7bc228df77f106460963caf7b11771d20e0be9665df148a49939bd46b04651"
+    },
+    {
+      "id": "os-ys-m33-cable-receipt",
+      "title": "EmberBSD YS-M33 physical cable installation receipt",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/12c35f22fd899b4d697e20986521226efaf6d8cb/ember/boards/validation/2026-10-08-a133-cable-install.md",
+      "revision": "12c35f22fd899b4d697e20986521226efaf6d8cb",
+      "reviewed_at": "2026-10-22",
+      "sha256": "9a4d6a1bd8779ee1f12068b809e669ed97b91f717abad22f4399f1a6408afe4d"
+    },
+    {
       "id": "os-cm5",
       "title": "EmberBSD CM5 support and evidence",
       "url": "https://github.com/oxtech-ember/EmberBSD/blob/39547d144888a9286ccc58304048efc68cd8e966/ember/boards/compute-module-5.md",

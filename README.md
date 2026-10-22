@@ -9,6 +9,7 @@ The catalog is an index. Each board profile names its sources and the limits of 
 
 | Reference platform | Useful starting point | Read first |
 |---|---|---|
+| Allwinner A133 wall tablet, vendor model `YS-M33` | Closed-enclosure USB installation and eMMC boot research | [Profile](boards/ys-m33-a133/README.md) |
 | BCM2712 module, vendor model `CM5` | Custom carrier, eMMC provisioning, thermal design and graphics research | [Profile](boards/bcm2712-cm5/README.md) |
 | BCM2712 SBC, vendor model `RPi5` | Peripheral prototypes and a comparison platform for module designs | [Profile](boards/bcm2712-rpi5/README.md) |
 | CIX P1/CD8180 SBC, vendor model `Orange Pi 6 Plus` | ACPI console routing, power boundaries and VPU integration research | [Profile](boards/cix-p1-orangepi6plus/README.md) |
