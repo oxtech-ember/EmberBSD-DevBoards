@@ -320,6 +320,14 @@
       "revision": "8735c9333e50d62a33a64a99b39e1af4f0dce3c1",
       "reviewed_at": "2026-10-21",
       "sha256": "88d44e25c3a06ac1fd7efda541006dda8f9231cacd26f73974de36ea7e86b843"
+    },
+    {
+      "id": "vendor-cix-opi6plus-v11-schematic",
+      "title": "Shenzhen Xunlong OPi 6 PLUS V11 DSN 0612 schematic, sheets 44, 46 and 48 of 66",
+      "url": "https://drive.google.com/file/d/1RqcQ1QOiHdUSWrTapIcdr3X1zWgUlrVK/view",
+      "revision": "PCB 1.1; title orange pi 6 plus_v11_20250612a_; PDF created 2026-01-09; official viewer PDF",
+      "reviewed_at": "2026-10-22",
+      "sha256": "ac7db7ce1ec70b290b6f3eeb6a444704ce592cd5374eac0e04f2aa379ac9bb8b"
     }
   ]
 }

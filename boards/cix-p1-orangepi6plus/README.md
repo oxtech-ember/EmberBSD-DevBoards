@@ -8,7 +8,8 @@ The profile's revision remains unknown; those observations do not qualify every 
 This is a focused hardware reference, not an installation recipe or a complete OS support matrix.
 
 Start with `os-cix-p1` in [sources.json](../../sources.json).
-All CIX source records here pin EmberBSD `75f0decfa1a02288f1bca8520b96811f9d5567a6`.
+The CIX OS source records here pin EmberBSD `75f0decfa1a02288f1bca8520b96811f9d5567a6`.
 Read the [current implementation owner](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/boards/orange-pi-6-plus.md) for later changes.
 No configuration or firmware binary is distributed by this profile.
-Connector contact numbers, signal voltage and electrical tolerances remain unknown here.
+The [V1.1 power-button circuit](interfaces.md#power-button-contacts-pcb-v11) has schematic-level contact and pull-up data.
+Other connector contact numbers and electrical tolerances remain outside this record.

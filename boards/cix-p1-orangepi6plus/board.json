@@ -5,7 +5,7 @@
   "vendor_model": "Orange Pi 6 Plus",
   "soc": "cix-p1-cd8180",
   "board_revision": null,
-  "reviewed_at": "2026-10-18",
+  "reviewed_at": "2026-10-22",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/cix-p1-orangepi6plus/README.md",
@@ -18,7 +18,8 @@
     "os-cix-spcr",
     "os-cix-platform",
     "os-cix-vpu",
-    "os-cix-vpu-attachment"
+    "os-cix-vpu-attachment",
+    "vendor-cix-opi6plus-v11-schematic"
   ],
   "capabilities": [
     {
