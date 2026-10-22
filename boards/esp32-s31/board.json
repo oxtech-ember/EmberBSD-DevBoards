@@ -1,0 +1,48 @@
+{
+  "format_version": 1,
+  "id": "esp32-s31",
+  "kind": "sbc",
+  "vendor_model": "ESP32-S31 development board",
+  "soc": "espressif-esp32-s31",
+  "board_revision": null,
+  "reviewed_at": "2026-10-22",
+  "carrier_ids": [],
+  "documents": {
+    "overview": "boards/esp32-s31/README.md",
+    "boot": "boards/esp32-s31/boot.md",
+    "interfaces": "boards/esp32-s31/interfaces.md",
+    "design": "boards/esp32-s31/design.md"
+  },
+  "source_refs": [
+    "os-esp32-s31-reference"
+  ],
+  "capabilities": [
+    {
+      "id": "boot",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "Flash boot through retained firmware into PSRAM with read-only flash root.",
+      "source_refs": [
+        "os-esp32-s31-reference"
+      ]
+    },
+    {
+      "id": "wifi",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "WPA2 2.4 GHz, 6000 pings over 100 minutes; closed vendor libraries required.",
+      "source_refs": [
+        "os-esp32-s31-reference"
+      ]
+    },
+    {
+      "id": "second-core",
+      "hardware": "present",
+      "emberbsd": "unsupported",
+      "scope": "The cited port runs one of two cores.",
+      "source_refs": [
+        "os-esp32-s31-reference"
+      ]
+    }
+  ]
+}

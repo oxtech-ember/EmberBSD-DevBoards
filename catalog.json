@@ -40,6 +40,29 @@
         "cd8180-sbc"
       ],
       "profile": "boards/cix-p1-orangepi6plus/board.json"
+    },
+    {
+      "id": "bcm2710-zero2w",
+      "aliases": [
+        "zero2w",
+        "zero-2-w"
+      ],
+      "profile": "boards/bcm2710-zero2w/board.json"
+    },
+    {
+      "id": "a733-zero4",
+      "aliases": [
+        "zero4",
+        "zero-4"
+      ],
+      "profile": "boards/a733-zero4/board.json"
+    },
+    {
+      "id": "esp32-s31",
+      "aliases": [
+        "esp32s31"
+      ],
+      "profile": "boards/esp32-s31/board.json"
     }
   ],
   "carriers": [
@@ -64,6 +87,14 @@
     {
       "id": "cix-p1-cd8180",
       "document": "socs/cix-p1-cd8180.md"
+    },
+    {
+      "id": "bcm2710a1",
+      "document": "socs/bcm2710a1.md"
+    },
+    {
+      "id": "espressif-esp32-s31",
+      "document": "socs/esp32-s31.md"
     }
   ]
 }

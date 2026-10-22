@@ -8,7 +8,7 @@ The profile's revision field is unknown unless a specific hardware revision is e
 Individual evidence records can name a narrower tested specimen.
 
 Start with the pinned source `os-zero3w` in [sources.json](../../sources.json).
-Then check the current OS board documentation for later changes.
+Use this profile for current hardware applicability. Follow its implementation links for software APIs and commands.
 Firmware, driver attachment, data movement and a complete application are separate evidence levels.
 Connector maps and control sequences that lack a primary source remain unknown.
 The [V1.2 UART0 map](boot.md#uart0-console-v12) has vendor manual and schematic sources.

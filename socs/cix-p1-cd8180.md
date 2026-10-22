@@ -9,7 +9,8 @@ The [ACPI attachment](https://github.com/oxtech-ember/EmberBSD/blob/75f0decfa1a0
 [VPU contract](https://github.com/oxtech-ember/EmberBSD/blob/75f0decfa1a02288f1bca8520b96811f9d5567a6/ember/boot/cix-vpu.md) and
 [clock/reset providers](https://github.com/oxtech-ember/EmberBSD/blob/75f0decfa1a02288f1bca8520b96811f9d5567a6/ember/boot/cix-platform.md) remain owned by EmberBSD.
 Clock ID67, resource validation, CPU preparation and a complete codec are separate evidence levels.
-The experimental firmware boot path retains exposed DMA owners after an incomplete handshake.
+A bounded firmware bootstrap reaches SWITCHED_IN and PONG and retains exposed DMA owners with IRQ masked.
+See the current [board boundary](../boards/cix-p1-orangepi6plus/interfaces.md#vpu-resources-and-acceptance); no codec frame is accepted.
 No production video interface is established by this record.
 
-Sources: `os-cix-vpu-attachment`, `os-cix-vpu`, `os-cix-platform` in [sources.json](../sources.json).
+Sources: `os-cix-vpu-attachment`, `os-cix-vpu`, `os-cix-platform`, `os-cix-p1-reference` in [sources.json](../sources.json).

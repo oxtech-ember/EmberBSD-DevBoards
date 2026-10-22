@@ -328,6 +328,566 @@
       "revision": "PCB 1.1; title orange pi 6 plus_v11_20250612a_; PDF created 2026-01-09; official viewer PDF",
       "reviewed_at": "2026-10-22",
       "sha256": "ac7db7ce1ec70b290b6f3eeb6a444704ce592cd5374eac0e04f2aa379ac9bb8b"
+    },
+    {
+      "id": "os-ys-m33-reference",
+      "title": "ys-m33-a133 hardware reference",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/ys-m33-a133.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "415b32af9c87c0db7a7f7fb8d3959e583447ace4dc529ad52a484fdd69087749"
+    },
+    {
+      "id": "os-zero2w-reference",
+      "title": "raspberry-pi-zero-2-w hardware reference",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/raspberry-pi-zero-2-w.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "681c14f55eb5e768e4c35b4ff1d6fbef777c16e52481e267945611f44a96d498"
+    },
+    {
+      "id": "os-zero4-reference",
+      "title": "orange-pi-zero-4 hardware reference",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/orange-pi-zero-4.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "4162c1fb2c104f02db72b647cef4d560687670e9d7ff9608da4ecdc2664450e5"
+    },
+    {
+      "id": "os-esp32-s31-reference",
+      "title": "esp32-s31 hardware reference",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/esp32-s31.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "7f5f2a305ebf6e504cf95cfaa01e5c61b1be5e9ab8ed01a50bfc06fc134d58d7"
+    },
+    {
+      "id": "os-rpi5-reference",
+      "title": "raspberry-pi-5 hardware reference",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/raspberry-pi-5.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "d2b7ff7b4368e48e054a622f4cd150581206e51cfa802ff673a37a286f4b845b"
+    },
+    {
+      "id": "os-cm5-reference",
+      "title": "compute-module-5 hardware reference",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/compute-module-5.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "535abe42257b9752c4d310f83140fed971d14a877f3f04b1801c96c557c99a67"
+    },
+    {
+      "id": "os-zero3w-reference",
+      "title": "orange-pi-zero-3w hardware reference",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/orange-pi-zero-3w.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "8b03151b33ff5b04a48a4252d5bb433cd3da32f9312bc2120fc628c57de704ed"
+    },
+    {
+      "id": "os-cix-p1-reference",
+      "title": "orange-pi-6-plus hardware reference",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/orange-pi-6-plus.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "77bc179d31aace29c9caf80564a66f67e05078848b36693a5127d70dd5091934"
+    },
+    {
+      "id": "os-a133-install-reference",
+      "title": "A133 factory boot and installation boundaries",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/ys-m33-a133-cable-install.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "ee7bc228df77f106460963caf7b11771d20e0be9665df148a49939bd46b04651"
+    },
+    {
+      "id": "os-a133-audio-driver",
+      "title": "A133 audio-driver bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/validation/2026-10-08-a133-audio-driver.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "d70dbfe5b9faad6bc516246583e74cdf90c7f5c85c2e0642e7fb5ce67b5c8968"
+    },
+    {
+      "id": "os-a133-audio-streams",
+      "title": "A133 audio-streams bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/validation/2026-10-08-a133-audio-streams.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "3fad6d7fc4f0836f8bd6be0914d235cc548a473f60e6a37b8179c6ad88b65662"
+    },
+    {
+      "id": "os-a133-usb-host",
+      "title": "A133 usb-host bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/validation/2026-10-08-a133-usb-host.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "f386fa16600f3bacc2756f4aed792a2c1ed6d8cd2ae8329dc93aac94d6fac390"
+    },
+    {
+      "id": "os-a133-sdio-probe",
+      "title": "A133 sdio-probe bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/validation/2026-10-08-a133-sdio-probe.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "fd762d0233b3c04f443a1017c43808f012aa17a3aecc59389a5ff5fa9ce1c09c"
+    },
+    {
+      "id": "os-a133-rtl8723ds-read",
+      "title": "A133 rtl8723ds-read bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/validation/2026-10-08-a133-rtl8723ds-read.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "64813f94f969c7da9cbbd1c084f2285b32cb473656f9ce0e024fe8399f084757"
+    },
+    {
+      "id": "os-a133-rtl8723ds-function",
+      "title": "A133 rtl8723ds-function bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/validation/2026-10-08-a133-rtl8723ds-function.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "47d43b57dac84e3b945964a8252d8bbc4e987e50db4bbf91e788a40e81ed83bd"
+    },
+    {
+      "id": "os-a133-uboot-ram",
+      "title": "A133 uboot-ram bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boards/validation/2026-10-08-a133-uboot-ram.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "8402db318aaaa86ac809304ee77ed8c415772f801a60f8d44600faa7fcf4e458"
+    },
+    {
+      "id": "os-cix-root-reference",
+      "title": "CIX P1 persistent-root applicability and bounded hardware checks",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/image/cix-p1.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "7d386c5c7655c1eac654199ca439d77c11221b77c826dab5c1888a72f6c5e55f"
+    },
+    {
+      "id": "os-cix-userland-reference",
+      "title": "CIX P1 reduced userland boundary",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/image/cix-p1-userland.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "110e14cf1b25e32415e578793dfd35e2d5c4deaea8fef3134281d27f04850751"
+    },
+    {
+      "id": "os-cix-uart-scope",
+      "title": "cix-uart bounded physical support source",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/cix-uart.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "6abfd1b09ded4c27b78599982e05b9fd4a05fb7fee97d0be498f1f909c5a2324"
+    },
+    {
+      "id": "os-cix-gpio-scope",
+      "title": "cix-gpio bounded physical support source",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/cix-gpio.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "93b2ce2499e38007066ac8d02c2797a71454cbcecbf06b06a8d43f2e9d1d5e9d"
+    },
+    {
+      "id": "os-cix-spcr-scope",
+      "title": "cix-spcr bounded physical support source",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/cix-spcr.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "3abd0c4340fd54642326d74dc964fe28b0a32fb8a19868c0acb1de26cb545c94"
+    },
+    {
+      "id": "os-cix-platform-scope",
+      "title": "cix-platform bounded physical support source",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/cix-platform.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "56e2f9bd812687209f166df4e42add15dd5ed33a663db4eaa432d9e2641f8129"
+    },
+    {
+      "id": "os-cix-vpu-scope",
+      "title": "cix-vpu bounded physical support source",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/cix-vpu.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "97ccfe5679c99e0fb719ae1ea15d27fc38793687ea234dbc88a341e591d3f8c2"
+    },
+    {
+      "id": "os-bcm2712-v3d-gl-scope",
+      "title": "bcm2712-v3d-gl bounded physical support source",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d-gl.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "7b022899ab840f60fd8039f314eba0439c3144da84bd746efe49b73fc3740aad"
+    },
+    {
+      "id": "os-a733-pvr-graphics-scope",
+      "title": "a733-pvr-graphics bounded physical support source",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-pvr-graphics.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "4a980090137386de31661c1e902fd8d55b345cc19594a87987477c1ee4c571ab"
+    },
+    {
+      "id": "os-cleanup-a733-gpu-fwboot",
+      "title": "a733-gpu-fwboot original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-gpu-fwboot.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "978e506d93823bb79b74d11e93a0d240774e14ba8f9446a8b084b169e97d621e"
+    },
+    {
+      "id": "os-cleanup-a733-gpu-fwcompute",
+      "title": "a733-gpu-fwcompute original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-gpu-fwcompute.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "cb082f2cea8b94a5435797415b07ab9607b5e9183a099534cf333a57e28c0677"
+    },
+    {
+      "id": "os-cleanup-a733-gpu-fwinfo",
+      "title": "a733-gpu-fwinfo original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-gpu-fwinfo.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "05f84796e105edae3c86bf93fd6582b3166d1e6fc4af741f5fcc569ee6b213f2"
+    },
+    {
+      "id": "os-cleanup-a733-gpu-fwmem",
+      "title": "a733-gpu-fwmem original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-gpu-fwmem.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "d2a06e5f7eaa139646275caefc842cd112778dc20119dcab95591d529efd0731"
+    },
+    {
+      "id": "os-cleanup-a733-gpu-fwprobe",
+      "title": "a733-gpu-fwprobe original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-gpu-fwprobe.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "aa7bbf836613c0c82cc1e3ab20ea011e51769cb7439346e4ef1b78a4f68ce633"
+    },
+    {
+      "id": "os-cleanup-a733-gpu-identification",
+      "title": "a733-gpu-identification original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-gpu-identification.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "2c6f368bcdf3cffdc9ba7fb1d6d93d87e43328af8da55bea7da50d3893873b9a"
+    },
+    {
+      "id": "os-cleanup-a733-npu-engine",
+      "title": "a733-npu-engine original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-npu-engine.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "5be9116362b741df3212465e25dfb56d65b64724c52bcb23fdf748373b877299"
+    },
+    {
+      "id": "os-cleanup-a733-npu-tiny-task",
+      "title": "a733-npu-tiny-task original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-npu-tiny-task.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "f836f8589a6b57fdf36cefad86b3d3df784132e1e964ef3498e46a4a448f5bd4"
+    },
+    {
+      "id": "os-cleanup-a733-preboot-snapshot",
+      "title": "a733-preboot-snapshot original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-preboot-snapshot.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "46a8b27fd87073f124857c23ec5d4b88994d1355dd9805cac5ffa46330ced51e"
+    },
+    {
+      "id": "os-cleanup-a733-pvr-execution",
+      "title": "a733-pvr-execution original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-pvr-execution.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "ad45a0c7e5faec10953baf04731392edfc079ccf91cab49e11dcd8207c864c7e"
+    },
+    {
+      "id": "os-cleanup-a733-pvr-graphics",
+      "title": "a733-pvr-graphics original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-pvr-graphics.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "4a980090137386de31661c1e902fd8d55b345cc19594a87987477c1ee4c571ab"
+    },
+    {
+      "id": "os-cleanup-a733-pvr-render",
+      "title": "a733-pvr-render original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-pvr-render.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "3e01949ac51a92c3873ab411ef0a717404a4de452877f33d4e302e6742f9ee71"
+    },
+    {
+      "id": "os-cleanup-a733-pvr-vm",
+      "title": "a733-pvr-vm original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-pvr-vm.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "158b02198b4510c9ad4f955e3333006e987f433d73f8cd75235cd8c5b1440183"
+    },
+    {
+      "id": "os-cleanup-bcm2712-display-dvp",
+      "title": "bcm2712-display-dvp original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-display-dvp.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "7e8668dba2ef5b573ec00a113bfbd30e759ba74d6c85e8e855034a4019a2c8c7"
+    },
+    {
+      "id": "os-cleanup-bcm2712-display-edid-probe",
+      "title": "bcm2712-display-edid-probe original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-display-edid-probe.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "430139aca2e83616892aea35a229e22c64df92daa1fa8cdb3904f67866edf679"
+    },
+    {
+      "id": "os-cleanup-bcm2712-display-hsm",
+      "title": "bcm2712-display-hsm original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-display-hsm.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "eb3b7abd035ab94bda767a1b083a727d2a64b3c201a193d7f2bd8e7ebae189cb"
+    },
+    {
+      "id": "os-cleanup-bcm2712-hd-observe-probe",
+      "title": "bcm2712-hd-observe-probe original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-hd-observe-probe.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "36ca628e46989b388bc884f30c60621670d1a6b60a0f64426a3efaf86b08e663"
+    },
+    {
+      "id": "os-cleanup-bcm2712-hpd-irq-probe",
+      "title": "bcm2712-hpd-irq-probe original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-hpd-irq-probe.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "f1ce625d657bd14e0dd64b2d27dd0dd930346eb248d975d006480b4fcb7d28b9"
+    },
+    {
+      "id": "os-cleanup-bcm2712-v3d-binrender-plan",
+      "title": "bcm2712-v3d-binrender-plan original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d-binrender-plan.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "4101fc173c2053991a15f3d1f113603aa51a65a69df19dd3de6283c784e5ce7b"
+    },
+    {
+      "id": "os-cleanup-bcm2712-v3d-csd",
+      "title": "bcm2712-v3d-csd original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d-csd.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "87fd063a6ebfb22c2f200cc424bdb1f6a6016c4c51847b8339a3e3461ee6db98"
+    },
+    {
+      "id": "os-cleanup-bcm2712-v3d-dma",
+      "title": "bcm2712-v3d-dma original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d-dma.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "e34cc05534b61ad28e60b57b83f5ecaa7ac7238d7f04ce22894ee5b4b291c42b"
+    },
+    {
+      "id": "os-cleanup-bcm2712-v3d-gl",
+      "title": "bcm2712-v3d-gl original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d-gl.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "7b022899ab840f60fd8039f314eba0439c3144da84bd746efe49b73fc3740aad"
+    },
+    {
+      "id": "os-cleanup-bcm2712-v3d-irq-plan",
+      "title": "bcm2712-v3d-irq-plan original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d-irq-plan.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "7993fa7a6efba8d0734591950fd8299887354aa0f7b9230fc5ffcb0792281865"
+    },
+    {
+      "id": "os-cleanup-bcm2712-v3d-render",
+      "title": "bcm2712-v3d-render original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d-render.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "92b7da0c39e1acbc980d7de89533334bdebd77991ac26c3f485c41f5b8fa7da7"
+    },
+    {
+      "id": "os-cleanup-bcm2712-v3d-sync",
+      "title": "bcm2712-v3d-sync original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d-sync.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "ce125faf6b1ba925aadc5fede35c8132f799547abe8884d9f6bfd586958c508a"
+    },
+    {
+      "id": "os-cleanup-bcm2712-v3d-takeover",
+      "title": "bcm2712-v3d-takeover original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d-takeover.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "36cbce5b7e093c94093be6ac95b6cb3d665a92d836aba04c55f2f0b73e3a6f2f"
+    },
+    {
+      "id": "os-cleanup-bcm2712-v3d-validation",
+      "title": "bcm2712-v3d-validation original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d-validation.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "233adcbf33b0faba71eb365673827553aea675476e03ce7be51830cf8ec3a0c9"
+    },
+    {
+      "id": "os-cleanup-bcm2712-v3d",
+      "title": "bcm2712-v3d original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-v3d.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "7c63c5fd7b4d26d788dcf25e9cb541db9868a106db12127e92aa4c8c06763c3e"
+    },
+    {
+      "id": "os-cleanup-bcmv3d-kms-snapshot",
+      "title": "bcmv3d-kms-snapshot original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcmv3d-kms-snapshot.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "e7686661d56599861a605fc679b380b988bc343bef92be52bfd77c3cae4f325f"
+    },
+    {
+      "id": "os-cleanup-cix-gpio",
+      "title": "cix-gpio original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/cix-gpio.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "93b2ce2499e38007066ac8d02c2797a71454cbcecbf06b06a8d43f2e9d1d5e9d"
+    },
+    {
+      "id": "os-cleanup-cix-platform",
+      "title": "cix-platform original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/cix-platform.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "56e2f9bd812687209f166df4e42add15dd5ed33a663db4eaa432d9e2641f8129"
+    },
+    {
+      "id": "os-cleanup-cix-uart",
+      "title": "cix-uart original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/cix-uart.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "6abfd1b09ded4c27b78599982e05b9fd4a05fb7fee97d0be498f1f909c5a2324"
+    },
+    {
+      "id": "os-cleanup-cix-vpu",
+      "title": "cix-vpu original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/cix-vpu.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "97ccfe5679c99e0fb719ae1ea15d27fc38793687ea234dbc88a341e591d3f8c2"
+    },
+    {
+      "id": "os-cleanup-bcm2712-display-contract",
+      "title": "bcm2712-display-contract original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcm2712-display-contract.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "aca616ac16ccd3e4edf18550accbdadc78b449e8c323920d1c6e3f406a8ed49b"
+    },
+    {
+      "id": "os-cleanup-usb-control-recovery",
+      "title": "usb-control-recovery original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/usb-control-recovery.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "72e92a5bfbe45a4ae40340191a0ac59e5124dcb1b438193c403fd2957413e827"
+    },
+    {
+      "id": "os-cleanup-bwfm-kv",
+      "title": "bwfm-kv original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bwfm-kv.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "22e44ce7456cb49cd2f5401578441f8721d89e5cce7f90f575f88059599447c8"
+    },
+    {
+      "id": "os-cleanup-thermal-fan",
+      "title": "thermal-fan original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/thermal-fan.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "add4f4df4607ccfe5f7d2fdb0d8545d62f898e0b369ffe58e7d1dd6f2cd8db4f"
+    },
+    {
+      "id": "os-cleanup-bwfm-link-events",
+      "title": "bwfm-link-events original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bwfm-link-events.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "b21efef11a32acf38f83178b6e760fc982fb9326ff8e559e09909f094e0b5aad"
+    },
+    {
+      "id": "os-cleanup-bwfm-scan",
+      "title": "bwfm-scan original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bwfm-scan.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "d7c2852cd86fc0b56f6a10207655278282b00de254c0fad077aa6953f37133b8"
+    },
+    {
+      "id": "os-cleanup-aicwf-vht",
+      "title": "aicwf-vht original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/aicwf-vht.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "939997045e2ff4d5da91cb239a2cbdd5a7053f90721ae0c4c94a05308d12ba08"
+    },
+    {
+      "id": "os-cleanup-aicwf-kv",
+      "title": "aicwf-kv original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/aicwf-kv.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "0550bb90df137946819e6678ca95da1a5452ad22794856c38d49f5ba26c908e6"
+    },
+    {
+      "id": "os-cleanup-rge-wire-probe",
+      "title": "rge-wire-probe original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/rge-wire-probe.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "8ae26539c23bed92aeb3de94b3eee8f0c6fa9ba2d0cddf6bdf45f1f144296536"
+    },
+    {
+      "id": "os-cleanup-bcmmbox-transactions",
+      "title": "bcmmbox-transactions original contract and bounded evidence",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/bcmmbox-transactions.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "ecd245c1068ac1d4b157d22622fdd19349ae6927fde031555f6ee5f5e2cca958"
+    },
+    {
+      "id": "os-a733-fixed-nn-acceptance",
+      "title": "A733 immutable fixed INT8 NN physical acceptance",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/ember/boot/a733-npu-tiny-task-acceptance.json",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "1a42916e865d6e5c759918422cc7c1bbc6ee391bf24d33baef0fa079adfd2114"
+    },
+    {
+      "id": "os-accessory-boundaries",
+      "title": "OS accessory and protocol physical limits",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4a4c98bb99999836103d3fe63fd6f4c98013f0c5/README.ember.md",
+      "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
+      "reviewed_at": "2026-10-22",
+      "sha256": "a2913b41ffba4d9cdea5d9936d4b87a7da1099f3af60637cb182359674f32d1b"
     }
   ]
 }

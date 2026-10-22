@@ -19,27 +19,27 @@
     "os-cix-platform",
     "os-cix-vpu",
     "os-cix-vpu-attachment",
-    "vendor-cix-opi6plus-v11-schematic"
+    "vendor-cix-opi6plus-v11-schematic",
+    "os-cix-p1-reference",
+    "os-cix-root-reference"
   ],
   "capabilities": [
     {
       "id": "debug-console",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "Observed DEBUG UART2 console at 115200 8N1 uses an opt-in RAM SPCR correction from stock UART3. Exact firmware-table matching applies; connector pin numbers and voltage are not established here.",
+      "scope": "DEBUG UART2 at 115200 8N1 uses exact SPCR correction or gated kernel fallback when SPCR is absent; electrical contact mapping remains unknown.",
       "source_refs": [
-        "os-cix-p1",
-        "os-cix-spcr"
+        "os-cix-p1-reference"
       ]
     },
     {
       "id": "vpu",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "CIXH3010 describes two 64 KiB windows, GSI 358 and _CCA=0 on the observed firmware. Clock67/identity diagnostics and a 256-owner CPU preparation fixture pass. A firmware trial stops before SWITCHED_IN/PONG and retains exposed owners. No usable codec is established.",
+      "scope": "One-core firmware bootstrap reaches SWITCHED_IN and PONG after bounded allocations. Exposed owners remain held and IRQ masked; no codec frame or independent decode is accepted.",
       "source_refs": [
-        "os-cix-vpu",
-        "os-cix-platform"
+        "os-cix-p1-reference"
       ]
     },
     {
@@ -49,6 +49,34 @@
       "scope": "Short-button shutdown reaches native powerd and filesystem unmount in the cited scenario. Restart by short press after shutdown remains unresolved. Hardware wake, removal of power and OS shutdown are separate contracts.",
       "source_refs": [
         "os-cix-p1"
+      ]
+    },
+    {
+      "id": "sd-root",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "Reduced persistent FFS root passes scoped cold/warm default boots and data retention; full base, NVMe and unclean power-loss recovery unqualified.",
+      "source_refs": [
+        "os-cix-root-reference",
+        "os-cix-p1-reference"
+      ]
+    },
+    {
+      "id": "ethernet",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "Two RTL8126 ports pass 5GBASE-T and bounded raw frames including jumbo payloads; IP/TCP, throughput and sustained operation unqualified.",
+      "source_refs": [
+        "os-cix-p1-reference"
+      ]
+    },
+    {
+      "id": "wifi",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "RTL8822CE legacy WPA2/CCMP and scoped scan/reconnect/data recovery; no HT/VHT, calibrated dBm or endurance acceptance.",
+      "source_refs": [
+        "os-cix-p1-reference"
       ]
     }
   ]

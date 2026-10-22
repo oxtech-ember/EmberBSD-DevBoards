@@ -3,8 +3,8 @@
 Start with [the Zero 3W profile](../boards/a733-zero3w/README.md).
 Boot firmware, power management, clocks, resets, DMA and accelerator firmware are distinct dependencies.
 
-The [native accelerator providers](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/boot/a733-power-domains.md)
-and [GPU execution path](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/boot/a733-pvr-execution.md)
+The [native accelerator providers](https://github.com/oxtech-ember/EmberBSD/blob/main/sys/arch/arm/sunxi/docs/a733-power-domains.md)
+and [GPU execution path](https://github.com/oxtech-ember/EmberBSD/blob/main/sys/arch/arm/sunxi/docs/a733-pvr-execution.md)
 are implementation entry points. A provider attaching does not establish successful command execution.
 [Native Vulkan Compute](https://github.com/oxtech-ember/EmberBSD/blob/58a0ae471cf2162f6c4add28764761f868f65a3f/ember/boot/a733-pvr-execution.md#physical-compute-boundary) has bounded hardware acceptance on Zero 3W.
 [Offscreen graphics and four KWin/Zink frames](https://github.com/oxtech-ember/EmberBSD/blob/8735c9333e50d62a33a64a99b39e1af4f0dce3c1/ember/boards/orange-pi-zero-3w.md#accelerator-acceptance-2026-10-20)

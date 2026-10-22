@@ -1,0 +1,39 @@
+{
+  "format_version": 1,
+  "id": "bcm2710-zero2w",
+  "kind": "sbc",
+  "vendor_model": "Raspberry Pi Zero 2 W",
+  "soc": "bcm2710a1",
+  "board_revision": null,
+  "reviewed_at": "2026-10-22",
+  "carrier_ids": [],
+  "documents": {
+    "overview": "boards/bcm2710-zero2w/README.md",
+    "boot": "boards/bcm2710-zero2w/boot.md",
+    "interfaces": "boards/bcm2710-zero2w/interfaces.md",
+    "design": "boards/bcm2710-zero2w/design.md"
+  },
+  "source_refs": [
+    "os-zero2w-reference"
+  ],
+  "capabilities": [
+    {
+      "id": "boot",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "Native firmware/device-tree microSD boot, serial and all cores have inherited physical results.",
+      "source_refs": [
+        "os-zero2w-reference"
+      ]
+    },
+    {
+      "id": "wifi",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "2.4 GHz connectivity is recorded; large transfers stall.",
+      "source_refs": [
+        "os-zero2w-reference"
+      ]
+    }
+  ]
+}

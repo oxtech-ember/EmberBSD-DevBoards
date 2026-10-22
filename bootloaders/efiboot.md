@@ -14,7 +14,7 @@ Current EmberBSD loaders include the ASCII logo. `boot.cfg` selects the menu.
 If the logo is absent, check the installed loader before changing the kernel.
 Keep normal boot, one checked recovery entry and a command prompt in the regular menu.
 Keep experimental entries in a separate diagnostic profile.
-See the [OS loader identity guide](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/boot/installer-branding.md).
+See the [OS loader identity guide](https://github.com/oxtech-ember/EmberBSD/blob/main/usr.sbin/sysinst/docs/installer-branding.md).
 
 ## Match the artifact to the selected entry
 

@@ -12,5 +12,7 @@ Add it to `catalog.json`. Replace inherited claims with sourced facts or explici
 - Configuration: files, source pins, hashes, applicability, activation effect and rollback route.
 - Evidence: exact specimen class, inputs, workload, observation, measurements, duration and exclusions.
 
-Keep `board.json` brief. Detailed support and executable checks stay in the OS or Ports owner.
+Keep `board.json` brief. Detailed current hardware support belongs in this profile.
+Keep software mechanisms, API contracts, build commands and executable checks beside their implementation.
+Link immutable source evidence with a revision and hash. Consolidate conclusions without a test diary.
 Do not use this worksheet as a completed acceptance record.

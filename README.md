@@ -9,6 +9,9 @@ The catalog is an index. Each board profile names its sources and the limits of 
 
 | Reference platform | Useful starting point | Read first |
 |---|---|---|
+| BCM2710A1 SBC, vendor model `Zero 2 W` | Compact native-firmware boot and wireless research | [Profile](boards/bcm2710-zero2w/README.md) |
+| Allwinner A733 SBC, vendor model `Zero 4` | Gigabit Ethernet, thermal and wireless integration | [Profile](boards/a733-zero4/README.md) |
+| ESP32-S31 development board | Small-memory RISC-V flash boot and radio integration | [Profile](boards/esp32-s31/README.md) |
 | Allwinner A133 wall tablet, vendor model `YS-M33` | Closed-enclosure USB installation and eMMC boot research | [Profile](boards/ys-m33-a133/README.md) |
 | BCM2712 module, vendor model `CM5` | Custom carrier, eMMC provisioning, thermal design and graphics research | [Profile](boards/bcm2712-cm5/README.md) |
 | BCM2712 SBC, vendor model `RPi5` | Peripheral prototypes and a comparison platform for module designs | [Profile](boards/bcm2712-rpi5/README.md) |
@@ -52,19 +55,22 @@ A shared SoC or UEFI firmware does not establish the same loader path.
 
 For a new design, use [From a board to your device](docs/device-design.md).
 For a new record, use [CONTRIBUTING](CONTRIBUTING.md) and [the data contract](docs/data-model.md).
-Run `ruby tools/validate.rb` after edits. Reading the catalog requires no tool installation.
+Run `ruby tools/validate.rb` and `ruby tools/check-validator.rb` after edits. Reading the catalog requires no tool installation.
 
 ## Ownership and scope
 
 | Repository | Owns |
 |---|---|
-| DevBoards | Hardware references, integration knowledge, configuration applicability and research observations |
+| DevBoards | Canonical hardware, SoC and bootloader references, installation applicability and current scoped support |
 | [EmberBSD](https://github.com/oxtech-ember/EmberBSD) | Kernel drivers, device trees, firmware adaptation, builders and executable OS checks |
+| [SDK](https://github.com/oxtech-ember/EmberBSD-SDK) | Shared host orchestration, sysroot assembly and release verification/publication |
 | [Ports](https://github.com/oxtech-ember/EmberBSD-Ports) | Shared software recipes, dependencies and portability patches |
 | [Examples](https://github.com/oxtech-ember/EmberBSD-Examples) | Standalone applications and reproducible demonstrations |
 | [Development skills](https://github.com/oxtech-ember/Ember-Agent-Skills) | Assistant workflows for developing EmberBSD components |
 
-Link to the implementation owner. Do not maintain a second driver, build procedure or support matrix here.
+Keep the current hardware support boundary here, with sources and explicit limits.
+Link to the implementation owner for drivers, software APIs, build commands and executable checks.
+Do not duplicate those software contracts here or maintain a second hardware support matrix in the OS.
 Pinned sources explain a claim. Current owner documentation shows subsequent changes.
 Keep reusable findings and their applicability here. Do not track an individual lab device's current state.
 Installed packages, recovery progress, deployment hashes and pending lab actions belong in the lab's own records.

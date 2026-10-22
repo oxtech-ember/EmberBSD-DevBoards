@@ -3,7 +3,11 @@
 First identify the board, module, carrier, revision and intended device function.
 Check existing IDs and the implementation owner's documentation.
 Add facts at the owning [knowledge layer](README.md#find-information). A shared SoC does not establish shared wiring.
-Keep a loader contract in `bootloaders/`; link each applicable board's actual boot chain to it.
+Keep shared hardware loader requirements in `bootloaders/`; link each applicable board's actual boot chain to them.
+DevBoards owns canonical hardware, SoC, bootloader and installation applicability, including current scoped support.
+The implementing repository owns software API contracts, build commands and executable checks.
+Consolidate new evidence into the existing profile. Remove superseded claims and test chronology.
+Preserve source revisions and hashes; a source snapshot is not a new hardware test.
 
 1. Copy the relevant [template](templates/board/README.md).
 2. Add source records with URLs, dates, revisions and available hashes.
@@ -11,7 +15,7 @@ Keep a loader contract in `bootloaders/`; link each applicable board's actual bo
 4. Describe boot stages, controls, power requirements, driver dependencies and design transfer limits.
 5. Add a configuration manifest for each reusable configuration.
 6. Record checks at their actual level. Keep source, build, VM and physical results separate.
-7. Run `ruby tools/validate.rb`. Inspect the rendered Markdown and changed source references.
+7. Run `ruby tools/validate.rb` and `ruby tools/check-validator.rb`. Inspect the rendered Markdown and changed source references.
 8. Submit through the repository's configured contribution process. Include the changed facts, evidence and remaining unknowns.
 
 For driver or package changes, follow the current rules of EmberBSD or Ports.

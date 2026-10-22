@@ -5,7 +5,7 @@
   "vendor_model": "Orange Pi Zero 3W",
   "soc": "allwinner-a733",
   "board_revision": null,
-  "reviewed_at": "2026-10-21",
+  "reviewed_at": "2026-10-22",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/a733-zero3w/README.md",
@@ -17,7 +17,8 @@
     "os-zero3w",
     "vendor-zero3w-manual",
     "vendor-zero3w-schematic",
-    "os-a733-console-dts"
+    "os-a733-console-dts",
+    "os-zero3w-reference"
   ],
   "capabilities": [
     {
@@ -42,9 +43,9 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "AIC8800D80 needs vendor firmware. Nonzero initial IGTK IPN is unsupported in the cited snapshot.",
+      "scope": "WPA2 on both bands and VHT80; separate 5 GHz SAE/H2E required-PMF checks. Nonzero initial IGTK IPN and sustained 2.4 GHz SAE/VHT80 SAE remain unsupported or unaccepted.",
       "source_refs": [
-        "os-zero3w"
+        "os-zero3w-reference"
       ]
     },
     {

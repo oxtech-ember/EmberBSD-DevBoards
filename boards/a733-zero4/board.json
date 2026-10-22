@@ -1,0 +1,66 @@
+{
+  "format_version": 1,
+  "id": "a733-zero4",
+  "kind": "sbc",
+  "vendor_model": "Orange Pi Zero 4",
+  "soc": "allwinner-a733",
+  "board_revision": null,
+  "reviewed_at": "2026-10-22",
+  "carrier_ids": [],
+  "documents": {
+    "overview": "boards/a733-zero4/README.md",
+    "boot": "boards/a733-zero4/boot.md",
+    "interfaces": "boards/a733-zero4/interfaces.md",
+    "design": "boards/a733-zero4/design.md"
+  },
+  "source_refs": [
+    "os-zero4-reference"
+  ],
+  "capabilities": [
+    {
+      "id": "boot",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "Vendor firmware/device-tree microSD boot and eight cores; SDR104 at 150 MHz.",
+      "source_refs": [
+        "os-zero4-reference"
+      ]
+    },
+    {
+      "id": "ethernet",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "Gigabit YT8531 path with measured board delays.",
+      "source_refs": [
+        "os-zero4-reference"
+      ]
+    },
+    {
+      "id": "wifi",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "WPA2/CCMP on both bands with 802.11n; requires vendor firmware.",
+      "source_refs": [
+        "os-zero4-reference"
+      ]
+    },
+    {
+      "id": "usb",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "USB-C high-speed storage tested in one orientation; SuperSpeed and host-port peripherals unqualified.",
+      "source_refs": [
+        "os-zero4-reference"
+      ]
+    },
+    {
+      "id": "accelerators",
+      "hardware": "present",
+      "emberbsd": "unknown",
+      "scope": "Software provider checks do not establish GPU/NPU operation on this board.",
+      "source_refs": [
+        "os-zero4-reference"
+      ]
+    }
+  ]
+}

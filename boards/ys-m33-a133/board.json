@@ -16,7 +16,11 @@
   "source_refs": [
     "os-ys-m33-board",
     "os-ys-m33-cable-install",
-    "os-ys-m33-cable-receipt"
+    "os-ys-m33-cable-receipt",
+    "os-a133-audio-streams",
+    "os-ys-m33-reference",
+    "os-a133-usb-host",
+    "os-a133-rtl8723ds-function"
   ],
   "capabilities": [
     {
@@ -37,6 +41,42 @@
       "source_refs": [
         "os-ys-m33-board",
         "os-ys-m33-cable-receipt"
+      ]
+    },
+    {
+      "id": "audio",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "Bounded speaker playback and MIC1 capture on the reference sample; processed phrase intelligibility does not qualify clean startup, general speech quality or sustained duplex.",
+      "source_refs": [
+        "os-a133-audio-streams"
+      ]
+    },
+    {
+      "id": "touch",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "GT9271 press/drag/release and landscape directions on the reference sample; one polled pointer, no multitouch or suspend/resume acceptance.",
+      "source_refs": [
+        "os-ys-m33-reference"
+      ]
+    },
+    {
+      "id": "usb-a",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "Powered four-port hub and one CDC serial device survive ordinary eMMC reboot; other classes and sustained transfers unqualified.",
+      "source_refs": [
+        "os-a133-usb-host"
+      ]
+    },
+    {
+      "id": "wifi",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "RTL8723DS discovery and bounded function-ready/restore only; no radio initialization or network interface.",
+      "source_refs": [
+        "os-a133-rtl8723ds-function"
       ]
     }
   ]

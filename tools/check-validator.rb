@@ -22,9 +22,10 @@ cases = {
 abort 'Baseline does not validate' unless CatalogValidator.new(root).run.empty?
 cases.each do |name, (path, mutation)|
   Dir.mktmpdir('devboards-check-') do |copy|
-    %w[boards carriers socs interfaces docs schemas templates tools README.md CONTRIBUTING.md catalog.json sources.json].each do |entry|
+    %w[boards carriers socs bootloaders interfaces docs schemas templates tools README.md CONTRIBUTING.md catalog.json sources.json].each do |entry|
       FileUtils.cp_r(File.join(root, entry), copy)
     end
+    abort "Invalid baseline copy for #{name}" unless CatalogValidator.new(copy).run.empty?
     file = File.join(copy, path)
     object = JSON.parse(File.read(file))
     mutation.call(object)
