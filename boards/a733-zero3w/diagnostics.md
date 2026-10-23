@@ -5,7 +5,9 @@ The observed board has 4 GiB RAM; its PCB revision was not recorded. Source reco
 
 ## Clock and power admission
 
-The normal path observes firmware state. CORE ON policy with OFF status was already visible before final ARISC startup and kernel entry.
+The normal DTB requests automatic GPU startup at 600 MHz after the root mount, before init(8).
+It is not an observe-only recovery configuration. Use the separate [diagnostic boot path](boot.md#diagnostic-boot-selection).
+Earlier observe-only checks found CORE ON policy with OFF status before final ARISC startup and kernel entry.
 This does not identify a writer or a completed OFF transition. The configured default policy is unknown.
 Sampled gate masks, MISR levels and PWCR 0x101 do not justify overriding readiness or DEVREQEN.
 The dedicated PLL path reports 600 MHz core, 200 MHz bus and BVNC 36.56.104.183 after strict ON/Q readiness.
@@ -30,6 +32,7 @@ Source IDs in [sources.json](../../sources.json): `os-cleanup-a733-gpu-identific
 `os-cleanup-a733-gpu-fwinfo`, `os-cleanup-a733-gpu-fwmem`, `os-cleanup-a733-gpu-fwboot`, `os-cleanup-a733-gpu-fwprobe`,
 `os-cleanup-a733-gpu-fwcompute`, `os-cleanup-a733-pvr-render`, `os-cleanup-a733-pvr-vm`, `os-cleanup-a733-pvr-execution`,
 `os-cleanup-a733-pvr-graphics`, `os-cleanup-a733-npu-engine` and `os-cleanup-a733-npu-tiny-task`.
+The current automatic startup policy is defined by `os-a733-gpu-native-startup`.
 
 The [immutable fixed-NN acceptance record](data/fixed-nn-acceptance.json) retains its original schema and bytes.
 Source `os-a733-fixed-nn-acceptance` in [sources.json](../../sources.json) records its OS revision and SHA256.

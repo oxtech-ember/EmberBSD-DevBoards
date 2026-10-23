@@ -15,6 +15,20 @@ The OS record reports no power button.
 Its accepted stock-fan power-off scenario uses `shutdown -p now`; plain `halt` leaves power applied.
 Fan speed control and a full power-off are different operations.
 
+## Diagnostic boot selection
+
+The normal Zero 3W DTB requests GPU startup at 600 MHz after the root mount, before init(8).
+Single-user mode cannot prevent this startup. A spare kernel that uses the normal DTB is not an observe-only recovery path.
+For diagnosis, use a separate DTB that selects observe-only mode for both GPU and display.
+Select that DTB through an independent loader entry before kernel execution.
+Verify access to that entry through the actual loader before updating the normal bundle.
+Check that a failed diagnostic entry cannot silently continue into normal boot.
+A mode variable or a saved DTB file alone does not establish an independent recovery route.
+
+The [GPU startup contract](https://github.com/oxtech-ember/EmberBSD/blob/60058290e0dfc8813f79e3c675532addfb292935/sys/arch/arm/sunxi/docs/a733-gpu-identification.md#native-startup)
+defines the current source behavior. Source review does not establish successful automatic startup or physical recovery on a board.
+Source ID: `os-a733-gpu-native-startup` in [sources.json](../../sources.json).
+
 ## UART0 console, V1.2
 
 Use physical pin numbers on the 40-pin header, not GPIO numbers.

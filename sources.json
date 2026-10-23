@@ -274,6 +274,14 @@
       "sha256": "a2f0bb96e67df4beb729266a7f3344dea8c486d7ad1a7874876f3b6ed2c6c851"
     },
     {
+      "id": "os-a733-gpu-native-startup",
+      "title": "EmberBSD A733 native GPU startup before init",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/60058290e0dfc8813f79e3c675532addfb292935/sys/arch/arm/sunxi/docs/a733-gpu-identification.md",
+      "revision": "60058290e0dfc8813f79e3c675532addfb292935",
+      "reviewed_at": "2026-10-23",
+      "sha256": "083e854be870fdaa35d7e2fe77b4286919f880093e3c60e15e0e14defb429afd"
+    },
+    {
       "id": "os-a733-accelerator-boundary",
       "title": "EmberBSD bounded A733 GPU and display acceptance",
       "url": "https://github.com/oxtech-ember/EmberBSD/blob/8735c9333e50d62a33a64a99b39e1af4f0dce3c1/ember/boards/orange-pi-zero-3w.md",
