@@ -2,6 +2,14 @@
   "format_version": 1,
   "boards": [
     {
+      "id": "hamgeek-plutosdr-nano",
+      "aliases": [
+        "pluto-nano",
+        "hamgeek-pluto-nano"
+      ],
+      "profile": "boards/hamgeek-plutosdr-nano/board.json"
+    },
+    {
       "id": "ys-m33-a133",
       "aliases": [
         "ys-m33"
@@ -72,6 +80,10 @@
     }
   ],
   "socs": [
+    {
+      "id": "xilinx-zynq-7000-z7010",
+      "document": "socs/xilinx-zynq-7000-z7010.md"
+    },
     {
       "id": "allwinner-a133",
       "document": "socs/allwinner-a133.md"

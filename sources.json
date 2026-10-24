@@ -2,6 +2,78 @@
   "format_version": 1,
   "sources": [
     {
+      "id": "hamgeek-plutosdr-nano-product",
+      "title": "HamGeek Zynq7010 and AD9363 product page with PlutoSDR Nano variant",
+      "url": "https://www.hgeek.com/products/hamgeek-70mhz-6ghz-zynq7010-ad9363-sdr-software-defined-radio-development-board-for-pluto-sdr-matlab",
+      "revision": null,
+      "reviewed_at": "2026-10-24",
+      "sha256": null
+    },
+    {
+      "id": "hamgeek-plutosdr-nano-quickstart",
+      "title": "HamGeek PLUTOSDR NANO Quick Start Guide",
+      "url": "https://down.hgeek.com/download/99314/development-Board-Quick-Start-Guide.pdf",
+      "revision": null,
+      "reviewed_at": "2026-10-24",
+      "sha256": null
+    },
+    {
+      "id": "nano-measured-fpga-pinout",
+      "title": "Independent measured FPGA pin map for HamGeek PlutoSDR Nano",
+      "url": "https://github.com/k-iseri/pluto-fw-isdbt/blob/be1dfec5df616de27737ecd31530ab84eea882aa/docs/pinout-nano.md",
+      "revision": "be1dfec5df616de27737ecd31530ab84eea882aa",
+      "reviewed_at": "2026-10-24",
+      "sha256": "9bc18cfaa8d7bee9321a28d7864a3e4258feff3a79c9c0eea5d9d7bff0d1e0f3"
+    },
+    {
+      "id": "tezuka-nano-uboot-report",
+      "title": "Community report with a Tezuka Nano U-Boot environment dump",
+      "url": "https://github.com/F5OEO/tezuka_fw/issues/227",
+      "revision": null,
+      "reviewed_at": "2026-10-24",
+      "sha256": null
+    },
+    {
+      "id": "tezuka-nano-dtsi",
+      "title": "Tezuka community device tree for a PlutoSDR Nano",
+      "url": "https://github.com/F5OEO/tezuka_fw/blob/a304a1f7ecba49dc4cd9d57a7935ec52504c7334/board/tezuka/nano/kernel-dts/xilinx/nano.dtsi",
+      "revision": "a304a1f7ecba49dc4cd9d57a7935ec52504c7334",
+      "reviewed_at": "2026-10-24",
+      "sha256": "250add7ba5de6d70bd114ed203632932bc0ec5e050d5a02158030409ab639e46"
+    },
+    {
+      "id": "tezuka-nano-coldboot-report",
+      "title": "Community report on Nano FPGA cold-boot behavior",
+      "url": "https://github.com/F5OEO/tezuka_fw/discussions/229",
+      "revision": null,
+      "reviewed_at": "2026-10-24",
+      "sha256": null
+    },
+    {
+      "id": "adi-pluto-revb-dts",
+      "title": "Analog Devices ADALM-PLUTO Rev.B device tree",
+      "url": "https://github.com/analogdevicesinc/linux/blob/45e0a21afaf6833985da9d424bc2307b84eb4f38/arch/arm/boot/dts/xilinx/zynq-pluto-sdr-revb.dts",
+      "revision": "45e0a21afaf6833985da9d424bc2307b84eb4f38",
+      "reviewed_at": "2026-10-24",
+      "sha256": "a06c1d869e35fd44396b3dbb9e027a88e0168564c47a57a82595d7ecbbc4d4c7"
+    },
+    {
+      "id": "adi-ad9363-datasheet",
+      "title": "Analog Devices AD9363 datasheet",
+      "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/AD9363.pdf",
+      "revision": null,
+      "reviewed_at": "2026-10-24",
+      "sha256": null
+    },
+    {
+      "id": "amd-zynq-7000-ds190",
+      "title": "AMD Zynq-7000 SoC overview DS190",
+      "url": "https://docs.amd.com/api/khub/documents/juMnxca71Tf2gfjmNyjM8A/content",
+      "revision": null,
+      "reviewed_at": "2026-10-24",
+      "sha256": null
+    },
+    {
       "id": "os-ys-m33-board",
       "title": "EmberBSD YS-M33 / Allwinner A133 board record",
       "url": "https://github.com/oxtech-ember/EmberBSD/blob/12c35f22fd899b4d697e20986521226efaf6d8cb/ember/boards/ys-m33-a133.md",
@@ -896,6 +968,30 @@
       "revision": "4a4c98bb99999836103d3fe63fd6f4c98013f0c5",
       "reviewed_at": "2026-10-22",
       "sha256": "a2913b41ffba4d9cdea5d9936d4b87a7da1099f3af60637cb182359674f32d1b"
+    },
+    {
+      "id": "ember-pluto-rx-scenario",
+      "title": "EmberBSD Nano finite RX implementation and physical scenario",
+      "url": "https://github.com/oxtech-ember/EmberBSD/tree/10d9f2d024ab1a333aee740a083ccf4f7fa6ce1b/ember/tools/tests/pluto-nano",
+      "revision": "10d9f2d024ab1a333aee740a083ccf4f7fa6ce1b",
+      "reviewed_at": "2026-10-24",
+      "sha256": null
+    },
+    {
+      "id": "adi-pluto-uboot-fit",
+      "title": "ADI Pluto U-Boot RAM FIT handoff",
+      "url": "https://github.com/analogdevicesinc/u-boot-xlnx/blob/90401ce9ce029e5563f4dface63914d42badf5bc/include/configs/zynq-common.h",
+      "revision": "90401ce9ce029e5563f4dface63914d42badf5bc",
+      "reviewed_at": "2026-10-24",
+      "sha256": "96a07f57804b3a43051cfd4b596fafc8f77bc78400224aa94e7f9a4da81779ed"
+    },
+    {
+      "id": "adi-pluto-uboot-arm-handoff",
+      "title": "ADI U-Boot ARM bootm Linux register handoff",
+      "url": "https://github.com/analogdevicesinc/u-boot-xlnx/blob/90401ce9ce029e5563f4dface63914d42badf5bc/arch/arm/lib/bootm.c",
+      "revision": "90401ce9ce029e5563f4dface63914d42badf5bc",
+      "reviewed_at": "2026-10-24",
+      "sha256": "8c0cb6de2f793d7337ed049732ff15f5da1a28a233849fe11e493277fb31a3bf"
     }
   ]
 }

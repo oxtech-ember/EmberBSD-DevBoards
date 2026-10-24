@@ -1,0 +1,104 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "nano-ram-rx",
+  "target_id": "hamgeek-plutosdr-nano",
+  "recorded_at": "2026-10-24",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Observed 512 MiB RAM and 32 MiB QSPI variant; CH340 USB-C UART"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD PLUTO_NANO_RX kernel",
+      "revision": "10d9f2d024ab1a333aee740a083ccf4f7fa6ce1b",
+      "sha256": "e21464656bf251c097e0640a2551cca15c8b3bfd35e0a97fae3ea1ae556b034f",
+      "reference": null
+    },
+    {
+      "name": "Scanner source, unchanged production code used in the physical sweep",
+      "revision": "b7b6781d459b8d312957e1f9bcaf3f2fd506b880",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Original device FPGA bitstream",
+      "revision": null,
+      "sha256": "cfc235406ddcd926a353559c39351e2fe72ad42974f6163bb0248e8373e55f8b",
+      "reference": null
+    },
+    {
+      "name": "Live-derived RX FDT",
+      "revision": null,
+      "sha256": "37fb053a050c9a445aeda2cb2e29b1875074a9a088e1f1ad80875501616146fd",
+      "reference": null
+    },
+    {
+      "name": "Accepted RAM FIT",
+      "revision": null,
+      "sha256": "9d018c74772be1253156e4a919fef55b8ec4bf8bb86c819181ecc5c86c89b4a8",
+      "reference": null
+    },
+    {
+      "name": "Full sweep CSV",
+      "revision": null,
+      "sha256": "2bb75bbe0a2f3a8c593e8a6332b64f8f9c950b19aa5410b509f36c7b78bd270f",
+      "reference": null
+    }
+  ],
+  "scenario": "RAM DFU loads the matched original FPGA, FDT, kernel and FFS root. Run finite RX1 captures at both band edges, then the default scanner sweep and a shifted 935\u2013960 MHz repeat. Read fresh TX hardware status. Reset to original Linux and compare a 947 MHz center capture through local IIO at 10 MSPS and 8 MHz bandwidth.",
+  "expected": "Finite captures and all 1160 ordered centers complete without error; fresh TX channel bits stay clear and TX LO stays inhibited. Reset returns to original firmware.",
+  "observed": "All finite and sweep commands returned zero. The full sweep produced 5416 CSV rows across every expected center. The shifted repeat found activity around 942, 947.8 and 955.6 MHz. TX enable bits 0xc0 were clear and tx_synth_pd was 0x1f. Reset returned to original Linux. A 4096-complex-sample IIO capture showed the same 947.8 MHz activity; this was a sequential comparison, not a calibrated measurement.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "tune-centers",
+      "value": 1160,
+      "unit": "centers"
+    },
+    {
+      "name": "first-center",
+      "value": 325000000,
+      "unit": "Hz"
+    },
+    {
+      "name": "last-center",
+      "value": 3800000000,
+      "unit": "Hz"
+    },
+    {
+      "name": "sample-rate",
+      "value": 10000000,
+      "unit": "samples/s"
+    },
+    {
+      "name": "rf-bandwidth",
+      "value": 8000000,
+      "unit": "Hz"
+    },
+    {
+      "name": "samples-per-center",
+      "value": 4096,
+      "unit": "complex samples"
+    }
+  ],
+  "limits": [
+    "One physical variant; PCB revision and exact FPGA package marking are unknown.",
+    "Vendor U-Boot prefix matches ADI 90401ce9ce, but its local binary modifications are not qualified.",
+    "Private device-specific firmware/FDT and CSV are not distributed; hashes identify the bounded experiment, not an installable release.",
+    "The first scanner binary preceded its source commit; production source remained unchanged. A clean-commit rebuild is a separate artifact.",
+    "Exact sweep duration was not instrumented. No sustained reliability, RF calibration, antenna coverage, frequency accuracy or signal classification is established.",
+    "No continuous streaming, USB networking or persistent QSPI installation under EmberBSD was checked.",
+    "Reset after an ordinary completed sweep worked; recovery after deliberately failed bootstrap with retained DMA ownership was not physically checked.",
+    "Local GCC16 experimental build; not a qualified SDK release."
+  ],
+  "source_refs": [
+    "ember-pluto-rx-scenario",
+    "adi-pluto-uboot-fit",
+    "hamgeek-plutosdr-nano-quickstart"
+  ]
+}

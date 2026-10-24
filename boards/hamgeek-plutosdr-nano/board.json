@@ -1,0 +1,65 @@
+{
+  "format_version": 1,
+  "id": "hamgeek-plutosdr-nano",
+  "kind": "sbc",
+  "vendor_model": "HamGeek PlutoSDR Nano",
+  "soc": "xilinx-zynq-7000-z7010",
+  "board_revision": null,
+  "reviewed_at": "2026-10-24",
+  "carrier_ids": [],
+  "documents": {
+    "overview": "boards/hamgeek-plutosdr-nano/README.md",
+    "boot": "boards/hamgeek-plutosdr-nano/boot.md",
+    "interfaces": "boards/hamgeek-plutosdr-nano/interfaces.md",
+    "design": "boards/hamgeek-plutosdr-nano/design.md"
+  },
+  "source_refs": [
+    "hamgeek-plutosdr-nano-product",
+    "hamgeek-plutosdr-nano-quickstart",
+    "nano-measured-fpga-pinout",
+    "tezuka-nano-uboot-report",
+    "tezuka-nano-dtsi",
+    "tezuka-nano-coldboot-report",
+    "adi-pluto-revb-dts",
+    "adi-ad9363-datasheet",
+    "ember-pluto-rx-scenario",
+    "adi-pluto-uboot-fit"
+  ],
+  "capabilities": [
+    {
+      "id": "boot",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "One Nano variant booted PLUTO_NANO_RX from a RAM-only FIT with its original FPGA image and an FFS RAM root. QSPI installation and other revisions remain unqualified.",
+      "source_refs": [
+        "hamgeek-plutosdr-nano-product",
+        "hamgeek-plutosdr-nano-quickstart",
+        "ember-pluto-rx-scenario"
+      ]
+    },
+    {
+      "id": "ad9363-rx",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "Finite RX1 IQ capture and one 1160-center sweep from 325 MHz to 3.8 GHz returned zero on the recorded configuration. TX stayed inhibited. This is not RF calibration, continuous streaming or antenna qualification.",
+      "source_refs": [
+        "hamgeek-plutosdr-nano-product",
+        "adi-ad9363-datasheet",
+        "nano-measured-fpga-pinout",
+        "tezuka-nano-dtsi",
+        "tezuka-nano-coldboot-report",
+        "ember-pluto-rx-scenario"
+      ]
+    },
+    {
+      "id": "usb-uart-console",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "The separate USB-C CH340 UART provided the EmberBSD PS UART1 console at 115200 8N1. Hardware BREAK was not a verified debugger entry. This does not qualify the data USB port under EmberBSD.",
+      "source_refs": [
+        "hamgeek-plutosdr-nano-quickstart",
+        "ember-pluto-rx-scenario"
+      ]
+    }
+  ]
+}
