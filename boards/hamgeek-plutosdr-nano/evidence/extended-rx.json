@@ -1,0 +1,109 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "nano-extended-rx",
+  "target_id": "hamgeek-plutosdr-nano",
+  "recorded_at": "2026-10-25",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Observed 512 MiB RAM and 32 MiB QSPI variant; CH340 UART"
+  },
+  "inputs": [
+    {
+      "name": "PLUTO_NANO_RX kernel",
+      "revision": "7880482cfbb2d4b2e25a6ff76170f2af0cb9e172",
+      "sha256": "7198bc6ba20cf660086f850bd7e969c743145b3b68c53549cfeff2cfc43861f5",
+      "reference": null
+    },
+    {
+      "name": "Static FFS RAM root",
+      "revision": null,
+      "sha256": "e4e8f8370cdfc32f495f66444d47bfd1b1a0484a3efb885aa5540058e167cd2e",
+      "reference": null
+    },
+    {
+      "name": "Original device FPGA image",
+      "revision": null,
+      "sha256": "cfc235406ddcd926a353559c39351e2fe72ad42974f6163bb0248e8373e55f8b",
+      "reference": null
+    },
+    {
+      "name": "Live-derived extended RX FDT",
+      "revision": null,
+      "sha256": "2b79dcf6ae3cb0677026d00f76fa383a70804ffbf9665f9a9a0c93fce1795462",
+      "reference": null
+    },
+    {
+      "name": "Matched EmberBSD extended RAM FIT",
+      "revision": null,
+      "sha256": "3e5d1afa969230027c11599fc0b92a0a1f5e46e7e777090a441f806927ff984c",
+      "reference": null
+    },
+    {
+      "name": "Scanner source",
+      "revision": "a062333e443bb7efeee95a3a6a209bfe37aa66e5",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Complete sweep CSV",
+      "revision": null,
+      "sha256": "b4f5a5a8506938e03baba87f1e5e7813925b6dcb37c846f851a8a1c4f6b7bbdb",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the matched original FPGA, FFS root and PLUTO_NANO_RX kernel from RAM. Keep AD9363 identity and add the explicit experimental receive-only FDT property. Run finite captures at 70\u201371, 137\u2013138 and 5999\u20136000 MHz, then scan 70 MHz\u20136 GHz in overlapping steps.",
+  "expected": "Each capture and every planned sweep center completes with RFPLL readback and lock checks; fresh TX status remains inhibited.",
+  "observed": "All three edge/mid-band runs returned zero. The full sweep returned zero with 1978 ordered centers and 9113 CSV rows. After each run TX channel-enable bits 0xc0 were clear and tx_synth_pd was 0x1f.",
+  "duration_seconds": 42.857,
+  "measurements": [
+    {
+      "name": "tune-centers",
+      "value": 1978,
+      "unit": "centers"
+    },
+    {
+      "name": "csv-rows",
+      "value": 9113,
+      "unit": "rows"
+    },
+    {
+      "name": "first-center",
+      "value": 70000000,
+      "unit": "Hz"
+    },
+    {
+      "name": "last-center",
+      "value": 6000000000,
+      "unit": "Hz"
+    },
+    {
+      "name": "sample-rate",
+      "value": 10000000,
+      "unit": "samples/s"
+    },
+    {
+      "name": "rf-bandwidth",
+      "value": 8000000,
+      "unit": "Hz"
+    }
+  ],
+  "limits": [
+    "One physical variant; exact PCB revision and package marking remain unknown.",
+    "Duration is host command elapsed time including UART transfer, not measured RF capture duration.",
+    "The qualified AD9363 band remains 325\u20133800 MHz. No calibrated out-of-band sensitivity, matching, frequency accuracy or antenna performance is established.",
+    "Finite capture does not qualify uninterrupted streaming or USB IIO under EmberBSD.",
+    "No persistent QSPI installation or intentional TX sample submission.",
+    "Device-specific FDT, firmware and observations remain private; hashes bind this scenario rather than a downloadable release.",
+    "Local GCC16 experimental build, not a qualified SDK release."
+  ],
+  "source_refs": [
+    "ember-pluto-extended-rx",
+    "adi-pluto-ad9364-mode",
+    "adi-ad9363-datasheet"
+  ]
+}

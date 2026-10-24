@@ -992,6 +992,22 @@
       "revision": "90401ce9ce029e5563f4dface63914d42badf5bc",
       "reviewed_at": "2026-10-24",
       "sha256": "8c0cb6de2f793d7337ed049732ff15f5da1a28a233849fe11e493277fb31a3bf"
+    },
+    {
+      "id": "ember-pluto-extended-rx",
+      "title": "EmberBSD explicit experimental AD9363 receive tuning range",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/7880482cfbb2d4b2e25a6ff76170f2af0cb9e172/sys/external/bsd/ad9361/README",
+      "revision": "7880482cfbb2d4b2e25a6ff76170f2af0cb9e172",
+      "reviewed_at": "2026-10-25",
+      "sha256": null
+    },
+    {
+      "id": "adi-pluto-ad9364-mode",
+      "title": "ADI Pluto boot configuration and AD9364 tuning mode",
+      "url": "https://wiki.analog.com/university/tools/pluto/devs/booting",
+      "revision": null,
+      "reviewed_at": "2026-10-25",
+      "sha256": null
     }
   ]
 }

@@ -5,7 +5,7 @@
   "vendor_model": "HamGeek PlutoSDR Nano",
   "soc": "xilinx-zynq-7000-z7010",
   "board_revision": null,
-  "reviewed_at": "2026-10-24",
+  "reviewed_at": "2026-10-25",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/hamgeek-plutosdr-nano/README.md",
@@ -23,7 +23,9 @@
     "adi-pluto-revb-dts",
     "adi-ad9363-datasheet",
     "ember-pluto-rx-scenario",
-    "adi-pluto-uboot-fit"
+    "adi-pluto-uboot-fit",
+    "ember-pluto-extended-rx",
+    "adi-pluto-ad9364-mode"
   ],
   "capabilities": [
     {
@@ -59,6 +61,17 @@
       "source_refs": [
         "hamgeek-plutosdr-nano-quickstart",
         "ember-pluto-rx-scenario"
+      ]
+    },
+    {
+      "id": "ad9363-experimental-rx",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "One Nano variant completed 1978 finite capture centers from 70 MHz to 6 GHz with explicit RX-only FDT opt-in. Actual AD9363 identity and the 20 MHz RF bandwidth limit remain. PLL checks and TX inhibition passed; analog performance outside the qualified 325\u20133800 MHz band remains uncalibrated.",
+      "source_refs": [
+        "adi-ad9363-datasheet",
+        "ember-pluto-extended-rx",
+        "adi-pluto-ad9364-mode"
       ]
     }
   ]

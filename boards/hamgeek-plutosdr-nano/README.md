@@ -8,6 +8,9 @@ A bounded RAM-only EmberBSD boot and finite RX scenario is verified on one Nano 
 The original device FPGA image was loaded into volatile fabric.
 A complete 325 MHz–3.8 GHz sweep covered 1160 centers and returned zero.
 See the [physical evidence](evidence/ram-rx.json) for exact inputs and exclusions.
-This does not establish persistent installation or support for every Nano revision.
+An explicit experimental RX mode also completed a 1978-center 70 MHz–6 GHz sweep.
+The default AD9363 limits and the 20 MHz RF bandwidth limit remain unchanged.
+See [extended RX evidence](evidence/extended-rx.json); this does not qualify out-of-band analog performance.
+Neither scenario establishes persistent installation or support for every Nano revision.
 
 [Machine-readable profile](board.json) · [Boot and recovery](boot.md) · [Interfaces](interfaces.md) · [Design transfer](design.md)
