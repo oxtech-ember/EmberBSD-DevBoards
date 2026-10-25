@@ -37,13 +37,20 @@ This experimental path requires an enabled USB node with explicit peripheral rol
 The default boot path keeps USB disabled; no generic installer or ready-to-flash image is qualified.
 The no-FIR profile requested 2.4 MSPS and reported 2399999 complex samples/s.
 Bounded multi-block transfers and alternating 1090 MHz/162 MHz windows returned zero native loss counters.
+A 1090 MHz run received 289538048 complex samples with zero native/software loss reports.
+This equals 120.64 seconds at the reported rate; the host stop timer was 125 seconds.
+An independent CRC check accepted 32 received DF17 messages in this run.
 LO-only retuning preserved the common sample rate; actual-rate read/write roundtrips preserved the requested profile.
 A USB counter transfer ran for 30 minutes at 14.28 MB/s with verified payload ordering.
 The counter result measures USB transport, not sustained RF sample throughput.
-These bounded checks do not establish long-duration RF stability or independent per-sample continuity.
+These bounded checks do not establish indefinite RF stability or independent per-sample continuity.
+With 16 buffers and 32768-sample refills, an 81.68 ms host pause completed without reported loss.
+A 253.66 ms pause correctly returned overflow and unknown loss; a fresh recovery epoch then passed.
+These host pauses do not measure a universal buffer capacity or physical RF gap.
+See [native RX evidence](evidence/native-usb-iio-rx.json) for the exact scope.
 
-Sources: [native drivers](https://github.com/oxtech-ember/EmberBSD/blob/c3a5065bc09d958fac4e0ead123f10e0c4bb7b41/sys/arch/arm/xilinx/docs/zynq-usb-device.md)
-and [IIO service](https://github.com/oxtech-ember/EmberBSD-Examples/tree/f765200e3301f9c61364ccaac9cbc42f4ac7827c/robotics/pluto-iio).
+Sources: [native drivers](https://github.com/oxtech-ember/EmberBSD/blob/ec4a6f9e6d0b3f268b44732ffadeb620bb03f9f1/sys/arch/arm/xilinx/docs/zynq-usb-device.md)
+and [IIO service](https://github.com/oxtech-ember/EmberBSD-Examples/tree/93a1ffbacc3a9b4bdef2695f0cb52e149ae14f3f/robotics/pluto-iio).
 This experimental scenario does not qualify other units or revisions.
-ADS-B/AIS RF message reception, GUI integration, CPR position decoding and persistent installation remain unqualified.
+AIS RF message reception, GUI integration, CPR position decoding and persistent installation remain unqualified.
 The no-FIR path rejects 1.536 MSPS; FIR configuration remains unsupported.

@@ -80,7 +80,7 @@
       "id": "native-usb-iio-rx",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "One Nano unit passed opt-in RAM-only native USB peripheral counter and USB IIO RX checks at 2.4 MSPS requested (2399999 complex samples/s actual). Multi-block capture and LO-only alternating windows returned zero native loss counters. A 30-minute counter test measured 14.28 MB/s USB transport. Default USB enablement, RF message reception, GUI, CPR positions and persistent installation remain unqualified. No-FIR 1.536 MSPS and FIR configuration remain unsupported.",
+      "scope": "One Nano unit passed opt-in RAM-only USB IIO RX at 2.4 MSPS requested (2399999 complex samples/s actual). With 16 buffers, a 289538048-sample run reported zero native/software loss and 32 independently CRC-valid DF17 messages. An 81.68 ms host pause passed; 253.66 ms correctly reported overflow, followed by a clean separate recovery epoch. This does not prove indefinite or independent per-sample continuity. Default USB enablement, AIS reception, GUI, CPR positions and persistent installation remain unqualified. No-FIR 1.536 MSPS and FIR configuration remain unsupported.",
       "source_refs": [
         "ember-pluto-native-usb",
         "ember-pluto-native-iio"

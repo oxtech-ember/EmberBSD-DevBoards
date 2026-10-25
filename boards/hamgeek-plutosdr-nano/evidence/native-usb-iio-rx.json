@@ -1,0 +1,87 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "nano-native-usb-iio-rx",
+  "target_id": "hamgeek-plutosdr-nano",
+  "recorded_at": "2026-10-25",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One observed 512 MiB RAM and 32 MiB QSPI Nano variant"
+  },
+  "inputs": [
+    {
+      "name": "Native USB and RX streaming kernel sources",
+      "revision": "ec4a6f9e6d0b3f268b44732ffadeb620bb03f9f1",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Native USB IIO RX service, default 16 blocks",
+      "revision": "93a1ffbacc3a9b4bdef2695f0cb52e149ae14f3f",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "RAM-only opt-in USB peripheral boot. Receive at 1090 MHz with 2.4 MSPS requested and 2399999 complex samples/s actual. Independently check received DF17 CRC. Separately pause host refills after 50 complete 32768-sample buffers with 16 native blocks; require explicit overflow on exhaustion and a new clean recovery epoch.",
+  "expected": "Bounded capture reports no native/software loss. A shorter host pause is absorbed; a longer pause reports unknown loss. Positive STOP and context closure precede fresh recovery. No lost epoch is silently continued or joined.",
+  "observed": "The main run received 289538048 samples, 134 accepted Mode S messages and 32 independently CRC-valid DF17 messages. All native/software loss reports were zero; SIGINT returned zero and preserved the profile. An actual 81.6826 ms host pause completed 11993088 samples with zero native loss. An actual 253.6564 ms pause returned IIOD -75/EOVERFLOW with discontinuities=1 and loss_unknown=1. STOP, idle acknowledgement and context closure completed; a separate recovery epoch received 11993088 samples with zero native loss.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "main-complex-samples",
+      "value": 289538048,
+      "unit": "samples"
+    },
+    {
+      "name": "main-sample-count-duration",
+      "value": 120.6409036003765,
+      "unit": "s at reported sample rate"
+    },
+    {
+      "name": "main-host-stop-timer",
+      "value": 125,
+      "unit": "s"
+    },
+    {
+      "name": "native-block-count",
+      "value": 16,
+      "unit": "blocks"
+    },
+    {
+      "name": "native-block-bytes",
+      "value": 131072,
+      "unit": "bytes"
+    },
+    {
+      "name": "independent-crc-valid-df17",
+      "value": 32,
+      "unit": "messages"
+    },
+    {
+      "name": "absorbed-host-pause",
+      "value": 81.6825839865487,
+      "unit": "ms"
+    },
+    {
+      "name": "overflow-host-pause",
+      "value": 253.6564169859048,
+      "unit": "ms"
+    }
+  ],
+  "limits": [
+    "One unit and bounded runs, not indefinite stability or independent per-sample continuity. No calibrated RF sensitivity, timestamped blind-gap or universal queue-capacity claim.",
+    "Host pauses are measured wall-clock intervals after full refills, not physical capture timestamps. No I/O query ran during the pause.",
+    "Expected overflow is a passing safety outcome, not a loss-free capture. The faulted epoch was stopped and discarded before separate recovery.",
+    "AIS RF reception, GUI operation, CPR position decoding, other board revisions and persistent installation remain unqualified. FIR and no-FIR 1.536 MSPS remain unsupported.",
+    "Local GCC16 experimental builds and host instrumentation. Artifact hashes, device-specific FPGA/FDT and the host harness are not a public release or generic reproducible installation recipe; inputs identify public source revisions.",
+    "The separate 30-minute USB counter observation measures transport, not RF sample continuity."
+  ],
+  "source_refs": [
+    "ember-pluto-native-usb",
+    "ember-pluto-native-iio"
+  ]
+}
