@@ -25,7 +25,9 @@
     "ember-pluto-rx-scenario",
     "adi-pluto-uboot-fit",
     "ember-pluto-extended-rx",
-    "adi-pluto-ad9364-mode"
+    "adi-pluto-ad9364-mode",
+    "ember-pluto-native-usb",
+    "ember-pluto-native-iio"
   ],
   "capabilities": [
     {
@@ -72,6 +74,16 @@
         "adi-ad9363-datasheet",
         "ember-pluto-extended-rx",
         "adi-pluto-ad9364-mode"
+      ]
+    },
+    {
+      "id": "native-usb-iio-rx",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "One Nano unit passed opt-in RAM-only native USB peripheral counter and USB IIO RX checks at 2.4 MSPS requested (2399999 complex samples/s actual). Multi-block capture and LO-only alternating windows returned zero native loss counters. A 30-minute counter test measured 14.28 MB/s USB transport. Default USB enablement, RF message reception, GUI, CPR positions and persistent installation remain unqualified. No-FIR 1.536 MSPS and FIR configuration remain unsupported.",
+      "source_refs": [
+        "ember-pluto-native-usb",
+        "ember-pluto-native-iio"
       ]
     }
   ]

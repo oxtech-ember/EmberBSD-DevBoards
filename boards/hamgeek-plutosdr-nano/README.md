@@ -13,4 +13,9 @@ The default AD9363 limits and the 20 MHz RF bandwidth limit remain unchanged.
 See [extended RX evidence](evidence/extended-rx.json); this does not qualify out-of-band analog performance.
 Neither scenario establishes persistent installation or support for every Nano revision.
 
+Experimental native USB peripheral and USB IIO RX passed on one Nano unit in a RAM-only boot.
+The no-FIR profile requested 2.4 MSPS and reported 2399999 complex samples/s.
+This opt-in scenario does not enable USB in the default boot path.
+See [interfaces and support limits](interfaces.md#native-usb-and-iio-rx) for sources and exclusions.
+
 [Machine-readable profile](board.json) · [Boot and recovery](boot.md) · [Interfaces](interfaces.md) · [Design transfer](design.md)

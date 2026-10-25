@@ -1008,6 +1008,22 @@
       "revision": null,
       "reviewed_at": "2026-10-25",
       "sha256": null
+    },
+    {
+      "id": "ember-pluto-native-usb",
+      "title": "EmberBSD native Zynq USB peripheral contract",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/c3a5065bc09d958fac4e0ead123f10e0c4bb7b41/sys/arch/arm/xilinx/docs/zynq-usb-device.md",
+      "revision": "c3a5065bc09d958fac4e0ead123f10e0c4bb7b41",
+      "reviewed_at": "2026-10-25",
+      "sha256": null
+    },
+    {
+      "id": "ember-pluto-native-iio",
+      "title": "EmberBSD native USB IIO RX service and supported profiles",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/f765200e3301f9c61364ccaac9cbc42f4ac7827c/robotics/pluto-iio",
+      "revision": "f765200e3301f9c61364ccaac9cbc42f4ac7827c",
+      "reviewed_at": "2026-10-25",
+      "sha256": null
     }
   ]
 }
