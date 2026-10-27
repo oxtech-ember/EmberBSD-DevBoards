@@ -13,6 +13,7 @@ Distinct diagnostic kernels qualify distinct operations; they do not form one fu
 | Wi-Fi | RTL8822CE legacy 802.11a/b/g with software CCMP; scoped WPA2, reconnect, scan recovery and data checks below |
 | USB | 16 nonempty logical root buses and two attached VID/PID reads; external USB3, Bluetooth traffic and sustained transfers unqualified |
 | Power button | Short press reaches orderly filesystem shutdown and fan stop; short-press restart after shutdown unresolved |
+| RTC | The kernel uses EFI runtime services for the RX8900 clock; time set with `date(1)` survived one short removal of input power, 0.08 s behind a reference after boot. Backup duration and drift are unmeasured |
 | VPU | Manual firmware bootstrap reaches SWITCHED_IN and PONG; no submitted codec frame or independently decoded output |
 | Other paths | Camera, HDMI, GPU, NPU, general GPIO/PPS and thermal endurance unaccepted |
 

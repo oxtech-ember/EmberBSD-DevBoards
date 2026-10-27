@@ -52,6 +52,15 @@
       ]
     },
     {
+      "id": "rtc",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "The kernel reads and sets the RX8900 clock through EFI runtime services; no OS I2C or RX8900 driver is used. Time set with date(1) survived one short removal of input power, 0.08 s behind a reference after boot. Backup duration is unmeasured.",
+      "source_refs": [
+        "os-efi-rtc"
+      ]
+    },
+    {
       "id": "sd-root",
       "hardware": "present",
       "emberbsd": "partial",

@@ -1,0 +1,42 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "cix-p1-efi-rtc-power-removal",
+  "target_id": "cix-p1-orangepi6plus",
+  "recorded_at": "2026-10-27",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "A4 PHECDA-Rev A",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "CIX P1 CD8180; 32 GB; stock BiosV1.5-W20260706-e321056a"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD kernel EMBER64_CIX_PERIPHERALS",
+      "revision": "3d9255b15d32d689e99c32152d70782027cc7eb5",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Set the system time with date(1), so that the kernel writes it through EFI SetTime. Remove input power, restore it, and boot the same kernel without network time.",
+  "expected": "The kernel reads a time within one second of a reference clock and reports no lost clock.",
+  "observed": "The kernel used EFI runtime services for the RTC, and the ACPI RTC0 (RX008900) node stayed unconfigured. After boot, the board clock was 0.08 s behind the reference host. The kernel printed no clock-lost warning.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "clock-offset-after-boot",
+      "value": -0.08,
+      "unit": "s"
+    }
+  ],
+  "limits": [
+    "One power removal of short, unrecorded length; the backup supply duration is unmeasured.",
+    "The reference was a networked host compared over SSH, not a disciplined time source.",
+    "The kernel truncates the RTC seconds on read, so one boot can lose up to one second."
+  ],
+  "source_refs": [
+    "os-efi-rtc"
+  ]
+}
