@@ -10,7 +10,7 @@
     "revision": "A4 PHECDA-Rev A",
     "carrier_id": null,
     "carrier_revision": null,
-    "variant": "CIX P1 CD8180; 32 GB; stock BiosV1.5-W20260706-e321056a"
+    "variant": "CIX P1 CD8180; 32 GB; stock BiosV1.5-W20260706-e321056a; no RTC backup battery"
   },
   "inputs": [
     {
@@ -32,7 +32,8 @@
     }
   ],
   "limits": [
-    "One power removal of short, unrecorded length; the backup supply duration is unmeasured.",
+    "One power removal of short, unrecorded length.",
+    "No battery was connected to the RTC connector. A later removal lost the time (efi-rtc-power-removal-no-battery).",
     "The reference was a networked host compared over SSH, not a disciplined time source.",
     "The kernel truncates the RTC seconds on read, so one boot can lose up to one second."
   ],

@@ -5,7 +5,7 @@
   "vendor_model": "Orange Pi 6 Plus",
   "soc": "cix-p1-cd8180",
   "board_revision": null,
-  "reviewed_at": "2026-10-22",
+  "reviewed_at": "2026-10-27",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/cix-p1-orangepi6plus/README.md",
@@ -54,10 +54,29 @@
     {
       "id": "rtc",
       "hardware": "present",
-      "emberbsd": "verified-scenario",
-      "scope": "The kernel reads and sets the RX8900 clock through EFI runtime services; no OS I2C or RX8900 driver is used. Time set with date(1) survived one short removal of input power, 0.08 s behind a reference after boot. Backup duration is unmeasured.",
+      "emberbsd": "partial",
+      "scope": "The kernel reads and sets the RX8900 clock through EFI runtime services; no OS I2C or RX8900 driver is used. Time set with date(1) survived one warm reboot. Without a backup battery, it survived one short removal of input power and was lost after a later one; the cause of the difference is unknown. Retention with a battery and drift are unmeasured.",
       "source_refs": [
         "os-efi-rtc"
+      ]
+    },
+    {
+      "id": "thermal-sensors",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "envstat(8) reads 13 ACPI thermal zones at idle. An installed NVMe SSD can also report its composite temperature. Accuracy, cooling control and endurance are unqualified.",
+      "source_refs": [
+        "os-generic64-config"
+      ]
+    },
+    {
+      "id": "watchdog",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "sbsawdt0 attaches through the EmberBSD GTDT walk with a 5 s default period, and wdogctl(8) lists it. The OS owner records an armed reset after 5.08 s and 3 minutes with kernel tickles on 26 October 2026; DevBoards has no own record of that check.",
+      "source_refs": [
+        "os-gtdt-watchdog",
+        "os-generic64-config"
       ]
     },
     {

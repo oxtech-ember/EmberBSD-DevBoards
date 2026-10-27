@@ -13,9 +13,13 @@ Distinct diagnostic kernels qualify distinct operations; they do not form one fu
 | Wi-Fi | RTL8822CE legacy 802.11a/b/g with software CCMP; scoped WPA2, reconnect, scan recovery and data checks below |
 | USB | 16 nonempty logical root buses and two attached VID/PID reads; external USB3, Bluetooth traffic and sustained transfers unqualified |
 | Power button | Short press reaches orderly filesystem shutdown and fan stop; short-press restart after shutdown unresolved |
-| RTC | The kernel uses EFI runtime services for the RX8900 clock; time set with `date(1)` survived one short removal of input power, 0.08 s behind a reference after boot. Backup duration and drift are unmeasured |
+| RTC | The kernel uses EFI runtime services for the RX8900 clock; time set with `date(1)` survived one warm reboot, 0.007 s from a reference. Without a backup battery, it survived one short removal of input power and was lost after a later one: the RTC was 1838 days behind the file system time, and the kernel used the file system time. Retention with a battery and drift are unmeasured |
+| Thermal sensors | `envstat(8)` reads 13 ACPI thermal zones at 40–43 °C at idle; an installed NVMe SSD can add its composite temperature; accuracy, cooling control and endurance unqualified |
+| Watchdog | `sbsawdt0` attaches through the EmberBSD GTDT walk with a 5 s default period and `wdogctl(8)` lists it; the [OS owner](https://github.com/oxtech-ember/EmberBSD/blob/7cd7fe340fe49c4eb68ae7022a71074b3a8dc831/sys/dev/acpi/docs/gtdt-watchdog.md) records an armed reset after 5.08 s and 3 minutes with kernel tickles |
 | VPU | Manual firmware bootstrap reaches SWITCHED_IN and PONG; no submitted codec frame or independently decoded output |
 | Other paths | Camera, HDMI, GPU, NPU, general GPIO/PPS and thermal endurance unaccepted |
+
+RTC, sensor and watchdog records: [warm reboot](evidence/efi-rtc-warm-reboot.json), [short power removal](evidence/efi-rtc-power-removal.json), [lost clock](evidence/efi-rtc-power-removal-no-battery.json) and [sensors and watchdog](evidence/sensors-watchdog-attach.json).
 
 ## Network boundaries
 
@@ -48,8 +52,9 @@ Electrical power-off is unmeasured. A short press did not restart the board, inc
 Do not infer pin numbering or electrical levels from native UART/GPIO enumeration.
 USB device-name conversion remains incomplete in the reduced static base, despite VID/PID reads.
 
-Sources: `os-cix-p1-reference`, `os-cix-root-reference`, `os-cix-platform`, `os-cix-vpu`
-and `os-cix-vpu-attachment` in [sources.json](../../sources.json).
+Sources: `os-cix-p1-reference`, `os-cix-root-reference`, `os-cix-platform`, `os-cix-vpu`,
+`os-cix-vpu-attachment`, `os-efi-rtc`, `os-generic64-config` and `os-gtdt-watchdog`
+in [sources.json](../../sources.json).
 
 ## Power-button contacts: PCB V1.1
 

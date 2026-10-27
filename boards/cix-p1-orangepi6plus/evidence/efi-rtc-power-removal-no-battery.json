@@ -1,0 +1,55 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "cix-p1-efi-rtc-power-removal-no-battery",
+  "target_id": "cix-p1-orangepi6plus",
+  "recorded_at": "2026-10-27",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": "A4 PHECDA-Rev A",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "CIX P1 CD8180; 32 GB; stock BiosV1.5-W20260706-e321056a; no RTC backup battery"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD Wi-Fi trial kernel that set the time",
+      "revision": "d175df270bbad1ab2564dfa784e6420dde3f053d",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "EmberBSD kernel EMBER64_CIX_PERIPHERALS that read the time",
+      "revision": "7cd7fe340fe49c4eb68ae7022a71074b3a8dc831",
+      "sha256": "f03f40b3a7d42dcd78ef473579a1d3a9ce91b4eec8e596932ba138fee59cfdb4",
+      "reference": null
+    }
+  ],
+  "scenario": "With no battery on the RTC connector, set the system time with date(1). Shut down with a short press of the power button. Remove input power for a few seconds, restore it, and boot.",
+  "expected": "The kernel reads a time within one second of a reference clock and reports no lost clock.",
+  "observed": "The kernel printed 'WARNING: clock lost 1838 days': the RTC time was 1838 days behind the file system time. The kernel used the file system time. After boot, the board clock was 45.9 s behind the reference host. An earlier boot after a power interruption of unknown cause printed 'clock lost 1831 days'.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "clock-lost-days",
+      "value": 1838,
+      "unit": "d"
+    },
+    {
+      "name": "clock-offset-after-boot",
+      "value": -45.9,
+      "unit": "s"
+    }
+  ],
+  "limits": [
+    "One controlled cycle. The length of the power removal was not recorded.",
+    "The earlier pass in efi-rtc-power-removal had the same battery state. The cause of the different result is unknown.",
+    "The Wi-Fi trial kernel set the time, and the RTC was not read back before the power removal. The boot of that kernel already printed 'clock lost 1838 days'.",
+    "The configuration name and image hash of the Wi-Fi trial kernel were not recorded.",
+    "Retention with a backup battery is not tested."
+  ],
+  "source_refs": [
+    "os-efi-rtc"
+  ]
+}

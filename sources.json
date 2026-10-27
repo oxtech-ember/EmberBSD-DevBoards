@@ -306,6 +306,22 @@
       "sha256": "3325d36595c24840ada83ef69899068306f67743711f0cfa61706ae813f1c6bd"
     },
     {
+      "id": "os-generic64-config",
+      "title": "EmberBSD GENERIC64 kernel configuration (acpitz, sbsawdt, nvme)",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/7cd7fe340fe49c4eb68ae7022a71074b3a8dc831/sys/arch/evbarm/conf/GENERIC64",
+      "revision": "7cd7fe340fe49c4eb68ae7022a71074b3a8dc831",
+      "reviewed_at": "2026-10-27",
+      "sha256": "ce152a079f53f4ed3e28f083a7b68d9ad7e51366c280e64ec637243dacfd0a3a"
+    },
+    {
+      "id": "os-gtdt-watchdog",
+      "title": "EmberBSD GTDT walk and SBSA watchdog on CIX P1",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/7cd7fe340fe49c4eb68ae7022a71074b3a8dc831/sys/dev/acpi/docs/gtdt-watchdog.md",
+      "revision": "7cd7fe340fe49c4eb68ae7022a71074b3a8dc831",
+      "reviewed_at": "2026-10-27",
+      "sha256": "f9bd4945d9ba3d8a0e71d7f4bc776332ed0b7984668e35ce4e072cbf8c70599e"
+    },
+    {
       "id": "os-cix-spcr",
       "title": "EmberBSD CIX SPCR console correction",
       "url": "https://github.com/oxtech-ember/EmberBSD/blob/75f0decfa1a02288f1bca8520b96811f9d5567a6/ember/boot/cix-spcr.md",

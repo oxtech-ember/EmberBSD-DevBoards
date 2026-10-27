@@ -1,0 +1,59 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "cix-p1-sensors-watchdog-attach",
+  "target_id": "cix-p1-orangepi6plus",
+  "recorded_at": "2026-10-27",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "A4 PHECDA-Rev A",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "CIX P1 CD8180; 32 GB; stock BiosV1.5-W20260706-e321056a; NVMe NE-256"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD kernel EMBER64_CIX_PERIPHERALS",
+      "revision": "7cd7fe340fe49c4eb68ae7022a71074b3a8dc831",
+      "sha256": "f03f40b3a7d42dcd78ef473579a1d3a9ce91b4eec8e596932ba138fee59cfdb4",
+      "reference": null
+    },
+    {
+      "name": "Static envstat from the reduced CIX userland",
+      "revision": "7cd7fe340fe49c4eb68ae7022a71074b3a8dc831",
+      "sha256": "70a7feeebc2aa44ada8234c93e0c0a779071227510c08c228a84895ffb296efc",
+      "reference": null
+    },
+    {
+      "name": "Static wdogctl from the reduced CIX userland",
+      "revision": "7cd7fe340fe49c4eb68ae7022a71074b3a8dc831",
+      "sha256": "dc10c4a660ad1e868d38c3346e3f9706651427e54aa680f25a12821e47a1d2ab",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the kernel from the reduced SD root after removal of input power. Read dmesg, envstat and wdogctl at idle.",
+  "expected": "The ACPI thermal zones, the NVMe temperature and the SBSA watchdog are visible to the standard tools.",
+  "observed": "envstat listed acpitz0 to acpitz12 at 40-43 degC. acpitz0 to acpitz11 have a 98 degC critical limit; acpitz12 has none. envstat also listed the nvme0 composite temperature, 47.85 degC with 82.85 degC warning and 84.85 degC critical limits. sbsawdt0 attached at acpi0 with a 5 s default period. wdogctl listed swwdog0 and sbsawdt0. nvme0 attached as NE-256 with ld4.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "acpi-thermal-zones",
+      "value": 13,
+      "unit": "count"
+    },
+    {
+      "name": "nvme-composite-temperature",
+      "value": 47.85,
+      "unit": "degC"
+    }
+  ],
+  "limits": [
+    "Idle readings only; no reference thermometer.",
+    "No watchdog was armed; expiry and reset are not tested.",
+    "The NVMe device was only enumerated and read; NVMe installation remains unaccepted."
+  ],
+  "source_refs": [
+    "os-generic64-config"
+  ]
+}

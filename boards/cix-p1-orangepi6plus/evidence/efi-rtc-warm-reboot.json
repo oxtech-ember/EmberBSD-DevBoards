@@ -1,0 +1,42 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "cix-p1-efi-rtc-warm-reboot",
+  "target_id": "cix-p1-orangepi6plus",
+  "recorded_at": "2026-10-27",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "A4 PHECDA-Rev A",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "CIX P1 CD8180; 32 GB; stock BiosV1.5-W20260706-e321056a; no RTC backup battery"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD kernel EMBER64_CIX_PERIPHERALS",
+      "revision": "7cd7fe340fe49c4eb68ae7022a71074b3a8dc831",
+      "sha256": "f03f40b3a7d42dcd78ef473579a1d3a9ce91b4eec8e596932ba138fee59cfdb4",
+      "reference": null
+    }
+  ],
+  "scenario": "Set the system time with date(1), so that the kernel writes it through EFI SetTime. Restart with shutdown -r now. Input power stays on.",
+  "expected": "The kernel reads a time within one second of a reference clock and reports no lost clock.",
+  "observed": "The kernel used EFI runtime services for the RTC and printed no clock warning. After boot, the board clock was 0.007 s ahead of the reference host.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "clock-offset-after-boot",
+      "value": 0.007,
+      "unit": "s"
+    }
+  ],
+  "limits": [
+    "One restart.",
+    "The reference was a networked host compared over SSH, not a disciplined time source.",
+    "The kernel truncates the RTC seconds on read, so one boot can lose up to one second."
+  ],
+  "source_refs": [
+    "os-efi-rtc"
+  ]
+}
