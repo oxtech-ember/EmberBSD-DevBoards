@@ -33,4 +33,16 @@ cases.each do |name, (path, mutation)|
     abort "Missed invalid case: #{name}" if CatalogValidator.new(copy).run.empty?
   end
 end
-puts "PASS: baseline and #{cases.size} invalid-record regressions"
+# A removed Markdown target must fail through the page that links it.
+removed = {'missing linked document' => 'boards/a733-zero3w/update.md'}
+removed.each do |name, path|
+  Dir.mktmpdir('devboards-check-') do |copy|
+    %w[boards carriers socs bootloaders interfaces docs schemas templates tools README.md CONTRIBUTING.md catalog.json sources.json].each do |entry|
+      FileUtils.cp_r(File.join(root, entry), copy)
+    end
+    abort "Invalid baseline copy for #{name}" unless CatalogValidator.new(copy).run.empty?
+    FileUtils.rm(File.join(copy, path))
+    abort "Missed invalid case: #{name}" if CatalogValidator.new(copy).run.empty?
+  end
+end
+puts "PASS: baseline and #{cases.size + removed.size} invalid-record regressions"

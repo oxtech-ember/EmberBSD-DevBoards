@@ -21,7 +21,7 @@ The normal Zero 3W DTB requests GPU startup at 600 MHz after the root mount, bef
 Single-user mode cannot prevent this startup. A spare kernel that uses the normal DTB is not an observe-only recovery path.
 For diagnosis, use a separate DTB that selects observe-only mode for both GPU and display.
 Select that DTB through an independent loader entry before kernel execution.
-Verify access to that entry through the actual loader before updating the normal bundle.
+Verify access to that entry through the actual loader before updating the normal bundle. The [update recipe](update.md) lists the checks.
 Check that a failed diagnostic entry cannot silently continue into normal boot.
 A mode variable or a saved DTB file alone does not establish an independent recovery route.
 

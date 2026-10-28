@@ -1048,6 +1048,30 @@
       "revision": "93a1ffbacc3a9b4bdef2695f0cb52e149ae14f3f",
       "reviewed_at": "2026-10-25",
       "sha256": null
+    },
+    {
+      "id": "os-a733-boot-modes",
+      "title": "EmberBSD A733 boot modes, DTB target and boot script",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/c5d1be911e44b58402a405333db205ba4ad1daaf/sys/arch/arm/sunxi/docs/a733-boot-modes.md",
+      "revision": "c5d1be911e44b58402a405333db205ba4ad1daaf",
+      "reviewed_at": "2026-10-28",
+      "sha256": null
+    },
+    {
+      "id": "os-aarch64-base-update",
+      "title": "EmberBSD headless AArch64 base update order",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/c5d1be911e44b58402a405333db205ba4ad1daaf/ember/tools/docs/aarch64-base-update.md",
+      "revision": "c5d1be911e44b58402a405333db205ba4ad1daaf",
+      "reviewed_at": "2026-10-28",
+      "sha256": null
+    },
+    {
+      "id": "sdk-os-release",
+      "title": "EmberBSD SDK Clang OS release builder",
+      "url": "https://github.com/oxtech-ember/EmberBSD-SDK/blob/1e8103ae9357fa914ae82a58a1fd3d1f5c252321/docs/os-release.md",
+      "revision": "1e8103ae9357fa914ae82a58a1fd3d1f5c252321",
+      "reviewed_at": "2026-10-28",
+      "sha256": null
     }
   ]
 }

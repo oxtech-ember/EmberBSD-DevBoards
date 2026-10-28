@@ -1,7 +1,7 @@
 # Allwinner A733 SBC: Zero 3W
 
 Use this compact SBC to investigate wireless devices and the A733 accelerator software path.
-[Machine-readable profile](board.json) · [Boot](boot.md) · [Interfaces](interfaces.md) · [Your device](design.md)
+[Machine-readable profile](board.json) · [Boot](boot.md) · [Update](update.md) · [Interfaces](interfaces.md) · [Your device](design.md)
 
 This is a research reference, not a production qualification or an exhaustive support matrix.
 The profile's revision field is unknown unless a specific hardware revision is established.
