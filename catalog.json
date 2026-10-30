@@ -71,6 +71,14 @@
         "esp32s31"
       ],
       "profile": "boards/esp32-s31/board.json"
+    },
+    {
+      "id": "esp-mosaico",
+      "aliases": [
+        "esp32-s31-mosaico",
+        "esp32s31-mosaico"
+      ],
+      "profile": "boards/esp-mosaico/board.json"
     }
   ],
   "carriers": [

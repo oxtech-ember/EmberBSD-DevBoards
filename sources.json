@@ -1072,6 +1072,54 @@
       "revision": "1e8103ae9357fa914ae82a58a1fd3d1f5c252321",
       "reviewed_at": "2026-10-28",
       "sha256": null
+    },
+    {
+      "id": "mosaico-hardware-v10",
+      "title": "Espressif ESP-Mosaico CoreBoard V1.0 hardware guide",
+      "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide_v1.0.html",
+      "revision": null,
+      "reviewed_at": "2026-10-30",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-hardware-v12",
+      "title": "Espressif ESP-Mosaico CoreBoard V1.2 hardware guide",
+      "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html",
+      "revision": null,
+      "reviewed_at": "2026-10-30",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-user-guide",
+      "title": "ESP-Mosaico vendor user guide",
+      "url": "https://mosaico.ai/en/guide",
+      "revision": null,
+      "reviewed_at": "2026-10-30",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-bsp",
+      "title": "ESP-Mosaico BSP and revision-dependent hardware interfaces",
+      "url": "https://github.com/esp-mosaico/esp-mosaico-bsp/tree/7cbfb390638dcb93522fc3cde094b2d43cf907c2",
+      "revision": "7cbfb390638dcb93522fc3cde094b2d43cf907c2",
+      "reviewed_at": "2026-10-30",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-device-modes",
+      "title": "ESP-Mosaico Vibe device modes and retained-firmware boundaries",
+      "url": "https://github.com/esp-mosaico/esp-mosaico-vibe/blob/1872fd88c01d7807556d01fd2a19864e40a307c9/docs/device-modes.md",
+      "revision": "1872fd88c01d7807556d01fd2a19864e40a307c9",
+      "reviewed_at": "2026-10-30",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-vendor-webui-observation",
+      "title": "Bounded read-only ESP-Mosaico vendor WebUI observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/vendor-webui.json",
+      "revision": null,
+      "reviewed_at": "2026-10-30",
+      "sha256": null
     }
   ]
 }

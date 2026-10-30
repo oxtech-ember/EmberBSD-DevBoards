@@ -13,6 +13,7 @@ The catalog is an index. Each board profile names its sources and the limits of 
 | BCM2710A1 SBC, vendor model `Zero 2 W` | Compact native-firmware boot and wireless research | [Profile](boards/bcm2710-zero2w/README.md) |
 | Allwinner A733 SBC, vendor model `Zero 4` | Gigabit Ethernet, thermal and wireless integration | [Profile](boards/a733-zero4/README.md) |
 | ESP32-S31 development board | Small-memory RISC-V flash boot and radio integration | [Profile](boards/esp32-s31/README.md) |
+| ESP-Mosaico | Revision-specific HMI, power, expansion and vendor-firmware access | [Profile](boards/esp-mosaico/README.md) |
 | Allwinner A133 wall tablet, vendor model `YS-M33` | Closed-enclosure USB installation and eMMC boot research | [Profile](boards/ys-m33-a133/README.md) |
 | BCM2712 module, vendor model `CM5` | Custom carrier, eMMC provisioning, thermal design and graphics research | [Profile](boards/bcm2712-cm5/README.md) |
 | BCM2712 SBC, vendor model `RPi5` | Peripheral prototypes and a comparison platform for module designs | [Profile](boards/bcm2712-rpi5/README.md) |

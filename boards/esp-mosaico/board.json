@@ -1,0 +1,77 @@
+{
+  "format_version": 1,
+  "id": "esp-mosaico",
+  "kind": "sbc",
+  "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
+  "soc": "espressif-esp32-s31",
+  "board_revision": null,
+  "reviewed_at": "2026-10-30",
+  "carrier_ids": [],
+  "documents": {
+    "overview": "boards/esp-mosaico/README.md",
+    "boot": "boards/esp-mosaico/boot.md",
+    "interfaces": "boards/esp-mosaico/interfaces.md",
+    "design": "boards/esp-mosaico/design.md"
+  },
+  "source_refs": [
+    "mosaico-hardware-v10",
+    "mosaico-hardware-v12",
+    "mosaico-user-guide",
+    "mosaico-bsp",
+    "mosaico-device-modes",
+    "mosaico-vendor-webui-observation"
+  ],
+  "capabilities": [
+    {
+      "id": "boot",
+      "hardware": "present",
+      "emberbsd": "unknown",
+      "scope": "Vendor application observed. The generic S31 flash-boot result does not identify this kit or qualify an EmberBSD image for it.",
+      "source_refs": [
+        "mosaico-vendor-webui-observation",
+        "mosaico-device-modes"
+      ]
+    },
+    {
+      "id": "wifi",
+      "hardware": "present",
+      "emberbsd": "unknown",
+      "scope": "Vendor-firmware WebUI and a bounded live-log connection observed. No EmberBSD radio or sustained-transfer result.",
+      "source_refs": [
+        "mosaico-hardware-v12",
+        "mosaico-vendor-webui-observation"
+      ]
+    },
+    {
+      "id": "usb",
+      "hardware": "present",
+      "emberbsd": "unknown",
+      "scope": "Vendor-documented Type-C OTG and separate slot USB Serial/JTAG. USB enumeration and recovery were not established in the physical observation.",
+      "source_refs": [
+        "mosaico-hardware-v10",
+        "mosaico-hardware-v12",
+        "mosaico-vendor-webui-observation"
+      ]
+    },
+    {
+      "id": "hmi",
+      "hardware": "present",
+      "emberbsd": "unknown",
+      "scope": "BSP covers display, touch, audio and sensors. Exact revision and fitted touch controller need identification; Lua catalog entries do not qualify drivers.",
+      "source_refs": [
+        "mosaico-bsp",
+        "mosaico-hardware-v12",
+        "mosaico-vendor-webui-observation"
+      ]
+    },
+    {
+      "id": "expansion",
+      "hardware": "present",
+      "emberbsd": "unknown",
+      "scope": "Two resource-sharing module slots. Camera is an optional left-slot module; module ownership and pin conflicts constrain combinations.",
+      "source_refs": [
+        "mosaico-bsp"
+      ]
+    }
+  ]
+}

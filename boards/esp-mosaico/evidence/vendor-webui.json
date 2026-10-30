@@ -1,0 +1,68 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-vendor-webui",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-30",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Assembled ESP-Mosaico kit; CoreBoard and supplied BaseBoard revisions unconfirmed"
+  },
+  "inputs": [
+    {
+      "name": "Running vendor application; operator-reported screen labels",
+      "revision": "Software 0.4.0; GSP 1.5.1",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Host-side HTTP and WebSocket inspection on macOS arm64",
+      "revision": null,
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "After operator power-on and network setup, read the application root and the GET paths /api/status, /api/logs/status, /api/capabilities and /api/lua-modules. With Live Logs in WebUI enabled by the operator, connect to /ws/logs and observe for 10 seconds. Request paths were discovered in the served WebUI. No configuration, file, firmware or actuator write was performed.",
+  "expected": "Settings HTML and JSON catalogs are readable; the enabled log endpoint accepts a WebSocket connection and sends a log frame.",
+  "observed": "HTTP 200 and page title ESP-MOSAICO Settings. Log status enabled=true. WebSocket upgrade HTTP 101 succeeded and one informational http_logs frame arrived. Capability catalog returned 19 entries; Lua catalog returned 28 entries. The status response did not include hardware revision or firmware version. Host USB enumeration showed no Mosaico USB device or serial port during this observation.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "log-observation-window",
+      "value": 10,
+      "unit": "s"
+    },
+    {
+      "name": "received-log-frames",
+      "value": 1,
+      "unit": "frame"
+    },
+    {
+      "name": "capability-catalog-entries",
+      "value": 19,
+      "unit": "entry"
+    },
+    {
+      "name": "lua-module-catalog-entries",
+      "value": 28,
+      "unit": "entry"
+    }
+  ],
+  "limits": [
+    "Pass applies only to the read-only vendor WebUI scenario, not EmberBSD boot or drivers.",
+    "Software and GSP labels were reported by the operator. They are not a measured firmware hash, ESP-Claw version or source commit.",
+    "CoreBoard and BaseBoard revisions remain unknown; the observation does not qualify either V1.0 or V1.2 wiring.",
+    "The single log frame confirms the subscription path, not sustained logging or capture of earlier boot messages.",
+    "Catalog enumeration does not test Lua execution, peripheral I/O, attached modules or model services.",
+    "USB data cable suitability and the firmware USB configuration were not isolated; absence of enumeration has no established cause.",
+    "Vibe Mode, ROM recovery, firmware updates, flash layout, Bluetooth, IEEE 802.15.4 and multi-board operation were not tested."
+  ],
+  "source_refs": [
+    "mosaico-user-guide",
+    "mosaico-hardware-v12"
+  ]
+}
