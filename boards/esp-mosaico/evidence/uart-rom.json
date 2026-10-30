@@ -1,0 +1,56 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-uart-rom",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-30",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Assembled kit; V1.2 reported by operator; ESP32-S31 silicon revision 0.0 read through UART"
+  },
+  "inputs": [
+    {
+      "name": "Official esptool macOS arm64 archive",
+      "revision": "5.6.0",
+      "sha256": "08a58829a3f14bb08f2e39f4cad48dcb14b7000384268e7f06689836332d6e25",
+      "reference": null
+    },
+    {
+      "name": "USB-UART bridge enumerated as FT232R; operator confirmed 3.3 V logic",
+      "revision": "USB VID 0403, PID 6001",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Connect only crossed TX/RX and common ground between H1 and the USB-UART adapter; supply board power separately through USB-C. Enter ROM manually with BOOT held during power-on. Run esptool with --chip esp32s31 --baud 115200 --before no-reset --after no-reset --no-stub --connect-attempts 2 chip-id on the adapter serial port. Compare the returned MAC privately with the earlier USB ROM readback identity.",
+  "expected": "A valid ROM response identifying the same board through the UART adapter, establishing communication in both directions without firmware or eFuse writes.",
+  "observed": "esptool exited 0, identified ESP32-S31 revision 0.0 and a 40 MHz crystal. The chip-id command reported that S31 has no chip ID and returned its MAC instead. That identity matched the earlier USB ROM readback. The board was left in the ROM loader.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "uart-baud",
+      "value": 115200,
+      "unit": "baud"
+    },
+    {
+      "name": "esptool-exit-status",
+      "value": 0,
+      "unit": "status"
+    }
+  ],
+  "limits": [
+    "This verifies UART ROM request/response only, not an EmberBSD or OpenSBI console, an OS boot, a firmware write or a restore.",
+    "Board revision and adapter logic level were reported by the operator; BaseBoard marking and signal voltage were not independently measured.",
+    "Device identifiers, personal photographs and raw logs are not published.",
+    "UART log readability and sustained-transfer reliability are outside this check."
+  ],
+  "source_refs": [
+    "mosaico-hardware-v12",
+    "esptool-5-6-0-macos-arm64",
+    "mosaico-rom-readback-observation"
+  ]
+}

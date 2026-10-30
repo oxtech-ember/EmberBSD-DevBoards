@@ -58,7 +58,7 @@
     "NOR contents and device identifiers are private and are not attached. The separate NAND, eFuses and off-device data are not covered by this backup.",
     "Security settings and partition offsets apply to the observed firmware/sample, not every Mosaico or software release.",
     "The USB device disappeared after the stub read; cause was not established. Manual ROM re-entry restored access and ROM verification succeeded.",
-    "UART, RAM-only OS boot and the vendor Vibe update path were not exercised."
+    "RAM-only OS boot and the vendor Vibe update path were not exercised."
   ],
   "source_refs": [
     "mosaico-hardware-v12",

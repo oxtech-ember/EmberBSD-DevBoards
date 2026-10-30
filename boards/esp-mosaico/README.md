@@ -24,6 +24,8 @@ The separate [ROM readback check](evidence/rom-readback.json) established Type-C
 download access and verified a complete 16 MiB NOR backup against the device.
 Its installed partition table differs from the cited Vibe source layout;
 see [boot and recovery](boot.md#observed-factory-layout).
+The [UART ROM check](evidence/uart-rom.json) also verified bidirectional
+identification through H1 with an external USB-UART adapter.
 There is no accepted EmberBSD runtime result for this Mosaico profile.
 
 ## Sources

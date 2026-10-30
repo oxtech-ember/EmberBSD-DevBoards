@@ -41,6 +41,13 @@ adapter, cross adapter TX to board RX and adapter RX to board TX, and join
 ground. Keep adapter supply pins disconnected when the board is powered by USB-C.
 Make connections with the board powered off. This is the vendor wiring route;
 it does not establish a working EmberBSD serial console.
+
+The [UART ROM check](evidence/uart-rom.json) verified request/response through
+an FT232R adapter at 115200 baud, 8N1, with only TX, RX and ground connected.
+Board power came separately through USB-C. A ROM identification response matched
+the earlier USB readback identity. This establishes both UART directions;
+it does not establish OpenSBI/EmberBSD console output or sustained transfers.
+
 Camera modules use the left slot only. Some camera signals conflict with USB Serial/JTAG;
 the BSP directs affected examples to UART.
 Five right-slot signals share the onboard audio I²S bus.

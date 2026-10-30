@@ -1136,6 +1136,14 @@
       "revision": null,
       "reviewed_at": "2026-10-30",
       "sha256": null
+    },
+    {
+      "id": "mosaico-uart-rom-observation",
+      "title": "ESP-Mosaico V1.2 bidirectional UART ROM identification",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/uart-rom.json",
+      "revision": null,
+      "reviewed_at": "2026-10-30",
+      "sha256": null
     }
   ]
 }

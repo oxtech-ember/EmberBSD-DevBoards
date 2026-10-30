@@ -20,18 +20,20 @@
     "mosaico-bsp",
     "mosaico-device-modes",
     "mosaico-vendor-webui-observation",
-    "mosaico-rom-readback-observation"
+    "mosaico-rom-readback-observation",
+    "mosaico-uart-rom-observation"
   ],
   "capabilities": [
     {
       "id": "boot",
       "hardware": "present",
       "emberbsd": "unknown",
-      "scope": "Vendor application and ROM NOR readback observed on operator-reported V1.2. The generic S31 boot result does not qualify an EmberBSD image for this kit.",
+      "scope": "Vendor application, USB ROM NOR readback and bidirectional UART ROM identification observed on operator-reported V1.2. These results do not qualify an EmberBSD image for this kit.",
       "source_refs": [
         "mosaico-vendor-webui-observation",
         "mosaico-device-modes",
-        "mosaico-rom-readback-observation"
+        "mosaico-rom-readback-observation",
+        "mosaico-uart-rom-observation"
       ]
     },
     {
