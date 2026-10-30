@@ -33,6 +33,14 @@ Confirm the fitted controller and BSP detection path before selecting a touch dr
 Use the revision-specific vendor schematic for connector orientation and contact numbers.
 The left slot exposes USB Serial/JTAG; the right slot exposes UART.
 These paths are distinct from Type-C OTG.
+For the [V1.2 right slot H1](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#right-module-slot-h1-pins),
+contact 13 is board RX0/GPIO59, contact 15 is board TX0/GPIO58 and contact 20 is GND.
+Identify Pin 1 from the marking/schematic before counting contacts.
+The back pads also carry RX, TX and GND labels. With a 3.3 V logic USB-UART
+adapter, cross adapter TX to board RX and adapter RX to board TX, and join
+ground. Keep adapter supply pins disconnected when the board is powered by USB-C.
+Make connections with the board powered off. This is the vendor wiring route;
+it does not establish a working EmberBSD serial console.
 Camera modules use the left slot only. Some camera signals conflict with USB Serial/JTAG;
 the BSP directs affected examples to UART.
 Five right-slot signals share the onboard audio I²S bus.

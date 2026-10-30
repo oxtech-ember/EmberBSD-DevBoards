@@ -1120,6 +1120,22 @@
       "revision": null,
       "reviewed_at": "2026-10-30",
       "sha256": null
+    },
+    {
+      "id": "esptool-5-6-0-macos-arm64",
+      "title": "Espressif esptool 5.6.0 official macOS arm64 archive",
+      "url": "https://github.com/espressif/esptool/releases/download/v5.6.0/esptool-v5.6.0-macos-arm64.tar.gz",
+      "revision": "v5.6.0",
+      "reviewed_at": "2026-10-30",
+      "sha256": "08a58829a3f14bb08f2e39f4cad48dcb14b7000384268e7f06689836332d6e25"
+    },
+    {
+      "id": "mosaico-rom-readback-observation",
+      "title": "ESP-Mosaico V1.2 ROM access and NOR readback verification",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/rom-readback.json",
+      "revision": null,
+      "reviewed_at": "2026-10-30",
+      "sha256": null
     }
   ]
 }

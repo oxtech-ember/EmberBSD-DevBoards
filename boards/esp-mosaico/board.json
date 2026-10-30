@@ -4,7 +4,7 @@
   "kind": "sbc",
   "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
   "soc": "espressif-esp32-s31",
-  "board_revision": null,
+  "board_revision": "1.2",
   "reviewed_at": "2026-10-30",
   "carrier_ids": [],
   "documents": {
@@ -19,17 +19,19 @@
     "mosaico-user-guide",
     "mosaico-bsp",
     "mosaico-device-modes",
-    "mosaico-vendor-webui-observation"
+    "mosaico-vendor-webui-observation",
+    "mosaico-rom-readback-observation"
   ],
   "capabilities": [
     {
       "id": "boot",
       "hardware": "present",
       "emberbsd": "unknown",
-      "scope": "Vendor application observed. The generic S31 flash-boot result does not identify this kit or qualify an EmberBSD image for it.",
+      "scope": "Vendor application and ROM NOR readback observed on operator-reported V1.2. The generic S31 boot result does not qualify an EmberBSD image for this kit.",
       "source_refs": [
         "mosaico-vendor-webui-observation",
-        "mosaico-device-modes"
+        "mosaico-device-modes",
+        "mosaico-rom-readback-observation"
       ]
     },
     {
@@ -46,18 +48,19 @@
       "id": "usb",
       "hardware": "present",
       "emberbsd": "unknown",
-      "scope": "Vendor-documented Type-C OTG and separate slot USB Serial/JTAG. USB enumeration and recovery were not established in the physical observation.",
+      "scope": "Type-C USB-OTG ROM connection and complete 16 MiB NOR readback verified with esptool 5.6.0. This does not establish an EmberBSD USB console or a successful firmware restore.",
       "source_refs": [
         "mosaico-hardware-v10",
         "mosaico-hardware-v12",
-        "mosaico-vendor-webui-observation"
+        "mosaico-vendor-webui-observation",
+        "mosaico-rom-readback-observation"
       ]
     },
     {
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "unknown",
-      "scope": "BSP covers display, touch, audio and sensors. Exact revision and fitted touch controller need identification; Lua catalog entries do not qualify drivers.",
+      "scope": "BSP covers display, touch, audio and sensors. V1.2 was reported by the operator; the fitted touch controller needs identification. Lua catalog entries do not qualify drivers.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",

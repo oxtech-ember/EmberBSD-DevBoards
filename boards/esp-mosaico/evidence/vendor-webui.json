@@ -7,10 +7,10 @@
   "layer": "physical",
   "result": "pass",
   "hardware": {
-    "revision": null,
+    "revision": "1.2",
     "carrier_id": null,
     "carrier_revision": null,
-    "variant": "Assembled ESP-Mosaico kit; CoreBoard and supplied BaseBoard revisions unconfirmed"
+    "variant": "Assembled ESP-Mosaico kit; V1.2 reported by the operator, supplied BaseBoard revision not independently read"
   },
   "inputs": [
     {
@@ -55,7 +55,7 @@
   "limits": [
     "Pass applies only to the read-only vendor WebUI scenario, not EmberBSD boot or drivers.",
     "Software and GSP labels were reported by the operator. They are not a measured firmware hash, ESP-Claw version or source commit.",
-    "CoreBoard and BaseBoard revisions remain unknown; the observation does not qualify either V1.0 or V1.2 wiring.",
+    "V1.2 was reported by the operator. Neither eFuse board revision nor BaseBoard marking was read; peripheral wiring was not exercised.",
     "The single log frame confirms the subscription path, not sustained logging or capture of earlier boot messages.",
     "Catalog enumeration does not test Lua execution, peripheral I/O, attached modules or model services.",
     "USB data cable suitability and the firmware USB configuration were not isolated; absence of enumeration has no established cause.",
