@@ -29,6 +29,28 @@ Do not infer the installed partition table from a repository release or a screen
 Use the vendor's current update-selection rules and establish recovery before replacing firmware.
 The generic ESP32-S31 port's loader chain and flash-root layout are not a Mosaico installation recipe.
 
+## ESP32-S31 firmware sources
+
+Espressif publishes a developer-preview Linux boot chain for the ESP32-S31.
+Its [U-Boot SPL](https://github.com/espressif/u-boot/blob/333c7a31f49d0ecc796edc7b6f7d44c4fcd1e9f8/board/espressif/esp32s31/spl.c)
+initializes the SoC and loads OpenSBI, U-Boot and a device tree; its
+[PSRAM initialization](https://github.com/espressif/u-boot/blob/333c7a31f49d0ecc796edc7b6f7d44c4fcd1e9f8/board/espressif/esp32s31/spl_psram.c)
+is part of that SPL. The matching
+[OpenSBI platform](https://github.com/espressif/opensbi/tree/5395e03e1cb295257142cfdeaade6334f1543bcb/platform/generic/espressif/esp32s31)
+implements the S31 firmware services. Espressif's
+[image layout and packaging](https://github.com/espressif/esp-linux-bsp/tree/a427cfbf5cccebd4f4e571db8a111ff1f5d31d71)
+are for its Linux preview, not an EmberBSD Mosaico image.
+
+The preview's [U-Boot device tree](https://github.com/espressif/u-boot/blob/333c7a31f49d0ecc796edc7b6f7d44c4fcd1e9f8/arch/riscv/dts/esp32s31.dts)
+uses root compatible `espressif,esp32s31`, whereas the
+[EmberBSD platform](https://github.com/oxtech-ember/EmberBSD/blob/9fb4f116466938027d200f582ea0c1beca8c6ab0/sys/arch/riscv/espressif/esp32s31_platform.c)
+matches `esp,esp32s31`. Its interrupt-controller bindings also differ from the
+[EmberBSD driver](https://github.com/oxtech-ember/EmberBSD/blob/9fb4f116466938027d200f582ea0c1beca8c6ab0/sys/arch/riscv/espressif/esp_intmtx.c).
+The preview device tree therefore cannot be assumed to select the EmberBSD
+platform or attach its interrupt controller. These sources do not identify the
+loader, device tree or kernel-copy stub used in the earlier S31 board result,
+and do not establish an EmberBSD boot on Mosaico.
+
 ## Observed factory layout
 
 The sample reported as V1.2, with screen labels `Software 0.4.0` and `GSP 1.5.1`,
