@@ -2,7 +2,8 @@
 
 This recipe updates an existing EmberBSD microSD installation that starts through vendor U-Boot and `boot.scr`.
 It replaces the native kernel, the loaded kernel modules, both A733 board DTBs, the normal boot script and the `base`, `comp` and `etc` sets.
-It leaves packages, X11 sets, `/rescue`, `/libdata/firmware`, the diagnostic directory and other recovery files unchanged.
+If the bundle contains X11 sets, it also installs `xbase`, `xcomp`, `xfont` and `xserver` and merges `xetc`.
+It leaves packages, `/rescue`, `/libdata/firmware`, the diagnostic directory and other recovery files unchanged.
 Commands run as root on the board unless a step names the serial console or another host.
 This is a procedure, not physical acceptance of a particular build.
 
@@ -24,11 +25,18 @@ The bundle contains:
 | `boot.scr` | U-Boot script image of [`orangepi-zero4-boot.cmd`](https://github.com/oxtech-ember/EmberBSD/blob/c5d1be911e44b58402a405333db205ba4ad1daaf/ember/boot/orangepi-zero4-boot.cmd) from `REV` |
 | `modules/NAME.kmod` | One module for each name in the board's `/etc/modules.conf` |
 | `base.tar.xz`, `comp.tar.xz`, `etc.tar.xz` | Userland sets from the same destination tree |
+| `xbase.tar.xz`, `xcomp.tar.xz`, `xetc.tar.xz`, `xfont.tar.xz`, `xserver.tar.xz` | Optional X11 sets from the same destination tree |
 | `orangepi-zero4-boot.cmd` | Script source from `REV`, kept as `boot.cmd` |
 | `SHA256` | BSD-style SHA256 lines for every file above |
 
 Do not combine a new kernel with older modules or a DTB from another commit.
 A missing set or module stops the update; do not substitute a file from another build.
+Install the X11 sets either all together or not at all.
+`X11` below means that the bundle contains them and they are installed.
+Check the bundle on the build host before copying it.
+No file may contain a build-host path.
+A Clang build must contain no GCC runtime file and no `GCC:` identification string.
+GCC-profile text in `/usr/share/mk` is build-system data, not a GCC dependency.
 `boot.scr` is a 64-byte legacy image header, an 8-byte script length table and the unchanged script text.
 
 ## Before any change
@@ -74,7 +82,8 @@ Do not delete `netbsd.recovery`, the diagnostic directory or another recovery fi
 If space is insufficient, stop and plan a separate cleanup.
 
 The root file system holds the staged bundle, the backups and a test tree.
-Its free space must exceed twice the uncompressed size of the three sets plus the backup size.
+Its free space must exceed twice the uncompressed size of the installed sets plus the backup size.
+The X11 sets add several hundred MB.
 `tar -tvJf SET` lists the uncompressed sizes.
 
 ## Stage and verify the bundle
@@ -95,10 +104,13 @@ Extract the sets into a test tree and run its loader, shell, OpenSSL and SSH in 
 
 ```sh
 mkdir /var/update/REV-root
-for set in base comp etc; do tar -xpJf "$set.tar.xz" -C /var/update/REV-root; done
+sets="base comp etc"
+[ -f xbase.tar.xz ] && sets="$sets xbase xetc"   # X11 only
+for set in $sets; do tar -xpJf "$set.tar.xz" -C /var/update/REV-root; done
 mkdir -p /var/update/REV-root/dev
 mknod /var/update/REV-root/dev/null c 0 2
 chroot /var/update/REV-root /bin/sh -c 'echo ok; /usr/bin/openssl version; /usr/bin/ssh -V'
+[ -f xbase.tar.xz ] && chroot /var/update/REV-root /usr/X11R7/bin/xdpyinfo -version
 rm /var/update/REV-root/dev/null
 ```
 
@@ -119,12 +131,14 @@ tar -cf "$bk/etc.tar" -C / etc
 cp -p /netbsd "$bk/netbsd.elf"
 ```
 
-Back up every existing file that the new `base` and `comp` sets replace.
+Back up every existing file that the new `base`, `comp` and X11 sets replace.
 Record the files that the sets add, so that a rollback can remove them.
 
 ```sh
 new=/var/update/REV
-for set in base comp; do tar -tJf "$new/$set.tar.xz"; done | sort -u > "$bk/set-paths"
+sets="base comp"
+[ -f "$new/xbase.tar.xz" ] && sets="$sets xbase xcomp xfont xserver"   # X11 only
+for set in $sets; do tar -tJf "$new/$set.tar.xz"; done | sort -u > "$bk/set-paths"
 : > "$bk/replaced"; : > "$bk/added"
 while read -r path; do
     if [ -e "/$path" ] || [ -h "/$path" ]; then
@@ -189,15 +203,18 @@ Use [rollback A](#rollback-a-kernel-bundle) if any check fails.
 ## Stage 2: userland
 
 Install the userland only after stage 1 passes.
-Do not extract the `etc` set over `/`.
+Do not extract the `etc` or `xetc` set over `/`.
+Stop if a set fails to extract and use [rollback B](#rollback-b-userland).
 
 ```sh
 new=/var/update/REV
 cd /
-tar -xpUJf "$new/base.tar.xz"
-tar -xpUJf "$new/comp.tar.xz"
+sets="base comp"
+[ -f "$new/xbase.tar.xz" ] && sets="$sets xbase xcomp xfont xserver"   # X11 only
+for set in $sets; do tar -xpUJf "$new/$set.tar.xz" || break; done
 mkdir /var/update/REV-etc
 tar -xpJf "$new/etc.tar.xz" -C /var/update/REV-etc
+[ -f "$new/xetc.tar.xz" ] && tar -xpJf "$new/xetc.tar.xz" -C /var/update/REV-etc
 etcupdate -s /var/update/REV-etc
 postinstall -s /var/update/REV-etc check
 ```
@@ -206,9 +223,11 @@ postinstall -s /var/update/REV-etc check
 In `etcupdate`, keep the installed `rc.conf`, `modules.conf`, `wpa_supplicant.conf`, SSH host keys and local accounts.
 Merge only reviewed upstream changes.
 Run `postinstall -s /var/update/REV-etc fix ITEM` only for reviewed items, then repeat `check`.
+Files that the new sets no longer contain stay installed; `postinstall -s /var/update/REV-etc check obsolete` lists them.
 
 Reboot so that services load the new libraries.
 Repeat the stage 1 checks and confirm existing services and packages start.
+With X11, run `X -version` and `xdpyinfo -version`; start X only with a display attached.
 Keep the backup and the staged bundle until the build is accepted.
 
 ## Rollback A: kernel bundle
@@ -265,6 +284,7 @@ cd /
 ```
 
 Remove the regular files and links listed in `$bk/added`.
+This also removes X11 files that the update added.
 Remove listed directories only when they are empty.
 Reboot and repeat the post-update checks.
 If the kernel also needs to return, follow rollback A afterwards.
