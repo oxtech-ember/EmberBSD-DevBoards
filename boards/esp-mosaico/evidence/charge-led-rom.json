@@ -1,0 +1,38 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-charge-led-rom",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-30",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Assembled ESP-Mosaico kit; V1.2 reported by operator; ESP32-S31 silicon revision 0.0 read by esptool"
+  },
+  "inputs": [
+    {
+      "name": "Official esptool standalone macOS arm64 archive",
+      "revision": "5.6.0",
+      "sha256": "08a58829a3f14bb08f2e39f4cad48dcb14b7000384268e7f06689836332d6e25",
+      "reference": null
+    }
+  ],
+  "scenario": "Enter ROM Download Mode manually. Ask the operator for the current color of the LED above USB-C, then query ROM security information with no reset before or after the command and with the RAM stub disabled.",
+  "expected": "A successful ROM reply while the operator reports white would disprove treating white as sufficient evidence that ROM Download Mode has ended.",
+  "observed": "The operator reported white. The subsequent get-security-info command connected to ESP32-S31, returned ROM security information, exited successfully and reported that it was staying in the bootloader. The operator had also described the indicator as red after ROM entry and white in the application; the later ROM reply shows that this color association is not a reliable mode detector.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "The LED color and board revision are operator observations, not optical or silkscreen measurements by the host.",
+    "The V1.2 hardware guide calls the charge colors orange and white; an operator description of red is not a separate verified ROM indicator.",
+    "No fixed idle interval, ROM timeout, reset reason or universal persistence guarantee was established.",
+    "The check did not write or erase flash or eFuses and does not establish EmberBSD boot."
+  ],
+  "source_refs": [
+    "mosaico-hardware-v12",
+    "esptool-5-6-0-macos-arm64"
+  ]
+}

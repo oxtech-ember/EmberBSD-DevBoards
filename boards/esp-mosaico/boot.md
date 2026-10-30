@@ -1,11 +1,20 @@
 # Power, boot and recovery
 
 The charge LED reports charging, not processor execution or USB data connectivity.
+The [V1.2 hardware guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-revision-details)
+specifies orange while charging and white when fully charged; V1.0 used red and green.
 Press POWER once to turn the board on. USB power can charge it while it is off.
 The Type-C connector carries USB 2.0 High-Speed OTG as well as power.
 Use a data-capable cable. The vendor application supplies its USB CDC console;
 the running application and its USB configuration therefore affect enumeration.
 See the [hardware guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-notes).
+
+White is also compatible with ROM Download Mode: in the
+[LED and ROM check](evidence/charge-led-rom.json), the operator reported white
+while a ROM security query succeeded without a reset or RAM stub.
+A change to white therefore does not establish exit from ROM.
+No ROM idle timeout was established by that check; confirm the mode through a
+ROM response rather than the charge LED color.
 
 ## Distinct startup paths
 
