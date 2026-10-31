@@ -1288,6 +1288,22 @@
       "revision": null,
       "reviewed_at": "2026-10-31",
       "sha256": null
+    },
+    {
+      "id": "mosaico-touch-input-observation",
+      "title": "ESP-Mosaico native touch event observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/touch-input.json",
+      "revision": null,
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-touch-kernel-source",
+      "title": "ESP-Mosaico kernel with RV32 framebuffer mapping correction",
+      "url": "https://github.com/oxtech-ember/EmberBSD/tree/ae4538fa8e39c56ad75ed70768cf549032e822b1",
+      "revision": "ae4538fa8e39c56ad75ed70768cf549032e822b1",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
     }
   ]
 }

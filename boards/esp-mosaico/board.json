@@ -27,7 +27,8 @@
     "mosaico-ram-os-observation",
     "mosaico-nor-os-observation",
     "mosaico-gui-peripheral-observation",
-    "mosaico-camera-guide"
+    "mosaico-camera-guide",
+    "mosaico-touch-input-observation"
   ],
   "capabilities": [
     {
@@ -72,12 +73,13 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, CO5300 framebuffer and CST9220 touch drivers attached and an LVGL process remained running for at least eight seconds, but the display remained black. Touch coordinates and audio function were not verified.",
+      "scope": "On one V1.2 sample, CO5300 framebuffer and CST9220 touch drivers attached; a subsequent touch trial produced changing coordinates and contact events. The LVGL display remained black; orientation, calibration and audio function were not verified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
-        "mosaico-gui-peripheral-observation"
+        "mosaico-gui-peripheral-observation",
+        "mosaico-touch-input-observation"
       ]
     },
     {

@@ -43,8 +43,10 @@ support remain unverified.
 A later [RAM graphics and peripheral observation](evidence/gui-peripherals.json)
 attached the CO5300 framebuffer and CST9220 touch driver, kept an LVGL process
 running for at least eight seconds, and read selected device IDs and a camera
-module EEPROM. The user reported a completely black screen; touch coordinates
-and camera sensor operation were not established by that check.
+module EEPROM. The user reported a completely black screen. A subsequent
+[touch input check](evidence/touch-input.json) observed changing coordinates
+and contact/release events. Touch calibration and camera sensor operation
+remain unverified.
 
 ## Sources
 

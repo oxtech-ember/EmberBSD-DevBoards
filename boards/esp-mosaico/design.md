@@ -14,7 +14,8 @@ For a native EmberBSD port, start with the [ESP32-S31 source profile](../esp32-s
 and identify which boot, memory and radio assumptions apply to Mosaico.
 Keep the 16 MB PSRAM budget explicit. Storage capacity is not working RAM.
 Initial display and touch integration has attached on one sample; the display
-remained black, and touch coordinates have not been checked. Power, audio and expansion
+remained black. Touch coordinates and contact events reached wsmouse, while
+orientation and calibration remain unverified. Power, audio and expansion
 features retain their own integration and validation limits.
 Check the actual flash layout and a usable console/recovery route before selecting an image.
 

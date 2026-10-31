@@ -27,8 +27,10 @@ Do not write eFuses to resolve an identification gap.
 
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
 V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 480
-and attached `wsmouse`. Touch-coordinate operation was not established.
-The same check read BMI270 and ES8311 identification registers; it did not
+and attached `wsmouse`. A [subsequent input check](evidence/touch-input.json)
+observed contact/release events and changing absolute coordinates; orientation
+and calibration have not been verified.
+The earlier peripheral observation also read BMI270 and ES8311 identification registers; it did not
 verify motion sensing or audio playback. See the [bounded observation](evidence/gui-peripherals.json).
 
 ## Expansion and debug routing

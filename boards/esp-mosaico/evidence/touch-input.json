@@ -1,0 +1,44 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-touch-input",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-31",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2 and CST9220 touch controller."
+  },
+  "inputs": [
+    {
+      "name": "ESP_MOSAICO RAM kernel FIT",
+      "revision": "OS ae4538fa8e39c56ad75ed70768cf549032e822b1",
+      "sha256": "9117e4615ed5fda910f9401bb90a7362cf863b754b29e7c7e6f0dfc1315ceef3",
+      "reference": null
+    },
+    {
+      "name": "Static FFS RAM root",
+      "revision": "Console tools with wscons and I²C reader",
+      "sha256": "a45be34726e86292e6ee055822392de9d8e99be27a934bdc95c70f035dc8b5ee",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the test kernel with a RAM root and read the native wsmouse event stream while the operator moves a finger on the touch panel.",
+  "expected": "Contact and release events and changing absolute X and Y coordinates reach the native wsmouse device.",
+  "observed": "The operator reported several finger movements. The wsmouse event stream contained changing absolute X and Y coordinates and contact/release events.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "One assembled V1.2 sample; this RAM boot did not update the installed NOR image.",
+    "The event capture establishes input delivery, not orientation, calibration accuracy, multitouch or sustained reliability.",
+    "The screen remained completely black in the separate graphics trial; touch input does not establish visible display output.",
+    "The escaped event stream and local device details remain private."
+  ],
+  "source_refs": [
+    "mosaico-touch-kernel-source",
+    "mosaico-gui-peripheral-observation"
+  ]
+}
