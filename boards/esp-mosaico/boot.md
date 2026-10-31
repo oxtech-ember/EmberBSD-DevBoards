@@ -11,17 +11,21 @@ establish EmberBSD kernel boot or a persistent installation.
 
 On the same V1.2 sample, a subsequent [RAM OS boot](evidence/ram-os.json)
 reached a single-user shell with an FFS memory-disk root. UART input, a child
-shell and one Ctrl-C were observed. This is a RAM-only scenario; full PSRAM
-testing, persistent boot and broader runtime support remain unverified.
+shell and one Ctrl-C were observed. This was a RAM-only scenario; full PSRAM
+testing and broader runtime support remain unverified.
 
 A later [RAM-only NOR read check](evidence/ram-nor-read.json) compared two
 4 KiB samples with an independently checked backup, then continued to OpenSBI
 and U-Boot. It did not write NOR or test persistent boot.
 
 A subsequent [NOR write and ROM digest verification](evidence/nor-write.json)
-covered the selected SPL and FIT ranges on that sample. Cold boot from the
-written NOR remains to be checked; the verification did not read back the
-entire device byte for byte.
+covered the selected SPL and FIT ranges on that sample; the verification did
+not read back the entire device byte for byte. A separate
+[battery-powered NOR boot](evidence/nor-os.json) with USB-C disconnected
+reached the ESP_MOSAICO kernel and a single-user shell. Its FFS root is an
+in-memory disk; repeated power cycles and NAND were not tested. After USB-C
+was connected, the existing shell continued to accept input and produce
+output; this did not test a separate power-on boot with USB-C attached.
 
 The charge LED reports charging, not processor execution or USB data connectivity.
 The [V1.2 hardware guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-revision-details)

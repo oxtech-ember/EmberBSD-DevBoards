@@ -1,0 +1,60 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-nor-os",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-31",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Assembled kit; V1.2 reported by operator; ESP32-S31 silicon revision 0.0 identified through ROM"
+  },
+  "inputs": [
+    {
+      "name": "NOR SPL sector image",
+      "revision": "U-Boot 2026.10; EmberBSD Ports d86b4004ef5295a97db22110b363a6ab45b2771a",
+      "sha256": "595de0fda3e9abc7073690fe68b47641759d4cd4f05c7ec91cbc993718f2c425",
+      "reference": null
+    },
+    {
+      "name": "NOR FIT sector image",
+      "revision": "S31 firmware, kernel and memory-disk root FIT",
+      "sha256": "5fcd02bb0ce1f77db92cf72a32546be0be5e90884cd8c1eebb42ffafedd49798",
+      "reference": null
+    },
+    {
+      "name": "ESP_MOSAICO kernel FIT",
+      "revision": "Kernel configuration from OS f089a9dc4b62671cfdb9f2873beff33acd6b59b9",
+      "sha256": "e17482b21ecf1a9805f374f9037cf56d47da98839999b7017799650d91c49c30",
+      "reference": null
+    },
+    {
+      "name": "Static FFS RAM root filesystem",
+      "revision": "Modified OS worktree based on efe18759405516fc3925570e07d0094eabc7ad3a; source-worktree SHA256 5109cdc1237b3e64c1474c52dee421c2243b0068c9e5a42dc072a68d66b50c13; console producer published at 27242ccd8e397de27e50b57589d3d4c97e4ca5e1",
+      "sha256": "1685070fa4fce541d3ffeda58e1dfc978f95e45d96913e3f28ca238994ae20ba",
+      "reference": null
+    }
+  ],
+  "scenario": "Power the V1.2 kit from its battery with USB-C disconnected; press POWER without BOOT and observe the UART console. Exercise simple single-user shell commands.",
+  "expected": "The ROM boots the installed NOR image and the kernel mounts its memory-disk root and provides an interactive single-user shell.",
+  "observed": "One battery-powered POWER press produced a POWERON reset and SPI flash boot. SPL, OpenSBI and U-Boot started the ESP_MOSAICO kernel, which mounted an FFS root on md0a and reached a single-user shell. Shell input and output, a child shell, /tmp and a read of hello were observed. After USB-C was connected, pwd still reported /tmp and the same console accepted a command and printed its expected output.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "This is one battery-powered normal POWER-on boot on one operator-reported V1.2 sample; it does not establish sustained reliability or repeated power cycles.",
+    "Connecting USB-C to the already running system did not test a power-on boot with USB-C attached.",
+    "The persistent NOR holds boot and root image inputs; the running FFS root is an in-memory disk, not a writable persistent filesystem.",
+    "This does not test NAND, full-range PSRAM read/write or general peripheral and application support.",
+    "A child shell and console input/output were observed; no new Ctrl-C or full POSIX, PTY and signal tests were performed in this boot.",
+    "FIT SHA-256 checks integrity and does not establish authenticated firmware.",
+    "The UART logs and device identifiers remain private; no raw logs or identifiers are published."
+  ],
+  "source_refs": [
+    "mosaico-rom-readback-observation",
+    "mosaico-ram-os-observation",
+    "mosaico-nor-write-observation"
+  ]
+}

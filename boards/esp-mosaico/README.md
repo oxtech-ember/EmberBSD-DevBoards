@@ -34,8 +34,11 @@ verified a firmware FIT, started OpenSBI and reached the U-Boot prompt.
 That check did not establish an EmberBSD kernel boot or persistent installation.
 A later [RAM operating-system check](evidence/ram-os.json) booted the
 `ESP_MOSAICO` kernel with an FFS memory-disk root to a single-user shell.
-UART input, a child shell and one Ctrl-C were observed; persistent boot,
-full PSRAM read/write and general application support remain unverified.
+UART input, a child shell and one Ctrl-C were observed. A subsequent
+[battery-powered NOR boot](evidence/nor-os.json) reached a single-user shell
+after a normal POWER press. Its FFS root is an in-memory disk; persistent
+filesystem writes, NAND, full PSRAM read/write and general application
+support remain unverified.
 
 ## Sources
 

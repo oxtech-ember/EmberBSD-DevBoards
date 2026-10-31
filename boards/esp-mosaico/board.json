@@ -24,14 +24,15 @@
     "mosaico-uart-rom-observation",
     "mosaico-ram-spl-observation",
     "mosaico-ram-firmware-observation",
-    "mosaico-ram-os-observation"
+    "mosaico-ram-os-observation",
+    "mosaico-nor-os-observation"
   ],
   "capabilities": [
     {
       "id": "boot",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one operator-reported V1.2 sample, a RAM-only SPL, OpenSBI and U-Boot booted the ESP_MOSAICO kernel with an FFS memory-disk root into a single-user shell. This does not establish persistent boot, general peripheral support or full PSRAM read/write.",
+      "scope": "On one operator-reported V1.2 sample, a battery-powered normal POWER-on boot from NOR reached the ESP_MOSAICO kernel and a single-user shell with an FFS memory-disk root. This does not establish NAND boot, full PSRAM read/write or general peripheral support.",
       "source_refs": [
         "mosaico-vendor-webui-observation",
         "mosaico-device-modes",
@@ -39,7 +40,8 @@
         "mosaico-uart-rom-observation",
         "mosaico-ram-spl-observation",
         "mosaico-ram-firmware-observation",
-        "mosaico-ram-os-observation"
+        "mosaico-ram-os-observation",
+        "mosaico-nor-os-observation"
       ]
     },
     {

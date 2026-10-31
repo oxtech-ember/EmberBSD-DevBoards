@@ -1232,6 +1232,22 @@
       "revision": "e0ef9584d7988d47c6c0577dc295339db9ff1656",
       "reviewed_at": "2026-10-31",
       "sha256": null
+    },
+    {
+      "id": "mosaico-nor-write-observation",
+      "title": "ESP-Mosaico NOR write and ROM digest verification",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/59dc6e9b35b5a85cecb1b869401083fe5cf5a981/boards/esp-mosaico/evidence/nor-write.json",
+      "revision": null,
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-nor-os-observation",
+      "title": "ESP-Mosaico battery-powered NOR boot to single-user shell",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/nor-os.json",
+      "revision": null,
+      "reviewed_at": "2026-10-31",
+      "sha256": null
     }
   ]
 }
