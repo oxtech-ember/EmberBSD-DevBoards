@@ -1144,6 +1144,30 @@
       "revision": null,
       "reviewed_at": "2026-10-30",
       "sha256": null
+    },
+    {
+      "id": "esp32s31-idf-memory-layout",
+      "title": "ESP-IDF ESP32-S31 heap regions and ROM startup reservation",
+      "url": "https://github.com/espressif/esp-idf/blob/d445e947156f276dfe0db5804e4edf6ae90fe6fb/components/heap/port/esp32s31/memory_layout.c",
+      "revision": "d445e947156f276dfe0db5804e4edf6ae90fe6fb",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "esp32s31-idf-memory-definitions",
+      "title": "ESP-IDF ESP32-S31 SoC memory and ROM stack definitions",
+      "url": "https://github.com/espressif/esp-idf/blob/d445e947156f276dfe0db5804e4edf6ae90fe6fb/components/soc/esp32s31/include/soc/soc.h",
+      "revision": "d445e947156f276dfe0db5804e4edf6ae90fe6fb",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "esp32s31-idf-linker-memory",
+      "title": "ESP-IDF ESP32-S31 HP linker memory boundary",
+      "url": "https://github.com/espressif/esp-idf/blob/d445e947156f276dfe0db5804e4edf6ae90fe6fb/components/esp_system/ld/esp32s31/ld.hp_mem_defs",
+      "revision": "d445e947156f276dfe0db5804e4edf6ae90fe6fb",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
     }
   ]
 }

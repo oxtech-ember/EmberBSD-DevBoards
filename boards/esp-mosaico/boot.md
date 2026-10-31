@@ -40,6 +40,9 @@ The generic ESP32-S31 port's loader chain and flash-root layout are not a Mosaic
 
 ## ESP32-S31 firmware sources
 
+The shared [ROM working-memory boundary](../../socs/esp32-s31.md#rom-working-memory-during-early-boot)
+applies when placing SRAM boot stages and their stacks.
+
 Espressif publishes a developer-preview Linux boot chain for the ESP32-S31.
 Its [U-Boot SPL](https://github.com/espressif/u-boot/blob/333c7a31f49d0ecc796edc7b6f7d44c4fcd1e9f8/board/espressif/esp32s31/spl.c)
 initializes the SoC and loads OpenSBI, U-Boot and a device tree; its
