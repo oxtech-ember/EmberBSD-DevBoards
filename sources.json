@@ -1184,6 +1184,22 @@
       "revision": "2dfe2f8b286b270a90a51787716a00d52fe3e5d3",
       "reviewed_at": "2026-10-31",
       "sha256": null
+    },
+    {
+      "id": "mosaico-ram-firmware-observation",
+      "title": "ESP-Mosaico V1.2 RAM firmware through U-Boot prompt",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/ram-firmware.json",
+      "revision": null,
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-s31-uart-fit-ports",
+      "title": "EmberBSD Ports ESP32-S31 UART FIT receiver source",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/tree/28f5b441939dd2276b1abdd10af51dca14b01170/pkgsrc/sysutils/u-boot-source",
+      "revision": "28f5b441939dd2276b1abdd10af51dca14b01170",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
     }
   ]
 }

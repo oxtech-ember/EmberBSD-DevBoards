@@ -1,0 +1,57 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-ram-firmware",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-31",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Assembled kit; V1.2 reported by operator; ESP32-S31 silicon revision 0.0 identified through ROM"
+  },
+  "inputs": [
+    {
+      "name": "RAM-only ESP32-S31 U-Boot SPL ROM image",
+      "revision": "U-Boot 2026.10; EmberBSD Ports 28f5b441939dd2276b1abdd10af51dca14b01170",
+      "sha256": "b686ae2238e09977d9c98984cdc5e956f6937f1706b5d16de0e6dbcb93108308",
+      "reference": null
+    },
+    {
+      "name": "OpenSBI and U-Boot firmware FIT",
+      "revision": "U-Boot 2026.10; OpenSBI 1.9; S31 firmware FIT configuration",
+      "sha256": "8f67ca8e3f6b5680523ade212d6909785344e5e247d8e2faa6b07b6fb3a5581b",
+      "reference": null
+    }
+  ],
+  "scenario": "Start the RAM-only SPL using the vendor ROM and transfer the firmware FIT through its UART receiver; observe the next stages on the UART console. The trial does not install firmware to nonvolatile storage.",
+  "expected": "The complete FIT transfers, the SPL verifies image hashes, OpenSBI starts and U-Boot reaches its interactive prompt.",
+  "observed": "The SPL reported receiving 322032 bytes and verified the FIT image hashes. OpenSBI reported ESP32-S31 firmware active. U-Boot 2026.10 reported DRAM 299.9 KiB (total 16.3 MiB) and reached the esp32s31 prompt.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "spl-image-size",
+      "value": 56784,
+      "unit": "byte"
+    },
+    {
+      "name": "fit-image-size",
+      "value": 322032,
+      "unit": "byte"
+    }
+  ],
+  "limits": [
+    "This is a RAM-only bootloader result on one operator-reported V1.2 sample and silicon revision 0.0; other units and revisions were not tested.",
+    "The output does not establish EmberBSD kernel boot, a persistent installation, a successful restoration or operation across power cycles.",
+    "The trial did not perform a full-range PSRAM read/write test; U-Boot DRAM reporting includes the available memory regions and is not a separate PSRAM capacity measurement.",
+    "FIT image hashes check integrity but do not establish authenticated firmware.",
+    "The UART trace and device identifiers remain private; no raw logs or identifiers are published."
+  ],
+  "source_refs": [
+    "mosaico-s31-uart-fit-ports",
+    "mosaico-ram-spl-observation",
+    "esptool-5-6-0-macos-arm64"
+  ]
+}

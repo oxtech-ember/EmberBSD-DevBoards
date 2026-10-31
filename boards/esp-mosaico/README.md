@@ -29,6 +29,9 @@ identification through H1 with an external USB-UART adapter.
 The [RAM-only SPL check](evidence/ram-spl.json) reached its UART receiver and
 reported 16 MiB PSRAM density on this sample. It did not test full PSRAM
 read/write, U-Boot proper, OpenSBI or an EmberBSD kernel.
+A subsequent [RAM firmware check](evidence/ram-firmware.json) received and
+verified a firmware FIT, started OpenSBI and reached the U-Boot prompt.
+That check did not establish an EmberBSD kernel boot or persistent installation.
 There is no accepted EmberBSD runtime result for this Mosaico profile.
 
 ## Sources
