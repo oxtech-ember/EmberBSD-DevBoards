@@ -1,0 +1,49 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-ram-nor-read",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-31",
+  "layer": "physical",
+  "result": "pass",
+  "duration_seconds": null,
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Assembled kit; V1.2 reported by operator; ESP32-S31 silicon revision 0.0 identified through ROM"
+  },
+  "inputs": [
+    {
+      "name": "RAM-only ESP32-S31 SPL with NOR read probe",
+      "revision": "U-Boot 2026.10; experimental probe",
+      "sha256": "ca8be9eff6691cf98797aded4e33429d80c334460aa167082a69a5c44d15de68",
+      "reference": null
+    }
+  ],
+  "scenario": "Start an experimental SPL in RAM, read two 4 KiB NOR ranges and compare their CRC32 values to an independently checked complete backup. Continue to OpenSBI and U-Boot in RAM.",
+  "expected": "Both sampled ranges agree with the corresponding bytes in the backup, and the RAM firmware chain continues.",
+  "observed": "The probe reported CRC32 70f96d2a for the 4 KiB range at offset 0x2000 and c223153e for the 4 KiB range at offset 0x20000; both match independent calculations over the backup. OpenSBI and U-Boot subsequently started.",
+  "measurements": [
+    {
+      "name": "sample-size",
+      "value": 4096,
+      "unit": "byte"
+    },
+    {
+      "name": "sample-count",
+      "value": 2,
+      "unit": "count"
+    }
+  ],
+  "limits": [
+    "The probe was built from a modified worktree; it is not established as a byte-identical build of the published nb10 source package.",
+    "This samples two NOR ranges on one operator-reported V1.2 sample and does not verify the entire NOR address space.",
+    "This is a RAM-only read test, not a persistent installation, NOR write, restore or cold boot.",
+    "The trace and device identifiers remain private; no raw logs or identifiers are published."
+  ],
+  "source_refs": [
+    "mosaico-rom-readback-observation",
+    "mosaico-ram-firmware-observation"
+  ]
+}

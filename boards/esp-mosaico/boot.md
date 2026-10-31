@@ -14,6 +14,10 @@ reached a single-user shell with an FFS memory-disk root. UART input, a child
 shell and one Ctrl-C were observed. This is a RAM-only scenario; full PSRAM
 testing, persistent boot and broader runtime support remain unverified.
 
+A later [RAM-only NOR read check](evidence/ram-nor-read.json) compared two
+4 KiB samples with an independently checked backup, then continued to OpenSBI
+and U-Boot. It did not write NOR or test persistent boot.
+
 The charge LED reports charging, not processor execution or USB data connectivity.
 The [V1.2 hardware guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-revision-details)
 specifies orange while charging and white when fully charged; V1.0 used red and green.
