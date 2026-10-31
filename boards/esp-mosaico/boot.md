@@ -9,6 +9,11 @@ permanent installation were not tested in that check. A subsequent
 started OpenSBI and reached the U-Boot prompt on the same sample. It did not
 establish EmberBSD kernel boot or a persistent installation.
 
+On the same V1.2 sample, a subsequent [RAM OS boot](evidence/ram-os.json)
+reached a single-user shell with an FFS memory-disk root. UART input, a child
+shell and one Ctrl-C were observed. This is a RAM-only scenario; full PSRAM
+testing, persistent boot and broader runtime support remain unverified.
+
 The charge LED reports charging, not processor execution or USB data connectivity.
 The [V1.2 hardware guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-revision-details)
 specifies orange while charging and white when fully charged; V1.0 used red and green.

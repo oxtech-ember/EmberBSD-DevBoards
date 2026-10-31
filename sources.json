@@ -1200,6 +1200,38 @@
       "revision": "28f5b441939dd2276b1abdd10af51dca14b01170",
       "reviewed_at": "2026-10-31",
       "sha256": null
+    },
+    {
+      "id": "mosaico-ram-os-observation",
+      "title": "ESP-Mosaico V1.2 RAM kernel and single-user shell",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/ram-os.json",
+      "revision": null,
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-esp-kernel-source",
+      "title": "ESP-Mosaico kernel configuration",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/f089a9dc4b62671cfdb9f2873beff33acd6b59b9/sys/arch/riscv/conf/ESP_MOSAICO",
+      "revision": "f089a9dc4b62671cfdb9f2873beff33acd6b59b9",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-ram-console-producer",
+      "title": "EmberBSD static console profile",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/27242ccd8e397de27e50b57589d3d4c97e4ca5e1/ember/image/cix-p1-userland.md",
+      "revision": "27242ccd8e397de27e50b57589d3d4c97e4ca5e1",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-netbsd-boot-ports",
+      "title": "EmberBSD Ports U-Boot source and NetBSD boot support",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/tree/e0ef9584d7988d47c6c0577dc295339db9ff1656/pkgsrc/sysutils/u-boot-source",
+      "revision": "e0ef9584d7988d47c6c0577dc295339db9ff1656",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
     }
   ]
 }

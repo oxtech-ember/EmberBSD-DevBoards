@@ -1,0 +1,71 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-ram-os",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-31",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Assembled kit; V1.2 reported by operator; ESP32-S31 silicon revision 0.0 identified through ROM"
+  },
+  "inputs": [
+    {
+      "name": "RAM-only SPL ROM image",
+      "revision": "U-Boot 2026.10; EmberBSD Ports 28f5b441939dd2276b1abdd10af51dca14b01170",
+      "sha256": "b686ae2238e09977d9c98984cdc5e956f6937f1706b5d16de0e6dbcb93108308",
+      "reference": null
+    },
+    {
+      "name": "RAM firmware FIT with OpenSBI and U-Boot",
+      "revision": "U-Boot 2026.10; OpenSBI 1.9; Ports source 2026.10nb7",
+      "sha256": "60f973e93e1797b6afc25d9dfc459e2bd05fded86c3a9f2fdf594a25d40b246d",
+      "reference": null
+    },
+    {
+      "name": "ESP_MOSAICO kernel FIT",
+      "revision": "Kernel configuration from OS f089a9dc4b62671cfdb9f2873beff33acd6b59b9",
+      "sha256": "e17482b21ecf1a9805f374f9037cf56d47da98839999b7017799650d91c49c30",
+      "reference": null
+    },
+    {
+      "name": "Static FFS RAM root filesystem",
+      "revision": "Modified OS worktree based on efe18759405516fc3925570e07d0094eabc7ad3a; source-worktree SHA256 5109cdc1237b3e64c1474c52dee421c2243b0068c9e5a42dc072a68d66b50c13; console producer published at 27242ccd8e397de27e50b57589d3d4c97e4ca5e1",
+      "sha256": "1685070fa4fce541d3ffeda58e1dfc978f95e45d96913e3f28ca238994ae20ba",
+      "reference": null
+    }
+  ],
+  "scenario": "Start the RAM-only SPL using the vendor ROM and transfer firmware. Use U-Boot YMODEM at 460800 baud to load the kernel FIT and RAM root, returning the console to 115200 after each transfer. Boot in single-user mode with an in-place memory-disk root, and exercise console input and output, a child shell and interrupt delivery.",
+  "expected": "The kernel starts with its memory-disk root and provides an interactive single-user shell on UART.",
+  "observed": "Both YMODEM transfers completed with 460800/115200 baud transitions. The kernel attached its timer and interrupt matrix, mounted an FFS root on md0a and reached a single-user shell. Console input and output worked; /sbin/init and /bin/sh were present, a child shell executed, and Ctrl-C returned to the prompt.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "root-filesystem-size",
+      "value": 4194304,
+      "unit": "byte"
+    },
+    {
+      "name": "kernel-fit-size",
+      "value": 748448,
+      "unit": "byte"
+    }
+  ],
+  "limits": [
+    "This is one operator-reported V1.2 sample and silicon revision 0.0; other units and revisions were not tested.",
+    "Boot and root storage were RAM-only; persistent NOR or NAND boot, recovery and operation across power cycles were not tested.",
+    "This is not a full-range PSRAM read/write test or a sustained reliability test.",
+    "A child shell and a single Ctrl-C were observed; this does not establish complete POSIX, PTY, signal or application support.",
+    "FIT SHA-256 checks integrity and does not establish authenticated firmware.",
+    "The UART log and device identifiers remain private; raw logs and identifiers are not published."
+  ],
+  "source_refs": [
+    "mosaico-ram-firmware-observation",
+    "mosaico-esp-kernel-source",
+    "mosaico-ram-console-producer",
+    "mosaico-netbsd-boot-ports"
+  ]
+}

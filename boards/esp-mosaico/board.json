@@ -23,21 +23,23 @@
     "mosaico-rom-readback-observation",
     "mosaico-uart-rom-observation",
     "mosaico-ram-spl-observation",
-    "mosaico-ram-firmware-observation"
+    "mosaico-ram-firmware-observation",
+    "mosaico-ram-os-observation"
   ],
   "capabilities": [
     {
       "id": "boot",
       "hardware": "present",
-      "emberbsd": "unknown",
-      "scope": "On one operator-reported V1.2 sample, a RAM-only SPL received and verified a firmware FIT, then OpenSBI and U-Boot reached the console prompt. Full PSRAM read/write, EmberBSD kernel boot and permanent installation were not established by that trial.",
+      "emberbsd": "verified-scenario",
+      "scope": "On one operator-reported V1.2 sample, a RAM-only SPL, OpenSBI and U-Boot booted the ESP_MOSAICO kernel with an FFS memory-disk root into a single-user shell. This does not establish persistent boot, general peripheral support or full PSRAM read/write.",
       "source_refs": [
         "mosaico-vendor-webui-observation",
         "mosaico-device-modes",
         "mosaico-rom-readback-observation",
         "mosaico-uart-rom-observation",
         "mosaico-ram-spl-observation",
-        "mosaico-ram-firmware-observation"
+        "mosaico-ram-firmware-observation",
+        "mosaico-ram-os-observation"
       ]
     },
     {

@@ -32,7 +32,10 @@ read/write, U-Boot proper, OpenSBI or an EmberBSD kernel.
 A subsequent [RAM firmware check](evidence/ram-firmware.json) received and
 verified a firmware FIT, started OpenSBI and reached the U-Boot prompt.
 That check did not establish an EmberBSD kernel boot or persistent installation.
-There is no accepted EmberBSD runtime result for this Mosaico profile.
+A later [RAM operating-system check](evidence/ram-os.json) booted the
+`ESP_MOSAICO` kernel with an FFS memory-disk root to a single-user shell.
+UART input, a child shell and one Ctrl-C were observed; persistent boot,
+full PSRAM read/write and general application support remain unverified.
 
 ## Sources
 
