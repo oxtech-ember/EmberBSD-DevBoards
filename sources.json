@@ -1248,6 +1248,46 @@
       "revision": null,
       "reviewed_at": "2026-10-31",
       "sha256": null
+    },
+    {
+      "id": "mosaico-gui-peripheral-observation",
+      "title": "ESP-Mosaico RAM graphics and peripheral identification",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/gui-peripherals.json",
+      "revision": null,
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-gui-kernel-source",
+      "title": "ESP-Mosaico kernel for graphics and peripheral trial",
+      "url": "https://github.com/oxtech-ember/EmberBSD/tree/841a197fe51b12d86828e4c47a40b1d6d5675e1b",
+      "revision": "841a197fe51b12d86828e4c47a40b1d6d5675e1b",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-lvgl-example",
+      "title": "EmberBSD LVGL wscons example",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/b1afcfbe0c3ef008a44bb5aae11a2dbfa937597f/desktop/lvgl-wscons",
+      "revision": "b1afcfbe0c3ef008a44bb5aae11a2dbfa937597f",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-i2c-reader-example",
+      "title": "EmberBSD addressed I²C register-read example",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/eac32cff3302728d3661bb00b06c4c8cc57d61cf/diagnostics/i2c-register-read",
+      "revision": "eac32cff3302728d3661bb00b06c4c8cc57d61cf",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-camera-guide",
+      "title": "ESP-Mosaico Camera Module guide",
+      "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide_camera.html",
+      "revision": null,
+      "reviewed_at": "2026-10-31",
+      "sha256": null
     }
   ]
 }

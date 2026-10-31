@@ -1,0 +1,49 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-gui-peripherals",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-31",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit, operator-reported CoreBoard V1.2; a left-slot camera module was connected."
+  },
+  "inputs": [
+    {
+      "name": "ESP_MOSAICO RAM kernel FIT",
+      "revision": "OS 841a197fe51b12d86828e4c47a40b1d6d5675e1b",
+      "sha256": "3a8964f3072b885d80a668552ef43f0484623764e89b24ae00bf27933f97db32",
+      "reference": null
+    },
+    {
+      "name": "Static FFS RAM root with LVGL and I²C reader",
+      "revision": "LVGL example b1afcfbe0c3ef008a44bb5aae11a2dbfa937597f; I²C reader eac32cff3302728d3661bb00b06c4c8cc57d61cf; console-tools 06be3ad3bfec7e98e214059b21e18a195ac3d2be",
+      "sha256": "a45be34726e86292e6ee055822392de9d8e99be27a934bdc95c70f035dc8b5ee",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the test kernel and RAM root, observe display and touch driver attachment, run the LVGL example, and read selected peripheral identification registers and the left-slot module EEPROM.",
+  "expected": "The kernel attaches the devices, the LVGL example displays a visible interface, and addressed I²C reads return independently checkable identification data.",
+  "observed": "CO5300 framebuffer/wsdisplay, both GPIO I²C buses and CST9220 touch/wsmouse attached. The controller reported project 0x6854 and 480 × 480. The LVGL example remained running after an eight-second wait while the UART shell remained responsive; the user reported a completely black screen. The camera EEPROM had ESP magic, camera board type, hardware version 0x0102, and three valid CRCs. BMI270 address 0x69 register 0x00 returned 0x24; individual ES8311 registers 0xfd, 0xfe and 0xff returned 0x83, 0x11 and 0x01. Reads of OV3640 ID registers returned I/O errors before sensor power/reset configuration.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "One assembled V1.2 sample only; this was a RAM test and does not update the installed NOR image.",
+    "The display remained black despite the running process; touch-coordinate operation was not tested.",
+    "EEPROM identifies the camera module, not the sensor silicon. The sensor ID and camera frame capture remain unverified; sensor power and reset were not configured.",
+    "Register identification does not establish audio playback, motion measurements or full peripheral operation.",
+    "The ES8311 multi-byte read did not match the individual reads; register auto-increment has not been established.",
+    "The UART logs and identifying EEPROM fields remain private."
+  ],
+  "source_refs": [
+    "mosaico-gui-kernel-source",
+    "mosaico-lvgl-example",
+    "mosaico-i2c-reader-example",
+    "mosaico-bsp",
+    "mosaico-camera-guide"
+  ]
+}

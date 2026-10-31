@@ -40,6 +40,12 @@ after a normal POWER press. Its FFS root is an in-memory disk; persistent
 filesystem writes, NAND, full PSRAM read/write and general application
 support remain unverified.
 
+A later [RAM graphics and peripheral observation](evidence/gui-peripherals.json)
+attached the CO5300 framebuffer and CST9220 touch driver, kept an LVGL process
+running for at least eight seconds, and read selected device IDs and a camera
+module EEPROM. The user reported a completely black screen; touch coordinates
+and camera sensor operation were not established by that check.
+
 ## Sources
 
 - [CoreBoard V1.0 guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide_v1.0.html)

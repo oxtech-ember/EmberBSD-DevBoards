@@ -25,8 +25,11 @@ states that unknown or unprogrammed versions return `ESP_ERR_NOT_SUPPORTED`.
 Legacy header aliases retain V1.0 values; they are not universal pin selections.
 Do not write eFuses to resolve an identification gap.
 
-The guides name CST9220-series touch; the cited BSP names CST9217.
-Confirm the fitted controller and BSP detection path before selecting a touch driver.
+The guides name CST9220-series touch; the pinned BSP names CST9217. On one
+V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 480
+and attached `wsmouse`. Touch-coordinate operation was not established.
+The same check read BMI270 and ES8311 identification registers; it did not
+verify motion sensing or audio playback. See the [bounded observation](evidence/gui-peripherals.json).
 
 ## Expansion and debug routing
 
@@ -45,10 +48,13 @@ it does not establish a working EmberBSD serial console.
 The [UART ROM check](evidence/uart-rom.json) verified request/response through
 an FT232R adapter at 115200 baud, 8N1, with only TX, RX and ground connected.
 Board power came separately through USB-C. A ROM identification response matched
-the earlier USB readback identity. This establishes both UART directions;
-it does not establish OpenSBI/EmberBSD console output or sustained transfers.
+the earlier USB readback identity. That ROM check established both UART directions; the separate operating-system
+boot evidence establishes an EmberBSD console, but not sustained transfers.
 
-Camera modules use the left slot only. Some camera signals conflict with USB Serial/JTAG;
+Camera modules use the left slot only. A connected module on one V1.2 sample
+returned a CRC-valid camera EEPROM descriptor with hardware version 0x0102;
+sensor identification and capture remain unverified. The module revision is
+independent of the CoreBoard revision. Some camera signals conflict with USB Serial/JTAG;
 the BSP directs affected examples to UART.
 Five right-slot signals share the onboard audio I²S bus.
 Do not allocate those signals to another function while the codec uses them.

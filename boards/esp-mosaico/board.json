@@ -25,7 +25,9 @@
     "mosaico-ram-spl-observation",
     "mosaico-ram-firmware-observation",
     "mosaico-ram-os-observation",
-    "mosaico-nor-os-observation"
+    "mosaico-nor-os-observation",
+    "mosaico-gui-peripheral-observation",
+    "mosaico-camera-guide"
   ],
   "capabilities": [
     {
@@ -69,21 +71,24 @@
     {
       "id": "hmi",
       "hardware": "present",
-      "emberbsd": "unknown",
-      "scope": "BSP covers display, touch, audio and sensors. V1.2 was reported by the operator; the fitted touch controller needs identification. Lua catalog entries do not qualify drivers.",
+      "emberbsd": "partial",
+      "scope": "On one V1.2 sample, CO5300 framebuffer and CST9220 touch drivers attached and an LVGL process remained running for at least eight seconds, but the display remained black. Touch coordinates and audio function were not verified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
-        "mosaico-vendor-webui-observation"
+        "mosaico-vendor-webui-observation",
+        "mosaico-gui-peripheral-observation"
       ]
     },
     {
       "id": "expansion",
       "hardware": "present",
-      "emberbsd": "unknown",
-      "scope": "Two resource-sharing module slots. Camera is an optional left-slot module; module ownership and pin conflicts constrain combinations.",
+      "emberbsd": "partial",
+      "scope": "The slot I\u00b2C bus read a left-slot camera module EEPROM with valid CRCs on one sample. The module revision and sensor identity are separate; camera sensor access and frame capture remain unverified.",
       "source_refs": [
-        "mosaico-bsp"
+        "mosaico-bsp",
+        "mosaico-gui-peripheral-observation",
+        "mosaico-camera-guide"
       ]
     }
   ]
