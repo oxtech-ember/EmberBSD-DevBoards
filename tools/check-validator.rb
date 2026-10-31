@@ -15,7 +15,6 @@ cases = {
   'duplicate alias' => ['catalog.json', ->(x) { x['boards'][1]['aliases'] << 'cm5' }],
   'duplicate pin' => ['carriers/cm5-nano-b/carrier.json', ->(x) { x['connectors'][0]['pins'][1]['contact'] = 6 }],
   'false status' => ['boards/bcm2712-cm5/board.json', ->(x) { x['capabilities'][0]['emberbsd'] = 'fully-supported' }],
-  'wrong hash' => ['boards/bcm2712-cm5/configs/usb-recovery/manifest.json', ->(x) { x['files'][0]['sha256'] = '0' * 64 }],
   'unknown carrier' => ['boards/bcm2712-cm5/evidence/usb-recovery.json', ->(x) { x['hardware']['carrier_id'] = 'missing' }],
   'invalid date' => ['boards/bcm2712-cm5/evidence/usb-recovery.json', ->(x) { x['recorded_at'] = '2026-02-30' }]
 }

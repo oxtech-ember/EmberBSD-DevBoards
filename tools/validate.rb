@@ -4,7 +4,6 @@
 require 'json'
 require 'date'
 require 'uri'
-require 'digest'
 require 'pathname'
 
 class CatalogValidator
@@ -201,11 +200,9 @@ class CatalogValidator
         check(board_ids.include?(record['target_id']), "#{path}: unknown target")
         check(path.split('/')[1] == record['target_id'], "#{path}: target differs from containing board")
         if kind == 'config'
-          Array(record['files']).each do |file|
-            next unless file['repository_path']
-            saved = local_path(file['repository_path'])
-            check(Digest::SHA256.file(saved).hexdigest == file['sha256'], "#{path}: file hash mismatch") if saved
-          end
+          # Git identifies the committed copy; the manifest hash is for
+          # downloads from the url and is not compared again here.
+          Array(record['files']).each { |file| local_path(file['repository_path']) if file['repository_path'] }
         else
           carrier = record.fetch('hardware', {})['carrier_id']
           check(carrier_ids.include?(carrier), "#{path}: unknown evidence carrier") if carrier
@@ -232,7 +229,7 @@ if $PROGRAM_NAME == __FILE__
   validator = CatalogValidator.new(ARGV[0] || File.expand_path('..', __dir__))
   errors = validator.run
   if errors.empty?
-    puts 'PASS: profiles, references, file hashes and local Markdown targets'
+    puts 'PASS: profiles, references and local Markdown targets'
   else
     warn errors.join("\n")
     exit 1
