@@ -18,6 +18,11 @@ A later [RAM-only NOR read check](evidence/ram-nor-read.json) compared two
 4 KiB samples with an independently checked backup, then continued to OpenSBI
 and U-Boot. It did not write NOR or test persistent boot.
 
+A subsequent [NOR write and ROM digest verification](evidence/nor-write.json)
+covered the selected SPL and FIT ranges on that sample. Cold boot from the
+written NOR remains to be checked; the verification did not read back the
+entire device byte for byte.
+
 The charge LED reports charging, not processor execution or USB data connectivity.
 The [V1.2 hardware guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-revision-details)
 specifies orange while charging and white when fully charged; V1.0 used red and green.

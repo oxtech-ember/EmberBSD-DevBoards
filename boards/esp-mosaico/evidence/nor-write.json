@@ -1,0 +1,46 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-nor-write",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-31",
+  "layer": "physical",
+  "result": "pass",
+  "duration_seconds": null,
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Assembled kit; V1.2 reported by operator; ESP32-S31 silicon revision 0.0 identified through ROM"
+  },
+  "inputs": [
+    {
+      "name": "NOR SPL sector image",
+      "revision": "U-Boot 2026.10; EmberBSD Ports d86b4004ef5295a97db22110b363a6ab45b2771a",
+      "sha256": "595de0fda3e9abc7073690fe68b47641759d4cd4f05c7ec91cbc993718f2c425",
+      "reference": null
+    },
+    {
+      "name": "NOR FIT sector image",
+      "revision": "S31 firmware, kernel and memory-disk root FIT",
+      "sha256": "5fcd02bb0ce1f77db92cf72a32546be0be5e90884cd8c1eebb42ffafedd49798",
+      "reference": null
+    }
+  ],
+  "scenario": "Using the vendor ROM and official esptool 5.6.0, write the selected SPL and FIT sector ranges to the onboard NOR and independently verify each complete range using the ROM digest.",
+  "expected": "The ROM verifies both written ranges against their respective sector images.",
+  "observed": "The write completed for [0x2000, 0x10000) and [0x20000, 0x526000). A separate verify-flash operation reported a matching digest for each full range. The prior NOR backup was retained.",
+  "measurements": [
+    {"name": "spl-range-size", "value": 57344, "unit": "byte"},
+    {"name": "fit-range-size", "value": 5267456, "unit": "byte"}
+  ],
+  "limits": [
+    "The independent check used ROM digests for the two selected ranges; it is not a byte readback of the full NOR.",
+    "This record establishes write and ROM digest verification only; normal power-on boot requires separate evidence.",
+    "The event log, backup contents and device identifiers remain private."
+  ],
+  "source_refs": [
+    "mosaico-rom-readback-observation",
+    "esptool-5-6-0-macos-arm64"
+  ]
+}
