@@ -5,7 +5,7 @@
   "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
   "soc": "espressif-esp32-s31",
   "board_revision": "1.2",
-  "reviewed_at": "2026-10-30",
+  "reviewed_at": "2026-10-31",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/esp-mosaico/README.md",
@@ -21,19 +21,21 @@
     "mosaico-device-modes",
     "mosaico-vendor-webui-observation",
     "mosaico-rom-readback-observation",
-    "mosaico-uart-rom-observation"
+    "mosaico-uart-rom-observation",
+    "mosaico-ram-spl-observation"
   ],
   "capabilities": [
     {
       "id": "boot",
       "hardware": "present",
       "emberbsd": "unknown",
-      "scope": "Vendor application, USB ROM NOR readback and bidirectional UART ROM identification observed on operator-reported V1.2. These results do not qualify an EmberBSD image for this kit.",
+      "scope": "Vendor application, USB ROM NOR readback, UART ROM identification and RAM-only SPL initialization through its UART receiver were observed on operator-reported V1.2. Full PSRAM read/write, U-Boot proper, OpenSBI, EmberBSD kernel and permanent installation remain unverified.",
       "source_refs": [
         "mosaico-vendor-webui-observation",
         "mosaico-device-modes",
         "mosaico-rom-readback-observation",
-        "mosaico-uart-rom-observation"
+        "mosaico-uart-rom-observation",
+        "mosaico-ram-spl-observation"
       ]
     },
     {

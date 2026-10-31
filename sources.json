@@ -1168,6 +1168,22 @@
       "revision": "d445e947156f276dfe0db5804e4edf6ae90fe6fb",
       "reviewed_at": "2026-10-31",
       "sha256": null
+    },
+    {
+      "id": "mosaico-ram-spl-observation",
+      "title": "ESP-Mosaico V1.2 RAM-only SPL initialization and UART receiver",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/ram-spl.json",
+      "revision": null,
+      "reviewed_at": "2026-10-31",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-s31-spl-ports",
+      "title": "EmberBSD Ports ESP32-S31 SPL source",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/tree/2dfe2f8b286b270a90a51787716a00d52fe3e5d3/pkgsrc/sysutils/u-boot-source",
+      "revision": "2dfe2f8b286b270a90a51787716a00d52fe3e5d3",
+      "reviewed_at": "2026-10-31",
+      "sha256": null
     }
   ]
 }

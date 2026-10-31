@@ -1,5 +1,11 @@
 # Power, boot and recovery
 
+A [RAM-only first-stage check](evidence/ram-spl.json) on one operator-reported
+V1.2 kit with ESP32-S31 silicon revision 0.0 reached the SPL UART receiver.
+The SPL reported 16 MiB PSRAM density after its mode-register sequence; this
+is not a full-memory read/write test. FIT reception, later boot stages and
+permanent installation remain unverified.
+
 The charge LED reports charging, not processor execution or USB data connectivity.
 The [V1.2 hardware guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-revision-details)
 specifies orange while charging and white when fully charged; V1.0 used red and green.

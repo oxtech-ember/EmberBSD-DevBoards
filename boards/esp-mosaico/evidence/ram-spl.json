@@ -1,0 +1,52 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-ram-spl",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-10-31",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Assembled kit; V1.2 reported by operator; ESP32-S31 silicon revision 0.0 read through ROM"
+  },
+  "inputs": [
+    {
+      "name": "RAM-only ESP32-S31 U-Boot SPL ROM image",
+      "revision": "U-Boot 2026.10; EmberBSD Ports 2dfe2f8b286b270a90a51787716a00d52fe3e5d3",
+      "sha256": "8cf43173e63293a070de3d996d82185e59d15383df234981ca95f934d87eb321",
+      "reference": null
+    },
+    {
+      "name": "Official esptool macOS arm64 archive",
+      "revision": "5.6.0",
+      "sha256": "08a58829a3f14bb08f2e39f4cad48dcb14b7000384268e7f06689836332d6e25",
+      "reference": null
+    }
+  ],
+  "scenario": "Enter the vendor ROM download mode manually; use esptool to load the diagnostic SPL to RAM and observe the separate UART console. No firmware image was written to nonvolatile storage in this trial.",
+  "expected": "SPL initializes the early cache, PMA, clocks and PSRAM, reports detected capacity and starts its UART receiver.",
+  "observed": "The RAM-loaded SPL printed completion markers for cache/MMU, PSRAM PMA, MPLL, seven PSRAM mode-register SPI transactions, AXI and PSRAM MMU. It reported 16 MiB PSRAM density, printed readiness for UART FIT and emitted repeated receiver handshake characters.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "reported-psram-density",
+      "value": 16,
+      "unit": "MiB"
+    }
+  ],
+  "limits": [
+    "The density is the SPL interpretation of the PSRAM mode register; full-range PSRAM reads and writes were not tested.",
+    "Receiving or validating a FIT, U-Boot proper, OpenSBI, EmberBSD kernel boot and permanent installation were not tested.",
+    "This result applies to one operator-reported V1.2 sample and silicon revision 0.0; other boards and revisions were not tested.",
+    "RAM-only loading does not establish successful firmware restoration or persistence across power cycles.",
+    "The UART trace and device identifiers remain private; no private logs or raw identifiers are published."
+  ],
+  "source_refs": [
+    "mosaico-s31-spl-ports",
+    "esptool-5-6-0-macos-arm64",
+    "mosaico-uart-rom-observation"
+  ]
+}
