@@ -62,11 +62,13 @@
     {
       "id": "wifi",
       "hardware": "present",
-      "emberbsd": "unknown",
-      "scope": "Vendor-firmware WebUI and a bounded live-log connection observed. No EmberBSD radio or sustained-transfer result.",
+      "emberbsd": "partial",
+      "scope": "On one V1.2 sample, an EmberBSD RAM trial enumerated espwifi0 and completed active 2.4 GHz scan passes reporting 14 and 16 AP records. Repeated WPA IE parser callback errors make security classification unreliable. Association, DHCP, roaming and sustained transfer are unverified.",
       "source_refs": [
         "mosaico-hardware-v12",
-        "mosaico-vendor-webui-observation"
+        "mosaico-vendor-webui-observation",
+        "mosaico-espwifi-scan-kernel-source",
+        "mosaico-wifi-scan-observation"
       ]
     },
     {
@@ -85,7 +87,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD camera support remains identity-only with no DVP capture. Wi-Fi has not been tested in EmberBSD.",
+      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD camera support remains identity-only with no DVP capture. EmberBSD radio evidence is limited to the bounded active scan observation.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
@@ -98,7 +100,9 @@
         "mosaico-uboot-red-splash-diagnostic",
         "mosaico-spi-line-mode-kernel-source",
         "mosaico-row-pair-kernel-source",
-        "mosaico-row-pair-display-touch-observation"
+        "mosaico-row-pair-display-touch-observation",
+        "mosaico-espwifi-scan-kernel-source",
+        "mosaico-wifi-scan-observation"
       ]
     },
     {

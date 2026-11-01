@@ -79,9 +79,8 @@ replaces invalid one-row RASET windows with even-height two-row windows and
 [bounded display/touch observation](evidence/row-pair-display-touch.json).
 This confirms one configured V1.2 sample only. Touch orientation and quantitative
 calibration, audio playback and sustained operation remain unverified. The
-optional EmberBSD camera path is identity-only and does not implement DVP capture;
-EmberBSD Wi-Fi was not tested. A software transfer trace is not a voltage measurement
-of the switched LCD supply.
+optional EmberBSD camera path is identity-only and does not implement DVP capture.
+A software transfer trace is not a voltage measurement of the switched LCD supply.
 
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
 V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 480
@@ -90,6 +89,14 @@ observed contact/release events and changing absolute coordinates; orientation
 and calibration have not been verified.
 The earlier peripheral observation also read BMI270 and ES8311 identification registers; it did not
 verify motion sensing or audio playback. See the [bounded observation](evidence/gui-peripherals.json).
+
+## Wireless
+
+On one V1.2 RAM trial, `espwifi0` enumerated and two active 2.4 GHz scans
+reported 14 and 16 AP records. Repeated `wpa_parse_wpa_ie function not found`
+errors leave security classification unreliable. This establishes scan-path
+activity only; association, DHCP, roaming and sustained transfer are unverified.
+See the [bounded scan observation](evidence/wifi-scan.json).
 
 ## Expansion and debug routing
 

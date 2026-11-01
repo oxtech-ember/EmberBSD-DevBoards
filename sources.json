@@ -1456,6 +1456,22 @@
       "revision": null,
       "reviewed_at": "2026-11-01",
       "sha256": null
+    },
+    {
+      "id": "mosaico-espwifi-scan-kernel-source",
+      "title": "EmberBSD ESP-Mosaico ESP32-S31 Wi-Fi scan configuration",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/ea9f2751d407ab887268ad87a56445fd187c350a",
+      "revision": "ea9f2751d407ab887268ad87a56445fd187c350a",
+      "reviewed_at": "2026-11-02",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-wifi-scan-observation",
+      "title": "ESP-Mosaico EmberBSD active Wi-Fi scan observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-scan.json",
+      "revision": null,
+      "reviewed_at": "2026-11-02",
+      "sha256": null
     }
   ]
 }

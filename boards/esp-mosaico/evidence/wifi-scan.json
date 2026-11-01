@@ -1,0 +1,65 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-wifi-scan",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-02",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "ESP_MOSAICO_SC101IOT_WIFI RAM kernel FIT",
+      "revision": "OS source base db34405faaff2ab9ef72b73bed3643eb19159565 plus the ESP_MOSAICO_SC101IOT_WIFI profile diff published as ea9f2751d407ab887268ad87a56445fd187c350a",
+      "sha256": "0ad07545c724f152ba5a21d29a3db4e357f9452b45a04ed899ee5d88085c0b9e",
+      "reference": null
+    },
+    {
+      "name": "Static FFS RAM root with console tools",
+      "revision": "clean v2 RV32 root",
+      "sha256": "cd8ab0885b6f5452eda85185852e468a7cf26e23d206b108911680434ac04122",
+      "reference": null
+    },
+    {
+      "name": "RAM U-Boot firmware FIT",
+      "revision": "U-Boot 2026.10",
+      "sha256": "bcf9fd336b9db1ef4f6f2858cfe68a4a468e94ef6cb4176cc77510c23cf1339c",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the configured EmberBSD Wi-Fi kernel and RAM root, enumerate the ESP radio interface, bring it up, and run `/sbin/ifconfig espwifi0 list scan`. Do not associate to an access point.",
+  "expected": "The interface enumerates and the active scan returns access-point records without attempting association.",
+  "observed": "`espwifi0` enumerated and was brought up. The vendor scan reported 14 AP records in one pass and 16 in a second pass; these are pass counts, not a unique-network count. The log recorded 42 `wpa_parse_wpa_ie function not found` errors across interface bring-up and scan. Therefore reported auth enums cannot be trusted as security classifications. The command returned to the shell; no association or DHCP was attempted.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "first-pass-ap-records",
+      "value": 14,
+      "unit": "records"
+    },
+    {
+      "name": "second-pass-ap-records",
+      "value": 16,
+      "unit": "records"
+    },
+    {
+      "name": "wpa-ie-parser-callback-errors",
+      "value": 42,
+      "unit": "errors"
+    }
+  ],
+  "limits": [
+    "One operator-reported V1.2 sample and one RAM-only boot; this does not establish another board revision or persistent installation.",
+    "The scan was active. Repeated WPA IE parser callback errors make security classification unreliable.",
+    "No association, authentication, DHCP, roaming or sustained transfer was tested."
+  ],
+  "source_refs": [
+    "mosaico-hardware-v12",
+    "mosaico-espwifi-scan-kernel-source"
+  ]
+}
