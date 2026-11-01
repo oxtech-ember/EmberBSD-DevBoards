@@ -25,6 +25,43 @@ states that unknown or unprogrammed versions return `ESP_ERR_NOT_SUPPORTED`.
 Legacy header aliases retain V1.0 values; they are not universal pin selections.
 Do not write eFuses to resolve an identification gap.
 
+## V1.2 LCD connector and power nets
+
+The [CoreBoard V1.2 schematic (sheets 2, 3 and 5)](https://dl.espressif.com/AE/Mosaico/SCH_SCH_ESP-Mosaico_CoreBoard_V1_2_1_2026-09-24.pdf)
+shows the 24-contact LCD board-to-board connector. These are connector contacts,
+not GPIO numbers or pins from the display module's separate datasheet.
+
+| LCD connector contact | CoreBoard V1.2 connection |
+| --- | --- |
+| 2, 4 | `VCC_3V3` |
+| 5 | `VCC_3V3` through R18 (0 Ω) |
+| 7 | `MCU_3V3` (touch supply) |
+| 12 | LCD D0, GPIO36 through R53 (0 Ω) |
+| 14 | LCD D1, GPIO51 through R52 (0 Ω) |
+| 16 | LCD clock, GPIO42 through R20 (0 Ω) |
+| 18 | LCD CS, GPIO50 |
+| 19 | LCD D3, GPIO9 through R55 (0 Ω) |
+| 21 | LCD D2, GPIO35 through R54 (0 Ω) |
+| 24 | LCD reset, GPIO44; active-low per the pinned BSP |
+
+On CoreBoard sheet 5, GPIO60 drives `VCC_PW` to control Q5 (AO3401A), the
+high-side switch for `VCC_3V3`; the BSP defines this control as active-low.
+This switched LCD supply is distinct from `MCU_3V3` at LCD contact 7. On the
+[BaseBoard V1.2 schematic (sheet 1)](https://dl.espressif.com/AE/Mosaico/SCH_SCH_ESP-Mosaico_BaseBoard_A_V1_2_1_2026-09-24.pdf),
+left-slot H2 contact 19 is `OUT_3V3` from a separate TLV62569 converter whose
+input is `5V_OUT` and enable is `VCC_3V3`; it is not the CoreBoard `VCC_3V3` net.
+Touch input or codec-register communication therefore does not establish the
+LCD's switched supply state.
+
+The vendor's [H0216F002AMT004-1 V1 display datasheet](https://dl.espressif.com/AE/H0216F002AMT004-1%20V1%E8%A7%84%E6%A0%BC%E4%B9%A62.16%E5%AF%B8%20480X480%20QSPI%20MIPI%20%20AMOLED.pdf)
+describes a 31-pin display-module interface. The CoreBoard schematic instead
+shows a 24-contact connector, so the module datasheet numbering must not be
+applied to CoreBoard contacts. The exact electrical mapping within the display
+module remains unestablished; use the CoreBoard schematic and pinned BSP for
+board-side wiring.
+
+## Touch and peripheral support
+
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
 V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 480
 and attached `wsmouse`. A [subsequent input check](evidence/touch-input.json)
