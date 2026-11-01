@@ -1352,6 +1352,22 @@
       "revision": null,
       "reviewed_at": "2026-11-01",
       "sha256": null
+    },
+    {
+      "id": "mosaico-sc101iot-kernel-source",
+      "title": "EmberBSD optional ESP-Mosaico SC101IOT identity-only driver",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/5f706391bfc94d6f349a78ad56e477504267637e",
+      "revision": "5f706391bfc94d6f349a78ad56e477504267637e",
+      "reviewed_at": "2026-11-01",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-spi-idle-high-kernel-source",
+      "title": "EmberBSD ESP32-S31 SPI idle-high initialization change",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/37fb3aec46352034ad4b7ae78d354b39295a00ff",
+      "revision": "37fb3aec46352034ad4b7ae78d354b39295a00ff",
+      "reviewed_at": "2026-11-01",
+      "sha256": null
     }
   ]
 }

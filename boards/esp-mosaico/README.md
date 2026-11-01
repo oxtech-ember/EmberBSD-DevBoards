@@ -48,9 +48,12 @@ module EEPROM. The user reported a completely black screen. A subsequent
 and contact/release events. Touch calibration remains unverified. The latest
 [display diagnostic trial](evidence/display-output.json) recorded all-zero CO5300
 status-transaction values without reported bus errors and increasing refresh
-counters, but the EmberBSD screen remained black. Its camera sensor identification
-also failed; these are EmberBSD-specific limits. Register snapshots do not establish
-physical bus timing or panel power.
+counters, but the EmberBSD screen remained black. A published ESP32-S31 SPI
+idle-high initialization change has not yet been run on this panel. The earlier
+OV3640-specific camera probe did not identify this module. An optional SC101IOT
+identity-only configuration is now published, but has not yet run on hardware and
+does not implement capture. Register snapshots do not establish physical bus timing
+or panel power.
 
 A later [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before
