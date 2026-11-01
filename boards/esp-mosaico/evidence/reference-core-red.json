@@ -1,0 +1,49 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-reference-core-red-observation",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-01",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "Published ESP32-S31 Mosaico reference-core sequence",
+      "revision": "EmberBSD-Ports 07c34fb1a9cf1ffb16c7d6d514d322e3f6dbff58",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "ESP_MOSAICO_SC101IOT kernel base with temporary reference-core adapter",
+      "revision": "EmberBSD a249cbf317cf05eee4dfa06201098022ccc498ef; temporary kernel adapter is unpublished",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "A RAM-only EmberBSD kernel run invoked the published reference-core sequence from a temporary kernel adapter during configuration finalization. No U-Boot splash or LVGL application was run.",
+  "expected": "The reference-core sequence returns zero and produces a visible solid red display field while the OS is running.",
+  "observed": "The kernel reported `reference-core begin` followed by `reference-core result=0`. The owner confirmed a solid red display. LVGL was not started.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "reference-core-result",
+      "value": 0,
+      "unit": "return-code"
+    }
+  ],
+  "limits": [
+    "One operator-reported CoreBoard V1.2 sample; the kernel adapter used for this diagnostic is unpublished.",
+    "This demonstrates visible output from the reference-core diagnostic path while the OS is running. It does not establish the normal CO5300 initialization, framebuffer, genfb or LVGL path.",
+    "No panel identity or acknowledgement was established by this run."
+  ],
+  "source_refs": [
+    "mosaico-uboot-red-splash-diagnostic",
+    "mosaico-reference-core-os-base"
+  ]
+}

@@ -67,26 +67,21 @@ is the LVGL reference. Its [BSP display implementation](https://github.com/esp-m
 distinguishes cold panel initialization from adopting an initialized boot splash.
 The [Utils boot splash](https://github.com/esp-mosaico/esp-mosaico-utils/blob/be151ae047014e79a9c7ae0092dd203844499003/esp-mosaico-vibe-mode/firmware/vibe-mode/bootloader_components/main/mosaico_boot_splash.c)
 provides a separate SPI output reference before LVGL starts; [Claw's panel setup](https://github.com/esp-mosaico/esp-mosaico-claw/blob/2654a4a9f76f5d7ea108e4dff7ade7b1df4c1c5c/boards/esp_mosaico/setup_device.c)
-also handles the retained splash. These software revisions do not identify the
-factory firmware in the [vendor application observation](evidence/vendor-webui.json),
-and rendering a framebuffer does not establish visible panel output. A published
-[ESP32-S31 SPI initialization change](https://github.com/oxtech-ember/EmberBSD/commit/37fb3aec46352034ad4b7ae78d354b39295a00ff)
-leaves the controller's data lines high while idle. Earlier hardware-SPI and
-GPIO-bit-banged SPI framebuffer trials left this sample's display black; the GPIO
-trial requested 100 kHz and sent an ordinary red fill, while its transmit-only
-controller did not perform CO5300 status reads (`EOPNOTSUPP`). In a later
-[same-boot comparison](evidence/uboot-red-kernel-black.json), the owner confirmed
-a solid red field from the optional U-Boot command `mosaicosplash red`; after the
-ordinary EmberBSD kernel booted and LVGL started without a reset, the display was
-fully black. A post-refresh kernel snapshot read `CTRL=0x003c0000` and
-`USER=0x08002040`. The published U-Boot quad transmit path programs
-`CTRL=0x003c8000` (idle-high plus bit 15) with `USER.FWRITE_QUAD`; the captured
-kernel snapshot was after framebuffer activity, not during a transfer. This is a
-source/register discrepancy to investigate, not proof of panel acceptance or cause.
-Kernel row counters and `0xff` reads with no bus error do not establish visible
-output, panel acknowledgement or switched-supply voltage. EmberBSD display
-acceptance remains unresolved; the factory firmware's visible display remains
-separate evidence.
+also handles the retained splash.
+
+On one V1.2 sample, factory firmware showed a visible UI, touch response and a
+changing camera preview; these are vendor-firmware observations. EmberBSD raw
+touch contact/release and changing-coordinate events are confirmed. The normal
+CO5300 framebuffer/LVGL path remains black after the published
+[SPI data-line mode fix](https://github.com/oxtech-ember/EmberBSD/commit/6bd36b7ada1290598cd2c04696b00fbf55793ab9),
+despite nonzero pixel buffers and zero SPI transfer errors. A separate
+reference-core diagnostic produced a solid red field inside the OS (result 0,
+no LVGL) through a temporary unpublished kernel adapter. That result does not
+accept the normal framebuffer/genfb/LVGL path; cause remains unresolved. See the
+[reference-core observation](evidence/reference-core-red.json) and the [earlier
+U-Boot/kernel comparison](evidence/uboot-red-kernel-black.json) for its historical
+register snapshot. Kernel transfer status does not establish panel acknowledgement
+or switched-supply voltage.
 
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
 V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 480

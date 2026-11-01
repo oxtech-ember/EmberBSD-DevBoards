@@ -1416,6 +1416,30 @@
       "revision": null,
       "reviewed_at": "2026-11-01",
       "sha256": null
+    },
+    {
+      "id": "mosaico-reference-core-os-base",
+      "title": "EmberBSD ESP_MOSAICO_SC101IOT source base for the reference-core diagnostic",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/a249cbf317cf05eee4dfa06201098022ccc498ef",
+      "revision": "a249cbf317cf05eee4dfa06201098022ccc498ef",
+      "reviewed_at": "2026-11-01",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-reference-core-red-observation",
+      "title": "ESP-Mosaico OS reference-core solid-red diagnostic observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/reference-core-red.json",
+      "revision": null,
+      "reviewed_at": "2026-11-01",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-spi-line-mode-kernel-source",
+      "title": "EmberBSD ESP32-S31 SPI data-line mode selection correction",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/6bd36b7ada1290598cd2c04696b00fbf55793ab9",
+      "revision": "6bd36b7ada1290598cd2c04696b00fbf55793ab9",
+      "reviewed_at": "2026-11-01",
+      "sha256": null
     }
   ]
 }

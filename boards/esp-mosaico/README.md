@@ -41,22 +41,22 @@ filesystem writes, NAND, full PSRAM read/write and general application
 support remain unverified.
 
 A bounded [RAM graphics trial](evidence/gui-peripherals.json) attached the CO5300
-framebuffer and CST9220 touch driver and kept LVGL running; the screen remained
-black. A subsequent [touch input check](evidence/touch-input.json) observed
-changing coordinates and contact/release events. Touch calibration remains
-unverified. Earlier [display diagnostics](evidence/display-output.json) left the screen black
-with hardware-SPI and GPIO-bit-banged SPI; the GPIO trial sent an ordinary red
-framebuffer fill at 100 kHz with `spi-tx-bus-width=1`, and its transmit-only
-controller could not perform CO5300 status reads (`EOPNOTSUPP`). In a later
-[same-boot comparison](evidence/uboot-red-kernel-black.json), the optional
-U-Boot `mosaicosplash red` command produced a user-confirmed solid red field.
-Without resetting, the ordinary EmberBSD kernel booted and LVGL started; the owner
-confirmed the screen became fully black. The kernel reported 960 framebuffer rows
-sent without transfer errors; CO5300 reads returned `0xff` with no bus error.
-A post-refresh register snapshot had `CTRL=0x003c0000` and `USER=0x08002040`,
-while the known-visible U-Boot quad transmit path programs `CTRL=0x003c8000`
-with `USER.FWRITE_QUAD`. This idle snapshot is a diagnostic discrepancy, not proof
-of cause or panel acknowledgement. EmberBSD display acceptance remains unresolved.
+framebuffer and CST9220 touch driver and kept LVGL running; the display remained
+black. The [touch input check](evidence/touch-input.json) confirmed raw contact,
+release and changing-coordinate events. Factory UI, touch and changing camera
+preview are separate vendor-firmware evidence in the
+[factory observation](evidence/factory-peripherals.json).
+
+The normal EmberBSD CO5300 framebuffer/LVGL path remains black on this sample,
+including after the published [SPI data-line mode fix](https://github.com/oxtech-ember/EmberBSD/commit/6bd36b7ada1290598cd2c04696b00fbf55793ab9).
+Nonzero pixel buffers and zero SPI transfer errors do not establish visible
+output. A separate reference-core diagnostic produced a solid red field from
+inside the OS (result 0, no LVGL) using a temporary unpublished kernel adapter;
+see [its bounded observation](evidence/reference-core-red.json). The cause and
+standard framebuffer display acceptance remain unresolved. The [earlier
+U-Boot/kernel comparison](evidence/uboot-red-kernel-black.json) retains its
+historical register snapshot; it is not a current diagnosis. Touch calibration
+and audio function remain unverified.
 
 The same [camera identity check](evidence/display-output.json) read SC101IOT PID
 `0xda4a` at `0x68` with the optional EmberBSD identity-only driver. DVP capture

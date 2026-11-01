@@ -35,7 +35,10 @@
     "mosaico-spi-idle-high-kernel-source",
     "mosaico-uboot-red-splash-diagnostic",
     "mosaico-display-kernel-e8c60215-source",
-    "mosaico-uboot-red-kernel-black-observation"
+    "mosaico-uboot-red-kernel-black-observation",
+    "mosaico-reference-core-os-base",
+    "mosaico-reference-core-red-observation",
+    "mosaico-spi-line-mode-kernel-source"
   ],
   "capabilities": [
     {
@@ -80,7 +83,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, factory firmware showed a visible UI and touch responded. EmberBSD attached the CO5300 framebuffer and CST9220 touch driver; a touch check produced changing coordinates and contact events. In one RAM boot, the optional U-Boot red-field diagnostic visibly produced a solid red field, then the display became fully black after the ordinary ESP_MOSAICO_SC101IOT kernel booted and LVGL started. The kernel reported 960 rows sent without transfer errors, but CO5300 reads returned 0xff without bus errors. These results do not establish panel acknowledgement, physical rail voltage, or the cause of black output; a post-refresh SPI register snapshot differed from the known-visible U-Boot quad path at CTRL bit 15. EmberBSD display acceptance remains unresolved; orientation, calibration and audio function are unverified.",
+      "scope": "On one V1.2 sample, factory firmware showed a visible UI and touch response; the changing camera preview is separate vendor-firmware evidence. EmberBSD raw touch contact/release and changing-coordinate events are confirmed. The normal CO5300 framebuffer/LVGL path remains black after the published SPI data-line mode fix, despite nonzero pixel buffers and zero SPI transfer errors; display acceptance remains unresolved. A separate reference-core diagnostic produced a solid red field inside the OS (result 0, no LVGL) through a temporary unpublished kernel adapter. This does not establish the normal framebuffer/genfb/LVGL path or identify the cause. The earlier U-Boot/kernel comparison preserves its historical register snapshot. Orientation, touch calibration and audio function remain unverified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
@@ -91,7 +94,11 @@
         "mosaico-uboot-red-kernel-black-observation",
         "mosaico-factory-peripheral-observation",
         "mosaico-spi-idle-high-kernel-source",
-        "mosaico-fdt-i2c-status-kernel"
+        "mosaico-fdt-i2c-status-kernel",
+        "mosaico-uboot-red-splash-diagnostic",
+        "mosaico-reference-core-os-base",
+        "mosaico-reference-core-red-observation",
+        "mosaico-spi-line-mode-kernel-source"
       ]
     },
     {
