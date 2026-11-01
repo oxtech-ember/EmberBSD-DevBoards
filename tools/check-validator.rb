@@ -44,4 +44,21 @@ removed.each do |name, path|
     abort "Missed invalid case: #{name}" if CatalogValidator.new(copy).run.empty?
   end
 end
-puts "PASS: baseline and #{cases.size + removed.size} invalid-record regressions"
+# A command's display output is not a file payload. Reject truncated output
+# even when all the profile and evidence files remain valid.
+malformed = {
+  'tool output header' => ->(text) { "Warning: truncated output\nTotal output lines: 1349\n\n" + text },
+  'truncated source registry' => ->(text) { text[0, text.length / 2] + "\n... tokens truncated ...\n" }
+}
+malformed.each do |name, mutation|
+  Dir.mktmpdir('devboards-check-') do |copy|
+    %w[boards carriers socs bootloaders interfaces docs schemas templates tools README.md CONTRIBUTING.md catalog.json sources.json].each do |entry|
+      FileUtils.cp_r(File.join(root, entry), copy)
+    end
+    file = File.join(copy, 'sources.json')
+    File.write(file, mutation.call(File.read(file)))
+    errors = CatalogValidator.new(copy).run
+    abort "Missed invalid case: #{name}" unless errors.any? { |error| error.start_with?('sources.json: invalid JSON:') }
+  end
+end
+puts "PASS: baseline and #{cases.size + removed.size + malformed.size} invalid-record regressions"
