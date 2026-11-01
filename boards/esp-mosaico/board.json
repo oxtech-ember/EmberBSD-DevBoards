@@ -77,7 +77,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, the vendor factory firmware showed a visible UI and touch responded. In EmberBSD, CO5300 framebuffer and CST9220 touch drivers attached; a touch trial produced changing coordinates and contact events. A diagnostic LVGL trial completed SPI transfers without reported errors while the display remained black. Later CO5300 status transactions completed without reported bus errors but yielded all-zero values. The published ESP32-S31 SPI change initializes data lines idle high; this revision has not been tried on the board. Orientation, calibration and audio function were not verified.",
+      "scope": "On one V1.2 sample, the vendor factory firmware showed a visible UI and touch responded. In EmberBSD, CO5300 framebuffer and CST9220 touch drivers attached; earlier touch checks produced changing coordinates and contact events. A RAM trial with the published ESP32-S31 SPI idle-high initialization still left the display black; CO5300 status reads returned all-0xff values without bus errors. Orientation, calibration and audio function were not verified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
@@ -93,7 +93,7 @@
       "id": "expansion",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, the left-slot camera EEPROM descriptor had valid CRCs and hardware-version field 0x0102. The factory firmware separately reported SC101IOT PID 0xda4a and rendered a changing 1280 × 720 UYVY preview. EmberBSD now publishes the optional ESP_MOSAICO_SC101IOT identity-only probe at 0x68; it expects PID 0xda4a and does not implement DVP capture. This configuration has not yet run on the board; the prior OV3640-specific probe does not identify this sensor. The factory result does not establish sensor identity for other modules.",
+      "scope": "On one V1.2 sample, the left-slot camera EEPROM descriptor had valid CRCs and hardware-version field 0x0102. The factory firmware separately reported SC101IOT PID 0xda4a and rendered a changing 1280 × 720 UYVY preview. The optional EmberBSD SC101IOT ID probe at 0x68 failed GPIO-control acquisition with ENXIO before reading an ID; no DVP capture is implemented. An OV3640 node also attached at 0x3c and failed XCLK lookup after claiming GPIO controls; this does not identify the sensor. The factory result does not establish sensor identity for other modules.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-gui-peripheral-observation",

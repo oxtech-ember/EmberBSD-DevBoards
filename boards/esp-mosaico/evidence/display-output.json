@@ -14,9 +14,9 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_CAMERA RAM kernel FIT with display, controller-readback and camera diagnostics",
-      "revision": "OS e204ba5bf981b18048ba405fddd9135423f3c0c1",
-      "sha256": "18e46737437e50226dc8803914691a29002a6b6f0f0e08d1f7638f1f49a9efa4",
+      "name": "ESP_MOSAICO_SC101IOT RAM kernel FIT with CO5300 diagnostics and SPI idle-high initialization",
+      "revision": "OS 5f706391bfc94d6f349a78ad56e477504267637e (includes SPI 37fb3aec46352034ad4b7ae78d354b39295a00ff)",
+      "sha256": "588b20d9d86b9f47dbcf87af14d4f1b05f9509734b626620f6b3163ee4ff368a",
       "reference": null
     },
     {
@@ -26,21 +26,25 @@
       "reference": null
     }
   ],
-  "scenario": "Boot the diagnostic kernel and RAM root, read CO5300 status and framebuffer counters, inspect selected GPIO/GPSPI registers, start the LVGL wscons example, and check visible output.",
-  "expected": "The controller diagnostics provide usable status and the example produces a visible interface while refresh activity continues.",
-  "observed": "CO5300 attach-time SPI read transactions completed without reported bus errors but yielded all-zero ID (00:00:00), power, format and brightness values. The initial framebuffer scan reported rows_changed=480, rows_sent=480, errors=0 and last_error=0. After starting LVGL and a three-second wait, both row counters were 961 with no errors; the process remained alive. At the captured register snapshot, hp_hold1, hp_hold0 and lp_padctrl were all zero. GPSPI reported clkrst=00800043, gate=00000003, clock=80000000, user=08002040, user1=00400000, misc=0000003e and int_raw=00001000. The OV3640 sensor identification failed with error 5; the driver programmed reset and power-down asserted. The operator confirmed that the display remained completely black.",
+  "scenario": "Boot the optional SC101IOT RAM kernel with the existing static root, read CO5300 status registers, inspect the SPI controller state, start LVGL and observe the optional camera sensor attachments.",
+  "expected": "The CO5300 status reads identify the controller, LVGL renders a visible interface, and the optional sensor probe reads its expected ID while leaving the sensor parked.",
+  "observed": "CO5300 ID, power, format and brightness reads returned 0xff bytes without reported bus errors. The SPI control register was 0x003c0000. Framebuffer rows changed from 480 to 960 with errors=0; LVGL remained alive. The operator confirmed the screen was completely black. The SC101IOT probe failed with ENXIO while acquiring its GPIO controls, before reading the sensor ID. An OV3640 node also attached at address 0x3c and failed XCLK lookup after claiming GPIO controls.",
   "duration_seconds": null,
   "measurements": [],
   "limits": [
-    "One sample and a short RAM trial; the installed NOR image was not updated.",
-    "Completed SPI read transactions with zero-valued results, SPI completion and row counters do not establish a valid panel identity or prove that the panel received valid commands or pixels.",
-    "Register snapshots describe captured register state, not measured pad voltage or physical bus timing; zero low-power hold registers do not establish a power fault.",
-    "The camera identification failure and resulting reset/power-down state do not identify the sensor or establish camera function. This trial did not repeat the separately recorded touch-input check or establish calibration, audio or Wi-Fi operation.",
-    "Raw UART logs and local device identifiers remain private."
+    "One assembled V1.2 sample and a short RAM trial; this run did not write NOR. The restored EmberBSD NOR ranges had been independently verified before the RAM test.",
+    "All-0xff controller read values, SPI completion and framebuffer row counters do not establish valid panel identity, panel acknowledgement, physical bus timing or visible output.",
+    "The SC101IOT probe did not acquire its GPIO controls and did not read a sensor ID; this trial does not identify or reject the fitted sensor. DVP frame capture is not implemented by this driver.",
+    "The unexpected OV3640 attachment and XCLK failure do not identify the sensor. The OV3640-specific probe is not evidence of SC101IOT operation.",
+    "This trial did not repeat the separate touch-input check or establish calibration, audio, frame capture or Wi-Fi operation.",
+    "The UART log and device identifiers remain private."
   ],
   "source_refs": [
     "mosaico-display-kernel-source",
+    "mosaico-sc101iot-kernel-source",
+    "mosaico-spi-idle-high-kernel-source",
     "mosaico-lvgl-example",
-    "mosaico-bsp"
+    "mosaico-bsp",
+    "mosaico-factory-peripheral-observation"
   ]
 }

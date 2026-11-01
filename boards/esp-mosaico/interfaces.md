@@ -71,8 +71,9 @@ also handles the retained splash. These software revisions do not identify the
 factory firmware in the [vendor application observation](evidence/vendor-webui.json),
 and rendering a framebuffer does not establish visible panel output. A published
 [ESP32-S31 SPI initialization change](https://github.com/oxtech-ember/EmberBSD/commit/37fb3aec46352034ad4b7ae78d354b39295a00ff)
-leaves the controller's data lines high while idle; that revision has not yet been
-run on the panel.
+leaves the controller's data lines high while idle. A RAM run of that revision
+still produced a black screen; CO5300 status reads returned all-0xff values without
+bus errors, which does not establish a valid panel response.
 
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
 V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 480
@@ -115,8 +116,11 @@ camera support. The optional published
 uses the [SC101IOT identity-only driver](https://github.com/oxtech-ember/EmberBSD/blob/5f706391bfc94d6f349a78ad56e477504267637e/sys/dev/i2c/sc101iot.c)
 at 7-bit SCCB address `0x68`: it selects page `0x31` through `0xf0`, reads ID registers
 `0xf7` and `0xf8`, expects PID `0xda4a`, and leaves reset and power-down asserted.
-The driver does not implement DVP capture, and this optional configuration has not
-yet been run on the board. The OV3640-specific probe does not identify this sensor.
+The driver does not implement DVP capture. In the latest RAM trial, SC101IOT
+control acquisition failed with `ENXIO` before an ID read. An OV3640 node also
+attached at `0x3c` and failed XCLK lookup after claiming GPIO controls; neither
+observation identifies this sensor. The optional sensor ID path remains unverified
+on hardware.
 Some camera signals conflict with USB Serial/JTAG; the BSP directs affected examples
 to UART.
 Five right-slot signals share the onboard audio I²S bus.
