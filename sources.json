@@ -1384,6 +1384,14 @@
       "revision": "37fb3aec46352034ad4b7ae78d354b39295a00ff",
       "reviewed_at": "2026-11-01",
       "sha256": null
+    },
+    {
+      "id": "mosaico-gpio-spi-pixel-write-kernel-source",
+      "title": "EmberBSD CO5300 single-line pixel-write support used by the Mosaico GPIO-SPI trial",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/e2f027a9b6bfc86cbada9a8e24ff0cb4dfa8af5d",
+      "revision": "e2f027a9b6bfc86cbada9a8e24ff0cb4dfa8af5d",
+      "reviewed_at": "2026-11-01",
+      "sha256": null
     }
   ]
 }

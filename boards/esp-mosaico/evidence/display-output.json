@@ -14,9 +14,9 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT RAM kernel FIT with an added ALLPON init record",
-      "revision": "OS e6d0b3158587dd307580b8706e06821e2e99bb56 (profile 7da47e2c1f0bb3829275a189904a5c97fb50f7f8)",
-      "sha256": "a648e1690bee74b262d631080603f450af612e8cf2db7c813dfed8bc0231663e",
+      "name": "ESP_MOSAICO_SC101IOT RAM kernel with GPIO-bit-banged SPI and CO5300 framebuffer",
+      "revision": "EmberBSD e2f027a9b6bfc86cbada9a8e24ff0cb4dfa8af5d; local FDT overrides disable hardware SPI and attach spigpio0 → spi0",
+      "sha256": "4a4e9828259a39f3425e34f343db29d47c1a7db5b2ad7dcd7662c372278c17c1",
       "reference": null
     },
     {
@@ -24,40 +24,25 @@
       "revision": null,
       "sha256": "e9fcb99ca1eb4ec7071ef57f966c38321e5ea0357b791808d1b88134baa5a95f",
       "reference": null
-    },
-    {
-      "name": "console-tools",
-      "revision": "c57991c847cf58002d8fce203e2b76e9e55914de",
-      "sha256": null,
-      "reference": null
-    },
-    {
-      "name": "LVGL example (not started)",
-      "revision": "b1afcfbe0c3ef008a44bb5aae11a2dbfa937597f",
-      "sha256": null,
-      "reference": null
     }
   ],
-  "scenario": "Append zero-parameter ALLPON command 0x23 to the panel init sequence (DT record 23 00 00 00). Boot the optional SC101IOT RAM kernel, read CO5300 status registers, run the SC101IOT identity probe, and inspect the display without starting LVGL.",
-  "expected": "After initialization, the panel shows solid white independently of GRAM contents, and the fitted sensor ID is read.",
-  "observed": "The SPI driver completed panel initialization including ALLPON without reporting an error. CO5300 ID, power, format and brightness status reads returned 0xff without reported bus errors. The display remained completely black. LVGL was not started. The SC101IOT identity-only driver attached at SCCB address 0x68 and read PID 0xda4a.",
+  "scenario": "RAM-boot ESP_MOSAICO_SC101IOT with local FDT overrides disabling hardware SPI and attaching spigpio0 to spi0. Request GPIO SPI at 100 kHz with spi-tx-bus-width=1; send ordinary pixel-write opcode 0x02 as a full-screen red fill. Do not send ALLPON and do not start LVGL.",
+  "expected": "The initialized display shows the red console fill.",
+  "observed": "The owner confirmed the display remained completely black. The kernel attached spigpio0 → spi0 → cofb0; GPIO SPI was requested at 100 kHz with a 100 kHz controller maximum. cofb0 reported rows_changed=960, rows_sent=960, errors=0 and last_error=0 after the 480-row initial refresh plus the 480-row red fill; the result stayed stable across four status reads. The transmit-only controller did not perform CO5300 status reads; attempts returned error 45 (EOPNOTSUPP). SC101IOT PID 0xda4a remained readable at SCCB address 0x68.",
   "duration_seconds": null,
   "measurements": [],
   "limits": [
-    "One assembled V1.2 sample; this RAM trial did not write NOR. The kernel FIT and static RAM root hashes identify the tested inputs.",
-    "The ALLPON transfer completion and status reads do not prove that the panel accepted the command or establish physical SPI timing, panel power or the cause of the black display. No claim of a working physical SPI path is made.",
-    "The sensor check establishes identity only. DVP frame capture is not implemented, so it does not establish an EmberBSD camera preview or operation of other modules.",
-    "This trial did not test touch calibration, audio, Wi-Fi or LVGL rendering.",
-    "The UART log and device identifiers remain private."
+    "One assembled V1.2 sample; this was a RAM-only trial and did not write NOR. The kernel FIT and static RAM root hashes identify the tested inputs.",
+    "The row counters cover the 480-row initial refresh and 480-row red fill and establish driver-reported transfer completion only. They do not establish whether the panel accepted the data or the state of its switched supply; no panel rail or electrical signal was measured.",
+    "A previous hardware-SPI trial also left the panel black. Together the two results mean SPI transport selection alone is not a sufficient explanation; neither trial proves panel command acceptance or rules out a transport fault.",
+    "No LVGL or ALLPON command was used in this trial. The sensor check establishes identity only; DVP capture is not implemented and this does not establish EmberBSD camera preview or operation of other modules.",
+    "The UART log and identifying device details remain private."
   ],
   "source_refs": [
     "mosaico-display-kernel-source",
     "mosaico-sc101iot-kernel-source",
     "mosaico-sc101iot-profile-kernel",
-    "mosaico-fdt-i2c-status-kernel",
     "mosaico-spi-idle-high-kernel-source",
-    "mosaico-lvgl-example",
-    "mosaico-bsp",
-    "mosaico-factory-peripheral-observation"
+    "mosaico-gpio-spi-pixel-write-kernel-source"
   ]
 }

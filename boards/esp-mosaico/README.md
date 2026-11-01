@@ -44,10 +44,14 @@ A bounded [RAM graphics trial](evidence/gui-peripherals.json) attached the CO530
 framebuffer and CST9220 touch driver and kept LVGL running; the screen remained
 black. A subsequent [touch input check](evidence/touch-input.json) observed
 changing coordinates and contact/release events. Touch calibration remains
-unverified. The latest [display diagnostic](evidence/display-output.json) wrote
-the CO5300 ALLPON command `0x23` after initialization; the screen remained black
-without LVGL. Status reads returned `0xff` without reported bus errors. These
-results do not prove command acceptance, physical SPI timing or panel power.
+unverified. The [display diagnostics](evidence/display-output.json) left the
+screen black with both hardware-SPI and GPIO-bit-banged SPI. The GPIO trial
+sent an ordinary red framebuffer fill at 100 kHz with
+`spi-tx-bus-width=1`; the driver reported 960 rows across the initial refresh and
+red fill with no transfer errors. Its transmit-only controller could not perform
+CO5300 status reads (`EOPNOTSUPP`). The owner confirmed the screen remained
+completely black. The counters do not establish panel command acceptance or
+switched-rail state; SPI transport selection alone is not a sufficient explanation.
 
 The same [camera identity check](evidence/display-output.json) read SC101IOT PID
 `0xda4a` at `0x68` with the optional EmberBSD identity-only driver. DVP capture

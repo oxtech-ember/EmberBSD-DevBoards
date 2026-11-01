@@ -71,9 +71,14 @@ also handles the retained splash. These software revisions do not identify the
 factory firmware in the [vendor application observation](evidence/vendor-webui.json),
 and rendering a framebuffer does not establish visible panel output. A published
 [ESP32-S31 SPI initialization change](https://github.com/oxtech-ember/EmberBSD/commit/37fb3aec46352034ad4b7ae78d354b39295a00ff)
-leaves the controller's data lines high while idle. A RAM run of that revision
-still produced a black screen; CO5300 status reads returned all-0xff values without
-bus errors, which does not establish a valid panel response.
+leaves the controller's data lines high while idle. Hardware-SPI and GPIO-bit-banged
+SPI framebuffer trials both left this sample's display black. In the GPIO trial, a
+normal red fill used GPIO SPI requested at 100 kHz with `spi-tx-bus-width=1`; the
+960 reported rows cover the initial refresh and fill, with no transfer errors. The
+transmit-only controller did not perform CO5300 status reads (`EOPNOTSUPP`). These
+results make transport selection alone an insufficient explanation, but they do
+not establish panel command acceptance or switched-supply state. The factory
+firmware's visible display and preview remain separate evidence.
 
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
 V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 480
