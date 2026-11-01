@@ -40,23 +40,20 @@ after a normal POWER press. Its FFS root is an in-memory disk; persistent
 filesystem writes, NAND, full PSRAM read/write and general application
 support remain unverified.
 
-A later [RAM graphics and peripheral observation](evidence/gui-peripherals.json)
-attached the CO5300 framebuffer and CST9220 touch driver, kept an LVGL process
-running for at least eight seconds, and read selected device IDs and a camera
-module EEPROM. The user reported a completely black screen. A subsequent
-[touch input check](evidence/touch-input.json) observed changing coordinates
-and contact/release events. Touch calibration remains unverified. The latest
-[display diagnostic trial](evidence/display-output.json) recorded all-zero CO5300
-status-transaction values without reported bus errors and increasing refresh
-counters, but the EmberBSD screen remained black. A later RAM trial included the
-published ESP32-S31 SPI idle-high initialization; the screen remained black and
-CO5300 status reads returned all-0xff values without bus errors. The optional
-SC101IOT probe failed to acquire its GPIO controls before reading an ID. An OV3640
-node also attached and failed XCLK lookup after claiming GPIO controls. The driver
-has no capture path. Register snapshots do not establish physical bus timing or
-panel power.
+A bounded [RAM graphics trial](evidence/gui-peripherals.json) attached the CO5300
+framebuffer and CST9220 touch driver and kept LVGL running; the screen remained
+black. A subsequent [touch input check](evidence/touch-input.json) observed
+changing coordinates and contact/release events. Touch calibration remains
+unverified. The latest [display diagnostic](evidence/display-output.json) wrote
+the CO5300 ALLPON command `0x23` after initialization; the screen remained black
+without LVGL. Status reads returned `0xff` without reported bus errors. These
+results do not prove command acceptance, physical SPI timing or panel power.
 
-A later [factory-firmware observation](evidence/factory-peripherals.json) followed a
+The same [camera identity check](evidence/display-output.json) read SC101IOT PID
+`0xda4a` at `0x68` with the optional EmberBSD identity-only driver. DVP capture
+is not implemented, so this is not an EmberBSD camera preview.
+
+A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before
 writing, the full NOR matched the expected installed state; afterward, it matched
 the original factory backup. On this sample the factory UI was visible,

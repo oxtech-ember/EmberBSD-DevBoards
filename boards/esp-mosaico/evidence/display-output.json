@@ -14,34 +14,47 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT RAM kernel FIT with CO5300 diagnostics and SPI idle-high initialization",
-      "revision": "OS 5f706391bfc94d6f349a78ad56e477504267637e (includes SPI 37fb3aec46352034ad4b7ae78d354b39295a00ff)",
-      "sha256": "588b20d9d86b9f47dbcf87af14d4f1b05f9509734b626620f6b3163ee4ff368a",
+      "name": "ESP_MOSAICO_SC101IOT RAM kernel FIT with an added ALLPON init record",
+      "revision": "OS e6d0b3158587dd307580b8706e06821e2e99bb56 (profile 7da47e2c1f0bb3829275a189904a5c97fb50f7f8)",
+      "sha256": "a648e1690bee74b262d631080603f450af612e8cf2db7c813dfed8bc0231663e",
       "reference": null
     },
     {
-      "name": "Static FFS RAM root with LVGL",
-      "revision": "LVGL example b1afcfbe0c3ef008a44bb5aae11a2dbfa937597f; console-tools 06be3ad3bfec7e98e214059b21e18a195ac3d2be",
-      "sha256": "a45be34726e86292e6ee055822392de9d8e99be27a934bdc95c70f035dc8b5ee",
+      "name": "Static FFS RAM root",
+      "revision": null,
+      "sha256": "e9fcb99ca1eb4ec7071ef57f966c38321e5ea0357b791808d1b88134baa5a95f",
+      "reference": null
+    },
+    {
+      "name": "console-tools",
+      "revision": "c57991c847cf58002d8fce203e2b76e9e55914de",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "LVGL example (not started)",
+      "revision": "b1afcfbe0c3ef008a44bb5aae11a2dbfa937597f",
+      "sha256": null,
       "reference": null
     }
   ],
-  "scenario": "Boot the optional SC101IOT RAM kernel with the existing static root, read CO5300 status registers, inspect the SPI controller state, start LVGL and observe the optional camera sensor attachments.",
-  "expected": "The CO5300 status reads identify the controller, LVGL renders a visible interface, and the optional sensor probe reads its expected ID while leaving the sensor parked.",
-  "observed": "CO5300 ID, power, format and brightness reads returned 0xff bytes without reported bus errors. The SPI control register was 0x003c0000. Framebuffer rows changed from 480 to 960 with errors=0; LVGL remained alive. The operator confirmed the screen was completely black. The SC101IOT probe failed with ENXIO while acquiring its GPIO controls, before reading the sensor ID. An OV3640 node also attached at address 0x3c and failed XCLK lookup after claiming GPIO controls.",
+  "scenario": "Append zero-parameter ALLPON command 0x23 to the panel init sequence (DT record 23 00 00 00). Boot the optional SC101IOT RAM kernel, read CO5300 status registers, run the SC101IOT identity probe, and inspect the display without starting LVGL.",
+  "expected": "After initialization, the panel shows solid white independently of GRAM contents, and the fitted sensor ID is read.",
+  "observed": "The SPI driver completed panel initialization including ALLPON without reporting an error. CO5300 ID, power, format and brightness status reads returned 0xff without reported bus errors. The display remained completely black. LVGL was not started. The SC101IOT identity-only driver attached at SCCB address 0x68 and read PID 0xda4a.",
   "duration_seconds": null,
   "measurements": [],
   "limits": [
-    "One assembled V1.2 sample and a short RAM trial; this run did not write NOR. The restored EmberBSD NOR ranges had been independently verified before the RAM test.",
-    "All-0xff controller read values, SPI completion and framebuffer row counters do not establish valid panel identity, panel acknowledgement, physical bus timing or visible output.",
-    "The SC101IOT probe did not acquire its GPIO controls and did not read a sensor ID; this trial does not identify or reject the fitted sensor. DVP frame capture is not implemented by this driver.",
-    "The unexpected OV3640 attachment and XCLK failure do not identify the sensor. The OV3640-specific probe is not evidence of SC101IOT operation.",
-    "This trial did not repeat the separate touch-input check or establish calibration, audio, frame capture or Wi-Fi operation.",
+    "One assembled V1.2 sample; this RAM trial did not write NOR. The kernel FIT and static RAM root hashes identify the tested inputs.",
+    "The ALLPON transfer completion and status reads do not prove that the panel accepted the command or establish physical SPI timing, panel power or the cause of the black display. No claim of a working physical SPI path is made.",
+    "The sensor check establishes identity only. DVP frame capture is not implemented, so it does not establish an EmberBSD camera preview or operation of other modules.",
+    "This trial did not test touch calibration, audio, Wi-Fi or LVGL rendering.",
     "The UART log and device identifiers remain private."
   ],
   "source_refs": [
     "mosaico-display-kernel-source",
     "mosaico-sc101iot-kernel-source",
+    "mosaico-sc101iot-profile-kernel",
+    "mosaico-fdt-i2c-status-kernel",
     "mosaico-spi-idle-high-kernel-source",
     "mosaico-lvgl-example",
     "mosaico-bsp",

@@ -112,15 +112,15 @@ reported SC101IOT PID 0xda4a and the first 1280 × 720 UYVY preview frame render
 the operator confirmed a changing live image. This establishes factory-firmware
 operation on that sample only, not the sensor identity of other modules or EmberBSD
 camera support. The optional published
-[ESP_MOSAICO_SC101IOT configuration](https://github.com/oxtech-ember/EmberBSD/blob/5f706391bfc94d6f349a78ad56e477504267637e/sys/arch/riscv/conf/ESP_MOSAICO_SC101IOT)
+[ESP_MOSAICO_SC101IOT configuration](https://github.com/oxtech-ember/EmberBSD/blob/7da47e2c1f0bb3829275a189904a5c97fb50f7f8/sys/arch/riscv/conf/ESP_MOSAICO_SC101IOT)
 uses the [SC101IOT identity-only driver](https://github.com/oxtech-ember/EmberBSD/blob/5f706391bfc94d6f349a78ad56e477504267637e/sys/dev/i2c/sc101iot.c)
-at 7-bit SCCB address `0x68`: it selects page `0x31` through `0xf0`, reads ID registers
-`0xf7` and `0xf8`, expects PID `0xda4a`, and leaves reset and power-down asserted.
-The driver does not implement DVP capture. In the latest RAM trial, SC101IOT
-control acquisition failed with `ENXIO` before an ID read. An OV3640 node also
-attached at `0x3c` and failed XCLK lookup after claiming GPIO controls; neither
-observation identifies this sensor. The optional sensor ID path remains unverified
-on hardware.
+at 7-bit SCCB address `0x68`: it selects page `0x31` through `0xf0` and reads ID
+registers `0xf7` and `0xf8`. One V1.2 RAM trial identified PID `0xda4a`.
+The driver does not implement DVP capture or establish an EmberBSD camera preview.
+The common kernel configuration no longer selects the OV3640 driver. Its FDT node
+is marked disabled, and the generic FDT I²C enumerator skips disabled children.
+See the bounded
+[display and camera observation](evidence/display-output.json).
 Some camera signals conflict with USB Serial/JTAG; the BSP directs affected examples
 to UART.
 Five right-slot signals share the onboard audio I²S bus.

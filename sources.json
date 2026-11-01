@@ -1362,6 +1362,22 @@
       "sha256": null
     },
     {
+      "id": "mosaico-sc101iot-profile-kernel",
+      "title": "EmberBSD ESP-Mosaico SC101IOT profile and camera node selection",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/7da47e2c1f0bb3829275a189904a5c97fb50f7f8",
+      "revision": "7da47e2c1f0bb3829275a189904a5c97fb50f7f8",
+      "reviewed_at": "2026-11-01",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-fdt-i2c-status-kernel",
+      "title": "EmberBSD FDT I2C enumerator skips disabled children",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/e6d0b3158587dd307580b8706e06821e2e99bb56",
+      "revision": "e6d0b3158587dd307580b8706e06821e2e99bb56",
+      "reviewed_at": "2026-11-01",
+      "sha256": null
+    },
+    {
       "id": "mosaico-spi-idle-high-kernel-source",
       "title": "EmberBSD ESP32-S31 SPI idle-high initialization change",
       "url": "https://github.com/oxtech-ember/EmberBSD/commit/37fb3aec46352034ad4b7ae78d354b39295a00ff",
