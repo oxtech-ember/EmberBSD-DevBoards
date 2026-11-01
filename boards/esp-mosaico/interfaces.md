@@ -70,18 +70,18 @@ provides a separate SPI output reference before LVGL starts; [Claw's panel setup
 also handles the retained splash.
 
 On one V1.2 sample, factory firmware showed a visible UI, touch response and a
-changing camera preview; these are vendor-firmware observations. EmberBSD raw
-touch contact/release and changing-coordinate events are confirmed. The normal
-CO5300 framebuffer/LVGL path remains black after the published
-[SPI data-line mode fix](https://github.com/oxtech-ember/EmberBSD/commit/6bd36b7ada1290598cd2c04696b00fbf55793ab9),
-despite nonzero pixel buffers and zero SPI transfer errors. A separate
-reference-core diagnostic produced a solid red field inside the OS (result 0,
-no LVGL) through a temporary unpublished kernel adapter. That result does not
-accept the normal framebuffer/genfb/LVGL path; cause remains unresolved. See the
-[reference-core observation](evidence/reference-core-red.json) and the [earlier
-U-Boot/kernel comparison](evidence/uboot-red-kernel-black.json) for its historical
-register snapshot. Kernel transfer status does not establish panel acknowledgement
-or switched-supply voltage.
+changing camera preview; these remain separate vendor-firmware observations.
+The standard EmberBSD CO5300 framebuffer/genfb/LVGL path displayed a visible
+interface in a RAM trial, and the operator confirmed changing touch coordinates
+in that run. The published [row-pair worker fix](https://github.com/oxtech-ember/EmberBSD/commit/ded5f5242c6c8cb9cf17bb60d62ea0a520df7255)
+replaces invalid one-row RASET windows with even-height two-row windows and
+1920-byte width-4 pixel transfers, satisfying the CO5300 requirement. See the
+[bounded display/touch observation](evidence/row-pair-display-touch.json).
+This confirms one configured V1.2 sample only. Touch orientation and quantitative
+calibration, audio playback and sustained operation remain unverified. The
+optional EmberBSD camera path is identity-only and does not implement DVP capture;
+EmberBSD Wi-Fi was not tested. A software transfer trace is not a voltage measurement
+of the switched LCD supply.
 
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
 V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 480

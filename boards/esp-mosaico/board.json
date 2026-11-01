@@ -38,7 +38,9 @@
     "mosaico-uboot-red-kernel-black-observation",
     "mosaico-reference-core-os-base",
     "mosaico-reference-core-red-observation",
-    "mosaico-spi-line-mode-kernel-source"
+    "mosaico-spi-line-mode-kernel-source",
+    "mosaico-row-pair-kernel-source",
+    "mosaico-row-pair-display-touch-observation"
   ],
   "capabilities": [
     {
@@ -82,23 +84,21 @@
     {
       "id": "hmi",
       "hardware": "present",
-      "emberbsd": "partial",
-      "scope": "On one V1.2 sample, factory firmware showed a visible UI and touch response; the changing camera preview is separate vendor-firmware evidence. EmberBSD raw touch contact/release and changing-coordinate events are confirmed. The normal CO5300 framebuffer/LVGL path remains black after the published SPI data-line mode fix, despite nonzero pixel buffers and zero SPI transfer errors; display acceptance remains unresolved. A separate reference-core diagnostic produced a solid red field inside the OS (result 0, no LVGL) through a temporary unpublished kernel adapter. This does not establish the normal framebuffer/genfb/LVGL path or identify the cause. The earlier U-Boot/kernel comparison preserves its historical register snapshot. Orientation, touch calibration and audio function remain unverified.",
+      "emberbsd": "verified-scenario",
+      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD camera support remains identity-only with no DVP capture. Wi-Fi has not been tested in EmberBSD.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
         "mosaico-gui-peripheral-observation",
         "mosaico-touch-input-observation",
-        "mosaico-display-output-observation",
-        "mosaico-uboot-red-kernel-black-observation",
         "mosaico-factory-peripheral-observation",
         "mosaico-spi-idle-high-kernel-source",
         "mosaico-fdt-i2c-status-kernel",
         "mosaico-uboot-red-splash-diagnostic",
-        "mosaico-reference-core-os-base",
-        "mosaico-reference-core-red-observation",
-        "mosaico-spi-line-mode-kernel-source"
+        "mosaico-spi-line-mode-kernel-source",
+        "mosaico-row-pair-kernel-source",
+        "mosaico-row-pair-display-touch-observation"
       ]
     },
     {

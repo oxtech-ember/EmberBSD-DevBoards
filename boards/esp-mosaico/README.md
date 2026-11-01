@@ -40,23 +40,15 @@ after a normal POWER press. Its FFS root is an in-memory disk; persistent
 filesystem writes, NAND, full PSRAM read/write and general application
 support remain unverified.
 
-A bounded [RAM graphics trial](evidence/gui-peripherals.json) attached the CO5300
-framebuffer and CST9220 touch driver and kept LVGL running; the display remained
-black. The [touch input check](evidence/touch-input.json) confirmed raw contact,
-release and changing-coordinate events. Factory UI, touch and changing camera
-preview are separate vendor-firmware evidence in the
-[factory observation](evidence/factory-peripherals.json).
-
-The normal EmberBSD CO5300 framebuffer/LVGL path remains black on this sample,
-including after the published [SPI data-line mode fix](https://github.com/oxtech-ember/EmberBSD/commit/6bd36b7ada1290598cd2c04696b00fbf55793ab9).
-Nonzero pixel buffers and zero SPI transfer errors do not establish visible
-output. A separate reference-core diagnostic produced a solid red field from
-inside the OS (result 0, no LVGL) using a temporary unpublished kernel adapter;
-see [its bounded observation](evidence/reference-core-red.json). The cause and
-standard framebuffer display acceptance remain unresolved. The [earlier
-U-Boot/kernel comparison](evidence/uboot-red-kernel-black.json) retains its
-historical register snapshot; it is not a current diagnosis. Touch calibration
-and audio function remain unverified.
+A [standard EmberBSD framebuffer/LVGL trial](evidence/row-pair-display-touch.json)
+on one V1.2 sample displayed a visible interface; the operator also confirmed
+changing touch coordinates. The published [CO5300 row-pair fix](https://github.com/oxtech-ember/EmberBSD/commit/ded5f5242c6c8cb9cf17bb60d62ea0a520df7255)
+uses two-row RASET windows to satisfy the panel's even-height requirement,
+with 1920-byte width-4 pixel transfers. This confirms that configured RAM-boot
+scenario on one sample; it does not establish support for other revisions.
+Touch orientation/calibration, audio playback and sustained operation remain
+unverified. Factory UI, touch and changing camera preview are separate
+vendor-firmware evidence in the [factory observation](evidence/factory-peripherals.json).
 
 The same [camera identity check](evidence/display-output.json) read SC101IOT PID
 `0xda4a` at `0x68` with the optional EmberBSD identity-only driver. DVP capture

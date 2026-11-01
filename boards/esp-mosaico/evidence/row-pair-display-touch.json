@@ -1,0 +1,63 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-row-pair-display-touch",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-01",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "ESP_MOSAICO_SC101IOT row-pair RAM kernel FIT",
+      "revision": "EmberBSD OS ded5f5242c6c8cb9cf17bb60d62ea0a520df7255",
+      "sha256": "cfe0f90e4efc394df9bfa52d9da3f8200fee3801bea9ed36b76bf951466294ab",
+      "reference": null
+    },
+    {
+      "name": "Static FFS RAM root with console tools and LVGL",
+      "revision": "clean v2 RV32 root",
+      "sha256": "cd8ab0885b6f5452eda85185852e468a7cf26e23d206b108911680434ac04122",
+      "reference": null
+    }
+  ],
+  "scenario": "RAM-boot the standard ESP_MOSAICO_SC101IOT CO5300 framebuffer/genfb path and start LVGL. The row-pair worker programs two-row RASET windows (y..y+1) and sends 1920-byte width-4 pixel transfers. The operator views the interface and moves a finger on the touch panel.",
+  "expected": "The standard EmberBSD display shows a visible interface and the touch event stream reports changing coordinates.",
+  "observed": "The operator confirmed a visible EmberBSD interface and changing touch coordinates. The kernel attached espspi0 → spi0 → cofb0 and wsdisplay0; LVGL PID 80 remained alive at capture. COFB reported 962 rows sent and zero transfer errors. The SPI trace showed RASET 0x2b with start row 2/end row 3 followed by a hash-valid 1920-byte width-4 pixel transfer. The latest COFB sample was y478 with rows=2 and 960 nonzero pixels across rows 478–479; the diagnostic raw and wire sample endpoints were 0x1106.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "cofb-rows-sent",
+      "value": 962,
+      "unit": "rows"
+    },
+    {
+      "name": "cofb-transfer-errors",
+      "value": 0,
+      "unit": "errors"
+    },
+    {
+      "name": "pixel-bytes-per-row-pair",
+      "value": 1920,
+      "unit": "bytes"
+    }
+  ],
+  "limits": [
+    "One operator-reported V1.2 sample and one RAM-only boot; this did not write NOR or establish another board revision.",
+    "The published row-pair worker corrects the CO5300 even-height RASET requirement: the prior one-row windows were invalid; two-row windows use 1920-byte pixel transfers.",
+    "Touch coordinate movement is confirmed; orientation, quantitative calibration accuracy, multitouch and sustained reliability were not measured.",
+    "Audio playback and EmberBSD Wi-Fi were not tested. The optional camera support remains identity-only; DVP capture is not implemented."
+  ],
+  "source_refs": [
+    "mosaico-row-pair-kernel-source",
+    "mosaico-touch-kernel-source",
+    "mosaico-lvgl-example",
+    "mosaico-bsp",
+    "mosaico-hardware-v12"
+  ]
+}

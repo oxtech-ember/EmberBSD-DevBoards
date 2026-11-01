@@ -13,10 +13,12 @@ The vendor WebUI does not establish that Spark already runs on this board.
 For a native EmberBSD port, start with the [ESP32-S31 source profile](../esp32-s31/README.md)
 and identify which boot, memory and radio assumptions apply to Mosaico.
 Keep the 16 MB PSRAM budget explicit. Storage capacity is not working RAM.
-Initial display and touch integration has attached on one sample; the display
-remained black. Touch coordinates and contact events reached wsmouse, while
-orientation and calibration remain unverified. Power, audio and expansion
-features retain their own integration and validation limits.
+On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed
+a visible interface after the published two-row RASET worker fix; the operator
+also confirmed changing touch coordinates. This is a RAM-only scenario on one
+sample. Touch orientation/calibration, audio playback and sustained operation
+remain unverified; camera support is identity-only and DVP capture is not implemented.
+Power, Wi-Fi and other expansion features retain their own integration limits.
 Check the actual flash layout and a usable console/recovery route before selecting an image.
 
 The BSP also provides ESP-NOW peer and topology components for multi-board interaction.
