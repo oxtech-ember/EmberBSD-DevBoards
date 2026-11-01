@@ -57,8 +57,11 @@ defines these paths. Vibe Mode can download an Idea over Wi-Fi; download and boo
 selection are separate operations. The vendor's
 [full firmware updater](https://mosaico.ai/en/firmware) uses USB and ROM mode.
 ROM access and NOR backup verification were exercised in the
-[ROM readback check](evidence/rom-readback.json). Firmware writing, restoration
-and the Vibe update path have not been exercised.
+[ROM readback check](evidence/rom-readback.json). A later [bounded factory restore](evidence/factory-peripherals.json)
+wrote only the two ranges replaced by the OS installation. A full 16 MiB NOR
+digest check first matched the expected installed state; after writing, it matched
+the original factory backup on that sample. This does not establish a general
+recovery procedure or exercise the vendor updater or Vibe update path.
 
 The cited tools describe a retained `vibe_mode` partition and a separate application.
 Do not infer the installed partition table from a repository release or a screen version.

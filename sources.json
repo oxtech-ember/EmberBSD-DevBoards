@@ -1344,6 +1344,14 @@
       "revision": null,
       "reviewed_at": "2026-11-01",
       "sha256": null
+    },
+    {
+      "id": "mosaico-factory-peripheral-observation",
+      "title": "ESP-Mosaico factory firmware peripheral and camera observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/factory-peripherals.json",
+      "revision": null,
+      "reviewed_at": "2026-11-01",
+      "sha256": null
     }
   ]
 }

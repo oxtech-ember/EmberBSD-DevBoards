@@ -99,11 +99,18 @@ Board power came separately through USB-C. A ROM identification response matched
 the earlier USB readback identity. That ROM check established both UART directions; the separate operating-system
 boot evidence establishes an EmberBSD console, but not sustained transfers.
 
-Camera modules use the left slot only. A connected module on one V1.2 sample
-returned a CRC-valid camera EEPROM descriptor with hardware version 0x0102;
-sensor identification and capture remain unverified. The module revision is
-independent of the CoreBoard revision. Some camera signals conflict with USB Serial/JTAG;
-the BSP directs affected examples to UART.
+Camera modules use the left slot only. On one V1.2 sample, the CRC-valid EEPROM
+descriptor's hardware-version field was 0x0102; this identifies descriptor metadata,
+not sensor silicon, and is independent of the CoreBoard revision. The vendor guide's
+sensor mapping is a reference, not definitive part identification. In a separate
+[restored factory-firmware observation](evidence/factory-peripherals.json), UART
+reported SC101IOT PID 0xda4a and the first 1280 × 720 UYVY preview frame rendered;
+the operator confirmed a changing live image. This establishes factory-firmware
+operation on that sample only, not the sensor identity of other modules or EmberBSD
+camera support. EmberBSD sensor identification and capture remain unverified;
+the OV3640-specific probe does not identify this SC101IOT sensor.
+Some camera signals conflict with USB Serial/JTAG; the BSP directs affected examples
+to UART.
 Five right-slot signals share the onboard audio I²S bus.
 Do not allocate those signals to another function while the codec uses them.
 

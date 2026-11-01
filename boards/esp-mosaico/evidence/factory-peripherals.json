@@ -1,0 +1,54 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-factory-peripherals",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-01",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit; CoreBoard hardware version 1.2 was reported by eFuse."
+  },
+  "inputs": [
+    {
+      "name": "ESP-Mosaico factory application",
+      "revision": "edge_agent 0.4.0; compiled 2026-09-28 15:06:28",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "ESP-IDF",
+      "revision": "v6.1-dev-8142-g188e3e55bb2-dirt",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "CO5300 panel driver",
+      "revision": "2.2.0",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Restore the factory contents by writing only the two ranges replaced by the OS installation. First verify the full 16 MiB NOR against the expected installed state (original backup plus the installed OS ranges); verify both written ranges and then the complete restored NOR against the original backup. Boot normally without BOOT, observe the UI, open the camera by touch and point it at different subjects. Observe station association/DHCP and request GET /api/status, /api/capabilities and /api/lua-modules.",
+  "expected": "The full pre-write NOR matches the expected installed state; the restored NOR matches the original factory backup. The factory UI, touch and changing live preview work, and the three HTTP GET requests succeed.",
+  "observed": "All ROM digest checks matched their respective inputs. The operator confirmed visible factory UI, working touch and a changing live camera image. UART reported SC101IOT PID 0xda4a, 1280x720 UYVY capture and the first rendered preview frame. Vendor Wi-Fi associated and obtained a DHCP lease; all three diagnostic GET requests returned HTTP 200.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "One assembled V1.2 sample and vendor factory firmware only; this is not EmberBSD display, touch, camera or Wi-Fi acceptance.",
+    "The restore covered only the two original OS ranges. Matching full-device pre- and post-restore digests establish this restore on this sample, not a general recovery procedure or NAND/eFuse backup.",
+    "The prior CRC-valid EEPROM descriptor hardware-version field 0x0102 describes the module descriptor, not sensor silicon. The factory sensor ID applies to this sample and does not establish the sensor fitted to other modules with the same descriptor.",
+    "No oscillator frequency, frame rate, image quality, full-panel touch calibration, sustained network throughput or long-run stability was measured.",
+    "The dirty IDF version string and application version do not establish an exact public source tree."
+  ],
+  "source_refs": [
+    "mosaico-hardware-v12",
+    "mosaico-user-guide",
+    "mosaico-bsp",
+    "mosaico-camera-guide",
+    "mosaico-gui-peripheral-observation"
+  ]
+}

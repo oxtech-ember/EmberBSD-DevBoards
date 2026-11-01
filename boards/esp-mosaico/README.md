@@ -45,12 +45,20 @@ attached the CO5300 framebuffer and CST9220 touch driver, kept an LVGL process
 running for at least eight seconds, and read selected device IDs and a camera
 module EEPROM. The user reported a completely black screen. A subsequent
 [touch input check](evidence/touch-input.json) observed changing coordinates
-and contact/release events. Touch calibration and camera sensor operation
-remain unverified. The latest [display diagnostic trial](evidence/display-output.json)
-recorded all-zero CO5300 status-transaction values without reported bus errors
-and increasing refresh counters, but the screen remained black. Camera sensor
-identification also failed. Register snapshots do not establish physical bus
-timing or panel power.
+and contact/release events. Touch calibration remains unverified. The latest
+[display diagnostic trial](evidence/display-output.json) recorded all-zero CO5300
+status-transaction values without reported bus errors and increasing refresh
+counters, but the EmberBSD screen remained black. Its camera sensor identification
+also failed; these are EmberBSD-specific limits. Register snapshots do not establish
+physical bus timing or panel power.
+
+A later [factory-firmware observation](evidence/factory-peripherals.json) followed a
+restore that wrote only the two ranges replaced by the OS installation. Before
+writing, the full NOR matched the expected installed state; afterward, it matched
+the original factory backup. On this sample the factory UI was visible,
+touch worked, and a changing SC101IOT preview (PID 0xda4a, 1280 × 720 UYVY) rendered.
+Factory Wi-Fi STA, DHCP and read-only status requests also succeeded. This is vendor-
+firmware evidence only and does not establish EmberBSD camera, touch or display support.
 
 ## Sources
 
