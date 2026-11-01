@@ -74,7 +74,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, CO5300 framebuffer and CST9220 touch drivers attached; a touch trial produced changing coordinates and contact events. A diagnostic LVGL trial completed SPI transfers without reported errors while the display remained black. Orientation, calibration and audio function were not verified.",
+      "scope": "On one V1.2 sample, CO5300 framebuffer and CST9220 touch drivers attached; a touch trial produced changing coordinates and contact events. A diagnostic LVGL trial completed SPI transfers without reported errors while the display remained black. Later CO5300 status transactions completed without reported bus errors but yielded all-zero values; camera sensor identification failed. Orientation, calibration and audio function were not verified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",

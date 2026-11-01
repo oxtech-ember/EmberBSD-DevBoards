@@ -46,9 +46,11 @@ running for at least eight seconds, and read selected device IDs and a camera
 module EEPROM. The user reported a completely black screen. A subsequent
 [touch input check](evidence/touch-input.json) observed changing coordinates
 and contact/release events. Touch calibration and camera sensor operation
-remain unverified. A [display diagnostic trial](evidence/display-output.json)
-recorded successful SPI completion and increasing refresh counters, but the
-screen remained black. Register snapshots do not establish physical bus timing.
+remain unverified. The latest [display diagnostic trial](evidence/display-output.json)
+recorded all-zero CO5300 status-transaction values without reported bus errors
+and increasing refresh counters, but the screen remained black. Camera sensor
+identification also failed. Register snapshots do not establish physical bus
+timing or panel power.
 
 ## Sources
 
