@@ -1315,9 +1315,9 @@
     },
     {
       "id": "mosaico-display-kernel-source",
-      "title": "ESP-Mosaico kernel with framebuffer and GPIO/SPI diagnostics",
-      "url": "https://github.com/oxtech-ember/EmberBSD/tree/0c92eac5b000828b9ba9ffe8317a7359abce3ee3",
-      "revision": "0c92eac5b000828b9ba9ffe8317a7359abce3ee3",
+      "title": "ESP-Mosaico kernel with display diagnostics and GPSPI CS hold",
+      "url": "https://github.com/oxtech-ember/EmberBSD/tree/786a90b35f400fee1f5aaf76555c385598507212",
+      "revision": "786a90b35f400fee1f5aaf76555c385598507212",
       "reviewed_at": "2026-11-01",
       "sha256": null
     }
