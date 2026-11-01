@@ -1304,6 +1304,22 @@
       "revision": "ae4538fa8e39c56ad75ed70768cf549032e822b1",
       "reviewed_at": "2026-10-31",
       "sha256": null
+    },
+    {
+      "id": "mosaico-display-output-observation",
+      "title": "ESP-Mosaico display output and controller diagnostics",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/display-output.json",
+      "revision": null,
+      "reviewed_at": "2026-11-01",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-display-kernel-source",
+      "title": "ESP-Mosaico kernel with framebuffer and GPIO/SPI diagnostics",
+      "url": "https://github.com/oxtech-ember/EmberBSD/tree/0c92eac5b000828b9ba9ffe8317a7359abce3ee3",
+      "revision": "0c92eac5b000828b9ba9ffe8317a7359abce3ee3",
+      "reviewed_at": "2026-11-01",
+      "sha256": null
     }
   ]
 }

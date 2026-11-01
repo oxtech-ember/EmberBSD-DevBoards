@@ -1,0 +1,46 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-display-output",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-01",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "ESP_MOSAICO RAM kernel FIT with display and controller diagnostics",
+      "revision": "OS 0c92eac5b000828b9ba9ffe8317a7359abce3ee3",
+      "sha256": "217401981b0960c2dae19b15f0921d26c7bdda5c24bf1ab672d596f83dd1e59c",
+      "reference": null
+    },
+    {
+      "name": "Static FFS RAM root with LVGL",
+      "revision": "LVGL example b1afcfbe0c3ef008a44bb5aae11a2dbfa937597f; console-tools 06be3ad3bfec7e98e214059b21e18a195ac3d2be",
+      "sha256": "a45be34726e86292e6ee055822392de9d8e99be27a934bdc95c70f035dc8b5ee",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the diagnostic kernel and RAM root, read framebuffer and GPIO/SPI snapshots, start the LVGL wscons example, and check visible output.",
+  "expected": "The example produces a visible interface and the driver reports successful refresh activity.",
+  "observed": "The initial framebuffer scan reported rows_changed=480, rows_sent=480, errors=0 and last_error=0. After starting LVGL and a three-second wait, both row counters were 961 with no errors; the process remained alive. GPIO output and enable registers programmed the shared active-low supply on and panel reset released. Pin routing matched the V1.2 device tree. GPSPI reported clkrst=00800043, gate=00000003, clock=80000000, user=08002000, misc=0000003e and int_raw=00001000. The operator still reported a completely black screen.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "One sample and a short RAM trial; the installed NOR image was not updated.",
+    "Successful SPI completion and row counters do not prove the panel received valid commands or pixels.",
+    "Register snapshots describe programmed state, not measured pad voltage or physical bus timing.",
+    "This trial did not repeat the separately recorded touch-input check or establish calibration, camera, audio or Wi-Fi operation.",
+    "Raw UART logs and local device identifiers remain private."
+  ],
+  "source_refs": [
+    "mosaico-display-kernel-source",
+    "mosaico-lvgl-example",
+    "mosaico-bsp"
+  ]
+}
