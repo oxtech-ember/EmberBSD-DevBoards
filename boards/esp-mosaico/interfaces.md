@@ -62,6 +62,15 @@ board-side wiring.
 
 ## Touch and peripheral support
 
+The vendor's [HMI example](https://github.com/esp-mosaico/esp-mosaico-bsp/tree/7cbfb390638dcb93522fc3cde094b2d43cf907c2/examples/hmi_demo)
+is the LVGL reference. Its [BSP display implementation](https://github.com/esp-mosaico/esp-mosaico-bsp/blob/7cbfb390638dcb93522fc3cde094b2d43cf907c2/components/esp-mosaico-bsp/onboard/display.c)
+distinguishes cold panel initialization from adopting an initialized boot splash.
+The [Utils boot splash](https://github.com/esp-mosaico/esp-mosaico-utils/blob/be151ae047014e79a9c7ae0092dd203844499003/esp-mosaico-vibe-mode/firmware/vibe-mode/bootloader_components/main/mosaico_boot_splash.c)
+provides a separate SPI output reference before LVGL starts; [Claw's panel setup](https://github.com/esp-mosaico/esp-mosaico-claw/blob/2654a4a9f76f5d7ea108e4dff7ade7b1df4c1c5c/boards/esp_mosaico/setup_device.c)
+also handles the retained splash. These software revisions do not identify the
+factory firmware in the [vendor application observation](evidence/vendor-webui.json),
+and rendering a framebuffer does not establish visible panel output.
+
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
 V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 480
 and attached `wsmouse`. A [subsequent input check](evidence/touch-input.json)
