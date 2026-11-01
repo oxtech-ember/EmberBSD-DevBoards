@@ -44,14 +44,19 @@ A bounded [RAM graphics trial](evidence/gui-peripherals.json) attached the CO530
 framebuffer and CST9220 touch driver and kept LVGL running; the screen remained
 black. A subsequent [touch input check](evidence/touch-input.json) observed
 changing coordinates and contact/release events. Touch calibration remains
-unverified. The [display diagnostics](evidence/display-output.json) left the
-screen black with both hardware-SPI and GPIO-bit-banged SPI. The GPIO trial
-sent an ordinary red framebuffer fill at 100 kHz with
-`spi-tx-bus-width=1`; the driver reported 960 rows across the initial refresh and
-red fill with no transfer errors. Its transmit-only controller could not perform
-CO5300 status reads (`EOPNOTSUPP`). The owner confirmed the screen remained
-completely black. The counters do not establish panel command acceptance or
-switched-rail state; SPI transport selection alone is not a sufficient explanation.
+unverified. Earlier [display diagnostics](evidence/display-output.json) left the screen black
+with hardware-SPI and GPIO-bit-banged SPI; the GPIO trial sent an ordinary red
+framebuffer fill at 100 kHz with `spi-tx-bus-width=1`, and its transmit-only
+controller could not perform CO5300 status reads (`EOPNOTSUPP`). In a later
+[same-boot comparison](evidence/uboot-red-kernel-black.json), the optional
+U-Boot `mosaicosplash red` command produced a user-confirmed solid red field.
+Without resetting, the ordinary EmberBSD kernel booted and LVGL started; the owner
+confirmed the screen became fully black. The kernel reported 960 framebuffer rows
+sent without transfer errors; CO5300 reads returned `0xff` with no bus error.
+A post-refresh register snapshot had `CTRL=0x003c0000` and `USER=0x08002040`,
+while the known-visible U-Boot quad transmit path programs `CTRL=0x003c8000`
+with `USER.FWRITE_QUAD`. This idle snapshot is a diagnostic discrepancy, not proof
+of cause or panel acknowledgement. EmberBSD display acceptance remains unresolved.
 
 The same [camera identity check](evidence/display-output.json) read SC101IOT PID
 `0xda4a` at `0x68` with the optional EmberBSD identity-only driver. DVP capture

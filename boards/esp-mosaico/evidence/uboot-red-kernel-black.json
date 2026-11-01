@@ -1,0 +1,58 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-uboot-red-kernel-black",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-01",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "Optional Mosaico U-Boot red-field diagnostic",
+      "revision": "EmberBSD-Ports 07c34fb1a9cf1ffb16c7d6d514d322e3f6dbff58; mosaicosplash red",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Ordinary ESP_MOSAICO_SC101IOT kernel used after the U-Boot splash",
+      "revision": "EmberBSD e8c60215a0ba0b3499e1cd94da3a15a8227a6d50; standard hardware-SPI FDT",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "In one RAM-only boot, the operator ran the published optional U-Boot command mosaicosplash red. Without resetting the board, the ordinary EmberBSD kernel booted and LVGL was started.",
+  "expected": "The U-Boot diagnostic shows a red field; after the same boot enters EmberBSD and starts LVGL, framebuffer output remains visible.",
+  "observed": "The operator confirmed a solid red field from U-Boot. After kernel boot and LVGL start in the same boot, the operator confirmed the display became fully black. The kernel attached espspi0 → spi0 → cofb0. Post-init CO5300 reads were id=ff:ff:ff, power=ff, format=ff and brightness=ff, each with error=0. After LVGL, cofb0 reported rows_changed=960, rows_sent=960, errors=0 and last_error=0. The post-refresh SPI snapshot was clkrst=00800043, gate=00000003, cmd=00000000, ctrl=003c0000, clock=80000000, user=08002040, user1=00400000, user2=00000000, misc=0000003e and int_raw=00001000.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "cofb-rows-sent",
+      "value": 960,
+      "unit": "rows"
+    },
+    {
+      "name": "cofb-transfer-errors",
+      "value": 0,
+      "unit": "errors"
+    }
+  ],
+  "limits": [
+    "One assembled V1.2 sample; this was a RAM-only sequence and did not write NOR.",
+    "The confirmed red U-Boot field establishes visible output before kernel boot on this sample; it does not establish EmberBSD display acceptance.",
+    "The row counters report framebuffer-driver transfer completion only. They do not establish panel command acceptance or switched-supply voltage.",
+    "CO5300 values of 0xff with error=0 are not a validated panel identity or acknowledgement.",
+    "The post-refresh snapshot showed CTRL=0x003c0000 and USER=0x08002040. The published U-Boot four-line transmit path programs CTRL=0x003c8000 (idle-high plus bit 15) together with USER.FWRITE_QUAD. The snapshot was taken after framebuffer activity, not during a transfer; this discrepancy is diagnostic evidence, not proof of cause or panel acceptance.",
+    "An earlier GPIO-bit-banged trial also remained black and did not support status reads. No physical rail voltage was measured."
+  ],
+  "source_refs": [
+    "mosaico-uboot-red-splash-diagnostic",
+    "mosaico-display-kernel-e8c60215-source",
+    "mosaico-display-output-observation"
+  ]
+}

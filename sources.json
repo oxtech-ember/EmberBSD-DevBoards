@@ -1392,6 +1392,30 @@
       "revision": "e2f027a9b6bfc86cbada9a8e24ff0cb4dfa8af5d",
       "reviewed_at": "2026-11-01",
       "sha256": null
+    },
+    {
+      "id": "mosaico-uboot-red-splash-diagnostic",
+      "title": "EmberBSD Ports opt-in ESP32-S31 Mosaico U-Boot red-field diagnostic",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/commit/07c34fb1a9cf1ffb16c7d6d514d322e3f6dbff58",
+      "revision": "07c34fb1a9cf1ffb16c7d6d514d322e3f6dbff58",
+      "reviewed_at": "2026-11-01",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-display-kernel-e8c60215-source",
+      "title": "EmberBSD ESP_MOSAICO_SC101IOT kernel source used in the RAM display comparison",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/e8c60215a0ba0b3499e1cd94da3a15a8227a6d50",
+      "revision": "e8c60215a0ba0b3499e1cd94da3a15a8227a6d50",
+      "reviewed_at": "2026-11-01",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-uboot-red-kernel-black-observation",
+      "title": "ESP-Mosaico same-boot U-Boot red field and black EmberBSD display observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/uboot-red-kernel-black.json",
+      "revision": null,
+      "reviewed_at": "2026-11-01",
+      "sha256": null
     }
   ]
 }

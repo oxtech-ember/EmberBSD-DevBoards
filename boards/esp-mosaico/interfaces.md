@@ -71,14 +71,22 @@ also handles the retained splash. These software revisions do not identify the
 factory firmware in the [vendor application observation](evidence/vendor-webui.json),
 and rendering a framebuffer does not establish visible panel output. A published
 [ESP32-S31 SPI initialization change](https://github.com/oxtech-ember/EmberBSD/commit/37fb3aec46352034ad4b7ae78d354b39295a00ff)
-leaves the controller's data lines high while idle. Hardware-SPI and GPIO-bit-banged
-SPI framebuffer trials both left this sample's display black. In the GPIO trial, a
-normal red fill used GPIO SPI requested at 100 kHz with `spi-tx-bus-width=1`; the
-960 reported rows cover the initial refresh and fill, with no transfer errors. The
-transmit-only controller did not perform CO5300 status reads (`EOPNOTSUPP`). These
-results make transport selection alone an insufficient explanation, but they do
-not establish panel command acceptance or switched-supply state. The factory
-firmware's visible display and preview remain separate evidence.
+leaves the controller's data lines high while idle. Earlier hardware-SPI and
+GPIO-bit-banged SPI framebuffer trials left this sample's display black; the GPIO
+trial requested 100 kHz and sent an ordinary red fill, while its transmit-only
+controller did not perform CO5300 status reads (`EOPNOTSUPP`). In a later
+[same-boot comparison](evidence/uboot-red-kernel-black.json), the owner confirmed
+a solid red field from the optional U-Boot command `mosaicosplash red`; after the
+ordinary EmberBSD kernel booted and LVGL started without a reset, the display was
+fully black. A post-refresh kernel snapshot read `CTRL=0x003c0000` and
+`USER=0x08002040`. The published U-Boot quad transmit path programs
+`CTRL=0x003c8000` (idle-high plus bit 15) with `USER.FWRITE_QUAD`; the captured
+kernel snapshot was after framebuffer activity, not during a transfer. This is a
+source/register discrepancy to investigate, not proof of panel acceptance or cause.
+Kernel row counters and `0xff` reads with no bus error do not establish visible
+output, panel acknowledgement or switched-supply voltage. EmberBSD display
+acceptance remains unresolved; the factory firmware's visible display remains
+separate evidence.
 
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
 V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 480

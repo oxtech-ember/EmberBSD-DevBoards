@@ -32,7 +32,10 @@
     "mosaico-display-output-observation",
     "mosaico-factory-peripheral-observation",
     "mosaico-sc101iot-kernel-source",
-    "mosaico-spi-idle-high-kernel-source"
+    "mosaico-spi-idle-high-kernel-source",
+    "mosaico-uboot-red-splash-diagnostic",
+    "mosaico-display-kernel-e8c60215-source",
+    "mosaico-uboot-red-kernel-black-observation"
   ],
   "capabilities": [
     {
@@ -77,7 +80,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, the vendor factory firmware showed a visible UI and touch responded. In EmberBSD, CO5300 framebuffer and CST9220 touch drivers attached; earlier touch checks produced changing coordinates and contact events. A RAM trial wrote the CO5300 ALLPON command 0x23 after initialization, but the display stayed black without LVGL; ID, power, format and brightness status reads returned 0xff without reported bus errors. These results do not prove command acceptance or physical SPI timing, panel power or the cause of the black display. Orientation, calibration and audio function were not verified.",
+      "scope": "On one V1.2 sample, factory firmware showed a visible UI and touch responded. EmberBSD attached the CO5300 framebuffer and CST9220 touch driver; a touch check produced changing coordinates and contact events. In one RAM boot, the optional U-Boot red-field diagnostic visibly produced a solid red field, then the display became fully black after the ordinary ESP_MOSAICO_SC101IOT kernel booted and LVGL started. The kernel reported 960 rows sent without transfer errors, but CO5300 reads returned 0xff without bus errors. These results do not establish panel acknowledgement, physical rail voltage, or the cause of black output; a post-refresh SPI register snapshot differed from the known-visible U-Boot quad path at CTRL bit 15. EmberBSD display acceptance remains unresolved; orientation, calibration and audio function are unverified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
@@ -85,6 +88,7 @@
         "mosaico-gui-peripheral-observation",
         "mosaico-touch-input-observation",
         "mosaico-display-output-observation",
+        "mosaico-uboot-red-kernel-black-observation",
         "mosaico-factory-peripheral-observation",
         "mosaico-spi-idle-high-kernel-source",
         "mosaico-fdt-i2c-status-kernel"
