@@ -70,7 +70,7 @@
   ],
   "limits": [
     "One operator-reported V1.2 sample and one RAM-only boot; this does not establish another board revision or persistent installation.",
-    "Selected ESP-IDF 6.1 defines auth enum 3 as WPA2-PSK, 4 as WPA/WPA2-PSK, 7 as WPA3-PSK, and 8 as WPA2/WPA3-PSK mixed mode. The scan reported enums 3 and 4; these values alone do not establish the AP security modes.",
+    "Selected ESP-IDF 6.1 defines auth enum 3 as WPA2-PSK, 4 as WPA/WPA2-PSK, 6 as WPA3-PSK, and 7 as WPA2/WPA3-PSK mixed mode. The scan reported enums 3 and 4; these values alone do not establish the AP security modes.",
     "The captured scan output provides no BSSID, raw RSN AKM or PMF fields. Unique BSS count and actual WPA3/PMF classification therefore remain unknown.",
     "No association, authentication, DHCP, roaming or sustained transfer was tested."
   ],
