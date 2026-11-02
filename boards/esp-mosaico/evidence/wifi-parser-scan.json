@@ -1,0 +1,82 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-wifi-parser-scan",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-02",
+  "layer": "physical",
+  "result": "inconclusive",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "ESP_MOSAICO_SC101IOT_WIFI parser-bridge RAM kernel FIT",
+      "revision": "EmberBSD parser bridge commit 707322954a39edd3e917a9ff7b4a2de8647d671b",
+      "sha256": "3a11dbbe80996685dfb68e63e578c961dca099003a8cd4fbe95a0cd79921f66e",
+      "reference": null
+    },
+    {
+      "name": "Static FFS RAM root with console tools",
+      "revision": "clean v2 RV32 root",
+      "sha256": "cd8ab0885b6f5452eda85185852e468a7cf26e23d206b108911680434ac04122",
+      "reference": null
+    },
+    {
+      "name": "RAM U-Boot firmware FIT",
+      "revision": "U-Boot 2026.10",
+      "sha256": "bcf9fd336b9db1ef4f6f2858cfe68a4a468e94ef6cb4176cc77510c23cf1339c",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the parser-bridge Wi-Fi kernel and RAM root, bring up espwifi0, and run one active 2.4 GHz scan. Do not associate to any access point.",
+  "expected": "The selected WPA/RSN parser completes without callback errors and returned metadata distinguishes protected network modes sufficiently to assess WPA3 and PMF.",
+  "observed": "espwifi0 attached and was brought up. The one scan command returned 14 and then 16 records; these are result polls, not a unique-network or BSS count. No WPA/RSN parser callback errors appeared. Reported auth enums included 3 and 4; the selected ESP-IDF 6.1 header defines 3 as WPA2-PSK and 4 as WPA/WPA2-PSK. The captured scan output contains neither BSSID nor raw RSN AKM/PMF fields, so actual security modes and unique BSS count cannot be established. The shell remained responsive; no association, authentication or DHCP was tested.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "first-result-poll-ap-records",
+      "value": 14,
+      "unit": "records"
+    },
+    {
+      "name": "second-result-poll-ap-records",
+      "value": 16,
+      "unit": "records"
+    },
+    {
+      "name": "wpa-ie-parser-callback-errors",
+      "value": 0,
+      "unit": "errors"
+    },
+    {
+      "name": "vendor-internal-ram-free",
+      "value": 233552,
+      "unit": "bytes"
+    },
+    {
+      "name": "reported-auth-enum-3",
+      "value": 3,
+      "unit": "ESP-IDF enum value"
+    },
+    {
+      "name": "reported-auth-enum-4",
+      "value": 4,
+      "unit": "ESP-IDF enum value"
+    }
+  ],
+  "limits": [
+    "One operator-reported V1.2 sample and one RAM-only boot; this does not establish another board revision or persistent installation.",
+    "Selected ESP-IDF 6.1 defines auth enum 3 as WPA2-PSK, 4 as WPA/WPA2-PSK, 7 as WPA3-PSK, and 8 as WPA2/WPA3-PSK mixed mode. The scan reported enums 3 and 4; these values alone do not establish the AP security modes.",
+    "The captured scan output provides no BSSID, raw RSN AKM or PMF fields. Unique BSS count and actual WPA3/PMF classification therefore remain unknown.",
+    "No association, authentication, DHCP, roaming or sustained transfer was tested."
+  ],
+  "source_refs": [
+    "mosaico-hardware-v12",
+    "mosaico-espwifi-scan-kernel-source",
+    "mosaico-espwifi-wpa-parser-source"
+  ]
+}

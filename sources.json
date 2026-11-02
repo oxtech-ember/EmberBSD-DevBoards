@@ -1466,9 +1466,25 @@
       "sha256": null
     },
     {
+      "id": "mosaico-espwifi-wpa-parser-source",
+      "title": "EmberBSD ESP-Mosaico selected common WPA/RSN parser bridge",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/707322954a39edd3e917a9ff7b4a2de8647d671b",
+      "revision": "707322954a39edd3e917a9ff7b4a2de8647d671b",
+      "reviewed_at": "2026-11-02",
+      "sha256": null
+    },
+    {
       "id": "mosaico-wifi-scan-observation",
       "title": "ESP-Mosaico EmberBSD active Wi-Fi scan observation",
       "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-scan.json",
+      "revision": null,
+      "reviewed_at": "2026-11-02",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-wifi-parser-scan-observation",
+      "title": "ESP-Mosaico parser-bridge Wi-Fi scan observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-parser-scan.json",
       "revision": null,
       "reviewed_at": "2026-11-02",
       "sha256": null

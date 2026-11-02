@@ -63,12 +63,14 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, an EmberBSD RAM trial enumerated espwifi0 and completed active 2.4 GHz scan passes reporting 14 and 16 AP records. Repeated WPA IE parser callback errors make security classification unreliable. Association, DHCP, roaming and sustained transfer are unverified.",
+      "scope": "On one V1.2 sample, a RAM trial enumerated espwifi0 and an active 2.4 GHz scan returned 14 and then 16 records in two result polls without WPA/RSN parser callback errors. Reported auth enums included 3 and 4. The capture lacks BSSID and raw RSN AKM/PMF fields, so actual security modes and unique BSS count remain unknown. Association, WPA2/WPA3/PMF authentication, DHCP and roaming remain unverified.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
         "mosaico-espwifi-scan-kernel-source",
-        "mosaico-wifi-scan-observation"
+        "mosaico-wifi-scan-observation",
+        "mosaico-espwifi-wpa-parser-source",
+        "mosaico-wifi-parser-scan-observation"
       ]
     },
     {
@@ -87,7 +89,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD camera support remains identity-only with no DVP capture. EmberBSD radio evidence is limited to the bounded active scan observation.",
+      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD camera support remains identity-only with no DVP capture. EmberBSD radio evidence is limited to scan-path activity: WPA2/WPA3/PMF authentication, DHCP and roaming remain unverified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
@@ -102,7 +104,9 @@
         "mosaico-row-pair-kernel-source",
         "mosaico-row-pair-display-touch-observation",
         "mosaico-espwifi-scan-kernel-source",
-        "mosaico-wifi-scan-observation"
+        "mosaico-wifi-scan-observation",
+        "mosaico-espwifi-wpa-parser-source",
+        "mosaico-wifi-parser-scan-observation"
       ]
     },
     {

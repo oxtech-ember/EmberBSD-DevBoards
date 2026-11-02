@@ -54,11 +54,12 @@ The same [camera identity check](evidence/display-output.json) read SC101IOT PID
 `0xda4a` at `0x68` with the optional EmberBSD identity-only driver. DVP capture
 is not implemented, so this is not an EmberBSD camera preview.
 
-An EmberBSD RAM trial enumerated `espwifi0` and completed two active 2.4 GHz
-scan passes. The vendor scan reported 14 and then 16 AP records, but repeated
-`wpa_parse_wpa_ie function not found` errors make security classification
-unreliable. No association or DHCP was attempted; see the
-[bounded Wi-Fi scan observation](evidence/wifi-scan.json).
+On one V1.2 RAM trial, `espwifi0` enumerated and an active 2.4 GHz scan
+returned 14 and then 16 records in two result polls, with no WPA/RSN parser
+callback errors. Reported auth enums included 3 and 4; the capture has no BSSID
+or raw RSN AKM/PMF fields, so actual security modes and unique BSS count are
+unknown. Association, WPA2/WPA3/PMF authentication, DHCP and roaming remain
+untested. See the [scan evidence](evidence/wifi-parser-scan.json).
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before

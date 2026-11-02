@@ -92,11 +92,13 @@ verify motion sensing or audio playback. See the [bounded observation](evidence/
 
 ## Wireless
 
-On one V1.2 RAM trial, `espwifi0` enumerated and two active 2.4 GHz scans
-reported 14 and 16 AP records. Repeated `wpa_parse_wpa_ie function not found`
-errors leave security classification unreliable. This establishes scan-path
-activity only; association, DHCP, roaming and sustained transfer are unverified.
-See the [bounded scan observation](evidence/wifi-scan.json).
+On one V1.2 RAM trial, `espwifi0` enumerated and an active 2.4 GHz scan
+returned 14 and then 16 records in two result polls without WPA/RSN parser
+callback errors. Reported auth enums included 3 and 4. The capture has no BSSID
+or raw RSN AKM/PMF fields, so actual security modes and unique BSS count are
+unknown. This confirms scan-path activity only; association, WPA2/WPA3/PMF
+authentication, DHCP and roaming remain unverified. See the
+[parser-bridge scan evidence](evidence/wifi-parser-scan.json).
 
 ## Expansion and debug routing
 
