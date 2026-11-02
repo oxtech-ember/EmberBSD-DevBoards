@@ -1370,6 +1370,14 @@
       "sha256": null
     },
     {
+      "id": "mosaico-dvp-video-kernel-source",
+      "title": "EmberBSD SC101IOT sensor and ESP32-S31 DVP video(4) capture implementation",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/4ac7924ecb7",
+      "revision": "4ac7924ecb7",
+      "reviewed_at": "2026-11-03",
+      "sha256": null
+    },
+    {
       "id": "mosaico-fdt-i2c-status-kernel",
       "title": "EmberBSD FDT I2C enumerator skips disabled children",
       "url": "https://github.com/oxtech-ember/EmberBSD/commit/e6d0b3158587dd307580b8706e06821e2e99bb56",

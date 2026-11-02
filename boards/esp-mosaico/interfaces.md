@@ -79,7 +79,10 @@ replaces invalid one-row RASET windows with even-height two-row windows and
 [bounded display/touch observation](evidence/row-pair-display-touch.json).
 This confirms one configured V1.2 sample only. Touch orientation and quantitative
 calibration, audio playback and sustained operation remain unverified. The
-optional EmberBSD camera path is identity-only and does not implement DVP capture.
+optional SC101IOT EmberBSD configuration now has a target-built sensor/DVP/video(4)
+capture path, but no physical EmberBSD frame has been captured. The mode table
+describes 640 × 480 UYVY at a required 20 MHz XCLK; oscillator frequency and
+actual frame rate remain unmeasured. See [camera and other peripherals](#camera-and-other-peripherals).
 A software transfer trace is not a voltage measurement of the switched LCD supply.
 
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
@@ -129,11 +132,15 @@ reported SC101IOT PID 0xda4a and the first 1280 × 720 UYVY preview frame render
 the operator confirmed a changing live image. This establishes factory-firmware
 operation on that sample only, not the sensor identity of other modules or EmberBSD
 camera support. The optional published
-[ESP_MOSAICO_SC101IOT configuration](https://github.com/oxtech-ember/EmberBSD/blob/7da47e2c1f0bb3829275a189904a5c97fb50f7f8/sys/arch/riscv/conf/ESP_MOSAICO_SC101IOT)
-uses the [SC101IOT identity-only driver](https://github.com/oxtech-ember/EmberBSD/blob/5f706391bfc94d6f349a78ad56e477504267637e/sys/dev/i2c/sc101iot.c)
-at 7-bit SCCB address `0x68`: it selects page `0x31` through `0xf0` and reads ID
-registers `0xf7` and `0xf8`. One V1.2 RAM trial identified PID `0xda4a`.
-The driver does not implement DVP capture or establish an EmberBSD camera preview.
+[ESP_MOSAICO_SC101IOT configuration](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/arch/riscv/conf/ESP_MOSAICO_SC101IOT)
+uses the [SC101IOT driver](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/dev/i2c/sc101iot.c)
+at 7-bit SCCB address `0x68`; it identifies the sensor and configures the
+source-backed 640 × 480 UYVY mode. The [S31 DVP driver](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/arch/riscv/espressif/esp32s31_dvp.c)
+transports frames through video(4). Both standard and Wi-Fi kernel configurations
+target-build. No physical EmberBSD capture is established. The mode table requires
+20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate
+are unmeasured. The earlier identity and factory-preview observations remain
+separate from this source/build result.
 The common kernel configuration no longer selects the OV3640 driver. Its FDT node
 is marked disabled, and the generic FDT I²C enumerator skips disabled children.
 See the bounded
@@ -147,6 +154,29 @@ The two slots use EEPROM addresses `0x50` and `0x51` for discovery.
 The BSP module manager validates descriptors and provides exclusive slot ownership.
 A descriptor or a software module name does not prove that the corresponding hardware is fitted.
 Follow the [BSP examples and resource rules](https://github.com/esp-mosaico/esp-mosaico-bsp/tree/7cbfb390638dcb93522fc3cde094b2d43cf907c2).
+
+## Camera and other peripherals
+
+The hardware details below follow the [BSP revision 7cbfb39](https://github.com/esp-mosaico/esp-mosaico-bsp/tree/7cbfb390638dcb93522fc3cde094b2d43cf907c2).
+The OS support statements refer to the [published DVP implementation](https://github.com/oxtech-ember/EmberBSD/commit/4ac7924ecb7)
+and its target kernel builds, not a physical camera test.
+
+| Device | BSP/source interface | EmberBSD source status |
+| --- | --- | --- |
+| BMI270 | Shared I²C, 7-bit address `0x69`; BSP `onboard/sensors.c` initializes it. | No BMI270 driver or user tool found. An earlier bounded observation read its chip ID only; motion sampling is not established. |
+| BMM150 ×2 | Shared I²C, addresses `0x11` and `0x12`; BSP `onboard/sensors.c` configures and reads both. | No BMM150 driver or user tool found; magnetometer sampling is unverified. |
+| BQ27220 | Shared I²C, address `0x55`; BSP `onboard/battery.c` attaches and reads the gauge. | No BQ27220 driver or battery CLI found. Battery telemetry is unverified. |
+| SPI NAND | BSP uses SPI3 and GPIO20–25 for clock, data, chip select, HOLD and WP. | OS has generic NAND core code, but this S31 profile has no enabled SPI3 NAND controller/child or NAND frontend. NAND boot and I/O are unverified. |
+| USB | Type-C ROM USB-OTG download/readback is separately recorded in [ROM evidence](evidence/rom-readback.json). | No S31 USB host/device controller is selected in this profile; EmberBSD USB enumeration is unverified. Generic USB utilities in the source tree do not establish a working S31 transport. |
+
+The generic OS source includes [`i2cscan`](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/usr.sbin/i2cscan/i2cscan.c),
+[`usbdevs`](https://github.com/oxtech-ember/EmberBSD/tree/4ac7924ecb7/usr.sbin/usbdevs)
+and [`usbhidctl`](https://github.com/oxtech-ember/EmberBSD/tree/4ac7924ecb7/usr.bin/usbhidctl);
+their presence in a particular root image is not established here. The BSP implementation
+links for [sensors](https://github.com/esp-mosaico/esp-mosaico-bsp/blob/7cbfb390638dcb93522fc3cde094b2d43cf907c2/components/esp-mosaico-bsp/onboard/sensors.c),
+[battery gauge](https://github.com/esp-mosaico/esp-mosaico-bsp/blob/7cbfb390638dcb93522fc3cde094b2d43cf907c2/components/esp-mosaico-bsp/onboard/battery.c)
+and [SPI NAND](https://github.com/esp-mosaico/esp-mosaico-bsp/blob/7cbfb390638dcb93522fc3cde094b2d43cf907c2/components/esp-mosaico-bsp/onboard/nand_flash.c)
+show vendor-side implementations, not BSD support.
 
 ## Vendor application observations
 

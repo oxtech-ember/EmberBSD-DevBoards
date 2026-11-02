@@ -5,7 +5,7 @@
   "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
   "soc": "espressif-esp32-s31",
   "board_revision": "1.2",
-  "reviewed_at": "2026-11-02",
+  "reviewed_at": "2026-11-03",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/esp-mosaico/README.md",
@@ -89,7 +89,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD camera support remains identity-only with no DVP capture. EmberBSD radio evidence is limited to scan-path activity: WPA2/WPA3/PMF authentication, DHCP and roaming remain unverified.",
+      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD has a target-built SC101IOT sensor/DVP/video(4) path, but no physical EmberBSD frame has been captured. The mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. EmberBSD radio evidence is limited to scan-path activity: WPA2/WPA3/PMF authentication, DHCP and roaming remain unverified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
@@ -106,14 +106,15 @@
         "mosaico-espwifi-scan-kernel-source",
         "mosaico-espwifi-wpa-parser-source",
         "mosaico-espwifi-mac-v3-kernel-source",
-        "mosaico-wifi-scan-observation"
+        "mosaico-wifi-scan-observation",
+        "mosaico-dvp-video-kernel-source"
       ]
     },
     {
       "id": "expansion",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, the left-slot camera EEPROM descriptor had valid CRCs and hardware-version field 0x0102. The factory firmware separately reported SC101IOT PID 0xda4a and rendered a changing 1280 × 720 UYVY preview. The optional EmberBSD identity-only driver read SC101IOT PID 0xda4a at 0x68 in a RAM trial. DVP capture is not implemented, so this does not establish an EmberBSD camera preview. The factory and EmberBSD results apply only to this sample and do not establish sensor identity for other modules.",
+      "scope": "On one V1.2 sample, the left-slot camera EEPROM descriptor had valid CRCs and hardware-version field 0x0102. The factory firmware separately reported SC101IOT PID 0xda4a and rendered a changing 1280 × 720 UYVY preview. The optional EmberBSD driver read SC101IOT PID 0xda4a at 0x68 in a RAM trial. A later source change adds target-built sensor control and DVP/video(4), but no physical EmberBSD frame has been captured. Its mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. The factory and EmberBSD results apply only to this sample and do not establish sensor identity for other modules.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-gui-peripheral-observation",
@@ -122,7 +123,8 @@
         "mosaico-sc101iot-kernel-source",
         "mosaico-sc101iot-profile-kernel",
         "mosaico-fdt-i2c-status-kernel",
-        "mosaico-display-output-observation"
+        "mosaico-display-output-observation",
+        "mosaico-dvp-video-kernel-source"
       ]
     }
   ]

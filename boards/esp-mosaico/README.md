@@ -50,9 +50,13 @@ Touch orientation/calibration, audio playback and sustained operation remain
 unverified. Factory UI, touch and changing camera preview are separate
 vendor-firmware evidence in the [factory observation](evidence/factory-peripherals.json).
 
-The same [camera identity check](evidence/display-output.json) read SC101IOT PID
-`0xda4a` at `0x68` with the optional EmberBSD identity-only driver. DVP capture
-is not implemented, so this is not an EmberBSD camera preview.
+The optional [SC101IOT EmberBSD configuration](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/arch/riscv/conf/ESP_MOSAICO_SC101IOT)
+now includes sensor mode control and a DVP-to-video(4) capture path. The
+configuration and Wi-Fi variant compile for the target. No physical EmberBSD
+frame or preview has been captured; the earlier [identity observation](evidence/display-output.json)
+is separate evidence. The mode table describes 640 × 480 UYVY and requires a
+20 MHz XCLK; the fitted oscillator frequency and actual frame rate have not
+been measured. See [interface limits](interfaces.md#camera-and-other-peripherals).
 
 On one V1.2 RAM boot, the net80211 scan cache reached 18 entries during
 automatic scanning. Ten scan summaries recorded zero IEEE80211 bad-version
