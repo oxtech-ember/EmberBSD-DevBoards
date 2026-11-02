@@ -1474,17 +1474,17 @@
       "sha256": null
     },
     {
-      "id": "mosaico-wifi-scan-observation",
-      "title": "ESP-Mosaico EmberBSD active Wi-Fi scan observation",
-      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-scan.json",
-      "revision": null,
+      "id": "mosaico-espwifi-mac-v3-kernel-source",
+      "title": "EmberBSD ESP32-S31 Wi-Fi MAC-v3 RX descriptor ABI fix",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/2817fed0e6ca12b62bdd48d17dbdb06059b586a3",
+      "revision": "2817fed0e6ca12b62bdd48d17dbdb06059b586a3",
       "reviewed_at": "2026-11-02",
       "sha256": null
     },
     {
-      "id": "mosaico-wifi-parser-scan-observation",
-      "title": "ESP-Mosaico parser-bridge Wi-Fi scan observation",
-      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-parser-scan.json",
+      "id": "mosaico-wifi-scan-observation",
+      "title": "ESP-Mosaico EmberBSD Wi-Fi scan-to-net80211 cache observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-scan.json",
       "revision": null,
       "reviewed_at": "2026-11-02",
       "sha256": null

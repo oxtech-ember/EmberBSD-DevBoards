@@ -15,51 +15,45 @@
   "inputs": [
     {
       "name": "ESP_MOSAICO_SC101IOT_WIFI RAM kernel FIT",
-      "revision": "OS source base db34405faaff2ab9ef72b73bed3643eb19159565 plus the ESP_MOSAICO_SC101IOT_WIFI profile diff published as ea9f2751d407ab887268ad87a56445fd187c350a",
-      "sha256": "0ad07545c724f152ba5a21d29a3db4e357f9452b45a04ed899ee5d88085c0b9e",
+      "revision": "OS source base aa8f39cf175b4c4ba9334757d43f942fbc0d2e23 plus frozen diagnostic/MAC-v3 working diff SHA256 330b3df4a20155fdea8f6874f35159f0f7038ca468bf1f617ca078446c50b600; published MAC-v3 fix commit 2817fed0e6ca12b62bdd48d17dbdb06059b586a3 was not built from clean HEAD",
+      "sha256": "3e7b328d5c19c89b14f0ece2e69c474278cb4114f77755d2119cf15f6faf6777",
       "reference": null
     },
     {
       "name": "Static FFS RAM root with console tools",
-      "revision": "clean v2 RV32 root",
-      "sha256": "cd8ab0885b6f5452eda85185852e468a7cf26e23d206b108911680434ac04122",
+      "revision": "Static RV32 RAM root (4,784,128 bytes)",
+      "sha256": "ecc231180a918963ce245770d2397f77901ee09f67a15e43a68ff5b81fadcfd9",
       "reference": null
     },
     {
       "name": "RAM U-Boot firmware FIT",
       "revision": "U-Boot 2026.10",
-      "sha256": "bcf9fd336b9db1ef4f6f2858cfe68a4a468e94ef6cb4176cc77510c23cf1339c",
+      "sha256": "e219ccaa933d7eebcca60c6b0e6b2ade05bae8beeee8a525e40e26ef046107f6",
       "reference": null
     }
   ],
-  "scenario": "Boot the configured EmberBSD Wi-Fi kernel and RAM root, enumerate the ESP radio interface, bring it up, and run `/sbin/ifconfig espwifi0 list scan`. Do not associate to an access point.",
-  "expected": "The interface enumerates and the active scan returns access-point records without attempting association.",
-  "observed": "`espwifi0` enumerated and was brought up. The vendor scan reported 14 AP records in one pass and 16 in a second pass; these are pass counts, not a unique-network count. The log recorded 42 `wpa_parse_wpa_ie function not found` errors across interface bring-up and scan. Therefore reported auth enums cannot be trusted as security classifications. The command returned to the shell; no association or DHCP was attempted.",
+  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot the RAM Wi-Fi kernel, bring up espwifi0 and observe scan summaries, net80211 cache generations and scan-import diagnostics during the WPA profile's automatic scan activity.",
+  "expected": "The scan callback uses the ESP32-S31 MAC-v3 RX layout, frames pass into the net80211 scan cache, and no ring or allocation failures occur.",
+  "observed": "The net80211 scan cache reached 18 entries during automatic scanning. Ten scan summaries recorded zero IEEE80211 bad-version drops and no scan-ring-full, mbuf-allocation or node-allocation failures. The count is from the BSD scan cache, not the vendor callback's AP summary.",
   "duration_seconds": null,
   "measurements": [
-    {
-      "name": "first-pass-ap-records",
-      "value": 14,
-      "unit": "records"
-    },
-    {
-      "name": "second-pass-ap-records",
-      "value": 16,
-      "unit": "records"
-    },
-    {
-      "name": "wpa-ie-parser-callback-errors",
-      "value": 42,
-      "unit": "errors"
-    }
+    {"name": "scan-summaries", "value": 10, "unit": "summaries"},
+    {"name": "ieee80211-bad-version-drops", "value": 0, "unit": "frames"},
+    {"name": "net80211-cache-entries-current-generation", "value": 18, "unit": "entries"},
+    {"name": "scan-ring-full-failures", "value": 0, "unit": "events"},
+    {"name": "mbuf-allocation-failures", "value": 0, "unit": "events"},
+    {"name": "net80211-node-allocation-failures", "value": 0, "unit": "events"}
   ],
   "limits": [
-    "One operator-reported V1.2 sample and one RAM-only boot; this does not establish another board revision or persistent installation.",
-    "The scan was active. Repeated WPA IE parser callback errors make security classification unreliable.",
-    "No association, authentication, DHCP, roaming or sustained transfer was tested."
+    "One operator-reported V1.2 sample and RAM-only trial; this does not establish another board revision or persistent installation.",
+    "The scan-cache count is not a vendor AP summary and does not establish a count of distinct radio networks.",
+    "A strict SAE/PMF-required profile remained in SCANNING/ASSOCIATING. Its matching AP observation reported auth enum 7, but there was no IPv4 address or default route; no actionable supplicant authentication event established the failure stage.",
+    "WPA2/WPA3 authentication, DHCP, roaming and sustained transfer are not accepted."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
-    "mosaico-espwifi-scan-kernel-source"
+    "mosaico-espwifi-scan-kernel-source",
+    "mosaico-espwifi-wpa-parser-source",
+    "mosaico-espwifi-mac-v3-kernel-source"
   ]
 }

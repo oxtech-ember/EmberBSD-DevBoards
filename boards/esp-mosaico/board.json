@@ -5,7 +5,7 @@
   "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
   "soc": "espressif-esp32-s31",
   "board_revision": "1.2",
-  "reviewed_at": "2026-11-01",
+  "reviewed_at": "2026-11-02",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/esp-mosaico/README.md",
@@ -63,14 +63,14 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, a RAM trial enumerated espwifi0 and an active 2.4 GHz scan returned 14 and then 16 records in two result polls without WPA/RSN parser callback errors. Reported auth enums included 3 and 4. The capture lacks BSSID and raw RSN AKM/PMF fields, so actual security modes and unique BSS count remain unknown. Association, WPA2/WPA3/PMF authentication, DHCP and roaming remain unverified.",
+      "scope": "On one operator-reported V1.2 sample, the net80211 scan cache reached 18 entries during one RAM boot's automatic scanning. Ten scan summaries recorded zero IEEE80211 bad-version drops and no ring-full, mbuf-allocation or node-allocation failures. These are BSD scan-cache entries, not the vendor callback's AP summary. A strict SAE/PMF-required profile remained in SCANNING/ASSOCIATING, with no IPv4 address or default route; its matching AP observation reported auth enum 7. WPA2/WPA3 authentication, DHCP and roaming are not accepted.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
         "mosaico-espwifi-scan-kernel-source",
-        "mosaico-wifi-scan-observation",
         "mosaico-espwifi-wpa-parser-source",
-        "mosaico-wifi-parser-scan-observation"
+        "mosaico-espwifi-mac-v3-kernel-source",
+        "mosaico-wifi-scan-observation"
       ]
     },
     {
@@ -104,9 +104,9 @@
         "mosaico-row-pair-kernel-source",
         "mosaico-row-pair-display-touch-observation",
         "mosaico-espwifi-scan-kernel-source",
-        "mosaico-wifi-scan-observation",
         "mosaico-espwifi-wpa-parser-source",
-        "mosaico-wifi-parser-scan-observation"
+        "mosaico-espwifi-mac-v3-kernel-source",
+        "mosaico-wifi-scan-observation"
       ]
     },
     {

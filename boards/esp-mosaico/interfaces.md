@@ -92,13 +92,13 @@ verify motion sensing or audio playback. See the [bounded observation](evidence/
 
 ## Wireless
 
-On one V1.2 RAM trial, `espwifi0` enumerated and an active 2.4 GHz scan
-returned 14 and then 16 records in two result polls without WPA/RSN parser
-callback errors. Reported auth enums included 3 and 4. The capture has no BSSID
-or raw RSN AKM/PMF fields, so actual security modes and unique BSS count are
-unknown. This confirms scan-path activity only; association, WPA2/WPA3/PMF
-authentication, DHCP and roaming remain unverified. See the
-[parser-bridge scan evidence](evidence/wifi-parser-scan.json).
+On one V1.2 RAM boot, the net80211 scan cache reached 18 entries during
+automatic scanning. Ten scan summaries recorded zero IEEE80211 bad-version
+drops and no ring or allocation failures. This is the BSD cache count, not the
+vendor callback's AP summary. A strict SAE/PMF-required profile remained in
+SCANNING/ASSOCIATING, and no IPv4 address or default route was obtained. WPA2/WPA3
+authentication, DHCP, roaming and sustained transfer are not accepted. See the
+[current scan evidence](evidence/wifi-scan.json).
 
 ## Expansion and debug routing
 
