@@ -75,6 +75,10 @@ TEMP-DISABLED/SCANNING. This is a reported security-compatibility rejection
 while scan-visible BSS entries were present, not an empty scan. The internal
 filter decision relative to SAE remains to be confirmed. No address or data
 exchange followed. See the [association evidence](evidence/wifi-association.json).
+The OS has since published a [standalone RSNXE ABI fix](https://github.com/oxtech-ember/EmberBSD/commit/7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c),
+which passed ASan/UBSan, Clang Static Analyzer and the target build. Its
+prepared FIT has not been run on this board, so the hardware boundary above
+is unchanged.
 WPA2-only authentication, DHCP/DNS, reconnect, roaming and sustained transfer
 remain unaccepted.
 
