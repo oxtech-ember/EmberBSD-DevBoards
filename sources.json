@@ -1538,6 +1538,22 @@
       "sha256": null
     },
     {
+      "id": "mosaico-espwifi-rsnxe-abi-fix-source",
+      "title": "EmberBSD standalone RSNXE ABI translation for FullMAC",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c",
+      "revision": "7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c",
+      "reviewed_at": "2026-11-03",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-espwifi-auth-join-diagnostics-source",
+      "title": "EmberBSD ESP32-S31 Wi-Fi AUTH join diagnostics",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/535d3bd0efab37706429932cb6f15d118969ec9c",
+      "revision": "535d3bd0efab37706429932cb6f15d118969ec9c",
+      "reviewed_at": "2026-11-03",
+      "sha256": null
+    },
+    {
       "id": "mosaico-wifi-scan-observation",
       "title": "ESP-Mosaico EmberBSD Wi-Fi scan-to-net80211 cache observation",
       "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-scan.json",

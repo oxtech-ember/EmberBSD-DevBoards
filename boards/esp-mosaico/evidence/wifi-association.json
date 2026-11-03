@@ -14,43 +14,48 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT_WIFI kernel FIT",
-      "revision": "EmberBSD kernel source 9f924deb563df7d4cdbe40ab9e5caa61435cd004",
-      "sha256": "ee6ba839d20a3efd9a9ff8250e6a40bd3e3ef77856f7a0c9805ffe3774a1d5e4",
-      "reference": null
+      "name": "ESP_MOSAICO_SC101IOT_WIFI RAM kernel FIT",
+      "revision": "EmberBSD kernel source 9f924deb563df7d4cdbe40ab9e5caa61435cd004 plus published Wi-Fi AUTH diagnostics 535d3bd0efab37706429932cb6f15d118969ec9c",
+      "sha256": "7a92390ede55ae8eb6fa9792d4cec9b82296f3bba23d6a3c2aa23d9f2791d426",
+      "reference": "https://github.com/oxtech-ember/EmberBSD/commit/535d3bd0efab37706429932cb6f15d118969ec9c"
     },
     {
       "name": "ESP32-S31 external radio object",
-      "revision": "EmberBSD radio source 8c5ea31ad2140abe2dedc9e14c414fbb38fe924c; config-done callback published as 7a99c200ed80b9fa3803fe3d461eea2d8136a8c4",
-      "sha256": "2b63b6d5e6d7f09d574b58de9d94d9f33f34e697c6422e079b1815a0e9714261",
-      "reference": null
+      "revision": "EmberBSD standalone RSNXE ABI translation 7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c",
+      "sha256": null,
+      "reference": "https://github.com/oxtech-ember/EmberBSD/commit/7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c"
     },
     {
-      "name": "RAM FFS root with console and Wi-Fi tools",
+      "name": "Static RAM root with console and Wi-Fi tools",
       "revision": null,
       "sha256": null,
       "reference": null
     }
   ],
-  "scenario": "Boot the ESP_MOSAICO_SC101IOT_WIFI kernel and attempt association with a scan-visible WPA2/SAE transition BSS using a strict SAE/PMF-required station profile.",
-  "expected": "The station accepts the compatible BSS, completes SAE with required PMF, and exchanges data.",
-  "observed": "Firmware was loaded at 115200 baud, and kernel/root at 460800 baud. The RAM boot reached the shell; the kernel trace showed no configuration or setup-validation errors, and the earlier null config-done callback panic did not recur. Scanning found three matching BSS entries on 2.4 GHz channels 8, 3 and 11. Their scan data advertised WPA2-PSK plus SAE with CCMP and SAE-H2E. The strict SAE/PMF-required attempt entered ASSOCIATING, then the vendor reported disconnect reason 210 NO_AP_FOUND_W_COMPATIBLE_SECURITY; the supplicant moved to TEMP-DISABLED/SCANNING. No IPv4 address or data exchange followed.",
+  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot the RAM ESP_MOSAICO_SC101IOT_WIFI kernel in normal multiuser mode and attempt SAE with PMF required using the configured transition-network profile.",
+  "expected": "The selected candidate is submitted to the vendor join path, completes SAE authentication and association with PMF, then receives an IP address and exchanges data.",
+  "observed": "The normal multiuser RAM boot reached the shell without the earlier null-callback panic. The AUTH request arrived from SCAN; SAE candidate selection validated, the join was queued and dequeued in the current generation, and the vendor ext_connect call returned 0. The trace reported vendor Wi-Fi auth mode WIFI_AUTH_WPA3_PSK (value 6), PMF capability and requirement bits both set, and PWE configuration 0 mapped to internal mode 2. The vendor then reported disconnect reason 210 NO_AP_FOUND_W_COMPATIBLE_SECURITY. No completed authentication or association, IPv4 address, or data exchange followed.",
   "duration_seconds": null,
   "measurements": [
-    {"name": "matching-transition-bss", "value": 3, "unit": "BSS"},
+    {"name": "vendor-ext-connect-return", "value": 0, "unit": "code"},
+    {"name": "vendor-wifi-auth-mode", "value": 6, "unit": "code"},
+    {"name": "pmf-capable", "value": 1, "unit": "bit"},
+    {"name": "pmf-required", "value": 1, "unit": "bit"},
+    {"name": "pwe-config-input", "value": 0, "unit": "code"},
+    {"name": "pwe-internal-mode", "value": 2, "unit": "code"},
     {"name": "vendor-disconnect-reason", "value": 210, "unit": "code"}
   ],
   "limits": [
     "One operator-reported V1.2 sample and RAM-only trial; this does not establish another board revision or persistent installation.",
     "The RAM root is identified by role only; its private configuration is not part of this shared record.",
-    "The visible transition BSS entries distinguish this result from an empty scan. Reason 210 reports a security-compatibility rejection, but does not locate every internal vendor filter decision relative to SAE.",
-    "The scan advertisement does not prove successful WPA3 negotiation or PMF protection. No IPv4 address, data exchange or WPA3 association was observed.",
+    "Local SAE selection and a successful vendor connect-call return do not prove that an authentication frame was exchanged over the air. Reason 210 reports a security-compatibility rejection but does not identify the specific vendor check or establish its position relative to SAE.",
+    "No completed WPA3/SAE/PMF authentication or association, IPv4 address or data exchange was observed.",
     "WPA2-only authentication, DHCP, reconnect, roaming and sustained transfer remain unaccepted."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
-    "mosaico-espwifi-config-done-callback",
-    "mosaico-espwifi-scan-kernel-source",
+    "mosaico-espwifi-rsnxe-abi-fix-source",
+    "mosaico-espwifi-auth-join-diagnostics-source",
     "mosaico-wifi-association-observation"
   ]
 }
