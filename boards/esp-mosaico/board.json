@@ -68,14 +68,16 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one operator-reported V1.2 sample, the net80211 scan cache reached 18 entries during one RAM boot's automatic scanning. Ten scan summaries recorded zero IEEE80211 bad-version drops and no ring-full, mbuf-allocation or node-allocation failures. These are BSD scan-cache entries, not the vendor callback's AP summary. A strict SAE/PMF-required profile remained in SCANNING/ASSOCIATING, with no IPv4 address or default route; its matching AP observation reported auth enum 7. WPA2/WPA3 authentication, DHCP and roaming are not accepted.",
+      "scope": "On one operator-reported V1.2 sample, the net80211 scan cache reached 18 entries without ring or allocation failures. A later config-done-callback kernel reached the RAM shell without the earlier null-callback panic. The scan found three WPA2/SAE transition BSS entries advertising SAE-H2E. A strict SAE/PMF-required attempt entered ASSOCIATING, then the vendor reported reason 210 NO_AP_FOUND_W_COMPATIBLE_SECURITY and the supplicant returned to TEMP-DISABLED/SCANNING. No address or data exchange followed. WPA2-only authentication, DHCP, reconnect and roaming remain unverified.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
         "mosaico-espwifi-scan-kernel-source",
         "mosaico-espwifi-wpa-parser-source",
         "mosaico-espwifi-mac-v3-kernel-source",
-        "mosaico-wifi-scan-observation"
+        "mosaico-wifi-scan-observation",
+        "mosaico-espwifi-config-done-callback",
+        "mosaico-wifi-association-observation"
       ]
     },
     {
@@ -96,7 +98,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD has a target-built SC101IOT sensor/DVP/video(4) path, but no physical EmberBSD frame has been captured. The mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. EmberBSD radio evidence is limited to scan-path activity: WPA2/WPA3/PMF authentication, DHCP and roaming remain unverified.",
+      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD has a target-built SC101IOT sensor/DVP/video(4) path, but no physical EmberBSD frame has been captured. The mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. EmberBSD radio evidence includes scan and one failed strict SAE/PMF association attempt; WPA2-only authentication, DHCP and roaming remain unverified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
@@ -114,6 +116,7 @@
         "mosaico-espwifi-wpa-parser-source",
         "mosaico-espwifi-mac-v3-kernel-source",
         "mosaico-wifi-scan-observation",
+        "mosaico-wifi-association-observation",
         "mosaico-dvp-video-kernel-source"
       ]
     },

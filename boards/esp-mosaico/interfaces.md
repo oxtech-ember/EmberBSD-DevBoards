@@ -98,13 +98,14 @@ table below.
 
 ## Wireless
 
-On one V1.2 RAM boot, the net80211 scan cache reached 18 entries during
-automatic scanning. Ten scan summaries recorded zero IEEE80211 bad-version
-drops and no ring or allocation failures. This is the BSD cache count, not the
-vendor callback's AP summary. A strict SAE/PMF-required profile remained in
-SCANNING/ASSOCIATING, and no IPv4 address or default route was obtained. WPA2/WPA3
-authentication, DHCP, roaming and sustained transfer are not accepted. See the
-[current scan evidence](evidence/wifi-scan.json).
+The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
+without ring or allocation failures. A later strict SAE/PMF-required attempt
+found matching WPA2/SAE BSS entries advertising SAE-H2E, entered ASSOCIATING,
+then received vendor disconnect reason 210
+`NO_AP_FOUND_W_COMPATIBLE_SECURITY` and returned to TEMP-DISABLED/SCANNING.
+No IPv4 address or data exchange followed. The [association evidence](evidence/wifi-association.json)
+records this RAM observation. WPA2-only authentication, DHCP/DNS, reconnect,
+roaming and sustained transfer remain unverified.
 
 ## Expansion and debug routing
 

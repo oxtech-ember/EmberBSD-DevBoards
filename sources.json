@@ -1530,11 +1530,27 @@
       "sha256": null
     },
     {
+      "id": "mosaico-espwifi-config-done-callback",
+      "title": "EmberBSD ESP-Mosaico external WPA config-done callback registration",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/7a99c200ed80b9fa3803fe3d461eea2d8136a8c4",
+      "revision": "7a99c200ed80b9fa3803fe3d461eea2d8136a8c4",
+      "reviewed_at": "2026-11-03",
+      "sha256": null
+    },
+    {
       "id": "mosaico-wifi-scan-observation",
       "title": "ESP-Mosaico EmberBSD Wi-Fi scan-to-net80211 cache observation",
       "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-scan.json",
       "revision": null,
       "reviewed_at": "2026-11-02",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-wifi-association-observation",
+      "title": "ESP-Mosaico EmberBSD SAE/PMF association attempt",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-association.json",
+      "revision": null,
+      "reviewed_at": "2026-11-03",
       "sha256": null
     }
   ]

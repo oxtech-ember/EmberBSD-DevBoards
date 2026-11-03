@@ -63,14 +63,20 @@ is separate evidence. The mode table describes 640 × 480 UYVY and requires a
 20 MHz XCLK; the fitted oscillator frequency and actual frame rate have not
 been measured. See [interface limits](interfaces.md#camera-and-other-peripherals).
 
-On one V1.2 RAM boot, the net80211 scan cache reached 18 entries during
-automatic scanning. Ten scan summaries recorded zero IEEE80211 bad-version
-drops and no ring or allocation failures. This is the BSD cache result, not the
-vendor callback's AP summary. A strict SAE/PMF-required profile remained in
-SCANNING/ASSOCIATING; its matching AP observation reported auth enum 7, but no
-IPv4 address or default route was obtained. The failure stage is undetermined.
-WPA2/WPA3 authentication, DHCP, roaming and sustained transfer are not
-accepted. See the [current scan evidence](evidence/wifi-scan.json).
+The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
+without ring or allocation failures. A later RAM trial used the published
+[external WPA config-done callback](https://github.com/oxtech-ember/EmberBSD/commit/7a99c200ed80b9fa3803fe3d461eea2d8136a8c4)
+and reached the shell without the earlier null-callback panic. Its scan found
+three WPA2/SAE transition BSS entries on 2.4 GHz channels 8, 3 and 11; scan
+data advertised SAE-H2E. A strict SAE/PMF-required attempt entered
+ASSOCIATING, then the vendor reported disconnect reason 210
+`NO_AP_FOUND_W_COMPATIBLE_SECURITY` and the supplicant returned to
+TEMP-DISABLED/SCANNING. This is a reported security-compatibility rejection
+while scan-visible BSS entries were present, not an empty scan. The internal
+filter decision relative to SAE remains to be confirmed. No address or data
+exchange followed. See the [association evidence](evidence/wifi-association.json).
+WPA2-only authentication, DHCP/DNS, reconnect, roaming and sustained transfer
+remain unaccepted.
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before
