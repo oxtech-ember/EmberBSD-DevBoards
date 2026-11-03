@@ -1378,6 +1378,46 @@
       "sha256": null
     },
     {
+      "id": "mosaico-envsys-sensors-kernel-source",
+      "title": "EmberBSD ESP-Mosaico BMI270 and BMM150 envsys drivers",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/718a9c6ba45",
+      "revision": "718a9c6ba45",
+      "reviewed_at": "2026-11-03",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-bq27220-kernel-source",
+      "title": "EmberBSD read-only BQ27220 envsys fuel gauge driver",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/df97773b7b3/sys/dev/i2c/bq27220.c",
+      "revision": "df97773b7b3",
+      "reviewed_at": "2026-11-03",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-audio-kernel-source",
+      "title": "EmberBSD ESP32-S31 I2S and ES8311 audio drivers",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/d27e2d790a2",
+      "revision": "d27e2d790a2",
+      "reviewed_at": "2026-11-03",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-spinandctl-kernel-source",
+      "title": "EmberBSD read-only ESP-Mosaico SPI NAND ID/status utility",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/88fea10b9fd",
+      "revision": "88fea10b9fd",
+      "reviewed_at": "2026-11-03",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-s31-usb-hardware-guidelines",
+      "title": "Espressif ESP32-S31 hardware design guidelines, USB pads",
+      "url": "https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32s31/schematic-checklist.html",
+      "revision": "0.3",
+      "reviewed_at": "2026-11-03",
+      "sha256": null
+    },
+    {
       "id": "mosaico-fdt-i2c-status-kernel",
       "title": "EmberBSD FDT I2C enumerator skips disabled children",
       "url": "https://github.com/oxtech-ember/EmberBSD/commit/e6d0b3158587dd307580b8706e06821e2e99bb56",

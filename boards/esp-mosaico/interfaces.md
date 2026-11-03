@@ -90,8 +90,11 @@ V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 48
 and attached `wsmouse`. A [subsequent input check](evidence/touch-input.json)
 observed contact/release events and changing absolute coordinates; orientation
 and calibration have not been verified.
-The earlier peripheral observation also read BMI270 and ES8311 identification registers; it did not
-verify motion sensing or audio playback. See the [bounded observation](evidence/gui-peripherals.json).
+The earlier peripheral observation read BMI270 and ES8311 identification registers; it did not
+verify motion measurements or audio playback. EmberBSD now has target-built sensor,
+fuel-gauge and audio paths; their physical telemetry and audio operation remain
+unverified. See the [bounded observation](evidence/gui-peripherals.json) and the
+table below.
 
 ## Wireless
 
@@ -158,18 +161,24 @@ Follow the [BSP examples and resource rules](https://github.com/esp-mosaico/esp-
 ## Camera and other peripherals
 
 The hardware details below follow the [BSP revision 7cbfb39](https://github.com/esp-mosaico/esp-mosaico-bsp/tree/7cbfb390638dcb93522fc3cde094b2d43cf907c2).
-The OS support statements refer to the [published DVP implementation](https://github.com/oxtech-ember/EmberBSD/commit/4ac7924ecb7)
-and its target kernel builds, not a physical camera test.
+The OS support statements refer to the linked published sources and target builds,
+not physical peripheral acceptance.
 
 | Device | BSP/source interface | EmberBSD source status |
 | --- | --- | --- |
-| BMI270 | Shared I²C, 7-bit address `0x69`; BSP `onboard/sensors.c` initializes it. | No BMI270 driver or user tool found. An earlier bounded observation read its chip ID only; motion sampling is not established. |
-| BMM150 ×2 | Shared I²C, addresses `0x11` and `0x12`; BSP `onboard/sensors.c` configures and reads both. | No BMM150 driver or user tool found; magnetometer sampling is unverified. |
-| BQ27220 | Shared I²C, address `0x55`; BSP `onboard/battery.c` attaches and reads the gauge. | No BQ27220 driver or battery CLI found. Battery telemetry is unverified. |
-| SPI NAND | BSP uses SPI3 and GPIO20–25 for clock, data, chip select, HOLD and WP. | OS has generic NAND core code, but this S31 profile has no enabled SPI3 NAND controller/child or NAND frontend. NAND boot and I/O are unverified. |
-| USB | Type-C ROM USB-OTG download/readback is separately recorded in [ROM evidence](evidence/rom-readback.json). | No S31 USB host/device controller is selected in this profile; EmberBSD USB enumeration is unverified. Generic USB utilities in the source tree do not establish a working S31 transport. |
+| BMI270 | Shared I²C at 7-bit address `0x69`; BSP `onboard/sensors.c` initializes it. | The [native envsys driver](https://github.com/oxtech-ember/EmberBSD/blob/718a9c6ba45/sys/dev/i2c/bmi270_driver.c) is present and the `ESP_MOSAICO_SC101IOT_WIFI` kernel linked with it. Motion samples have not been checked on the board. |
+| BMM150 ×2 | Shared I²C at addresses `0x11` and `0x12`; BSP `onboard/sensors.c` configures and reads both. | The [native SensorAPI-backed envsys driver](https://github.com/oxtech-ember/EmberBSD/blob/718a9c6ba45/sys/dev/i2c/bmm150_driver.c) is present; both addresses are configured in the board tree and the target kernel linked. Physical magnetometer samples remain unverified. |
+| BQ27220 | Shared I²C at address `0x55`; BSP `onboard/battery.c` attaches and reads the gauge. | The [read-only native envsys driver](https://github.com/oxtech-ember/EmberBSD/blob/df97773b7b3/sys/dev/i2c/bq27220.c) is present and included in the target kernel build. Board telemetry has not been checked. |
+| ES8311 audio | I²S codec on the onboard audio bus; BSP `onboard/audio.c` and the V1.2 schematic describe the codec and amplifier path. | The [S31 I²S/AHB-DMA driver](https://github.com/oxtech-ember/EmberBSD/blob/d27e2d790a2/sys/arch/riscv/espressif/esp_i2s.c) and [ES8311 codec driver](https://github.com/oxtech-ember/EmberBSD/blob/d27e2d790a2/sys/dev/i2c/es8311ac.c) are present and the target kernel linked. No EmberBSD playback or capture has been tested. |
+| SPI NAND | BSP identifies GigaDevice GD5F1GM7UEYIGR on SPI3, using GPIO20–25 for clock, data, chip select, HOLD and WP. | SPI3 pin routing and the [read-only `spinandctl` utility](https://github.com/oxtech-ember/EmberBSD/blob/88fea10b9fd/usr.sbin/spinandctl/spinandctl.c) are present. It issues READ ID and status-register commands only. No NAND page data, ECC, bad-block table, filesystem, boot or physical ID/status test is established. |
+| USB | Type-C ROM USB-OTG download/readback is recorded in [ROM evidence](evidence/rom-readback.json). S31 USB 2.0 HS OTG uses dedicated package pads 44/45. | The board kernel does not integrate an S31 OTG controller/role path. ROM download is not EmberBSD USB support. Host VBUS/CC role and power behavior are not verified, so USB host mode is not part of the prepared board configuration. |
 
-The generic OS source includes [`i2cscan`](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/usr.sbin/i2cscan/i2cscan.c),
+Package pads 44 and 45 are USB_D+ and USB_D−; they are not GPIO44 and GPIO45.
+The V1.2 schematic and BSP assign GPIO44 to LCD reset and GPIO45 to audio PA
+enable. Do not treat the dedicated USB pads as GPIOs or reassign those board GPIOs
+to USB. The Type-C connector's host-power and role path has not been established.
+
+The generic OS source includes [`i2cscan`](https://github.com/oxtech-ember/EmberBSD/blob/88fea10b9fd/usr.sbin/i2cscan/i2cscan.c),
 [`usbdevs`](https://github.com/oxtech-ember/EmberBSD/tree/4ac7924ecb7/usr.sbin/usbdevs)
 and [`usbhidctl`](https://github.com/oxtech-ember/EmberBSD/tree/4ac7924ecb7/usr.bin/usbhidctl);
 their presence in a particular root image is not established here. The BSP implementation

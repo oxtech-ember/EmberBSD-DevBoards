@@ -40,7 +40,12 @@
     "mosaico-reference-core-red-observation",
     "mosaico-spi-line-mode-kernel-source",
     "mosaico-row-pair-kernel-source",
-    "mosaico-row-pair-display-touch-observation"
+    "mosaico-row-pair-display-touch-observation",
+    "mosaico-envsys-sensors-kernel-source",
+    "mosaico-bq27220-kernel-source",
+    "mosaico-audio-kernel-source",
+    "mosaico-spinandctl-kernel-source",
+    "mosaico-s31-usb-hardware-guidelines"
   ],
   "capabilities": [
     {
@@ -77,10 +82,12 @@
       "id": "usb",
       "hardware": "present",
       "emberbsd": "unknown",
-      "scope": "Type-C USB-OTG ROM connection and complete 16 MiB NOR readback verified with esptool 5.6.0. This does not establish an EmberBSD USB console or a successful firmware restore.",
+      "scope": "Type-C USB-OTG ROM connection and complete 16 MiB NOR readback were verified with esptool 5.6.0. The board kernel has no S31 USB OTG role/controller integration. Dedicated package pads 44/45 are USB_D+/USB_D−, separate from GPIO44 LCD reset and GPIO45 audio PA enable. Host VBUS/CC role and power behavior are not verified; this does not establish EmberBSD USB support.",
       "source_refs": [
         "mosaico-hardware-v10",
         "mosaico-hardware-v12",
+        "mosaico-coreboard-v12-schematic",
+        "mosaico-s31-usb-hardware-guidelines",
         "mosaico-vendor-webui-observation",
         "mosaico-rom-readback-observation"
       ]
@@ -111,10 +118,44 @@
       ]
     },
     {
+      "id": "onboard-sensors",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "The BMI270, two BMM150 sensors and BQ27220 have native envsys drivers included in a target-linked ESP_MOSAICO_SC101IOT_WIFI kernel. Physical readings from these drivers have not been tested; prior BMI270 identification-register reads do not establish motion sampling.",
+      "source_refs": [
+        "mosaico-hardware-v12",
+        "mosaico-bsp",
+        "mosaico-envsys-sensors-kernel-source",
+        "mosaico-bq27220-kernel-source"
+      ]
+    },
+    {
+      "id": "audio",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "S31 I2S/AHB-DMA and ES8311 drivers are present and the combined ESP_MOSAICO_SC101IOT_WIFI kernel linked. No physical playback or capture has been tested.",
+      "source_refs": [
+        "mosaico-hardware-v12",
+        "mosaico-bsp",
+        "mosaico-audio-kernel-source"
+      ]
+    },
+    {
+      "id": "nand-storage",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "The board tree enables SPI3 and the published source adds a read-only NAND ID/status utility with a staged RV32 binary. It has not been run on hardware or installed in a root image; NAND data reads, ECC, bad-block management, filesystems and boot are not established.",
+      "source_refs": [
+        "mosaico-hardware-v12",
+        "mosaico-bsp",
+        "mosaico-spinandctl-kernel-source"
+      ]
+    },
+    {
       "id": "expansion",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, the left-slot camera EEPROM descriptor had valid CRCs and hardware-version field 0x0102. The factory firmware separately reported SC101IOT PID 0xda4a and rendered a changing 1280 × 720 UYVY preview. The optional EmberBSD driver read SC101IOT PID 0xda4a at 0x68 in a RAM trial. A later source change adds target-built sensor control and DVP/video(4), but no physical EmberBSD frame has been captured. Its mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. The factory and EmberBSD results apply only to this sample and do not establish sensor identity for other modules.",
+      "scope": "On one V1.2 sample, the left-slot camera EEPROM descriptor had valid CRCs and hardware-version field 0x0102. The factory firmware separately reported SC101IOT PID 0xda4a and rendered a changing 1280 × 720 UYVY preview. The optional EmberBSD driver read SC101IOT PID 0xda4a at 0x68 in a RAM trial. Published source now adds a target-built 640 × 480 UYVY sensor/DVP/video(4) path, but no physical EmberBSD frame has been captured. Its mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. The factory and EmberBSD results apply only to this sample and do not establish sensor identity for other modules.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-gui-peripheral-observation",

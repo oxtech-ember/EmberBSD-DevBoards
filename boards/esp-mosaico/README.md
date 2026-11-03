@@ -49,6 +49,11 @@ scenario on one sample; it does not establish support for other revisions.
 Touch orientation/calibration, audio playback and sustained operation remain
 unverified. Factory UI, touch and changing camera preview are separate
 vendor-firmware evidence in the [factory observation](evidence/factory-peripherals.json).
+The optional sensor, fuel-gauge and I²S/ES8311 paths now compile into the
+SC101IOT target kernel; physical sensor telemetry and audio playback/capture
+remain unverified. The SPI NAND tool only reads identification and status; NAND
+data, ECC/BBT and filesystem support are not established. See [interface
+limits](interfaces.md#camera-and-other-peripherals).
 
 The optional [SC101IOT EmberBSD configuration](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/arch/riscv/conf/ESP_MOSAICO_SC101IOT)
 now includes sensor mode control and a DVP-to-video(4) capture path. The
