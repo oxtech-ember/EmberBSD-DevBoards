@@ -17,13 +17,13 @@
       "name": "ESP_MOSAICO_SC101IOT_WIFI RAM kernel FIT",
       "revision": "EmberBSD kernel source 9f924deb563df7d4cdbe40ab9e5caa61435cd004 plus published Wi-Fi AUTH diagnostics 535d3bd0efab37706429932cb6f15d118969ec9c",
       "sha256": "28ae151450c2c0b2281ea2615b057a60fc775c92306739000a1da4af2d038b15",
-      "reference": "https://github.com/oxtech-ember/EmberBSD/commit/9f924deb563df7d4cdbe40ab9e5caa61435cd004"
+      "reference": null
     },
     {
       "name": "ESP32-S31 external radio object",
       "revision": "EmberBSD external radio source 04ab058b06ce9ce1617691b9ad53cb443f0389b3, with RSNXE ABI fix 7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c and radio diagnostics 26340504d78da70fe458d49b398592319aac74ff",
       "sha256": "d5eb127cad316392a2d4d35b1cfdd247b7ff5a95ff842752edb2f4b4fca08101",
-      "reference": "https://github.com/oxtech-ember/EmberBSD/commit/04ab058b06ce9ce1617691b9ad53cb443f0389b3"
+      "reference": null
     },
     {
       "name": "Static RAM root with console and Wi-Fi tools",
