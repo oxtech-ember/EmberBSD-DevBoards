@@ -1600,6 +1600,22 @@
       "revision": "919e23134b5c9652660197ccb5492ba80efa89d3",
       "reviewed_at": "2026-11-06",
       "sha256": null
+    },
+    {
+      "id": "mosaico-wifi-association-kernel-31-source",
+      "title": "EmberBSD ESP_MOSAICO_SC101IOT_WIFI kernel source used in the candidate 31 SAE association trial",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/41b8a71c17435830683d454645956ab1805a90c5",
+      "revision": "41b8a71c17435830683d454645956ab1805a90c5",
+      "reviewed_at": "2026-11-06",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-espwifi-radio-markerfix-source",
+      "title": "EmberBSD ESP32-S31 external-radio WPA marker fix source content",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/d5511d17a8274b1ec2122fe2b5a5bf0760de3c96",
+      "revision": "d5511d17a8274b1ec2122fe2b5a5bf0760de3c96",
+      "reviewed_at": "2026-11-06",
+      "sha256": null
     }
   ]
 }
