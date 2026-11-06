@@ -1086,7 +1086,7 @@
       "title": "Espressif ESP-Mosaico CoreBoard V1.2 hardware guide",
       "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html",
       "revision": null,
-      "reviewed_at": "2026-10-30",
+      "reviewed_at": "2026-11-06",
       "sha256": null
     },
     {
@@ -1326,7 +1326,7 @@
       "title": "Espressif ESP-Mosaico CoreBoard V1.2 schematic",
       "url": "https://dl.espressif.com/AE/Mosaico/SCH_SCH_ESP-Mosaico_CoreBoard_V1_2_1_2026-09-24.pdf",
       "revision": null,
-      "reviewed_at": "2026-11-01",
+      "reviewed_at": "2026-11-06",
       "sha256": null
     },
     {

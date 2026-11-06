@@ -27,21 +27,24 @@ in-memory disk; repeated power cycles and NAND were not tested. After USB-C
 was connected, the existing shell continued to accept input and produce
 output; this did not test a separate power-on boot with USB-C attached.
 
-The charge LED reports charging, not processor execution or USB data connectivity.
-The [V1.2 hardware guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-revision-details)
-specifies orange while charging and white when fully charged; V1.0 used red and green.
-Press POWER once to turn the board on. USB power can charge it while it is off.
-The Type-C connector carries USB 2.0 High-Speed OTG as well as power.
-Use a data-capable cable. The vendor application supplies its USB CDC console;
-the running application and its USB configuration therefore affect enumeration.
-See the [hardware guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-notes).
+POWER is a toggle: one press turns the board on or off. The SAM8108 controls
+whole-device power. V1.2's charge LED reports battery charge only: orange while
+charging and white when full. V1.2 has no programmable GPIO3 LED or separate
+3.3 V power LED. LED color does not identify processor power, USB connectivity,
+or boot mode. To enter chip ROM Download Mode, start with the board off, hold
+BOOT, then press POWER. BOOT is separate from the AI application button. USB
+power can charge the board while it is off. See the vendor's
+[hardware notes](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-notes),
+[revision details](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html#hardware-revision-details),
+and [CoreBoard schematic, sheet 5](https://dl.espressif.com/AE/Mosaico/SCH_SCH_ESP-Mosaico_CoreBoard_V1_2_1_2026-09-24.pdf#page=5).
+The Type-C connector carries USB 2.0 High-Speed OTG as well as power. Use a
+data-capable cable. The vendor application supplies its USB CDC console, so
+enumeration depends on the running application and its USB configuration.
 
-White is also compatible with ROM Download Mode: in the
-[LED and ROM check](evidence/charge-led-rom.json), the operator reported white
-while a ROM security query succeeded without a reset or RAM stub.
-A change to white therefore does not establish exit from ROM.
-No ROM idle timeout was established by that check; confirm the mode through a
-ROM response rather than the charge LED color.
+White is also compatible with ROM Download Mode: a ROM security query succeeded
+while the charge LED was reported white. No ROM idle timeout was established;
+confirm the mode through a ROM response rather than the LED color
+([bounded LED and ROM observation](evidence/charge-led-rom.json)).
 
 ## Distinct startup paths
 
@@ -49,7 +52,7 @@ ROM response rather than the charge LED color.
 | --- | --- |
 | Normal application | Runs the selected application. ESP-Iris is available only if the application integrates and starts it. |
 | Vibe Mode | Retained application installation and maintenance firmware. Hold AI while powering on; release when the mode starts. Working retained firmware and its bootloader are required. |
-| ROM Download Mode | Chip ROM for low-level provisioning and recovery. Hold BOOT while powering on. This mode does not run ESP-Iris. |
+| ROM Download Mode | Chip ROM for low-level provisioning and recovery. From power-off, hold BOOT and press POWER. This mode does not run ESP-Iris. |
 
 AI and BOOT are different buttons. The
 [pinned device-mode guide](https://github.com/esp-mosaico/esp-mosaico-vibe/blob/1872fd88c01d7807556d01fd2a19864e40a307c9/docs/device-modes.md)
