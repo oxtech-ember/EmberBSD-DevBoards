@@ -67,15 +67,16 @@ The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
 without ring or allocation failures. The normal multiuser RAM trial with the
 published [SAE feature-capability fix](https://github.com/oxtech-ember/EmberBSD/commit/04ab058b06ce9ce1617691b9ad53cb443f0389b3)
 reached the shell without the earlier null-callback panic. In the [recorded
-association trial](evidence/wifi-association.json), the vendor reported
-`feature_caps=0x31` with SAE capability enabled; AUTH was queued and processed,
-and `ext_connect` returned success. The vendor then reported disconnect reason
-210 `NO_AP_FOUND_W_COMPATIBLE_SECURITY`; the capture showed no SAE callbacks,
-completed association, IP address or data exchange. [Espressif lists](https://github.com/espressif/esp-idf/issues/13542) an encrypted
-AP with an empty vendor STA-profile password as one possible reason-210 branch,
-but the specific vendor rejection remains unconfirmed pending a DEBUG subreason
-capture. WPA2-only authentication, DHCP/DNS, reconnect, roaming and sustained
-transfer remain unaccepted.
+association trial](evidence/wifi-association.json), a one-shot DEBUG capture
+confirmed that the vendor rejected both encrypted AP candidates before SAE:
+its internal STA profile had an empty password. The vendor emitted
+`wifi:receive encrypted ap, but password is empty and no DPP credentials`,
+then disconnect reason 210 `NO_AP_FOUND_W_COMPATIBLE_SECURITY`; the kernel
+decoded the same reason. The vendor Wi-Fi auth mode was
+`WIFI_AUTH_WPA3_PSK` (6), PMF capable and required were both set, and the PWE
+configuration input was 0. No SAE callbacks, completed
+association, IP address or data exchange followed. WPA2-only authentication,
+DHCP/DNS, reconnect, roaming and sustained transfer remain unaccepted.
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before

@@ -1592,6 +1592,14 @@
       "revision": "26340504d78da70fe458d49b398592319aac74ff",
       "reviewed_at": "2026-11-03",
       "sha256": null
+    },
+    {
+      "id": "mosaico-espwifi-radio-once-debug-source",
+      "title": "EmberBSD ESP32-S31 external radio one-shot DEBUG source",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/919e23134b5c9652660197ccb5492ba80efa89d3",
+      "revision": "919e23134b5c9652660197ccb5492ba80efa89d3",
+      "reviewed_at": "2026-11-06",
+      "sha256": null
     }
   ]
 }

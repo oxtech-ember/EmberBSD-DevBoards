@@ -3,7 +3,7 @@
   "kind": "evidence",
   "id": "mosaico-wifi-association",
   "target_id": "esp-mosaico",
-  "recorded_at": "2026-11-03",
+  "recorded_at": "2026-11-06",
   "layer": "physical",
   "result": "fail",
   "hardware": {
@@ -15,14 +15,14 @@
   "inputs": [
     {
       "name": "ESP_MOSAICO_SC101IOT_WIFI RAM kernel FIT",
-      "revision": "EmberBSD kernel source 9f924deb563df7d4cdbe40ab9e5caa61435cd004 plus published Wi-Fi AUTH diagnostics 535d3bd0efab37706429932cb6f15d118969ec9c",
-      "sha256": "28ae151450c2c0b2281ea2615b057a60fc775c92306739000a1da4af2d038b15",
+      "revision": "EmberBSD kernel source 9f924deb563df7d4cdbe40ab9e5caa61435cd004 plus published Wi-Fi AUTH diagnostics 535d3bd0efab37706429932cb6f15d118969ec9c; kernel #30, built 2026-11-03 23:42:26",
+      "sha256": "fa59783ee11d11e7d27cd805c79ebb0deb056ded6e2b478b5a8d2780813225f2",
       "reference": null
     },
     {
       "name": "ESP32-S31 external radio object",
-      "revision": "EmberBSD external radio source 04ab058b06ce9ce1617691b9ad53cb443f0389b3, with RSNXE ABI fix 7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c and radio diagnostics 26340504d78da70fe458d49b398592319aac74ff",
-      "sha256": "d5eb127cad316392a2d4d35b1cfdd247b7ff5a95ff842752edb2f4b4fca08101",
+      "revision": "EmberBSD external radio source 919e23134b5c9652660197ccb5492ba80efa89d3 (one-shot DEBUG; includes SAE change 04ab058b06ce9ce1617691b9ad53cb443f0389b3 and RSNXE ABI fix 7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c)",
+      "sha256": "239257b1678d9bb9d209c2224c8faf477ab09e887d5998f24c1cedb0ec08257e",
       "reference": null
     },
     {
@@ -34,8 +34,8 @@
   ],
   "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot the ESP_MOSAICO_SC101IOT_WIFI kernel in normal multiuser RAM mode and attempt the selected WPA3/SAE profile with PMF required.",
   "expected": "The selected BSS passes vendor compatibility checks, SAE completes, association uses PMF, and the interface obtains an IP address for data exchange.",
-  "observed": "The normal multiuser RAM boot reached the shell without the earlier null-callback panic. Vendor feature_caps was 0x31 with SAE capability enabled. The AUTH request was queued and processed for the selected candidate; vendor ext_connect returned 0, then disconnect reason 210 NO_AP_FOUND_W_COMPATIBLE_SECURITY followed. The capture contained no SAE build/parse callback evidence, completed association, IP address, or data exchange.",
-  "duration_seconds": null,
+  "observed": "One continuous candidate/begin/restored/terminal diagnostic cycle completed with each count equal to 1; the vendor DEBUG-enable and warning-restore calls each returned 0. The vendor emitted `wifi:receive encrypted ap, but password is empty and no DPP credentials` for both encrypted BSS candidates. Vendor Wi-Fi auth mode was WIFI_AUTH_WPA3_PSK (6), PMF capable and required were 1, and PWE configuration input was 0. The vendor reported disconnect reason 210 NO_AP_FOUND_W_COMPATIBLE_SECURITY, which the kernel also decoded. The rejection occurred before SAE: no SAE callbacks, completed association, IP address, or data exchange followed.",
+  "duration_seconds": 16.1,
   "measurements": [
     {
       "name": "vendor-wifi-auth-mode",
@@ -58,24 +58,34 @@
       "unit": "code"
     },
     {
-      "name": "pwe-internal-mode",
-      "value": 2,
-      "unit": "code"
-    },
-    {
-      "name": "vendor-feature-caps",
-      "value": 49,
-      "unit": "bitmask"
-    },
-    {
-      "name": "vendor-sae-capability",
-      "value": 1,
-      "unit": "bit"
-    },
-    {
-      "name": "vendor-ext-connect-return",
+      "name": "vendor-debug-enable-return",
       "value": 0,
       "unit": "code"
+    },
+    {
+      "name": "vendor-warning-restore-return",
+      "value": 0,
+      "unit": "code"
+    },
+    {
+      "name": "diagnostic-cycle-candidate",
+      "value": 1,
+      "unit": "count"
+    },
+    {
+      "name": "diagnostic-cycle-begin",
+      "value": 1,
+      "unit": "count"
+    },
+    {
+      "name": "diagnostic-cycle-restored",
+      "value": 1,
+      "unit": "count"
+    },
+    {
+      "name": "diagnostic-cycle-terminal",
+      "value": 1,
+      "unit": "count"
     },
     {
       "name": "vendor-disconnect-reason",
@@ -86,8 +96,8 @@
   "limits": [
     "One operator-reported V1.2 sample and RAM-only trial; this does not establish another board revision or persistent installation.",
     "The RAM root is identified by role only; its private configuration is not part of this shared record.",
-    "Reason 210 does not identify the specific vendor compatibility check. Espressif lists an encrypted AP with an empty vendor STA-profile password as one possible cause; that branch has not been confirmed for this trial.",
-    "The capture did not show SAE callbacks or prove over-the-air SAE, completed WPA3/PMF association, IPv4, or data exchange.",
+    "Elapsed time is from bootm to the terminal diagnostic marker. The private capture and its path are not part of this shared record.",
+    "The rejection occurred before SAE; this result does not establish over-the-air SAE, completed WPA3/PMF association, IPv4, or data exchange.",
     "WPA2-only authentication, DHCP/DNS, reconnect, roaming and sustained transfer remain unaccepted."
   ],
   "source_refs": [
@@ -97,6 +107,6 @@
     "mosaico-espwifi-auth-join-diagnostics-source",
     "mosaico-wifi-association-observation",
     "mosaico-sae-capability-fix-source",
-    "mosaico-espwifi-radio-diagnostics-source"
+    "mosaico-espwifi-radio-once-debug-source"
   ]
 }
