@@ -1540,8 +1540,8 @@
     {
       "id": "mosaico-wifi-association-kernel-source",
       "title": "EmberBSD ESP_MOSAICO_SC101IOT_WIFI kernel source used in the latest SAE association trial",
-      "url": "https://github.com/oxtech-ember/EmberBSD/commit/3335ef5a7ecdaf6378709552a6a056829a0acfd1",
-      "revision": "3335ef5a7ecdaf6378709552a6a056829a0acfd1",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/d21831ed8d3eb1246acc98f949614cb9ba18269a",
+      "revision": "d21831ed8d3eb1246acc98f949614cb9ba18269a",
       "reviewed_at": "2026-11-06",
       "sha256": null
     },

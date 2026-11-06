@@ -65,23 +65,18 @@ been measured. See [interface limits](interfaces.md#camera-and-other-peripherals
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
 without ring or allocation failures. The latest
-[association trial](evidence/wifi-association.json) used kernel #32 from
-[source revision 3335ef5](https://github.com/oxtech-ember/EmberBSD/commit/3335ef5a7ecdaf6378709552a6a056829a0acfd1)
-and a radio object built once from the WPA marker fix plus the frozen diagnostic
-content used for that revision; the same object was reused for kernel linking.
-The vendor delivered an association response (callback subtype 1, 321-byte
-body), and EmberBSD published net80211 `RUN` after SAE commit and confirm
-succeeded. At 25.972 seconds, the kernel logged local `INIT` from state 4
-with argument -1, then entered join-worker teardown; the vendor sent disassoc
-(reason 8) at about 26.05 seconds. The ioctl or event that requested `INIT` is
-not established. `WPA_COMPLETED`, negotiated PMF, DHCP/DNS and data exchange
-remain unverified. The supplicant monitor attached after `RUN`; its later silence
-does not cover earlier events. No dedicated vendor EAPOL callback marker was
-seen, which does not rule out EAPOL through the normal Ethernet receive path.
-At about 33.832 seconds, UVM killed the user shell (`sh`, the `/bin/console-tools`
-multicall alias) for out-of-swap while a multi-call `dmesg` pipeline was running;
-the capture ended before a status snapshot. WPA2-only
-authentication, reconnect, roaming and sustained transfer remain unaccepted.
+[association trial](evidence/wifi-association.json) used kernel #33 from
+[source revision d21831e](https://github.com/oxtech-ember/EmberBSD/commit/d21831ed8d3eb1246acc98f949614cb9ba18269a)
+and reused the radio object built for the prior trial. SAE commit/confirm and
+association succeeded; the supplicant reported `Associated`, and EmberBSD
+published net80211 `RUN`. Two multicast membership requests returned
+`ENETRESET` without resetting the join. At 24.762 seconds, the vendor reported
+a four-way handshake timeout (reason 204), transitioned `run` to `init`, and
+sent deauthentication; disconnect reason 204 followed. The capture does not
+establish EAPOL delivery or identify the failed handshake step. No
+`WPA_COMPLETED`, negotiated PMF, DHCP/DNS or data exchange was observed. A later
+read-only supplicant status query returned `SCANNING`. WPA2-only authentication,
+reconnect, roaming and sustained transfer remain unaccepted.
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before

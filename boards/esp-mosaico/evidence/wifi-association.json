@@ -15,37 +15,32 @@
   "inputs": [
     {
       "name": "ESP_MOSAICO_SC101IOT_WIFI kernel FIT",
-      "revision": "EmberBSD kernel source 3335ef5a7ecdaf6378709552a6a056829a0acfd1; NetBSD 11.0 (ESP_MOSAICO_SC101IOT_WIFI) #32 built 2026-11-06 21:46 MSK",
-      "sha256": "6042cdc7db54f17c296d5ddcec391e14d34b8a03fad0bb1559c62601b39ff2c1",
+      "revision": "EmberBSD kernel source d21831ed8d3eb1246acc98f949614cb9ba18269a; NetBSD 11.0 (ESP_MOSAICO_SC101IOT_WIFI) #33 built 2026-11-06 22:17 MSK",
+      "sha256": "b936947cd45751383d26e5e0756b64b45ea856bdb2fa9e59e525793f518fec37",
       "reference": null
     },
     {
       "name": "ESP32-S31 external radio object",
-      "revision": "Built once from marker-fix source d5511d17a8274b1ec2122fe2b5a5bf0760de3c96 plus frozen diagnostic content published in 3335ef5a7ecdaf6378709552a6a056829a0acfd1; then reused unchanged for kernel #32.",
+      "revision": "Built once from a radio source tree based on d5511d17a8274b1ec2122fe2b5a5bf0760de3c96 plus frozen association diagnostics later published in 3335ef5a7ecdaf6378709552a6a056829a0acfd1; reused unchanged for kernel #33.",
       "sha256": "f61e2ee9239fc837a546dfc8a6d864e082213de5b5f6a0cb2d7f082162925fd3",
       "reference": null
     },
     {
       "name": "Static RAM root with console and Wi-Fi tools",
-      "revision": null,
+      "revision": "Updated WPA logging profile; role only.",
       "sha256": null,
       "reference": null
     }
   ],
   "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot the ESP_MOSAICO_SC101IOT_WIFI kernel in normal multiuser RAM mode and attempt the selected WPA3/SAE profile with PMF required.",
-  "expected": "The selected BSS passes vendor compatibility checks, SAE completes, association uses PMF, and the interface obtains an IP address for data exchange.",
-  "observed": "On one operator-reported V1.2 sample, SAE commit and confirm succeeded. The vendor then delivered association callback subtype 1 with a 321-byte response body; EmberBSD published net80211 RUN (state 4). At 25.972 s after kernel boot, EmberBSD logged local INIT with old state 4 and arg -1, then entered join-worker teardown and called disconnect. The vendor sent disassoc(8) and reported reason 8 at about 26.05 s. The trace does not establish which ioctl or event requested INIT. No WPA_COMPLETED, negotiated key management/PMF, DHCP/DNS or data exchange was observed. The wpa_cli monitor attached after RUN and saw no later control events; this does not cover earlier events. No dedicated vendor EAPOL-callback marker was recorded, which does not rule out EAPOL on the normal Ethernet RX path. At about 33.832 s, UVM killed the user shell (`sh`, the `/bin/console-tools` multicall alias) for out-of-swap while a multi-call dmesg pipeline was running; capture ended without a status snapshot.",
+  "expected": "The selected BSS passes vendor compatibility checks, SAE and the WPA four-way handshake complete with PMF, and the interface obtains an IP address for data exchange.",
+  "observed": "On one operator-reported V1.2 sample, the scan completed and selected the matching BSS at 13.795 s after kernel boot. SAE commit/confirm succeeded; the supplicant reported Trying then Associated and SUBNET-STATUS-UPDATE status 0. EmberBSD published net80211 RUN (state 4) between 14.696 and 14.783 s. Two SIOCADDMULTI requests returned ENETRESET at 21.422 and 21.452 s without resetting the join. At 24.762 s the vendor transitioned run to init and reported send deauth for 4-way handshake timeout (reason 204); disconnect reason 204 followed at 24.814/24.835 s. No scan or channel-change event was recorded after association. The retained instrumentation does not establish EAPOL delivery or identify a specific handshake step. No WPA_COMPLETED, negotiated key management/PMF, DHCP/DNS or data exchange was observed. A later read-only supplicant status query returned SCANNING.",
   "duration_seconds": null,
   "measurements": [
     {
-      "name": "association-callback-subtype",
-      "value": 1,
-      "unit": "code"
-    },
-    {
-      "name": "association-response-body-length",
-      "value": 321,
-      "unit": "bytes"
+      "name": "scan-match-boot-time",
+      "value": 13.795,
+      "unit": "seconds"
     },
     {
       "name": "net80211-run-state",
@@ -53,23 +48,28 @@
       "unit": "code"
     },
     {
-      "name": "local-init-old-state",
-      "value": 4,
-      "unit": "code"
+      "name": "net80211-run-transition-boot-time",
+      "value": 14.696,
+      "unit": "seconds"
     },
     {
-      "name": "local-init-argument",
-      "value": -1,
-      "unit": "code"
+      "name": "association-accepted-boot-time",
+      "value": 14.783,
+      "unit": "seconds"
     },
     {
-      "name": "local-init-boot-time",
-      "value": 25.972,
+      "name": "multicast-membership-enetreset-count",
+      "value": 2,
+      "unit": "requests"
+    },
+    {
+      "name": "vendor-handshake-timeout-boot-time",
+      "value": 24.762,
       "unit": "seconds"
     },
     {
       "name": "vendor-disconnect-reason",
-      "value": 8,
+      "value": 204,
       "unit": "code"
     }
   ],
@@ -77,9 +77,9 @@
     "One operator-reported V1.2 sample and RAM-only trial; this does not establish another board revision or persistent installation.",
     "The RAM root is identified by role only; its private configuration is not part of this shared record.",
     "Observed times are kernel uptime; the full capture duration is not established. The private capture and its path are not part of this shared record.",
-    "The supplicant monitor attached after RUN, so its silence does not cover earlier events. No vendor EAPOL callback marker was seen; this does not exclude normal Ethernet EAPOL RX.",
-    "The local INIT and subsequent disconnect are observed, but the triggering ioctl/event is unproven. No WPA_COMPLETED, negotiated PMF, DHCP/DNS or data exchange was established.",
-    "UVM killed the user shell for out-of-swap during the multi-call dmesg pipeline, and capture ended before a status snapshot.",
+    "The retained capture does not establish EAPOL delivery or identify the handshake step that failed. No WPA_COMPLETED, negotiated PMF, DHCP/DNS or data exchange was established.",
+    "The SIOCADDMULTI ENETRESET results did not reset the join in this trial; this does not establish broader multicast behavior.",
+    "Sequential log retrieval completed without an observed OOM or trap in this trial; this does not establish broader RAM reliability.",
     "WPA2-only authentication, reconnect, roaming and sustained transfer remain unaccepted."
   ],
   "source_refs": [
