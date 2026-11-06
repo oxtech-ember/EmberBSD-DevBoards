@@ -99,13 +99,16 @@ table below.
 ## Wireless
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
-without ring or allocation failures. A later strict SAE/PMF-required attempt
-found matching WPA2/SAE BSS entries advertising SAE-H2E, entered ASSOCIATING,
-then received vendor disconnect reason 210
-`NO_AP_FOUND_W_COMPATIBLE_SECURITY` and returned to TEMP-DISABLED/SCANNING.
-No IPv4 address or data exchange followed. The [association evidence](evidence/wifi-association.json)
-records this RAM observation. WPA2-only authentication, DHCP/DNS, reconnect,
-roaming and sustained transfer remain unverified.
+without ring or allocation failures. In the latest strict SAE/PMF-required RAM
+trial, SAE and association were accepted and EmberBSD published `RUN`. The
+one-shot RX observer counted 118 selected-AP management frames and no matching
+downlink station data or EAPOL frames, then the attempt ended with vendor
+reason 204 and a supplicant timeout. This filtered callback observation does
+not establish whether the AP transmitted frames outside the observer's
+visibility. No IPv4 address or data exchange followed. See the
+[association evidence](evidence/wifi-association.json). WPA2-only
+authentication, DHCP/DNS, reconnect, roaming and sustained transfer remain
+unverified.
 
 ## Expansion and debug routing
 

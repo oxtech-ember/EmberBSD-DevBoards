@@ -1602,6 +1602,22 @@
       "sha256": null
     },
     {
+      "id": "mosaico-wifi-rx-observer-base-source",
+      "title": "EmberBSD Wi-Fi source base used for the #35 RX-observer artifact",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/d990002d91ffb382b38ee317cf990eb445af6932",
+      "revision": "d990002d91ffb382b38ee317cf990eb445af6932",
+      "reviewed_at": "2026-11-07",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-espwifi-rx-observer-source",
+      "title": "EmberBSD ESP32-S31 bounded one-shot RX metadata observer",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/7714608d0b45f6e781fc9216084ded41276a465a",
+      "revision": "7714608d0b45f6e781fc9216084ded41276a465a",
+      "reviewed_at": "2026-11-07",
+      "sha256": null
+    },
+    {
       "id": "mosaico-espwifi-radio-markerfix-source",
       "title": "EmberBSD ESP32-S31 external-radio WPA marker fix source content",
       "url": "https://github.com/oxtech-ember/EmberBSD/commit/d5511d17a8274b1ec2122fe2b5a5bf0760de3c96",

@@ -5,7 +5,7 @@
   "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
   "soc": "espressif-esp32-s31",
   "board_revision": "1.2",
-  "reviewed_at": "2026-11-06",
+  "reviewed_at": "2026-11-07",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/esp-mosaico/README.md",
@@ -68,7 +68,7 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one operator-reported V1.2 sample, the net80211 scan cache reached 18 entries without ring or allocation failures. A strict SAE/PMF-required trial used kernel #33 and reused the prior radio object. SAE commit/confirm, supplicant Associated and net80211 RUN succeeded. Two multicast membership requests returned ENETRESET without resetting the join. The vendor then reported a four-way handshake timeout (reason 204), transitioned run to init and sent deauthentication; disconnect reason 204 followed. The capture does not establish EAPOL delivery or the failing handshake step. WPA_COMPLETED, negotiated PMF, DHCP/DNS and data exchange remain unverified.",
+      "scope": "On one operator-reported V1.2 sample, the net80211 scan cache reached 18 entries without ring or allocation failures. The latest strict SAE/PMF-required RAM trial used kernel #35 with the one-shot RX metadata observer. SAE and association were accepted, and EmberBSD published RUN with the interface joined and link up. The observer counted 118 selected-AP management frames but no matching downlink station data or EAPOL frames; its callback and filters do not establish whether the AP transmitted frames outside the observer's visibility. About ten seconds later the vendor reported reason 204 and the supplicant timed out and disconnected. WPA_COMPLETED, negotiated PMF, IP/DNS and data exchange remain unverified.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
@@ -78,7 +78,9 @@
         "mosaico-wifi-scan-observation",
         "mosaico-espwifi-config-done-callback",
         "mosaico-wifi-association-kernel-source",
+        "mosaico-wifi-rx-observer-base-source",
         "mosaico-espwifi-radio-markerfix-source",
+        "mosaico-espwifi-rx-observer-source",
         "mosaico-espwifi-radio-once-debug-source",
         "mosaico-sae-capability-fix-source",
         "mosaico-wifi-association-observation"

@@ -65,18 +65,17 @@ been measured. See [interface limits](interfaces.md#camera-and-other-peripherals
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
 without ring or allocation failures. The latest
-[association trial](evidence/wifi-association.json) used kernel #33 from
-[source revision d21831e](https://github.com/oxtech-ember/EmberBSD/commit/d21831ed8d3eb1246acc98f949614cb9ba18269a)
-and reused the radio object built for the prior trial. SAE commit/confirm and
-association succeeded; the supplicant reported `Associated`, and EmberBSD
-published net80211 `RUN`. Two multicast membership requests returned
-`ENETRESET` without resetting the join. At 24.762 seconds, the vendor reported
-a four-way handshake timeout (reason 204), transitioned `run` to `init`, and
-sent deauthentication; disconnect reason 204 followed. The capture does not
-establish EAPOL delivery or identify the failed handshake step. No
-`WPA_COMPLETED`, negotiated PMF, DHCP/DNS or data exchange was observed. A later
-read-only supplicant status query returned `SCANNING`. WPA2-only authentication,
-reconnect, roaming and sustained transfer remain unaccepted.
+[association trial](evidence/wifi-association.json) used kernel #35 with the
+one-shot RX metadata observer. Observer setup and restore succeeded; SAE and
+association were accepted, and EmberBSD published net80211 `RUN` with the
+interface joined and link up. It counted 118 management frames from the
+selected AP but no matching downlink station data or EAPOL frames. These
+filtered callback counters do not establish whether the AP transmitted frames
+that were not visible to the observer. About ten seconds later the vendor
+reported reason 204 and the supplicant timed out and disconnected. No
+`WPA_COMPLETED`, negotiated PMF, IP address, DNS or data exchange was observed.
+WPA2-only authentication, reconnect, roaming and sustained transfer remain
+unaccepted.
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before

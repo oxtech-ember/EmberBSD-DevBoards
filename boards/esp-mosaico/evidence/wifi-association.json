@@ -3,7 +3,7 @@
   "kind": "evidence",
   "id": "mosaico-wifi-association",
   "target_id": "esp-mosaico",
-  "recorded_at": "2026-11-06",
+  "recorded_at": "2026-11-07",
   "layer": "physical",
   "result": "fail",
   "hardware": {
@@ -14,15 +14,15 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT_WIFI kernel FIT",
-      "revision": "EmberBSD kernel source d21831ed8d3eb1246acc98f949614cb9ba18269a; NetBSD 11.0 (ESP_MOSAICO_SC101IOT_WIFI) #33 built 2026-11-06 22:17 MSK",
-      "sha256": "b936947cd45751383d26e5e0756b64b45ea856bdb2fa9e59e525793f518fec37",
+      "name": "ESP_MOSAICO_SC101IOT_WIFI kernel FIT #35",
+      "revision": "Built from EmberBSD source base d990002d91ffb382b38ee317cf990eb445af6932 plus the RX-observer patch. The changed-file blobs match published commit 7714608d0b45f6e781fc9216084ded41276a465a; this artifact predates the rebase and does not include intervening unrelated main commits.",
+      "sha256": "8b11f66b02cf6f89e7933188892a54c5a6243afa3f9ba563cf06ebe56db665a9",
       "reference": null
     },
     {
-      "name": "ESP32-S31 external radio object",
-      "revision": "Built once from a radio source tree based on d5511d17a8274b1ec2122fe2b5a5bf0760de3c96 plus frozen association diagnostics later published in 3335ef5a7ecdaf6378709552a6a056829a0acfd1; reused unchanged for kernel #33.",
-      "sha256": "f61e2ee9239fc837a546dfc8a6d864e082213de5b5f6a0cb2d7f082162925fd3",
+      "name": "ESP32-S31 external radio object #35",
+      "revision": "Built from the same RX-observer source tree used for kernel #35.",
+      "sha256": "c58f4475cce4fbf5faec18a702fb8f83e95a4c601ffcff20fd5ccf98b4bff6b8",
       "reference": null
     },
     {
@@ -32,40 +32,25 @@
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot the ESP_MOSAICO_SC101IOT_WIFI kernel in normal multiuser RAM mode and attempt the selected WPA3/SAE profile with PMF required.",
+  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot kernel #35 in normal multiuser RAM mode and run the opt-in one-shot selected-peer RX observer during a WPA3/SAE profile with PMF required.",
   "expected": "The selected BSS passes vendor compatibility checks, SAE and the WPA four-way handshake complete with PMF, and the interface obtains an IP address for data exchange.",
-  "observed": "On one operator-reported V1.2 sample, the scan completed and selected the matching BSS at 13.795 s after kernel boot. SAE commit/confirm succeeded; the supplicant reported Trying then Associated and SUBNET-STATUS-UPDATE status 0. EmberBSD published net80211 RUN (state 4) between 14.696 and 14.783 s. Two SIOCADDMULTI requests returned ENETRESET at 21.422 and 21.452 s without resetting the join. At 24.762 s the vendor transitioned run to init and reported send deauth for 4-way handshake timeout (reason 204); disconnect reason 204 followed at 24.814/24.835 s. No scan or channel-change event was recorded after association. The retained instrumentation does not establish EAPOL delivery or identify a specific handshake step. No WPA_COMPLETED, negotiated key management/PMF, DHCP/DNS or data exchange was observed. A later read-only supplicant status query returned SCANNING.",
+  "observed": "A fresh ROM entry loaded firmware, kernel and root, then reached normal multiuser init, getty and root login. The full UART capture recorded the observer candidate, begin, restored and terminal markers once each. The observer setup succeeded (0), with prior promiscuous mode disabled and filter 0x1; teardown returned 0/0/0 and restored the saved state. SAE and association were accepted, profile auth mode was 9, and EmberBSD published RUN with the interface joined and link up. During the first attempt the observer counted 118 management frames from the selected AP, zero matching downlink data frames to this station, and zero protected-data, A-MSDU, truncated, LLC or EAPOL frames. About ten seconds later the vendor reported reason 204; the supplicant moved from Associated to Authentication timed out and locally disconnected. No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted data exchange was observed. The bounded observer result does not establish whether the AP transmitted frames that were not exposed through this callback/filter path.",
   "duration_seconds": null,
   "measurements": [
     {
-      "name": "scan-match-boot-time",
-      "value": 13.795,
-      "unit": "seconds"
+      "name": "selected-ap-management-frames",
+      "value": 118,
+      "unit": "frames"
     },
     {
-      "name": "net80211-run-state",
-      "value": 4,
-      "unit": "code"
+      "name": "matching-downlink-station-data-frames",
+      "value": 0,
+      "unit": "frames"
     },
     {
-      "name": "net80211-run-transition-boot-time",
-      "value": 14.696,
-      "unit": "seconds"
-    },
-    {
-      "name": "association-accepted-boot-time",
-      "value": 14.783,
-      "unit": "seconds"
-    },
-    {
-      "name": "multicast-membership-enetreset-count",
-      "value": 2,
-      "unit": "requests"
-    },
-    {
-      "name": "vendor-handshake-timeout-boot-time",
-      "value": 24.762,
-      "unit": "seconds"
+      "name": "observed-eapol-frames",
+      "value": 0,
+      "unit": "frames"
     },
     {
       "name": "vendor-disconnect-reason",
@@ -77,16 +62,16 @@
     "One operator-reported V1.2 sample and RAM-only trial; this does not establish another board revision or persistent installation.",
     "The RAM root is identified by role only; its private configuration is not part of this shared record.",
     "Observed times are kernel uptime; the full capture duration is not established. The private capture and its path are not part of this shared record.",
-    "The retained capture does not establish EAPOL delivery or identify the handshake step that failed. No WPA_COMPLETED, negotiated PMF, DHCP/DNS or data exchange was established.",
-    "The SIOCADDMULTI ENETRESET results did not reset the join in this trial; this does not establish broader multicast behavior.",
-    "Sequential log retrieval completed without an observed OOM or trap in this trial; this does not establish broader RAM reliability.",
-    "WPA2-only authentication, reconnect, roaming and sustained transfer remain unaccepted."
+    "The receive observer is opt-in and can affect timing. Its ESP-IDF promiscuous callback and selected-AP/station/direction filters do not establish that the AP sent or did not send frames outside the observer's visibility.",
+    "Zero matching downlink data/EAPOL counters do not identify whether frames were absent over the air, filtered by firmware, or unavailable at the callback/API boundary. They do not establish normal-mode EAPOL delivery or a radio defect.",
+    "No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted data exchange was established. WPA2-only authentication, reconnect, roaming and sustained transfer remain unaccepted."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
-    "mosaico-wifi-association-kernel-source",
+    "mosaico-wifi-rx-observer-base-source",
     "mosaico-espwifi-radio-markerfix-source",
     "mosaico-espwifi-radio-once-debug-source",
+    "mosaico-espwifi-rx-observer-source",
     "mosaico-wifi-association-observation",
     "mosaico-sae-capability-fix-source"
   ]
