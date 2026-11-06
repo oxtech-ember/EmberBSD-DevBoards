@@ -15,14 +15,14 @@
   "inputs": [
     {
       "name": "ESP_MOSAICO_SC101IOT_WIFI kernel FIT",
-      "revision": "EmberBSD kernel source 41b8a71c17435830683d454645956ab1805a90c5; kernel #31 built 2026-11-06 21:05 MSK",
-      "sha256": "3c01e41f73e77d5df153a4398c20a1ab246372961daf3c5145ab4b879e01c5f2",
+      "revision": "EmberBSD kernel source 3335ef5a7ecdaf6378709552a6a056829a0acfd1; NetBSD 11.0 (ESP_MOSAICO_SC101IOT_WIFI) #32 built 2026-11-06 21:46 MSK",
+      "sha256": "6042cdc7db54f17c296d5ddcec391e14d34b8a03fad0bb1559c62601b39ff2c1",
       "reference": null
     },
     {
       "name": "ESP32-S31 external radio object",
-      "revision": "Radio object from source base 4aae5c1bccc with the marker-fix content later published as d5511d17a8274b1ec2122fe2b5a5bf0760de3c96; the publication commit metadata was not the build revision.",
-      "sha256": "82df8256a4eff27bdc8d1ecc90fddb8deac25d510b4c620add22d214e7b5fe98",
+      "revision": "Built once from marker-fix source d5511d17a8274b1ec2122fe2b5a5bf0760de3c96 plus frozen diagnostic content published in 3335ef5a7ecdaf6378709552a6a056829a0acfd1; then reused unchanged for kernel #32.",
+      "sha256": "f61e2ee9239fc837a546dfc8a6d864e082213de5b5f6a0cb2d7f082162925fd3",
       "reference": null
     },
     {
@@ -34,98 +34,38 @@
   ],
   "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot the ESP_MOSAICO_SC101IOT_WIFI kernel in normal multiuser RAM mode and attempt the selected WPA3/SAE profile with PMF required.",
   "expected": "The selected BSS passes vendor compatibility checks, SAE completes, association uses PMF, and the interface obtains an IP address for data exchange.",
-  "observed": "One continuous first-cycle capture recorded candidate, DEBUG-begin, warning-restore and terminal markers once each; the vendor DEBUG-enable and warning-restore calls returned 0. The earlier empty-password rejection and reason 210 were absent. Vendor auth mode was WIFI_AUTH_WPA3_PSK (6), PMF capable/required were 1/1, and PWE configuration input was 0. The kernel queued AUTH generation 1. The vendor wpa_sta_connect callback returned 0; SAE commit build (type 1, 98 bytes) and parse (status 126) returned 0, followed by SAE confirm build (type 2, 34 bytes) and parse (status 0), both returning 0. The vendor received an association response (type 0x10) and transitioned init -> auth -> assoc -> run. At 19.882 s after kernel boot, EmberBSD entered join-worker teardown generation 2 and called disconnect; the vendor then transitioned run -> init, sent disassoc(8), and emitted disconnect reason 8, which the kernel recorded. No received deauth/disassoc or AUTH/association timeout appeared before teardown. A later read-only supplicant status reported SCANNING; WPA_COMPLETED and negotiated key-management/PMF were not observed. DHCP/DNS and data exchange were not verified.",
-  "duration_seconds": 22.5,
+  "observed": "On one operator-reported V1.2 sample, SAE commit and confirm succeeded. The vendor then delivered association callback subtype 1 with a 321-byte response body; EmberBSD published net80211 RUN (state 4). At 25.972 s after kernel boot, EmberBSD logged local INIT with old state 4 and arg -1, then entered join-worker teardown and called disconnect. The vendor sent disassoc(8) and reported reason 8 at about 26.05 s. The trace does not establish which ioctl or event requested INIT. No WPA_COMPLETED, negotiated key management/PMF, DHCP/DNS or data exchange was observed. The wpa_cli monitor attached after RUN and saw no later control events; this does not cover earlier events. No dedicated vendor EAPOL-callback marker was recorded, which does not rule out EAPOL on the normal Ethernet RX path. At about 33.832 s, UVM killed the user shell (`sh`, the `/bin/console-tools` multicall alias) for out-of-swap while a multi-call dmesg pipeline was running; capture ended without a status snapshot.",
+  "duration_seconds": null,
   "measurements": [
     {
-      "name": "feature-caps",
-      "value": 49,
-      "unit": "bitmask"
-    },
-    {
-      "name": "sae-capable",
+      "name": "association-callback-subtype",
       "value": 1,
-      "unit": "bit"
-    },
-    {
-      "name": "vendor-wifi-auth-mode",
-      "value": 6,
       "unit": "code"
     },
     {
-      "name": "pmf-capable",
-      "value": 1,
-      "unit": "bit"
-    },
-    {
-      "name": "pmf-required",
-      "value": 1,
-      "unit": "bit"
-    },
-    {
-      "name": "pwe-config-input",
-      "value": 0,
-      "unit": "code"
-    },
-    {
-      "name": "sae-commit-build-result",
-      "value": 0,
-      "unit": "return-code"
-    },
-    {
-      "name": "sae-commit-parse-result",
-      "value": 0,
-      "unit": "return-code"
-    },
-    {
-      "name": "sae-confirm-build-result",
-      "value": 0,
-      "unit": "return-code"
-    },
-    {
-      "name": "sae-confirm-parse-result",
-      "value": 0,
-      "unit": "return-code"
-    },
-    {
-      "name": "sae-commit-message-length",
-      "value": 98,
+      "name": "association-response-body-length",
+      "value": 321,
       "unit": "bytes"
     },
     {
-      "name": "sae-confirm-message-length",
-      "value": 34,
-      "unit": "bytes"
-    },
-    {
-      "name": "vendor-debug-enable-return",
-      "value": 0,
+      "name": "net80211-run-state",
+      "value": 4,
       "unit": "code"
     },
     {
-      "name": "vendor-warning-restore-return",
-      "value": 0,
+      "name": "local-init-old-state",
+      "value": 4,
       "unit": "code"
     },
     {
-      "name": "diagnostic-cycle-candidate",
-      "value": 1,
-      "unit": "count"
+      "name": "local-init-argument",
+      "value": -1,
+      "unit": "code"
     },
     {
-      "name": "diagnostic-cycle-begin",
-      "value": 1,
-      "unit": "count"
-    },
-    {
-      "name": "diagnostic-cycle-restored",
-      "value": 1,
-      "unit": "count"
-    },
-    {
-      "name": "diagnostic-cycle-terminal",
-      "value": 1,
-      "unit": "count"
+      "name": "local-init-boot-time",
+      "value": 25.972,
+      "unit": "seconds"
     },
     {
       "name": "vendor-disconnect-reason",
@@ -136,14 +76,15 @@
   "limits": [
     "One operator-reported V1.2 sample and RAM-only trial; this does not establish another board revision or persistent installation.",
     "The RAM root is identified by role only; its private configuration is not part of this shared record.",
-    "Elapsed time is from bootm to the terminal diagnostic marker. The private capture and its path are not part of this shared record.",
-    "SAE commit/confirm and association response were observed, but WPA_COMPLETED and negotiated PMF were not; DHCP/DNS and data exchange remain unverified.",
-    "The capture shows a local disconnect and reason 8 but does not identify what queued teardown generation 2.",
+    "Observed times are kernel uptime; the full capture duration is not established. The private capture and its path are not part of this shared record.",
+    "The supplicant monitor attached after RUN, so its silence does not cover earlier events. No vendor EAPOL callback marker was seen; this does not exclude normal Ethernet EAPOL RX.",
+    "The local INIT and subsequent disconnect are observed, but the triggering ioctl/event is unproven. No WPA_COMPLETED, negotiated PMF, DHCP/DNS or data exchange was established.",
+    "UVM killed the user shell for out-of-swap during the multi-call dmesg pipeline, and capture ended before a status snapshot.",
     "WPA2-only authentication, reconnect, roaming and sustained transfer remain unaccepted."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
-    "mosaico-wifi-association-kernel-31-source",
+    "mosaico-wifi-association-kernel-source",
     "mosaico-espwifi-radio-markerfix-source",
     "mosaico-espwifi-radio-once-debug-source",
     "mosaico-wifi-association-observation",

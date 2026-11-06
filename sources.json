@@ -1539,10 +1539,10 @@
     },
     {
       "id": "mosaico-wifi-association-kernel-source",
-      "title": "EmberBSD ESP_MOSAICO_SC101IOT_WIFI kernel source used in the SAE association trial",
-      "url": "https://github.com/oxtech-ember/EmberBSD/commit/9f924deb563df7d4cdbe40ab9e5caa61435cd004",
-      "revision": "9f924deb563df7d4cdbe40ab9e5caa61435cd004",
-      "reviewed_at": "2026-11-03",
+      "title": "EmberBSD ESP_MOSAICO_SC101IOT_WIFI kernel source used in the latest SAE association trial",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/3335ef5a7ecdaf6378709552a6a056829a0acfd1",
+      "revision": "3335ef5a7ecdaf6378709552a6a056829a0acfd1",
+      "reviewed_at": "2026-11-06",
       "sha256": null
     },
     {
@@ -1574,7 +1574,7 @@
       "title": "ESP-Mosaico EmberBSD SAE/PMF association attempt",
       "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-association.json",
       "revision": null,
-      "reviewed_at": "2026-11-03",
+      "reviewed_at": "2026-11-06",
       "sha256": null
     },
     {
@@ -1598,14 +1598,6 @@
       "title": "EmberBSD ESP32-S31 external radio one-shot DEBUG source",
       "url": "https://github.com/oxtech-ember/EmberBSD/commit/919e23134b5c9652660197ccb5492ba80efa89d3",
       "revision": "919e23134b5c9652660197ccb5492ba80efa89d3",
-      "reviewed_at": "2026-11-06",
-      "sha256": null
-    },
-    {
-      "id": "mosaico-wifi-association-kernel-31-source",
-      "title": "EmberBSD ESP_MOSAICO_SC101IOT_WIFI kernel source used in the candidate 31 SAE association trial",
-      "url": "https://github.com/oxtech-ember/EmberBSD/commit/41b8a71c17435830683d454645956ab1805a90c5",
-      "revision": "41b8a71c17435830683d454645956ab1805a90c5",
       "reviewed_at": "2026-11-06",
       "sha256": null
     },

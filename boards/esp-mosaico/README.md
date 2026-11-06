@@ -64,16 +64,23 @@ is separate evidence. The mode table describes 640 × 480 UYVY and requires a
 been measured. See [interface limits](interfaces.md#camera-and-other-peripherals).
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
-without ring or allocation failures. The normal multiuser RAM trial with the
-published [SAE feature-capability fix](https://github.com/oxtech-ember/EmberBSD/commit/04ab058b06ce9ce1617691b9ad53cb443f0389b3)
-reached the shell without the earlier null-callback panic. The latest
-[association trial](evidence/wifi-association.json) did not reproduce the
-vendor empty-password rejection or reason 210. It observed successful SAE
-commit/confirm processing, an association response, and vendor state transitions
-through `run`; EmberBSD then entered local join-worker teardown generation 2,
-after which the vendor sent disassoc (reason 8). A later read-only supplicant status was
-`SCANNING`; `WPA_COMPLETED`, negotiated PMF, DHCP/DNS and data exchange remain
-unverified. The capture does not identify what requested the teardown. WPA2-only
+without ring or allocation failures. The latest
+[association trial](evidence/wifi-association.json) used kernel #32 from
+[source revision 3335ef5](https://github.com/oxtech-ember/EmberBSD/commit/3335ef5a7ecdaf6378709552a6a056829a0acfd1)
+and a radio object built once from the WPA marker fix plus the frozen diagnostic
+content used for that revision; the same object was reused for kernel linking.
+The vendor delivered an association response (callback subtype 1, 321-byte
+body), and EmberBSD published net80211 `RUN` after SAE commit and confirm
+succeeded. At 25.972 seconds, the kernel logged local `INIT` from state 4
+with argument -1, then entered join-worker teardown; the vendor sent disassoc
+(reason 8) at about 26.05 seconds. The ioctl or event that requested `INIT` is
+not established. `WPA_COMPLETED`, negotiated PMF, DHCP/DNS and data exchange
+remain unverified. The supplicant monitor attached after `RUN`; its later silence
+does not cover earlier events. No dedicated vendor EAPOL callback marker was
+seen, which does not rule out EAPOL through the normal Ethernet receive path.
+At about 33.832 seconds, UVM killed the user shell (`sh`, the `/bin/console-tools`
+multicall alias) for out-of-swap while a multi-call `dmesg` pipeline was running;
+the capture ended before a status snapshot. WPA2-only
 authentication, reconnect, roaming and sustained transfer remain unaccepted.
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a

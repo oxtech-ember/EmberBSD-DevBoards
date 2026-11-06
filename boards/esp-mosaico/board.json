@@ -5,7 +5,7 @@
   "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
   "soc": "espressif-esp32-s31",
   "board_revision": "1.2",
-  "reviewed_at": "2026-11-03",
+  "reviewed_at": "2026-11-06",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/esp-mosaico/README.md",
@@ -68,7 +68,7 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one operator-reported V1.2 sample, the net80211 scan cache reached 18 entries without ring or allocation failures. A later config-done-callback kernel reached the RAM shell without the earlier null-callback panic. The scan found three WPA2/SAE transition BSS entries advertising SAE-H2E. A strict SAE/PMF-required attempt entered ASSOCIATING, then the vendor reported reason 210 NO_AP_FOUND_W_COMPATIBLE_SECURITY and the supplicant returned to TEMP-DISABLED/SCANNING. No address or data exchange followed. WPA2-only authentication, DHCP, reconnect and roaming remain unverified.",
+      "scope": "On one operator-reported V1.2 sample, the net80211 scan cache reached 18 entries without ring or allocation failures. A strict SAE/PMF-required trial used kernel #32 and an external radio object built once from the WPA marker fix plus the frozen diagnostic content used for that kernel source; SAE commit/confirm and association response (callback subtype 1, 321-byte body) succeeded, publishing net80211 RUN. The kernel then logged local INIT from state 4 with argument -1 at 25.972 seconds and entered join-worker teardown; the vendor sent disassoc (reason 8) at about 26.05 seconds. The ioctl/event requesting INIT is not established. WPA_COMPLETED, negotiated PMF, DHCP/DNS and data exchange remain unverified. The supplicant monitor attached after RUN; no dedicated vendor EAPOL callback marker was observed, which does not exclude normal Ethernet EAPOL receive. WPA2-only authentication, reconnect and roaming remain unverified.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
@@ -77,6 +77,10 @@
         "mosaico-espwifi-mac-v3-kernel-source",
         "mosaico-wifi-scan-observation",
         "mosaico-espwifi-config-done-callback",
+        "mosaico-wifi-association-kernel-source",
+        "mosaico-espwifi-radio-markerfix-source",
+        "mosaico-espwifi-radio-once-debug-source",
+        "mosaico-sae-capability-fix-source",
         "mosaico-wifi-association-observation"
       ]
     },
