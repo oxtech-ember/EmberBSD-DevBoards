@@ -16,14 +16,14 @@
     {
       "name": "ESP_MOSAICO_SC101IOT_WIFI RAM kernel FIT",
       "revision": "EmberBSD kernel source 9f924deb563df7d4cdbe40ab9e5caa61435cd004 plus published Wi-Fi AUTH diagnostics 535d3bd0efab37706429932cb6f15d118969ec9c",
-      "sha256": "7a92390ede55ae8eb6fa9792d4cec9b82296f3bba23d6a3c2aa23d9f2791d426",
-      "reference": "https://github.com/oxtech-ember/EmberBSD/commit/535d3bd0efab37706429932cb6f15d118969ec9c"
+      "sha256": "28ae151450c2c0b2281ea2615b057a60fc775c92306739000a1da4af2d038b15",
+      "reference": "https://github.com/oxtech-ember/EmberBSD/commit/9f924deb563df7d4cdbe40ab9e5caa61435cd004"
     },
     {
       "name": "ESP32-S31 external radio object",
-      "revision": "EmberBSD standalone RSNXE ABI translation 7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c",
-      "sha256": null,
-      "reference": "https://github.com/oxtech-ember/EmberBSD/commit/7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c"
+      "revision": "EmberBSD external radio source 04ab058b06ce9ce1617691b9ad53cb443f0389b3, with RSNXE ABI fix 7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c and radio diagnostics 26340504d78da70fe458d49b398592319aac74ff",
+      "sha256": "d5eb127cad316392a2d4d35b1cfdd247b7ff5a95ff842752edb2f4b4fca08101",
+      "reference": "https://github.com/oxtech-ember/EmberBSD/commit/04ab058b06ce9ce1617691b9ad53cb443f0389b3"
     },
     {
       "name": "Static RAM root with console and Wi-Fi tools",
@@ -32,30 +32,71 @@
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot the RAM ESP_MOSAICO_SC101IOT_WIFI kernel in normal multiuser mode and attempt SAE with PMF required using the configured transition-network profile.",
-  "expected": "The selected candidate is submitted to the vendor join path, completes SAE authentication and association with PMF, then receives an IP address and exchanges data.",
-  "observed": "The normal multiuser RAM boot reached the shell without the earlier null-callback panic. The AUTH request arrived from SCAN; SAE candidate selection validated, the join was queued and dequeued in the current generation, and the vendor ext_connect call returned 0. The trace reported vendor Wi-Fi auth mode WIFI_AUTH_WPA3_PSK (value 6), PMF capability and requirement bits both set, and PWE configuration 0 mapped to internal mode 2. The vendor then reported disconnect reason 210 NO_AP_FOUND_W_COMPATIBLE_SECURITY. No completed authentication or association, IPv4 address, or data exchange followed.",
+  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot the ESP_MOSAICO_SC101IOT_WIFI kernel in normal multiuser RAM mode and attempt the selected WPA3/SAE profile with PMF required.",
+  "expected": "The selected BSS passes vendor compatibility checks, SAE completes, association uses PMF, and the interface obtains an IP address for data exchange.",
+  "observed": "The normal multiuser RAM boot reached the shell without the earlier null-callback panic. Vendor feature_caps was 0x31 with SAE capability enabled. The AUTH request was queued and processed for the selected candidate; vendor ext_connect returned 0, then disconnect reason 210 NO_AP_FOUND_W_COMPATIBLE_SECURITY followed. The capture contained no SAE build/parse callback evidence, completed association, IP address, or data exchange.",
   "duration_seconds": null,
   "measurements": [
-    {"name": "vendor-ext-connect-return", "value": 0, "unit": "code"},
-    {"name": "vendor-wifi-auth-mode", "value": 6, "unit": "code"},
-    {"name": "pmf-capable", "value": 1, "unit": "bit"},
-    {"name": "pmf-required", "value": 1, "unit": "bit"},
-    {"name": "pwe-config-input", "value": 0, "unit": "code"},
-    {"name": "pwe-internal-mode", "value": 2, "unit": "code"},
-    {"name": "vendor-disconnect-reason", "value": 210, "unit": "code"}
+    {
+      "name": "vendor-wifi-auth-mode",
+      "value": 6,
+      "unit": "code"
+    },
+    {
+      "name": "pmf-capable",
+      "value": 1,
+      "unit": "bit"
+    },
+    {
+      "name": "pmf-required",
+      "value": 1,
+      "unit": "bit"
+    },
+    {
+      "name": "pwe-config-input",
+      "value": 0,
+      "unit": "code"
+    },
+    {
+      "name": "pwe-internal-mode",
+      "value": 2,
+      "unit": "code"
+    },
+    {
+      "name": "vendor-feature-caps",
+      "value": 49,
+      "unit": "bitmask"
+    },
+    {
+      "name": "vendor-sae-capability",
+      "value": 1,
+      "unit": "bit"
+    },
+    {
+      "name": "vendor-ext-connect-return",
+      "value": 0,
+      "unit": "code"
+    },
+    {
+      "name": "vendor-disconnect-reason",
+      "value": 210,
+      "unit": "code"
+    }
   ],
   "limits": [
     "One operator-reported V1.2 sample and RAM-only trial; this does not establish another board revision or persistent installation.",
     "The RAM root is identified by role only; its private configuration is not part of this shared record.",
-    "Local SAE selection and a successful vendor connect-call return do not prove that an authentication frame was exchanged over the air. Reason 210 reports a security-compatibility rejection but does not identify the specific vendor check or establish its position relative to SAE.",
-    "No completed WPA3/SAE/PMF authentication or association, IPv4 address or data exchange was observed.",
-    "WPA2-only authentication, DHCP, reconnect, roaming and sustained transfer remain unaccepted."
+    "Reason 210 does not identify the specific vendor compatibility check. Espressif lists an encrypted AP with an empty vendor STA-profile password as one possible cause; that branch has not been confirmed for this trial.",
+    "The capture did not show SAE callbacks or prove over-the-air SAE, completed WPA3/PMF association, IPv4, or data exchange.",
+    "WPA2-only authentication, DHCP/DNS, reconnect, roaming and sustained transfer remain unaccepted."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
+    "mosaico-wifi-association-kernel-source",
     "mosaico-espwifi-rsnxe-abi-fix-source",
     "mosaico-espwifi-auth-join-diagnostics-source",
-    "mosaico-wifi-association-observation"
+    "mosaico-wifi-association-observation",
+    "mosaico-sae-capability-fix-source",
+    "mosaico-espwifi-radio-diagnostics-source"
   ]
 }

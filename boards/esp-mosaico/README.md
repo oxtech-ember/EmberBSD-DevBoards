@@ -64,23 +64,18 @@ is separate evidence. The mode table describes 640 × 480 UYVY and requires a
 been measured. See [interface limits](interfaces.md#camera-and-other-peripherals).
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
-without ring or allocation failures. A later normal multiuser RAM boot with
-the published [standalone RSNXE ABI fix](https://github.com/oxtech-ember/EmberBSD/commit/7181ba15b4b1458c5c8dcf4c749bbc0f6ee82d0c)
-and [ESP Wi-Fi AUTH diagnostics](https://github.com/oxtech-ember/EmberBSD/commit/535d3bd0efab37706429932cb6f15d118969ec9c)
-reached the shell without the earlier null-callback panic. The AUTH request
-arrived from SCAN; SAE selection validated, the join was
-queued and dequeued in the current generation, and the vendor connect call
-returned success. The trace reported vendor Wi-Fi auth mode
-`WIFI_AUTH_WPA3_PSK` (value 6), PMF
-capability/requirement bits set, and PWE configuration 0 mapped to internal
-mode 2. The vendor then reported disconnect reason 210
-`NO_AP_FOUND_W_COMPATIBLE_SECURITY`. These observations confirm progress
-through local selection and request submission; they do not identify which
-vendor security check rejected the attempt or establish an over-air SAE
-exchange. No completed authentication or association, IP address or data
-exchange followed. See the [association evidence](evidence/wifi-association.json).
-WPA2-only authentication, DHCP/DNS, reconnect, roaming and sustained transfer
-remain unaccepted.
+without ring or allocation failures. The normal multiuser RAM trial with the
+published [SAE feature-capability fix](https://github.com/oxtech-ember/EmberBSD/commit/04ab058b06ce9ce1617691b9ad53cb443f0389b3)
+reached the shell without the earlier null-callback panic. In the [recorded
+association trial](evidence/wifi-association.json), the vendor reported
+`feature_caps=0x31` with SAE capability enabled; AUTH was queued and processed,
+and `ext_connect` returned success. The vendor then reported disconnect reason
+210 `NO_AP_FOUND_W_COMPATIBLE_SECURITY`; the capture showed no SAE callbacks,
+completed association, IP address or data exchange. [Espressif lists](https://github.com/espressif/esp-idf/issues/13542) an encrypted
+AP with an empty vendor STA-profile password as one possible reason-210 branch,
+but the specific vendor rejection remains unconfirmed pending a DEBUG subreason
+capture. WPA2-only authentication, DHCP/DNS, reconnect, roaming and sustained
+transfer remain unaccepted.
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before
