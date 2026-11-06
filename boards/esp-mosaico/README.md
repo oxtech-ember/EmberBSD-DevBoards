@@ -69,7 +69,8 @@ without ring or allocation failures. The latest
 one-shot RX metadata observer. Observer setup and restore succeeded; SAE and
 association were accepted, and EmberBSD published net80211 `RUN` with the
 interface joined and link up. It counted 118 management frames from the
-selected AP but no matching downlink station data or EAPOL frames. These
+selected AP but zero data frames passing successful-RX, FromDS and
+receiver-address-equals-this-station checks, and zero EAPOL frames. These
 filtered callback counters do not establish whether the AP transmitted frames
 that were not visible to the observer. About ten seconds later the vendor
 reported reason 204 and the supplicant timed out and disconnected. No

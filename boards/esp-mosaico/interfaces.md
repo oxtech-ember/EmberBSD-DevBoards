@@ -101,8 +101,9 @@ table below.
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
 without ring or allocation failures. In the latest strict SAE/PMF-required RAM
 trial, SAE and association were accepted and EmberBSD published `RUN`. The
-one-shot RX observer counted 118 selected-AP management frames and no matching
-downlink station data or EAPOL frames, then the attempt ended with vendor
+one-shot RX observer counted 118 selected-AP management frames but zero data
+frames passing successful-RX, FromDS and receiver-address-equals-this-station
+checks, and zero EAPOL frames; the attempt then ended with vendor
 reason 204 and a supplicant timeout. This filtered callback observation does
 not establish whether the AP transmitted frames outside the observer's
 visibility. No IPv4 address or data exchange followed. See the
