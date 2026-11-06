@@ -14,15 +14,15 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT_WIFI kernel FIT #35",
-      "revision": "Built from EmberBSD source base d990002d91ffb382b38ee317cf990eb445af6932 plus the RX-observer patch. The changed-file blobs match published commit 7714608d0b45f6e781fc9216084ded41276a465a; this artifact predates the rebase and does not include intervening unrelated main commits.",
-      "sha256": "8b11f66b02cf6f89e7933188892a54c5a6243afa3f9ba563cf06ebe56db665a9",
+      "name": "ESP_MOSAICO_SC101IOT_WIFI kernel FIT #36",
+      "revision": "Built from EmberBSD source base 7714608d0b45f6e781fc9216084ded41276a465a plus the exact four-file RX-observer accounting patch in 0ab4ab54db281c9875f6d30a661cd7a1f6c52c15.",
+      "sha256": "8c3580eb11824d99f60836cd450ff388942547c5cb1a452159864d49e1a367cb",
       "reference": null
     },
     {
-      "name": "ESP32-S31 external radio object #35",
-      "revision": "Built from the same RX-observer source tree used for kernel #35.",
-      "sha256": "c58f4475cce4fbf5faec18a702fb8f83e95a4c601ffcff20fd5ccf98b4bff6b8",
+      "name": "ESP32-S31 external radio object embedded in #36",
+      "revision": "Built from the RX-observer accounting source in EmberBSD commit 0ab4ab54db281c9875f6d30a661cd7a1f6c52c15.",
+      "sha256": "21e2c7c05a5b2a9ed4a90e95066297ae645b1319da6ca9920cbcb368fd1c6c40",
       "reference": null
     },
     {
@@ -32,14 +32,29 @@
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot kernel #35 in normal multiuser RAM mode and run the opt-in one-shot selected-peer RX observer during a WPA3/SAE profile with PMF required.",
+  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot kernel #36 in normal multiuser RAM mode and run the opt-in one-shot selected-peer RX observer during a WPA3/SAE profile with PMF required.",
   "expected": "The selected BSS passes vendor compatibility checks, SAE and the WPA four-way handshake complete with PMF, and the interface obtains an IP address for data exchange.",
-  "observed": "A fresh ROM entry loaded firmware, kernel and root, then reached normal multiuser init, getty and root login. The full UART capture recorded the observer candidate, begin, restored and terminal markers once each. The observer setup succeeded (0), with prior promiscuous mode disabled and filter 0x1; teardown returned 0/0/0 and restored the saved state. SAE and association were accepted, profile auth mode was 9, and EmberBSD published RUN with the interface joined and link up. During the first attempt the observer counted 118 management frames from the selected AP. It counted zero data frames that passed successful-RX, FromDS and receiver-address-equals-this-station checks; protected-data, A-MSDU, truncated, LLC and EAPOL counters were also zero. About ten seconds later the vendor reported reason 204; the supplicant moved from Associated to Authentication timed out and locally disconnected. No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted data exchange was observed. The bounded observer result does not establish whether the AP transmitted frames that were not exposed through this callback/filter path.",
+  "observed": "Kernel #36 booted through ROM, firmware, kernel and the existing RAM root to normal multiuser init, getty and root login; the NOR and root were unchanged. The supplicant reported SAE/association status 0 and accepted=1 with profile authmode 9; EmberBSD published RUN with joined=1 and link=1. Callback counters recorded mgmt=372 and data=88, with bad and short counters zero. Among valid DATA headers, all_data=88, selected-TA ap_data=8 and FromDS ap_downlink=8; the association response was addressed to this station (assoc_self=1, assoc_other=0). Before restore, current promiscuous mode=1/result=0 and filter=0x5/result=0. The selected-peer observer counted 116 management frames; the strict own-DA data counter and EAPOL counter were zero. Restore calls returned 0/0/0. About ten seconds later the vendor reported reason 204 and the supplicant timed out and locally disconnected. No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. These callback counters establish that DATA reached the callback, but do not establish that M1 was absent over the air or that the AP or radio is defective.",
   "duration_seconds": null,
   "measurements": [
     {
+      "name": "callback-management-frames",
+      "value": 372,
+      "unit": "frames"
+    },
+    {
+      "name": "callback-data-frames",
+      "value": 88,
+      "unit": "frames"
+    },
+    {
+      "name": "selected-ap-fromds-data-frames",
+      "value": 8,
+      "unit": "frames"
+    },
+    {
       "name": "selected-ap-management-frames",
-      "value": 118,
+      "value": 116,
       "unit": "frames"
     },
     {
@@ -63,8 +78,9 @@
     "The RAM root is identified by role only; its private configuration is not part of this shared record.",
     "Observed times are kernel uptime; the full capture duration is not established. The private capture and its path are not part of this shared record.",
     "The receive observer is opt-in and can affect timing. Its ESP-IDF promiscuous callback and filters only report successful RX frames; the data count additionally requires FromDS direction and receiver address equal to this station. These counters do not establish that the AP sent or did not send frames outside the observer's visibility.",
-    "Zero matching downlink data/EAPOL counters do not identify whether frames were absent over the air, filtered by firmware, or unavailable at the callback/API boundary. They do not establish normal-mode EAPOL delivery or a radio defect.",
-    "No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted data exchange was established. WPA2-only authentication, reconnect, roaming and sustained transfer remain unaccepted."
+    "The observer's own-DA data and EAPOL counters were zero even though DATA reached the callback; the data counts have different address/direction filters. The capture does not establish that M1 was absent over the air or identify an AP/radio fault.",
+    "A WPA2 comparison did not reach BSS selection or association: wpa_cli was killed with status 137 during setup after out-of-swap. This is not a WPA2 authentication result.",
+    "No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was established. WPA2-only authentication, reconnect, roaming and sustained transfer remain unaccepted."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
@@ -72,6 +88,7 @@
     "mosaico-espwifi-radio-markerfix-source",
     "mosaico-espwifi-radio-once-debug-source",
     "mosaico-espwifi-rx-observer-source",
+    "mosaico-espwifi-rx-accounting-source",
     "mosaico-wifi-association-observation",
     "mosaico-sae-capability-fix-source"
   ]

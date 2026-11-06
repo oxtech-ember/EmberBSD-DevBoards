@@ -68,7 +68,7 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one operator-reported V1.2 sample, the net80211 scan cache reached 18 entries without ring or allocation failures. The latest strict SAE/PMF-required RAM trial used kernel #35 with the one-shot RX metadata observer. SAE and association were accepted, and EmberBSD published RUN with the interface joined and link up. The observer counted 118 selected-AP management frames and zero data frames passing successful-RX, FromDS and receiver-address-equals-this-station checks; the EAPOL count was zero. Its callback and filters do not establish whether the AP transmitted frames outside the observer's visibility. About ten seconds later the vendor reported reason 204 and the supplicant timed out and disconnected. WPA_COMPLETED, negotiated PMF, IP/DNS and data exchange remain unverified.",
+      "scope": "On one operator-reported V1.2 sample, the net80211 scan cache reached 18 entries without ring or allocation failures. The latest strict SAE/PMF-required RAM trial used kernel #36. SAE/association status 0 was accepted with profile authmode 9, and EmberBSD published RUN, joined and link up. Callback counts were 372 management and 88 data, with bad/short counts zero. Of 88 valid data headers, 8 had the selected AP transmitter address and FromDS direction; zero matched this station's destination address and EAPOL remained zero. The association response destination matched this station. Current promiscuous state/filter before restoration were mode 1 and filter 0x5, with getter and restore results 0. About ten seconds later the vendor reported reason 204 and the supplicant timed out and disconnected. The callback observation proves DATA reached the callback, but does not prove M1 was absent over the air or identify an AP/radio fault. WPA_COMPLETED, negotiated PMF, IP/DNS and accepted network data remain unverified. A WPA2 comparison did not reach network selection or association because its setup process was killed by out-of-swap; no WPA2 authentication result was obtained.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
@@ -81,6 +81,7 @@
         "mosaico-wifi-rx-observer-base-source",
         "mosaico-espwifi-radio-markerfix-source",
         "mosaico-espwifi-rx-observer-source",
+        "mosaico-espwifi-rx-accounting-source",
         "mosaico-espwifi-radio-once-debug-source",
         "mosaico-sae-capability-fix-source",
         "mosaico-wifi-association-observation"

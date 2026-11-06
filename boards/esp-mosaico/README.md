@@ -64,19 +64,20 @@ is separate evidence. The mode table describes 640 × 480 UYVY and requires a
 been measured. See [interface limits](interfaces.md#camera-and-other-peripherals).
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
-without ring or allocation failures. The latest
-[association trial](evidence/wifi-association.json) used kernel #35 with the
-one-shot RX metadata observer. Observer setup and restore succeeded; SAE and
-association were accepted, and EmberBSD published net80211 `RUN` with the
-interface joined and link up. It counted 118 management frames from the
-selected AP but zero data frames passing successful-RX, FromDS and
-receiver-address-equals-this-station checks, and zero EAPOL frames. These
-filtered callback counters do not establish whether the AP transmitted frames
-that were not visible to the observer. About ten seconds later the vendor
-reported reason 204 and the supplicant timed out and disconnected. No
-`WPA_COMPLETED`, negotiated PMF, IP address, DNS or data exchange was observed.
-WPA2-only authentication, reconnect, roaming and sustained transfer remain
-unaccepted.
+without ring or allocation failures. In the latest
+[association trial](evidence/wifi-association.json), kernel #36 received 372
+management and 88 data callbacks; all passed RX-status and length checks. Eight
+valid data headers had the selected AP transmitter address and FromDS direction,
+while none matched this station's destination address and the EAPOL count was
+zero. The association response was addressed to this station, and SAE/association
+were accepted with net80211 `RUN`, joined and link up. About ten seconds later
+the vendor reported reason 204 and the supplicant timed out and disconnected.
+The callback proves DATA reached the observer but does not prove M1 was absent
+over the air or establish an AP/radio fault. No `WPA_COMPLETED`, negotiated PMF,
+IP address, DNS or accepted network data exchange was observed. A WPA2
+comparison did not reach selection or association because setup was killed by
+out-of-swap. WPA2-only authentication, reconnect, roaming and sustained transfer
+remain unaccepted.
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before

@@ -1618,6 +1618,14 @@
       "sha256": null
     },
     {
+      "id": "mosaico-espwifi-rx-accounting-source",
+      "title": "EmberBSD ESP32-S31 pre-filter and peer-stage RX accounting",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/0ab4ab54db281c9875f6d30a661cd7a1f6c52c15",
+      "revision": "0ab4ab54db281c9875f6d30a661cd7a1f6c52c15",
+      "reviewed_at": "2026-11-07",
+      "sha256": null
+    },
+    {
       "id": "mosaico-espwifi-radio-markerfix-source",
       "title": "EmberBSD ESP32-S31 external-radio WPA marker fix source content",
       "url": "https://github.com/oxtech-ember/EmberBSD/commit/d5511d17a8274b1ec2122fe2b5a5bf0760de3c96",

@@ -100,13 +100,13 @@ table below.
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
 without ring or allocation failures. In the latest strict SAE/PMF-required RAM
-trial, SAE and association were accepted and EmberBSD published `RUN`. The
-one-shot RX observer counted 118 selected-AP management frames but zero data
-frames passing successful-RX, FromDS and receiver-address-equals-this-station
-checks, and zero EAPOL frames; the attempt then ended with vendor
-reason 204 and a supplicant timeout. This filtered callback observation does
-not establish whether the AP transmitted frames outside the observer's
-visibility. No IPv4 address or data exchange followed. See the
+trial, SAE/association status 0 was accepted and EmberBSD published `RUN`.
+The observer saw 88 valid DATA callbacks; 8 had the selected AP transmitter and
+FromDS direction, and none had this station's destination address. EAPOL was
+zero. The association response was addressed to the station; the supplicant
+later timed out after vendor reason 204. DATA reached the callback, but the
+filtered counters do not prove M1 was absent over the air or identify an
+AP/radio fault. No IPv4 address or accepted network data exchange followed. See the
 [association evidence](evidence/wifi-association.json). WPA2-only
 authentication, DHCP/DNS, reconnect, roaming and sustained transfer remain
 unverified.
