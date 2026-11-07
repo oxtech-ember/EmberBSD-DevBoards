@@ -101,12 +101,18 @@ table below.
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
 without ring or allocation failures. In the latest strict SAE/PMF-required RAM
 trial, SAE/association status 0 was accepted and EmberBSD published `RUN`.
-The observer saw 88 valid DATA callbacks; 8 had the selected AP transmitter and
-FromDS direction, and none had this station's destination address. EAPOL was
-zero. The association response was addressed to the station; the supplicant
-later timed out after vendor reason 204. DATA reached the callback, but the
-filtered counters do not prove M1 was absent over the air or identify an
-AP/radio fault. No IPv4 address or accepted network data exchange followed. See the
+The observer saw 66 valid DATA callbacks; none had the selected AP transmitter
+and FromDS direction. The association response was addressed to the station,
+and the observer's EAPOL count was zero. AP-side logs
+independently record SAE H2E completion and association, followed by station
+deauthentication for PTK 4-way handshake timeout (reason 204); they expose no
+explicit M1/retry/M2 markers. An AP-side Ethernet-format capture ran for 34.3
+seconds with an EAPOL/station filter and recorded zero frames. This is an AP
+network-interface capture, not an over-the-air 802.11 monitor; zero records do
+not prove that M1 was absent on radio. No `WPA_COMPLETED`, negotiated PMF, IPv4
+address or accepted network data exchange followed. No WPA2 comparison reached
+BSS selection or association, so WPA2 authentication and hardware WPA2 failure
+are both unestablished. See the
 [association evidence](evidence/wifi-association.json). WPA2-only
 authentication, DHCP/DNS, reconnect, roaming and sustained transfer remain
 unverified.

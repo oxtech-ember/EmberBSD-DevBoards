@@ -65,19 +65,22 @@ been measured. See [interface limits](interfaces.md#camera-and-other-peripherals
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
 without ring or allocation failures. In the latest
-[association trial](evidence/wifi-association.json), kernel #36 received 372
-management and 88 data callbacks; all passed RX-status and length checks. Eight
-valid data headers had the selected AP transmitter address and FromDS direction,
-while none matched this station's destination address and the EAPOL count was
-zero. The association response was addressed to this station, and SAE/association
-were accepted with net80211 `RUN`, joined and link up. About ten seconds later
-the vendor reported reason 204 and the supplicant timed out and disconnected.
-The callback proves DATA reached the observer but does not prove M1 was absent
-over the air or establish an AP/radio fault. No `WPA_COMPLETED`, negotiated PMF,
-IP address, DNS or accepted network data exchange was observed. A WPA2
-comparison did not reach selection or association because setup was killed by
-out-of-swap. WPA2-only authentication, reconnect, roaming and sustained transfer
-remain unaccepted.
+[association trial](evidence/wifi-association.json), kernel #36 received 444
+management and 66 data callbacks; all passed RX-status and length checks. No
+valid data header had the selected AP transmitter address and FromDS direction.
+The association response was addressed to this station, and SAE/association
+were accepted with net80211 `RUN`, joined and link up. Read-only logs from the
+selected 2.4 GHz AP also record SAE H2E completion and association, followed
+about eleven seconds later by station deauthentication for PTK 4-way handshake
+timeout (reason 204). The AP logs have no explicit M1, retry or M2 markers.
+An AP-side Ethernet-format capture with an EAPOL/station filter was active for
+34.3 seconds and recorded zero frames. It observes the AP network interface,
+not over-the-air 802.11 traffic, so the empty capture does not establish whether
+M1 was sent or received over radio. No `WPA_COMPLETED`, negotiated PMF, IP
+address, DNS or accepted network data exchange was observed. No WPA2 comparison
+reached BSS selection or association; this is not a WPA2 authentication result
+or a hardware failure. WPA2-only authentication, reconnect, roaming and sustained
+transfer remain unaccepted.
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before

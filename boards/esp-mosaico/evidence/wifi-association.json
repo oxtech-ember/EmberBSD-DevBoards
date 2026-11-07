@@ -34,27 +34,27 @@
   ],
   "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot kernel #36 in normal multiuser RAM mode and run the opt-in one-shot selected-peer RX observer during a WPA3/SAE profile with PMF required.",
   "expected": "The selected BSS passes vendor compatibility checks, SAE and the WPA four-way handshake complete with PMF, and the interface obtains an IP address for data exchange.",
-  "observed": "Kernel #36 booted through ROM, firmware, kernel and the existing RAM root to normal multiuser init, getty and root login; the NOR and root were unchanged. The supplicant reported SAE/association status 0 and accepted=1 with profile authmode 9; EmberBSD published RUN with joined=1 and link=1. Callback counters recorded mgmt=372 and data=88, with bad and short counters zero. Among valid DATA headers, all_data=88, selected-TA ap_data=8 and FromDS ap_downlink=8; the association response was addressed to this station (assoc_self=1, assoc_other=0). Before restore, current promiscuous mode=1/result=0 and filter=0x5/result=0. The selected-peer observer counted 116 management frames; the strict own-DA data counter and EAPOL counter were zero. Restore calls returned 0/0/0. About ten seconds later the vendor reported reason 204 and the supplicant timed out and locally disconnected. No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. These callback counters establish that DATA reached the callback, but do not establish that M1 was absent over the air or that the AP or radio is defective.",
+  "observed": "In the 09:36:29 RAM boot on one operator-reported V1.2 sample, kernel #36 reached normal multiuser init, getty and root login; the NOR and RAM root were unchanged. During the same WPA3/SAE attempt, the supplicant reported SAE/association status 0 and accepted=1 with profile authmode 9; EmberBSD published RUN with joined=1 and link=1. Callback counters recorded mgmt=444 and data=66, with bad and short counters zero. Of 66 valid DATA headers, ap_data=0 and ap_downlink=0; the association response was addressed to this station (assoc_self=1, assoc_other=0). Before restore, current promiscuous mode=1/result=0 and filter=0x5/result=0. The selected-peer observer counted 114 management frames; its strict own-DA data and EAPOL counters were zero. Restore calls returned 0/0/0. Read-only logs from the selected 2.4 GHz AP for this attempt record SAE H2E completion and association, followed about eleven seconds later by station deauthentication for PTK 4-way handshake timeout (reason 204). The AP logs do not expose explicit M1, retry or M2 markers. An AP-side Ethernet-format capture with an EAPOL/station filter was active for 34.3 seconds across this attempt and recorded zero frames. It observes the AP network interface, not over-the-air 802.11 frames; the empty capture does not establish whether M1 was sent or received over radio. The supplicant timed out and locally disconnected. No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. These callback and AP-side observations do not establish an AP or radio fault.",
   "duration_seconds": null,
   "measurements": [
     {
       "name": "callback-management-frames",
-      "value": 372,
+      "value": 444,
       "unit": "frames"
     },
     {
       "name": "callback-data-frames",
-      "value": 88,
+      "value": 66,
       "unit": "frames"
     },
     {
       "name": "selected-ap-fromds-data-frames",
-      "value": 8,
+      "value": 0,
       "unit": "frames"
     },
     {
       "name": "selected-ap-management-frames",
-      "value": 116,
+      "value": 114,
       "unit": "frames"
     },
     {
@@ -71,15 +71,25 @@
       "name": "vendor-disconnect-reason",
       "value": 204,
       "unit": "code"
+    },
+    {
+      "name": "ap-ethernet-capture-frames",
+      "value": 0,
+      "unit": "frames"
+    },
+    {
+      "name": "ap-ethernet-capture-duration",
+      "value": 34.3,
+      "unit": "seconds"
     }
   ],
   "limits": [
     "One operator-reported V1.2 sample and RAM-only trial; this does not establish another board revision or persistent installation.",
     "The RAM root is identified by role only; its private configuration is not part of this shared record.",
-    "Observed times are kernel uptime; the full capture duration is not established. The private capture and its path are not part of this shared record.",
+    "Observed kernel times are relative to boot. The private UART/router logs, capture path and station/BSSID addresses are not part of this shared record.",
     "The receive observer is opt-in and can affect timing. Its ESP-IDF promiscuous callback and filters only report successful RX frames; the data count additionally requires FromDS direction and receiver address equal to this station. These counters do not establish that the AP sent or did not send frames outside the observer's visibility.",
     "The observer's own-DA data and EAPOL counters were zero even though DATA reached the callback; the data counts have different address/direction filters. The capture does not establish that M1 was absent over the air or identify an AP/radio fault.",
-    "A WPA2 comparison did not reach BSS selection or association: wpa_cli was killed with status 137 during setup after out-of-swap. This is not a WPA2 authentication result.",
+    "No WPA2 comparison reached BSS selection or association. This is not a WPA2 authentication result or a hardware WPA2 failure.",
     "No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was established. WPA2-only authentication, reconnect, roaming and sustained transfer remain unaccepted."
   ],
   "source_refs": [
