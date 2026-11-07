@@ -25,6 +25,8 @@
     "mosaico-ram-spl-observation",
     "mosaico-ram-firmware-observation",
     "mosaico-ram-os-observation",
+    "mosaico-littlefs-kernel-source",
+    "mosaico-ram-littlefs-observation",
     "mosaico-nor-os-observation",
     "mosaico-gui-peripheral-observation",
     "mosaico-camera-guide",
@@ -52,7 +54,7 @@
       "id": "boot",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one operator-reported V1.2 sample, a battery-powered normal POWER-on boot from NOR reached the ESP_MOSAICO kernel and a single-user shell with an FFS memory-disk root. This does not establish NAND boot, full PSRAM read/write or general peripheral support.",
+      "scope": "On one operator-reported V1.2 sample, a battery-powered normal POWER-on boot from NOR reached the ESP_MOSAICO kernel and a single-user shell with an FFS memory-disk root. A separate RAM-only littlefs image reached single-user mode and passed read-write VFS acceptance. Neither result establishes a persistent littlefs root on NOR, NAND boot, full PSRAM read/write or general peripheral support.",
       "source_refs": [
         "mosaico-vendor-webui-observation",
         "mosaico-device-modes",
@@ -61,7 +63,19 @@
         "mosaico-ram-spl-observation",
         "mosaico-ram-firmware-observation",
         "mosaico-ram-os-observation",
+        "mosaico-ram-littlefs-observation",
         "mosaico-nor-os-observation"
+      ]
+    },
+    {
+      "id": "filesystem",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "On one operator-reported V1.2 sample, a RAM-loaded littlefs root was remounted read-write in single-user mode and the full littlefs VFS checker plus sync passed. The image and all test writes were RAM-backed; persistent NOR filesystem operation, power-cycle persistence and NAND filesystems were not tested.",
+      "source_refs": [
+        "mosaico-hardware-v12",
+        "mosaico-littlefs-kernel-source",
+        "mosaico-ram-littlefs-observation"
       ]
     },
     {

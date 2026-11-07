@@ -40,6 +40,13 @@ after a normal POWER press. Its FFS root is an in-memory disk; persistent
 filesystem writes, NAND, full PSRAM read/write and general application
 support remain unverified.
 
+A separate [RAM littlefs acceptance](evidence/ram-littlefs.json) on the same
+reported V1.2 sample booted the `ESP_MOSAICO_LITTLEFS` kernel with a RAM-loaded
+littlefs root, remounted it read-write, and passed the full littlefs VFS checker
+followed by `sync`. This confirms the tested RAM-root filesystem path only; it
+does not establish a littlefs root or writable filesystem on NOR, persistence
+across a power cycle, NAND support, or full PSRAM read/write.
+
 A [standard EmberBSD framebuffer/LVGL trial](evidence/row-pair-display-touch.json)
 on one V1.2 sample displayed a visible interface; the operator also confirmed
 changing touch coordinates. The published [CO5300 row-pair fix](https://github.com/oxtech-ember/EmberBSD/commit/ded5f5242c6c8cb9cf17bb60d62ea0a520df7255)

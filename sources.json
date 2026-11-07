@@ -1210,6 +1210,22 @@
       "sha256": null
     },
     {
+      "id": "mosaico-littlefs-kernel-source",
+      "title": "EmberBSD littlefs VFS and RAM/NOR root support",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/9ac72f043846364dbfe74f5250db1dd00f52f2e9",
+      "revision": "9ac72f043846364dbfe74f5250db1dd00f52f2e9",
+      "reviewed_at": "2026-11-07",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-ram-littlefs-observation",
+      "title": "ESP-Mosaico V1.2 RAM littlefs VFS acceptance",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/ram-littlefs.json",
+      "revision": null,
+      "reviewed_at": "2026-11-07",
+      "sha256": null
+    },
+    {
       "id": "mosaico-esp-kernel-source",
       "title": "ESP-Mosaico kernel configuration",
       "url": "https://github.com/oxtech-ember/EmberBSD/blob/f089a9dc4b62671cfdb9f2873beff33acd6b59b9/sys/arch/riscv/conf/ESP_MOSAICO",

@@ -14,6 +14,12 @@ reached a single-user shell with an FFS memory-disk root. UART input, a child
 shell and one Ctrl-C were observed. This was a RAM-only scenario; full PSRAM
 testing and broader runtime support remain unverified.
 
+A later [RAM littlefs acceptance](evidence/ram-littlefs.json) booted the
+`ESP_MOSAICO_LITTLEFS` kernel with a littlefs RAM root on the same reported
+V1.2 sample. The root was remounted read-write, the full VFS checker passed,
+and `sync` returned successfully. The filesystem image was loaded into RAM;
+this did not exercise NOR filesystem access or persistence across power loss.
+
 A later [RAM-only NOR read check](evidence/ram-nor-read.json) compared two
 4 KiB samples with an independently checked backup, then continued to OpenSBI
 and U-Boot. It did not write NOR or test persistent boot.

@@ -1,0 +1,63 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-ram-littlefs",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-07",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "RAM firmware FIT with SPL, OpenSBI and U-Boot",
+      "revision": "U-Boot 2026.10; OpenSBI 1.9; existing RAM boot firmware",
+      "sha256": "e219ccaa933d7eebcca60c6b0e6b2ade05bae8beeee8a525e40e26ef046107f6",
+      "reference": null
+    },
+    {
+      "name": "ESP_MOSAICO_LITTLEFS kernel FIT",
+      "revision": "EmberBSD 9ac72f043846364dbfe74f5250db1dd00f52f2e9",
+      "sha256": "6c21cf5c137937b8b9ad9fb7bf3b408d5431c611312cfed2abe1d8ff59b10132",
+      "reference": null
+    },
+    {
+      "name": "Stagecheck littlefs RAM root image",
+      "revision": "EmberBSD static-base-v2; packed with the published littlefs makefs backend",
+      "sha256": "94892e96aca882dd0fa28ce643a484059aee05b64cf148bd31f13f480b68f26c",
+      "reference": null
+    },
+    {
+      "name": "littlefs VFS acceptance checker",
+      "revision": "Built from the same EmberBSD littlefs source revision and staged in the RAM root",
+      "sha256": "232a4d23a32ec3b5dcc72c256c5998b95729ee8fc23d45a7a65c6277d6a29ae0",
+      "reference": null
+    }
+  ],
+  "scenario": "On one operator-reported V1.2 sample, RAM-load the firmware, ESP_MOSAICO_LITTLEFS kernel FIT and littlefs root image; boot single-user, remount the root read-write with the system mount_littlefs helper, run the staged full littlefs VFS checker, then run sync.",
+  "expected": "The kernel mounts the littlefs RAM root, accepts a read-write remount, and the VFS checker and sync complete successfully.",
+  "observed": "The kernel reached the single-user root shell with littlefs mounted on the RAM root. `/sbin/mount_littlefs -o update,rw root_device /` returned 0, and `/sbin/mount` reported the root as littlefs. `/bin/littlefs-vfs-check-memory-current /` passed its full create/write/sync, mmap/msync, metadata, symlink/readlink, truncate/fsync, open-file rename/unlink and cleanup checks. `/bin/sync` returned 0. No NOR write or persistent filesystem access was part of this run.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "ram-root-image-size",
+      "value": 5767168,
+      "unit": "byte"
+    }
+  ],
+  "limits": [
+    "One operator-reported V1.2 sample; other units and board revisions were not tested.",
+    "The filesystem image and checker ran from RAM. This does not establish NOR read/write, a persistent littlefs root, or data retention across power cycles.",
+    "The run did not test NAND, full-range PSRAM read/write, networking, or sustained reliability.",
+    "The UART capture and device identifiers remain private; no raw logs, credentials or device identifiers are published."
+  ],
+  "source_refs": [
+    "mosaico-hardware-v12",
+    "mosaico-littlefs-kernel-source",
+    "mosaico-ram-littlefs-observation"
+  ]
+}
