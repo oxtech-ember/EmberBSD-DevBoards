@@ -3,7 +3,7 @@
   "kind": "evidence",
   "id": "mosaico-wifi-association",
   "target_id": "esp-mosaico",
-  "recorded_at": "2026-11-08",
+  "recorded_at": "2026-11-09",
   "layer": "physical",
   "result": "fail",
   "hardware": {
@@ -14,64 +14,115 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT runtime RX-table diagnostic kernel #15",
-      "revision": "EmberBSD OS main 96c87873fa72127b94f0b10727dab991989176b1; RAM-loaded kernel #15.",
-      "sha256": "5d3b6afa500039fdd628491a70a29d314820296146929255f7bfb82057fe06dc",
+      "name": "ESP_MOSAICO_SC101IOT hw-rx-alloc diagnostic FIT",
+      "revision": "RAM-loaded diagnostic kernel; FIT SHA256 identifies the tested package.",
+      "sha256": "a811b7336294654ce8f4aac48347ccb90a26130a8f207a409bd5fef97d1018d5",
       "reference": null
     },
     {
-      "name": "WPA2 association profile and selected AP",
-      "revision": "WPA2 test against the same configured AP as the prior association trial; identifiers omitted.",
+      "name": "WPA2-PSK/CCMP/PMF0 profile and selected AP",
+      "revision": "WPA2 trial against the configured AP; identifiers omitted.",
       "sha256": null,
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, run WPA2-PSK/CCMP/PMF0 against the configured AP using RAM-loaded kernel #15 and the one-shot RX-chain/runtime-table diagnostic.",
-  "expected": "The bounded diagnostic records ROM RX callback entry counts and live function-table bindings across association, then reports the station/AP outcome.",
-  "observed": "The station reached ASSOCIATED with power save WIFI_PS_NONE (enum 0), but did not complete WPA and disconnected locally with reason 204 after the vendor's PTK four-way handshake timeout. The 12.3593-second diagnostic window reported zero entries at sta_input, crypto_decap, decap and sta_rx_eapol. The live table pointer remained 0x2f0306a0, table_changed=0, wrapper_match=1, and begin/end slot masks were 0xf/0xf. Router records at 23:16:07 reported association and at 23:16:17 deauthentication by the station after the PTK handshake timeout; clock mapping to kernel uptime is unavailable. These records do not establish whether M1 was transmitted or acknowledged over the air. No EAPOL input or WPA_COMPLETED was observed.",
+  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, run WPA2-PSK/CCMP/PMF0 using a RAM-loaded hw-rx-alloc diagnostic FIT, with bounded runtime-table, hardware-RX and internal-pool counters.",
+  "expected": "Associate and complete WPA, while recording ingress, opaque hardware counters and internal-pool pressure.",
+  "observed": "The station reached ASSOCIATED but did not complete WPA; it disconnected locally with reason 204 after a PTK four-way handshake timeout. The AP record shows station deauthentication after the timeout, but does not establish M1 transmission or acknowledgement. All four instrumented table-wrapper counters were zero; the live table pointer remained stable and all four instrumented slots matched wrappers (mask 0xf). This does not establish absence of ordinary STA ingress: wifi_create_sta registers sta_rx_cb for ifidx 0 at pTxRx+0x3f8, and sta_rx_cb tailcalls ROM sta_input directly, bypassing the instrumented net80211 table wrappers. That callback was not counted in this trial. The hardware getter returned rc=0 and opaque counters showed rx_mpdu=37640, rx_end_cnt=37879, rx_datasuc=139, buffer-full=92 and FIFO-overflow=0. Internal-pool misses, successful fallback, requested bytes and final NULL were zero in the measured connection window; free memory moved from 233552 to 233072 bytes and the window minimum was 197264 bytes. Several setup start/stop cycles preceded selection, outside that measured connection window.",
   "duration_seconds": null,
   "measurements": [
     {
-      "name": "power-save-mode",
-      "value": 0,
-      "unit": "WIFI_PS_NONE enum"
+      "name": "sta-association",
+      "value": 1,
+      "unit": "associated; WPA_COMPLETED not observed"
     },
     {
-      "name": "rx-diagnostic-window",
-      "value": 12.3593,
-      "unit": "seconds"
-    },
-    {
-      "name": "sta-input-entries",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "crypto-decap-entries",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "decap-entries",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "sta-rx-eapol-entries",
-      "value": 0,
-      "unit": "calls"
+      "name": "disconnect-reason",
+      "value": 204,
+      "unit": "local disconnect after PTK four-way handshake timeout"
     },
     {
       "name": "runtime-rx-table-wrapper-slots",
       "value": 4,
-      "unit": "slots matched; mask 0xf at begin and end"
+      "unit": "slots matched; stable pointer; mask 0xf"
+    },
+    {
+      "name": "instrumented-table-wrapper-entries",
+      "value": 0,
+      "unit": "calls across sta_input, crypto_decap, decap and sta_rx_eapol wrappers"
+    },
+    {
+      "name": "registered-sta-rx-callback",
+      "value": 0,
+      "unit": "calls counted; callback at pTxRx+0x3f8 was not instrumented"
+    },
+    {
+      "name": "hardware-rx-mpdu",
+      "value": 37640,
+      "unit": "opaque counter"
+    },
+    {
+      "name": "hardware-rx-end-count",
+      "value": 37879,
+      "unit": "opaque counter"
+    },
+    {
+      "name": "hardware-rx-data-success",
+      "value": 139,
+      "unit": "opaque counter"
+    },
+    {
+      "name": "hardware-rx-buffer-full",
+      "value": 92,
+      "unit": "opaque counter"
+    },
+    {
+      "name": "hardware-rx-fifo-overflow",
+      "value": 0,
+      "unit": "opaque counter"
+    },
+    {
+      "name": "hardware-counter-getter",
+      "value": 0,
+      "unit": "rc; getter succeeded"
+    },
+    {
+      "name": "internal-pool-window-misses",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "internal-pool-window-fallback-successes",
+      "value": 0,
+      "unit": "allocations"
+    },
+    {
+      "name": "internal-pool-window-fallback-bytes",
+      "value": 0,
+      "unit": "bytes"
+    },
+    {
+      "name": "internal-pool-window-final-null",
+      "value": 0,
+      "unit": "allocations"
+    },
+    {
+      "name": "internal-pool-window-free",
+      "value": "233552→233072",
+      "unit": "bytes; before→after"
+    },
+    {
+      "name": "internal-pool-window-minimum-free",
+      "value": 197264,
+      "unit": "bytes"
     }
   ],
   "limits": [
-    "One operator-reported V1.2 sample and one RAM-loaded diagnostic-kernel run; this does not establish another board revision or persistent Wi-Fi support.",
-    "The live table snapshot confirms all four instrumented ROM callback slots matched the wrappers during this window. Zero entries place the observed boundary before sta_input but do not establish that an EAPOL frame was transmitted over the air or received by the radio.",
-    "This trial did not sample hardware RX counters or internal-pool miss/fallback counters. A later bounded measurement can compare opaque hardware-counter activity with allocation pressure, but Espressif does not document the counter increment conditions or frame types; the counters cannot establish DATA or EAPOL reception, or by themselves distinguish radio filtering from memory pressure.",
-    "Router records confirm association and the subsequent PTK handshake timeout, not AP EAPOL transmission or station ACK. Clock mapping between router and kernel observations is unavailable.",
+    "One operator-reported V1.2 sample and one RAM-loaded diagnostic run; the result does not establish support for other revisions or persistent Wi-Fi operation.",
+    "The four instrumented net80211 table-wrapper counters do not cover the registered normal STA callback at pTxRx+0x3f8, which directly tailcalls ROM sta_input. Their zero count is not evidence that normal STA ingress was absent. The next diagnostic should count that actual callback.",
+    "Internal-pool misses, fallback and NULL were zero in this measured connection window only. Several setup start/stop cycles happened before the window.",
+    "Espressif does not document the hardware counter increment conditions or frame types. These values show opaque hardware activity and cannot establish reception of DATA or EAPOL, nor distinguish filtering from memory pressure.",
+    "The AP record confirms association and station deauthentication after the PTK timeout, not AP transmission or station acknowledgement of M1.",
     "No EAPOL input, WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. Wi-Fi support remains partial."
   ],
   "source_refs": [
