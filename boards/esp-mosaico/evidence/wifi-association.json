@@ -3,7 +3,7 @@
   "kind": "evidence",
   "id": "mosaico-wifi-association",
   "target_id": "esp-mosaico",
-  "recorded_at": "2026-11-07",
+  "recorded_at": "2026-11-08",
   "layer": "physical",
   "result": "fail",
   "hardware": {
@@ -14,92 +14,72 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT_WIFI kernel FIT #36",
-      "revision": "Built from EmberBSD source base 7714608d0b45f6e781fc9216084ded41276a465a plus the exact four-file RX-observer accounting patch in 0ab4ab54db281c9875f6d30a661cd7a1f6c52c15.",
-      "sha256": "8c3580eb11824d99f60836cd450ff388942547c5cb1a452159864d49e1a367cb",
+      "name": "ESP_MOSAICO_SC101IOT_WIFI diagnostic kernel #14",
+      "revision": "EmberBSD diagnostic OS source c7198a570027c7006d5e46ab7988d0fec319bb38; RAM-loaded kernel #14.",
+      "sha256": null,
       "reference": null
     },
     {
-      "name": "ESP32-S31 external radio object embedded in #36",
-      "revision": "Built from the RX-observer accounting source in EmberBSD commit 0ab4ab54db281c9875f6d30a661cd7a1f6c52c15.",
-      "sha256": "21e2c7c05a5b2a9ed4a90e95066297ae645b1319da6ca9920cbcb368fd1c6c40",
-      "reference": null
-    },
-    {
-      "name": "Static RAM root with console and Wi-Fi tools",
-      "revision": "Updated WPA logging profile; role only.",
+      "name": "WPA2 association profile and selected AP",
+      "revision": "WPA2 test against the same configured AP as the prior association trial; identifiers omitted.",
       "sha256": null,
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, boot kernel #36 in normal multiuser RAM mode and run the opt-in one-shot selected-peer RX observer during a WPA3/SAE profile with PMF required.",
-  "expected": "The selected BSS passes vendor compatibility checks, SAE and the WPA four-way handshake complete with PMF, and the interface obtains an IP address for data exchange.",
-  "observed": "In the 09:36:29 RAM boot on one operator-reported V1.2 sample, kernel #36 reached normal multiuser init, getty and root login; the NOR and RAM root were unchanged. During the same WPA3/SAE attempt, the supplicant reported SAE/association status 0 and accepted=1 with profile authmode 9; EmberBSD published RUN with joined=1 and link=1. Callback counters recorded mgmt=444 and data=66, with bad and short counters zero. Of 66 valid DATA headers, ap_data=0 and ap_downlink=0; the association response was addressed to this station (assoc_self=1, assoc_other=0). Before restore, current promiscuous mode=1/result=0 and filter=0x5/result=0. The selected-peer observer counted 114 management frames; its strict own-DA data and EAPOL counters were zero. Restore calls returned 0/0/0. Read-only logs from the selected 2.4 GHz AP for this attempt record SAE H2E completion and association, followed about eleven seconds later by station deauthentication for PTK 4-way handshake timeout (reason 204). The AP logs do not expose explicit M1, retry or M2 markers. An AP-side Ethernet-format capture with an EAPOL/station filter was active for 34.3 seconds across this attempt and recorded zero frames. It observes the AP network interface, not over-the-air 802.11 frames; the empty capture does not establish whether M1 was sent or received over radio. The supplicant timed out and locally disconnected. No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. These callback and AP-side observations do not establish an AP or radio fault.",
+  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, run the WPA2 association profile against the same configured AP with the diagnostic RX-chain window enabled in kernel #14.",
+  "expected": "The bounded window records entry counts at sta_input, crypto_decap, decap and sta_rx_eapol while preserving the WPA2 association and disconnect result.",
+  "observed": "WPA2 association succeeded. Power save was WIFI_PS_NONE (enum 0). The RX diagnostic window started about 1.99 seconds before association and ran to about 10.30 seconds after association. The window restored and snapshotted counters; STA_DISCONNECTED reason 204 followed 14.5 ms later. Source ordering ties that event to the window closeout. The vendor reported a four-way handshake timeout. sta_input, crypto_decap, decap and sta_rx_eapol entry counters were all zero; no EAPOL frame or WPA_COMPLETED event was observed. Station identity cross-checks were consistent: ifconfig, wpa_cli status and the router station entry agreed; the selected SSID/AP0 agreed, and AP0 MAC matched the association BSSID. Raw addresses and network names are omitted. This identity match does not inspect hardware RX filter registers.",
   "duration_seconds": null,
   "measurements": [
     {
-      "name": "callback-management-frames",
-      "value": 444,
-      "unit": "frames"
-    },
-    {
-      "name": "callback-data-frames",
-      "value": 66,
-      "unit": "frames"
-    },
-    {
-      "name": "selected-ap-fromds-data-frames",
+      "name": "power-save-mode",
       "value": 0,
-      "unit": "frames"
+      "unit": "WIFI_PS_NONE enum"
     },
     {
-      "name": "selected-ap-management-frames",
-      "value": 114,
-      "unit": "frames"
-    },
-    {
-      "name": "matching-downlink-station-data-frames",
-      "value": 0,
-      "unit": "frames"
-    },
-    {
-      "name": "observed-eapol-frames",
-      "value": 0,
-      "unit": "frames"
-    },
-    {
-      "name": "vendor-disconnect-reason",
-      "value": 204,
-      "unit": "code"
-    },
-    {
-      "name": "ap-ethernet-capture-frames",
-      "value": 0,
-      "unit": "frames"
-    },
-    {
-      "name": "ap-ethernet-capture-duration",
-      "value": 34.3,
+      "name": "rx-window-before-association",
+      "value": 1.99,
       "unit": "seconds"
+    },
+    {
+      "name": "rx-window-after-association",
+      "value": 10.3,
+      "unit": "seconds"
+    },
+    {
+      "name": "sta-input-entries",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "crypto-decap-entries",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "decap-entries",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "sta-rx-eapol-entries",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "disconnect-after-counter-snapshot",
+      "value": 14.5,
+      "unit": "milliseconds"
     }
   ],
   "limits": [
-    "One operator-reported V1.2 sample and RAM-only trial; this does not establish another board revision or persistent installation.",
-    "The RAM root is identified by role only; its private configuration is not part of this shared record.",
-    "Observed kernel times are relative to boot. The private UART/router logs, capture path and station/BSSID addresses are not part of this shared record.",
-    "The receive observer is opt-in and can affect timing. Its ESP-IDF promiscuous callback and filters only report successful RX frames; the data count additionally requires FromDS direction and receiver address equal to this station. These counters do not establish that the AP sent or did not send frames outside the observer's visibility.",
-    "The observer's own-DA data and EAPOL counters were zero even though DATA reached the callback; the data counts have different address/direction filters. The capture does not establish that M1 was absent over the air or identify an AP/radio fault.",
-    "No WPA2 comparison reached BSS selection or association. This is not a WPA2 authentication result or a hardware WPA2 failure.",
-    "No WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was established. WPA2-only authentication, reconnect, roaming and sustained transfer remain unaccepted."
+    "One operator-reported V1.2 sample and one RAM-loaded diagnostic-kernel run; this does not establish another board revision or persistent Wi-Fi support.",
+    "Zero entry counts localize the first observed missing receive stage to before the instrumented sta_input entry. They do not establish whether an M1 was sent or received over the air, nor whether the runtime ROM function table or receive filters are correct.",
+    "The station/AP identity cross-check is consistent, but it does not read or validate hardware RX filter registers. AP per-station EAPOL transmit remains unconfirmed.",
+    "No EAPOL input, WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. Wi-Fi support remains partial."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
-    "mosaico-wifi-rx-observer-base-source",
-    "mosaico-espwifi-radio-markerfix-source",
-    "mosaico-espwifi-radio-once-debug-source",
-    "mosaico-espwifi-rx-observer-source",
-    "mosaico-espwifi-rx-accounting-source",
-    "mosaico-wifi-association-observation",
-    "mosaico-sae-capability-fix-source"
+    "mosaico-wifi-association-observation"
   ]
 }

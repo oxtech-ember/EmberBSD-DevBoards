@@ -13,6 +13,14 @@ establish NOR initialization. The S31 SBI provider reports the detected ROM
 and its device-tree map when locating `flash1`. This boot-path prerequisite is
 demonstrated in the [Mosaico RAM-to-NOR check](../esp-mosaico/evidence/ram-nor-littlefs.json).
 
+On one operator-reported ESP-Mosaico V1.2 sample, a NOR-mapped SPL received a
+1,529,856-byte FIT over YMODEM at 460800 baud in 52.093 seconds. The kernel
+then mounted the NOR LittleFS root from `flash1` with the console at 115200.
+This is a single-sample transfer measurement, not a general throughput
+guarantee. Before changing the console rate, the S31 UART driver must wait for
+both an empty TX FIFO and an idle TX state machine; see the
+[EmberBSD Ports U-Boot source at commit 738d7b62](https://github.com/oxtech-ember/EmberBSD-Ports/commit/738d7b621445b6d39ff07acc7005d978628d07e2).
+
 The code owner is [EmberBSD espressif](https://github.com/oxtech-ember/EmberBSD/tree/main/sys/arch/riscv/espressif).
 
 Source: `os-esp32-s31-reference` in [sources.json](../../sources.json).
