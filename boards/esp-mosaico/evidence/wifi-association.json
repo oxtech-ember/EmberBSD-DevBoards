@@ -14,9 +14,9 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT_WIFI diagnostic kernel #14",
-      "revision": "EmberBSD diagnostic OS source c7198a570027c7006d5e46ab7988d0fec319bb38; RAM-loaded kernel #14.",
-      "sha256": null,
+      "name": "ESP_MOSAICO_SC101IOT runtime RX-table diagnostic kernel #15",
+      "revision": "EmberBSD OS main 96c87873fa72127b94f0b10727dab991989176b1; RAM-loaded kernel #15.",
+      "sha256": "5d3b6afa500039fdd628491a70a29d314820296146929255f7bfb82057fe06dc",
       "reference": null
     },
     {
@@ -26,9 +26,9 @@
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, run the WPA2 association profile against the same configured AP with the diagnostic RX-chain window enabled in kernel #14.",
-  "expected": "The bounded window records entry counts at sta_input, crypto_decap, decap and sta_rx_eapol while preserving the WPA2 association and disconnect result.",
-  "observed": "WPA2 association succeeded. Power save was WIFI_PS_NONE (enum 0). The RX diagnostic window started about 1.99 seconds before association and ran to about 10.30 seconds after association. The window restored and snapshotted counters; STA_DISCONNECTED reason 204 followed 14.5 ms later. Source ordering ties that event to the window closeout. The vendor reported a four-way handshake timeout. sta_input, crypto_decap, decap and sta_rx_eapol entry counters were all zero; no EAPOL frame or WPA_COMPLETED event was observed. Station identity cross-checks were consistent: ifconfig, wpa_cli status and the router station entry agreed; the selected SSID/AP0 agreed, and AP0 MAC matched the association BSSID. Raw addresses and network names are omitted. This identity match does not inspect hardware RX filter registers.",
+  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, run WPA2-PSK/CCMP/PMF0 against the configured AP using RAM-loaded kernel #15 and the one-shot RX-chain/runtime-table diagnostic.",
+  "expected": "The bounded diagnostic records ROM RX callback entry counts and live function-table bindings across association, then reports the station/AP outcome.",
+  "observed": "The station reached ASSOCIATED with power save WIFI_PS_NONE (enum 0), but did not complete WPA and disconnected locally with reason 204 after the vendor's PTK four-way handshake timeout. The 12.3593-second diagnostic window reported zero entries at sta_input, crypto_decap, decap and sta_rx_eapol. The live table pointer remained 0x2f0306a0, table_changed=0, wrapper_match=1, and begin/end slot masks were 0xf/0xf. Router records at 23:16:07 reported association and at 23:16:17 deauthentication by the station after the PTK handshake timeout; clock mapping to kernel uptime is unavailable. These records do not establish whether M1 was transmitted or acknowledged over the air. No EAPOL input or WPA_COMPLETED was observed.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -37,13 +37,8 @@
       "unit": "WIFI_PS_NONE enum"
     },
     {
-      "name": "rx-window-before-association",
-      "value": 1.99,
-      "unit": "seconds"
-    },
-    {
-      "name": "rx-window-after-association",
-      "value": 10.3,
+      "name": "rx-diagnostic-window",
+      "value": 12.3593,
       "unit": "seconds"
     },
     {
@@ -67,15 +62,16 @@
       "unit": "calls"
     },
     {
-      "name": "disconnect-after-counter-snapshot",
-      "value": 14.5,
-      "unit": "milliseconds"
+      "name": "runtime-rx-table-wrapper-slots",
+      "value": 4,
+      "unit": "slots matched; mask 0xf at begin and end"
     }
   ],
   "limits": [
     "One operator-reported V1.2 sample and one RAM-loaded diagnostic-kernel run; this does not establish another board revision or persistent Wi-Fi support.",
-    "Zero entry counts localize the first observed missing receive stage to before the instrumented sta_input entry. They do not establish whether an M1 was sent or received over the air, nor whether the runtime ROM function table or receive filters are correct.",
-    "The station/AP identity cross-check is consistent, but it does not read or validate hardware RX filter registers. AP per-station EAPOL transmit remains unconfirmed.",
+    "The live table snapshot confirms all four instrumented ROM callback slots matched the wrappers during this window. Zero entries place the observed boundary before sta_input but do not establish that an EAPOL frame was transmitted over the air or received by the radio.",
+    "This trial did not sample hardware RX counters or internal-pool miss/fallback counters. Their next bounded measurement should distinguish radio reception/filtering from memory-pressure effects.",
+    "Router records confirm association and the subsequent PTK handshake timeout, not AP EAPOL transmission or station ACK. Clock mapping between router and kernel observations is unavailable.",
     "No EAPOL input, WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. Wi-Fi support remains partial."
   ],
   "source_refs": [
