@@ -78,23 +78,18 @@ is separate evidence. The mode table describes 640 × 480 UYVY and requires a
 been measured. See [interface limits](interfaces.md#camera-and-other-peripherals).
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
-without ring or allocation failures. In the latest
-[association trial](evidence/wifi-association.json), kernel #36 received 444
-management and 66 data callbacks; all passed RX-status and length checks. No
-valid data header had the selected AP transmitter address and FromDS direction.
-The association response was addressed to this station, and SAE/association
-were accepted with net80211 `RUN`, joined and link up. Read-only logs from the
-selected 2.4 GHz AP also record SAE H2E completion and association, followed
-about eleven seconds later by station deauthentication for PTK 4-way handshake
-timeout (reason 204). The AP logs have no explicit M1, retry or M2 markers.
-An AP-side Ethernet-format capture with an EAPOL/station filter was active for
-34.3 seconds and recorded zero frames. It observes the AP network interface,
-not over-the-air 802.11 traffic, so the empty capture does not establish whether
-M1 was sent or received over radio. No `WPA_COMPLETED`, negotiated PMF, IP
-address, DNS or accepted network data exchange was observed. No WPA2 comparison
-reached BSS selection or association; this is not a WPA2 authentication result
-or a hardware failure. WPA2-only authentication, reconnect, roaming and sustained
-transfer remain unaccepted.
+without ring or allocation failures. A prior STA trial recorded SAE H2E and
+association; the latest [WPA2 trial](evidence/wifi-association.json) also
+reached ASSOCIATED but timed out during the PTK handshake, without EAPOL or
+WPA_COMPLETED. The AP record shows station deauthentication after the timeout,
+not M1 transmission or acknowledgement. Hardware counters showed activity but
+do not identify frame types. All four instrumented table wrappers remained
+stable but had zero entries; normal STA ingress is registered separately at
+`pTxRx+0x3f8` and directly tailcalls ROM `sta_input`, bypassing those wrappers.
+That callback was not counted. Internal-pool fallback, misses and NULL were
+zero in the measured connection window. The next diagnostic is a counter at the
+actual `pTxRx+0x3f8` callback. Wi-Fi authentication, PMF, DHCP, DNS, accepted
+data transfer, reconnect, roaming and sustained operation remain unaccepted.
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before
