@@ -77,19 +77,7 @@ is separate evidence. The mode table describes 640 × 480 UYVY and requires a
 20 MHz XCLK; the fitted oscillator frequency and actual frame rate have not
 been measured. See [interface limits](interfaces.md#camera-and-other-peripherals).
 
-The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
-without ring or allocation failures. A prior STA trial recorded SAE H2E and
-association; the latest [WPA2 trial](evidence/wifi-association.json) also
-reached ASSOCIATED but timed out during the PTK handshake, without EAPOL or
-WPA_COMPLETED. The AP record shows station deauthentication after the timeout,
-not M1 transmission or acknowledgement. Hardware counters showed activity but
-do not identify frame types. All four instrumented table wrappers remained
-stable but had zero entries; normal STA ingress is registered separately at
-`pTxRx+0x3f8` and directly tailcalls ROM `sta_input`, bypassing those wrappers.
-That callback was not counted. Internal-pool fallback, misses and NULL were
-zero in the measured connection window. The next diagnostic is a counter at the
-actual `pTxRx+0x3f8` callback. Wi-Fi authentication, PMF, DHCP, DNS, accepted
-data transfer, reconnect, roaming and sustained operation remain unaccepted.
+The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries without ring or allocation failures. The latest [WPA2 trial](evidence/wifi-association.json) associated but timed out during the PTK handshake, without WPA_COMPLETED. The normal STA callback at `pTxRx+0x3f8` ran 141 times; all were management frames, with no data callbacks in the measured window. This does not establish whether earlier hardware or ROM stages received data. Hardware RX statistics were active but opaque; internal-pool misses, fallback and NULL were zero, with a 197136-byte window minimum. The AP record shows station deauthentication after the PTK timeout, not M1 transmission or acknowledgement. The next diagnostic should distinguish delivery or filtering before the STA callback. Wi-Fi authentication, PMF, DHCP, DNS, accepted data transfer, reconnect, roaming and sustained operation remain unaccepted.
 
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before
