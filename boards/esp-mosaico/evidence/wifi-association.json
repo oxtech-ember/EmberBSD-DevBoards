@@ -14,9 +14,9 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT hw-rx-alloc diagnostic FIT",
-      "revision": "RAM-loaded diagnostic kernel; FIT SHA256 identifies the tested package.",
-      "sha256": "a811b7336294654ce8f4aac48347ccb90a26130a8f207a409bd5fef97d1018d5",
+      "name": "ESP_MOSAICO_SC101IOT normal STA RX callback diagnostic FIT",
+      "revision": "RAM-loaded diagnostic kernel from OS commit a88ec7252aa; FIT SHA256 identifies the tested package.",
+      "sha256": "0ddccdbfff3fbbee8770affcd08306542a72a12320b56a2f3c91fba92ddfc182",
       "reference": null
     },
     {
@@ -26,9 +26,9 @@
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, run WPA2-PSK/CCMP/PMF0 using a RAM-loaded hw-rx-alloc diagnostic FIT, with bounded runtime-table, hardware-RX and internal-pool counters.",
-  "expected": "Associate and complete WPA, while recording ingress, opaque hardware counters and internal-pool pressure.",
-  "observed": "The station reached ASSOCIATED but did not complete WPA; it disconnected locally with reason 204 after a PTK four-way handshake timeout. The AP record shows station deauthentication after the timeout, but does not establish M1 transmission or acknowledgement. All four instrumented table-wrapper counters were zero; the live table pointer remained stable and all four instrumented slots matched wrappers (mask 0xf). This does not establish absence of ordinary STA ingress: wifi_create_sta registers sta_rx_cb for ifidx 0 at pTxRx+0x3f8, and sta_rx_cb tailcalls ROM sta_input directly, bypassing the instrumented net80211 table wrappers. That callback was not counted in this trial. The hardware getter returned rc=0 and opaque counters showed rx_mpdu=37640, rx_end_cnt=37879, rx_datasuc=139, buffer-full=92 and FIFO-overflow=0. Internal-pool misses, successful fallback, requested bytes and final NULL were zero in the measured connection window; free memory moved from 233552 to 233072 bytes and the window minimum was 197264 bytes. Several setup start/stop cycles preceded selection, outside that measured connection window.",
+  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, run WPA2-PSK/CCMP/PMF0 using the normal STA RX callback diagnostic FIT, with bounded callback, hardware-RX and internal-pool counters.",
+  "expected": "Associate and complete WPA, while recording actual STA callback frame types, opaque hardware counters and internal-pool pressure.",
+  "observed": "The station associated but did not complete WPA; it disconnected locally with reason 204 after the PTK four-way handshake timeout. The AP record shows station deauthentication after the PTK timeout, but does not establish M1 transmission or acknowledgement. The live pTxRx table pointer remained stable at 0x80625408 and slot +0x3f8 matched the instrumented sta_rx_cb wrapper. The callback ran 141 times; all 141 frames were management type, with control/data/extension counts 0/0/0. This confirms management ingress to the normal STA callback, while no data frame reached that callback during the measured window; it does not establish whether data frames reached earlier hardware or ROM stages. The four older net80211 table-wrapper counters, crypto/decap/EAPOL counters remained zero and are not a proxy for this direct callback path. Hardware RX statistics were active (getter succeeded) but remain opaque and do not identify frame type. Internal-pool misses, successful fallback and final NULL were zero; window minimum free memory was 197136 bytes. WPA_COMPLETED was not observed.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -42,44 +42,44 @@
       "unit": "local disconnect after PTK four-way handshake timeout"
     },
     {
-      "name": "runtime-rx-table-wrapper-slots",
-      "value": 4,
-      "unit": "slots matched; stable pointer; mask 0xf"
+      "name": "normal-sta-rx-table",
+      "value": "0x80625408",
+      "unit": "stable pTxRx pointer; slot +0x3f8 matched wrapper"
     },
     {
-      "name": "instrumented-table-wrapper-entries",
+      "name": "sta-rx-callback-entries",
+      "value": 141,
+      "unit": "calls"
+    },
+    {
+      "name": "sta-rx-callback-management",
+      "value": 141,
+      "unit": "802.11 frame type"
+    },
+    {
+      "name": "sta-rx-callback-control",
       "value": 0,
-      "unit": "calls across sta_input, crypto_decap, decap and sta_rx_eapol wrappers"
+      "unit": "802.11 frame type"
     },
     {
-      "name": "hardware-rx-mpdu",
-      "value": 37640,
-      "unit": "opaque counter"
-    },
-    {
-      "name": "hardware-rx-end-count",
-      "value": 37879,
-      "unit": "opaque counter"
-    },
-    {
-      "name": "hardware-rx-data-success",
-      "value": 139,
-      "unit": "opaque counter"
-    },
-    {
-      "name": "hardware-rx-buffer-full",
-      "value": 92,
-      "unit": "opaque counter"
-    },
-    {
-      "name": "hardware-rx-fifo-overflow",
+      "name": "sta-rx-callback-data",
       "value": 0,
-      "unit": "opaque counter"
+      "unit": "802.11 frame type"
     },
     {
-      "name": "hardware-counter-getter",
+      "name": "sta-rx-callback-extension",
       "value": 0,
-      "unit": "rc; getter succeeded"
+      "unit": "802.11 frame type"
+    },
+    {
+      "name": "older-table-crypto-decap-eapol-counters",
+      "value": 0,
+      "unit": "calls; separate path and not a proxy for direct STA callback"
+    },
+    {
+      "name": "hardware-rx-statistics",
+      "value": "active",
+      "unit": "getter succeeded; opaque values do not identify frame type"
     },
     {
       "name": "internal-pool-window-misses",
@@ -92,31 +92,21 @@
       "unit": "allocations"
     },
     {
-      "name": "internal-pool-window-fallback-bytes",
-      "value": 0,
-      "unit": "bytes"
-    },
-    {
       "name": "internal-pool-window-final-null",
       "value": 0,
       "unit": "allocations"
     },
     {
-      "name": "internal-pool-window-free",
-      "value": "233552→233072",
-      "unit": "bytes; before→after"
-    },
-    {
       "name": "internal-pool-window-minimum-free",
-      "value": 197264,
+      "value": 197136,
       "unit": "bytes"
     }
   ],
   "limits": [
     "One operator-reported V1.2 sample and one RAM-loaded diagnostic run; the result does not establish support for other revisions or persistent Wi-Fi operation.",
-    "The four instrumented net80211 table-wrapper counters do not cover the registered normal STA callback at pTxRx+0x3f8, which directly tailcalls ROM sta_input. Their zero count is not evidence that normal STA ingress was absent. The next diagnostic should count that actual callback.",
-    "Internal-pool misses, fallback and NULL were zero in this measured connection window only. Several setup start/stop cycles happened before the window.",
-    "Espressif does not document the hardware counter increment conditions or frame types. These values show opaque hardware activity and cannot establish reception of DATA or EAPOL, nor distinguish filtering from memory pressure.",
+    "The 141 normal STA callback entries were management frames; zero data callbacks in this window does not establish whether the hardware or earlier ROM stages received data frames.",
+    "Hardware RX statistics are undocumented/opaque and cannot establish reception of DATA or EAPOL, nor distinguish filtering from memory pressure.",
+    "Internal-pool misses, fallback and NULL were zero in this measured window only.",
     "The AP record confirms association and station deauthentication after the PTK timeout, not AP transmission or station acknowledgement of M1.",
     "No EAPOL input, WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. Wi-Fi support remains partial."
   ],
