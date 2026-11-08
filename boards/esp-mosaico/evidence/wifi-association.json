@@ -70,7 +70,7 @@
   "limits": [
     "One operator-reported V1.2 sample and one RAM-loaded diagnostic-kernel run; this does not establish another board revision or persistent Wi-Fi support.",
     "The live table snapshot confirms all four instrumented ROM callback slots matched the wrappers during this window. Zero entries place the observed boundary before sta_input but do not establish that an EAPOL frame was transmitted over the air or received by the radio.",
-    "This trial did not sample hardware RX counters or internal-pool miss/fallback counters. Their next bounded measurement should distinguish radio reception/filtering from memory-pressure effects.",
+    "This trial did not sample hardware RX counters or internal-pool miss/fallback counters. A later bounded measurement can compare opaque hardware-counter activity with allocation pressure, but Espressif does not document the counter increment conditions or frame types; the counters cannot establish DATA or EAPOL reception, or by themselves distinguish radio filtering from memory pressure.",
     "Router records confirm association and the subsequent PTK handshake timeout, not AP EAPOL transmission or station ACK. Clock mapping between router and kernel observations is unavailable.",
     "No EAPOL input, WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. Wi-Fi support remains partial."
   ],
