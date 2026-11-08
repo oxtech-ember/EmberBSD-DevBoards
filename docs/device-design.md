@@ -16,7 +16,7 @@ Then identify the assumptions that your device changes.
 | Service access | Console pads, boot controls, recovery connector and artifact identity | Recovery without a working root filesystem or network |
 
 For every reused fact, say whether it belongs to the SoC, module, carrier, firmware, EmberBSD or application.
-Do not inherit a carrier's connector map into a custom PCB.
+Establish the connector map from the custom PCB design and verify each transferred connection.
 A schematic records intended wiring; it does not measure signal quality or verify the software path.
 
 Start with a [new board worksheet](../templates/board/README.md).

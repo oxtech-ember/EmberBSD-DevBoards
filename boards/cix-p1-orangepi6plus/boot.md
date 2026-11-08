@@ -21,7 +21,7 @@ Missing console output alone does not establish a kernel hang.
 Keep a verified console and an independent recovery route when changing the boot chain.
 OS shutdown, hardware power removal and wake by short button press require separate checks.
 The cited short-button shutdown reaches powerd and filesystem unmount, but short-button restart remains unresolved.
-Do not transfer a power-control sequence to another firmware revision without new evidence.
+Establish new evidence for the exact firmware revision before transferring a power-control sequence.
 
 Sources: `os-cix-p1`, `os-cix-spcr` in [sources.json](../../sources.json).
 

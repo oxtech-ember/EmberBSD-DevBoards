@@ -18,7 +18,7 @@ The pinned EmberBSD script expects the DTB under `dtb/allwinner/`, relative to i
 A DTB placed only beside the kernel does not satisfy that path.
 Keep the script, kernel and DTB layout consistent with the image builder.
 Preserve the board-specific tree when adapting the layout to a custom device.
-Do not infer a board variant from its hostname.
+Identify the board variant from its hardware and matching documentation.
 
 ## Transfer to another design
 
@@ -26,7 +26,7 @@ Load addresses, available RAM and reserved memory must agree.
 The script reserves extra DTB space because U-Boot adds properties before kernel entry.
 Root-device selection and the console route must match the actual storage and wiring.
 Use the [OS script](https://github.com/oxtech-ember/EmberBSD/blob/ad698a6e40ea89d72249f76d06913be29a5ab90c/ember/boot/orangepi-zero4-boot.cmd)
-for the exact implementation. Do not maintain a second copy here.
+for the exact implementation. Keep that implementation at its owner and link to it here.
 
 A successful manual launch proves only that invocation and its supplied files.
 Volatile environment changes do not establish persistent automatic boot.

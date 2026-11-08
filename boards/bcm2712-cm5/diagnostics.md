@@ -18,4 +18,4 @@ The original source records retain exact build inputs and artifact hashes in [so
 | CPU BO readback | A colored 1920×1080 desktop BO passes CPU mapping/readback. This does not identify its actual PV head or prove general GPU-cache coherency. | `os-cleanup-bcmv3d-kms-snapshot` |
 
 The implementation owner maintains admission, lifetime, IRQ, memory and executable regression contracts.
-Do not choose an old kernel solely to match a diagnostic source record.
+Choose a kernel for the current task and verify its relevant behavior; use older diagnostic records as scoped historical evidence.

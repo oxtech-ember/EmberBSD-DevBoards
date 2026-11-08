@@ -15,7 +15,7 @@ Keep actual pin maps with the board or carrier that owns the connector.
 | Verification | Exact connected part, workload, result, duration and evidence |
 
 Use explicit units: V, mA, Hz, ns and degrees Celsius.
-Do not use a nominal voltage as an absolute maximum rating.
+Record nominal voltage and absolute maximum rating separately, using the applicable component specification.
 Unknown voltage tolerance is not permission to connect a higher voltage.
 Bus discovery is not a successful sensor read, audio stream or actuator command.
 A camera, display or high-speed bus also needs the vendor routing and signal-integrity requirements.

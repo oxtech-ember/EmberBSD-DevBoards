@@ -20,13 +20,13 @@ Preserve source revisions and hashes; a source snapshot is not a new hardware te
 
 For driver or package changes, follow the current rules of EmberBSD or Ports.
 Keep executable checks beside that implementation and link them here.
-Describe the reusable mechanism, prerequisites and limits. Do not add current lab status or a deployment diary.
-A bounded reference experiment can support a design claim; it must not become an inventory of the tested device.
+Describe the reusable mechanism, prerequisites and limits. Keep current lab status and deployment history in the lab records.
+Use bounded reference experiments to support design claims. Retain reusable results, hardware scope, inputs and applicability here; keep individual-device inventory in lab records.
 For upstream contributions, follow the receiving project's rules and disclose AI assistance.
 
 Write short English sentences with exact identifiers and units.
 Keep vendor identifiers and source attribution intact.
-Link original schematics and datasheets; do not copy or redraw them without the required rights.
+Link original schematics and datasheets. Obtain the required rights before copying or redrawing them.
 Store no credentials, private keys, device serial numbers or network addresses in shared profiles.
 Do not commit firmware binaries, full device images or unredacted personal logs.
 

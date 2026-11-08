@@ -13,7 +13,7 @@ A `null` revision means not established. It never means all revisions.
 `reviewed_at` is the date the record was checked, not the date all interfaces were tested.
 `source_refs` resolve to IDs in `sources.json`.
 Each source names a URL, revision when known, review date and SHA256 when available.
-Do not invent a hash or substitute a branch name for an exact tested revision.
+Record measured hashes and the exact tested revision. Mark unavailable values as unknown.
 
 `documents` and catalog `profile`/`document` values are paths from the repository root.
 [The profile schema](../schemas/profile.schema.json) defines required fields and status values.
@@ -32,8 +32,7 @@ It cannot verify electrical facts, remote source contents or hardware behavior.
 A verified scenario is not a declaration that the whole board is supported.
 If hardware existence and software execution have different sources, cite both.
 Keep failures distinct from features not tested.
-New evidence must not silently erase an earlier result with different firmware or wiring.
-Update the current summary and retain the scoped evidence record.
+Update the current summary and retain earlier scoped evidence for different firmware or wiring.
 
 ## Configuration and evidence
 
@@ -42,7 +41,7 @@ owner, source pin, file hashes, prerequisites, activation effect and recovery ro
 Catalog configurations use `reference` or `tested-scenario` to state applicability.
 An unfinished worksheet uses `template` outside the catalog.
 An external bundle can be referenced by URL and SHA256 without copying its binaries.
-A template must not be mistaken for an installable image or deployed configuration.
+Label templates explicitly as unfinished worksheets. Label installable or deployed configurations with their verified applicability.
 
 An evidence record states hardware identity, software/firmware inputs, scenario, expected result,
 observed result, result status, validation layer, duration, measurements and exclusions.

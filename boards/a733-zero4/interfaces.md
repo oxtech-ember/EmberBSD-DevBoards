@@ -18,7 +18,7 @@
 Wi-Fi requires `fmacfw_8800d80_u02.bin`; Bluetooth requires four vendor patch files.
 Their implementation owner is EmberBSD `aicwf`; firmware is not redistributed by this catalog.
 The cited profile does not advertise 802.11ac or 802.11ax.
-Do not import newer Zero 3W radio or accelerator results as Zero 4 acceptance.
+Qualify Zero 4 radio and accelerator behavior with evidence for Zero 4; identify Zero 3W results as separate evidence.
 
 FUSB302 polls the Type-C connection and gates VBUS through PL8. SuperSpeed PHY lock alone does not prove USB3 traffic.
 The controller bus clock must remain 24 MHz for frame timing.

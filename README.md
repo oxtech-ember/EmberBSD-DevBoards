@@ -72,9 +72,9 @@ Run `ruby tools/validate.rb` and `ruby tools/check-validator.rb` after edits. Re
 
 Keep the current hardware support boundary here, with sources and explicit limits.
 Link to the implementation owner for drivers, software APIs, build commands and executable checks.
-Do not duplicate those software contracts here or maintain a second hardware support matrix in the OS.
+Maintain each software contract at its implementation owner and the hardware support matrix in DevBoards. Link between these owners.
 Pinned sources explain a claim. Current owner documentation shows subsequent changes.
-Keep reusable findings and their applicability here. Do not track an individual lab device's current state.
+Keep reusable findings and their applicability here. Track an individual lab device's current state in its lab records.
 Installed packages, recovery progress, deployment hashes and pending lab actions belong in the lab's own records.
 The initial records cover selected interfaces. Missing data means unknown, not absent or working.
 A successful experiment does not qualify a production design or another board revision.
