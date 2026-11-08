@@ -40,17 +40,15 @@ after a normal POWER press. Its FFS root is an in-memory disk, so that boot did
 not test writes to a persistent filesystem. NAND, full PSRAM read/write and
 general application support remain unverified.
 
-A [bounded NOR littlefs check](evidence/ram-nor-littlefs.json) on the same
-reported V1.2 sample passed the full littlefs VFS checker against `flash1` after
-a RAM-loaded diagnostic boot. A separate normal POWER off/on without BOOT
-booted the installed NOR SPL/FIT/kernel, mounted littlefs from `flash1` (10 MiB
-at 0x600000), and reached a single-user shell. One earlier synced marker
-remained after that power cycle; read-write remount and a separate write/sync/read
-smoke check passed. The full VFS checker ran only in the RAM-loaded scenario;
-the normal NOR boot ran the bounded smoke check. One normal cycle does not
-establish crash or sudden-power-loss durability, repeated-cycle reliability, or
-endurance. Full services, NAND, full PSRAM read/write and sustained reliability
-also remain unverified.
+A [bounded NOR littlefs check](evidence/ram-nor-littlefs.json) on the
+reported V1.2 sample boots the NOR SPL/FIT/kernel and mounts littlefs from
+`flash1` (10 MiB at 0x600000) to a single-user shell after a normal POWER
+cycle without BOOT. Read-write remount, tmpfs on `/tmp` and `/var/run`, and
+separate `/dev/null` `O_APPEND` and `O_TRUNC` checks passed. The RAM-loaded
+diagnostic scenario separately passed the full VFS checker. Exact image inputs
+and evidence scope are in [the check record](evidence/ram-nor-littlefs.json).
+Sudden-power-loss durability, repeated-cycle reliability, endurance, full
+services, NAND and full PSRAM read/write remain unverified.
 
 The separate [RAM littlefs acceptance](evidence/ram-littlefs.json) remains
 evidence for the RAM-root path; its filesystem image was loaded into RAM and it
