@@ -36,16 +36,25 @@ A later [RAM operating-system check](evidence/ram-os.json) booted the
 `ESP_MOSAICO` kernel with an FFS memory-disk root to a single-user shell.
 UART input, a child shell and one Ctrl-C were observed. A subsequent
 [battery-powered NOR boot](evidence/nor-os.json) reached a single-user shell
-after a normal POWER press. Its FFS root is an in-memory disk; persistent
-filesystem writes, NAND, full PSRAM read/write and general application
-support remain unverified.
+after a normal POWER press. Its FFS root is an in-memory disk, so that boot did
+not test writes to a persistent filesystem. NAND, full PSRAM read/write and
+general application support remain unverified.
 
-A separate [RAM littlefs acceptance](evidence/ram-littlefs.json) on the same
-reported V1.2 sample booted the `ESP_MOSAICO_LITTLEFS` kernel with a RAM-loaded
-littlefs root, remounted it read-write, and passed the full littlefs VFS checker
-followed by `sync`. This confirms the tested RAM-root filesystem path only; it
-does not establish a littlefs root or writable filesystem on NOR, persistence
-across a power cycle, NAND support, or full PSRAM read/write.
+A [bounded NOR littlefs check](evidence/ram-nor-littlefs.json) on the same
+reported V1.2 sample passed the full littlefs VFS checker against `flash1` after
+a RAM-loaded diagnostic boot. A separate normal POWER off/on without BOOT
+booted the installed NOR SPL/FIT/kernel, mounted littlefs from `flash1` (10 MiB
+at 0x600000), and reached a single-user shell. One earlier synced marker
+remained after that power cycle; read-write remount and a separate write/sync/read
+smoke check passed. The full VFS checker ran only in the RAM-loaded scenario;
+the normal NOR boot ran the bounded smoke check. One normal cycle does not
+establish crash or sudden-power-loss durability, repeated-cycle reliability, or
+endurance. Full services, NAND, full PSRAM read/write and sustained reliability
+also remain unverified.
+
+The separate [RAM littlefs acceptance](evidence/ram-littlefs.json) remains
+evidence for the RAM-root path; its filesystem image was loaded into RAM and it
+did not test NOR filesystem access.
 
 A [standard EmberBSD framebuffer/LVGL trial](evidence/row-pair-display-touch.json)
 on one V1.2 sample displayed a visible interface; the operator also confirmed

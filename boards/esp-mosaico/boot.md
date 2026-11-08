@@ -33,6 +33,15 @@ in-memory disk; repeated power cycles and NAND were not tested. After USB-C
 was connected, the existing shell continued to accept input and produce
 output; this did not test a separate power-on boot with USB-C attached.
 
+A [bounded NOR littlefs check](evidence/ram-nor-littlefs.json) first passed
+the full VFS checker against `flash1` after a RAM-loaded diagnostic boot. In a
+separate ordinary POWER off/on without BOOT, the installed NOR SPL/FIT/kernel
+mounted the littlefs root from `flash1` (10 MiB at 0x600000) and reached a
+single-user shell. An earlier synced marker remained after this one normal power
+cycle; the read-write remount and separate write/sync/read smoke check returned
+0. The normal NOR boot did not repeat the full VFS checker. This does not test
+sudden power loss, crash consistency, repeated-cycle reliability or endurance.
+
 POWER is a toggle: one press turns the board on or off. The SAM8108 controls
 whole-device power. V1.2's charge LED reports battery charge only: orange while
 charging and white when full. V1.2 has no programmable GPIO3 LED or separate

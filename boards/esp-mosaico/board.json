@@ -5,7 +5,7 @@
   "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
   "soc": "espressif-esp32-s31",
   "board_revision": "1.2",
-  "reviewed_at": "2026-11-07",
+  "reviewed_at": "2026-11-08",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/esp-mosaico/README.md",
@@ -47,14 +47,17 @@
     "mosaico-bq27220-kernel-source",
     "mosaico-audio-kernel-source",
     "mosaico-spinandctl-kernel-source",
-    "mosaico-s31-usb-hardware-guidelines"
+    "mosaico-s31-usb-hardware-guidelines",
+    "mosaico-nor-littlefs-observation",
+    "mosaico-nor-littlefs-kernel-source",
+    "mosaico-nor-littlefs-ports-source"
   ],
   "capabilities": [
     {
       "id": "boot",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one operator-reported V1.2 sample, a battery-powered normal POWER-on boot from NOR reached the ESP_MOSAICO kernel and a single-user shell with an FFS memory-disk root. A separate RAM-only littlefs image reached single-user mode and passed read-write VFS acceptance. Neither result establishes a persistent littlefs root on NOR, NAND boot, full PSRAM read/write or general peripheral support.",
+      "scope": "On one operator-reported V1.2 sample, normal POWER off/on without BOOT booted the installed NOR SPL/FIT/kernel, mounted a littlefs root from flash1 (10 MiB at 0x600000), and reached a single-user shell. After one normal power cycle, an earlier synced test marker remained; a read-write remount and bounded write/sync/read smoke check passed. A separate RAM-loaded diagnostic run passed the full VFS checker against the NOR root. This does not establish crash or sudden-power-loss durability, repeated-cycle reliability, full services, NAND, full PSRAM read/write or general peripheral support.",
       "source_refs": [
         "mosaico-vendor-webui-observation",
         "mosaico-device-modes",
@@ -64,18 +67,24 @@
         "mosaico-ram-firmware-observation",
         "mosaico-ram-os-observation",
         "mosaico-ram-littlefs-observation",
-        "mosaico-nor-os-observation"
+        "mosaico-nor-os-observation",
+        "mosaico-nor-littlefs-observation",
+        "mosaico-nor-littlefs-kernel-source",
+        "mosaico-nor-littlefs-ports-source"
       ]
     },
     {
       "id": "filesystem",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one operator-reported V1.2 sample, a RAM-loaded littlefs root was remounted read-write in single-user mode and the full littlefs VFS checker plus sync passed. The image and all test writes were RAM-backed; persistent NOR filesystem operation, power-cycle persistence and NAND filesystems were not tested.",
+      "scope": "On one operator-reported V1.2 sample, a littlefs root on NOR flash1 (10 MiB at 0x600000) was mounted and operated after a RAM-loaded boot. The read-write remount, full VFS checker and sync passed. A separate ordinary NOR boot reached a single-user shell, retained an earlier synced marker across one normal POWER off/on, and passed a read-write remount plus bounded write/sync/read smoke check. This does not establish crash or sudden-power-loss durability, repeated-cycle reliability, NAND filesystems or sustained operation.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-littlefs-kernel-source",
-        "mosaico-ram-littlefs-observation"
+        "mosaico-ram-littlefs-observation",
+        "mosaico-nor-littlefs-observation",
+        "mosaico-nor-littlefs-kernel-source",
+        "mosaico-nor-littlefs-ports-source"
       ]
     },
     {

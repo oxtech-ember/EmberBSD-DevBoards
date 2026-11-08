@@ -1,0 +1,76 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-ram-nor-littlefs",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-08",
+  "layer": "physical",
+  "result": "pass",
+  "duration_seconds": null,
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "RAM-loaded diagnostic kernel and NOR littlefs root check",
+      "revision": "EmberBSD source based on f16d858657503e3cf69ee28f2c1b16710222503c, with local verbose-only trace instrumentation; EmberBSD Ports cache-coherence fix 050ebfaa5943756bcdb4787b50ac3bcd9dae5dc1",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Normal-boot ESP_MOSAICO_LITTLEFS kernel",
+      "revision": "EmberBSD f16d858657503e3cf69ee28f2c1b16710222503c",
+      "sha256": "ff064be69387aaeb1efa892f04d2559e17c9b21c181e34b21096aa0f8f760a8b",
+      "reference": null
+    },
+    {
+      "name": "Normal-boot firmware FIT",
+      "revision": "OpenSBI from EmberBSD Ports 050ebfaa5943756bcdb4787b50ac3bcd9dae5dc1; FIT size 1529856 bytes",
+      "sha256": "0773426024805be86cb0dea50d35c846e6f46f98fc994e35374ae6d46c5ee4e2",
+      "reference": null
+    },
+    {
+      "name": "NOR littlefs root on flash1",
+      "revision": "10 MiB partition at offset 0x600000",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "littlefs-vfs-check-memory-current and NOR boot smoke markers",
+      "revision": "Full VFS checker from the RAM-loaded diagnostic run; smoke markers mosaico-nor-littlefs-20261108 and mosaico-nor-littlefs-boot-20261108",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "On one operator-reported V1.2 sample, first RAM-load a diagnostic kernel and exercise the littlefs root on NOR with the full VFS checker. Then boot the installed SPL/FIT/kernel from NOR with an ordinary POWER off/on and no BOOT press, verify the littlefs root and prior synced marker, remount read-write, and run a separate write/sync/read smoke check.",
+  "expected": "The RAM-loaded VFS check succeeds; the ordinary NOR boot reaches a single-user shell with a littlefs root, retains the earlier synced marker, and completes the read-write remount and smoke check.",
+  "observed": "In the RAM-loaded run, littlefs mounted from NOR flash1 (10 MiB at offset 0x600000) as root, root metadata loaded, the root mount completed and a shell was reached. The read-write remount returned 0; the full VFS checker passed mmap/msync, metadata, symlink/readlink, truncate/fsync, rename, unlink and cleanup and returned 0; sync returned 0. In the separate normal POWER off/on boot without BOOT, the NOR-resident SPL loaded the FIT and the kernel mounted the littlefs root, preserved marker mosaico-nor-littlefs-20261108, and reached the single-user shell. Root mount occurred 4.902 seconds after the kernel timestamp origin; this is not wall time to shell. The read-write remount returned 0, and the separate marker mosaico-nor-littlefs-boot-20261108 passed WRITE/SYNC/READ with return code 0.",
+  "measurements": [
+    {
+      "name": "root-mount-time-from-kernel-timestamp-origin",
+      "value": 4.902,
+      "unit": "second"
+    },
+    {
+      "name": "firmware-fit-size",
+      "value": 1529856,
+      "unit": "byte"
+    }
+  ],
+  "limits": [
+    "The full VFS checker ran in the RAM-loaded diagnostic-kernel scenario. The normal NOR boot separately verified root mount, single-user shell, read-write remount and a bounded write/sync/read smoke check; it did not repeat the full VFS checker.",
+    "One ordinary POWER off/on after a successful sync preserved the earlier test marker. This is not a sudden power-loss, crash-consistency, repeated-cycle, endurance or broader durability test.",
+    "The normal boot was tested on one operator-reported V1.2 sample and reached single-user mode only; full services, GUI, Wi-Fi and other peripherals are not established by this result.",
+    "The verbose-only trace instrumentation was present only in the earlier RAM-loaded diagnostic run. The normal-boot kernel was built from the clean published EmberBSD source revision stated above.",
+    "NAND support, full PSRAM read/write and sustained reliability remain unverified.",
+    "Private firmware images, UART captures and device identifiers are not published."
+  ],
+  "source_refs": [
+    "mosaico-hardware-v12",
+    "mosaico-nor-littlefs-kernel-source",
+    "mosaico-nor-littlefs-ports-source"
+  ]
+}

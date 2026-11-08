@@ -1648,6 +1648,30 @@
       "revision": "d5511d17a8274b1ec2122fe2b5a5bf0760de3c96",
       "reviewed_at": "2026-11-06",
       "sha256": null
+    },
+    {
+      "id": "mosaico-nor-littlefs-observation",
+      "title": "ESP-Mosaico V1.2 littlefs on NOR: RAM VFS test and normal NOR boot",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/ram-nor-littlefs.json",
+      "revision": null,
+      "reviewed_at": "2026-11-08",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-nor-littlefs-kernel-source",
+      "title": "EmberBSD ESP-Mosaico kernel source used for NOR littlefs boot",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/f16d858657503e3cf69ee28f2c1b16710222503c",
+      "revision": "f16d858657503e3cf69ee28f2c1b16710222503c",
+      "reviewed_at": "2026-11-08",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-nor-littlefs-ports-source",
+      "title": "EmberBSD Ports cache-coherent S31 NOR support used in the boot test",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/commit/050ebfaa5943756bcdb4787b50ac3bcd9dae5dc1",
+      "revision": "050ebfaa5943756bcdb4787b50ac3bcd9dae5dc1",
+      "reviewed_at": "2026-11-08",
+      "sha256": null
     }
   ]
 }
