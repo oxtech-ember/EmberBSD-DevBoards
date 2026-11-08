@@ -52,11 +52,6 @@
       "unit": "calls across sta_input, crypto_decap, decap and sta_rx_eapol wrappers"
     },
     {
-      "name": "registered-sta-rx-callback",
-      "value": 0,
-      "unit": "calls counted; callback at pTxRx+0x3f8 was not instrumented"
-    },
-    {
       "name": "hardware-rx-mpdu",
       "value": 37640,
       "unit": "opaque counter"
