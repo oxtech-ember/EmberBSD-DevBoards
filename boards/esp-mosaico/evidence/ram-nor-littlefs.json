@@ -43,14 +43,20 @@
       "revision": "Full VFS checker from the RAM-loaded diagnostic run; smoke markers mosaico-nor-littlefs-20261108 and mosaico-nor-littlefs-boot-20261108",
       "sha256": null,
       "reference": null
+    },
+    {
+      "name": "Corrected firmware-FDT normal-boot FIT",
+      "revision": "EmberBSD OS 6fe9f69bef222e9aef0d18e5e8e4154b2341a284 (same kernel source content as build; subsequent changes are comments); Ports cache-coherence fix 050ebfaa5943756bcdb4787b50ac3bcd9dae5dc1; corrected firmware FDT SHA256 70feb76a054a4fafac7683b3299671bb604d46783799606c3526efe38063d45f",
+      "sha256": "397dea9d07788b8fdfafa116f033a88b18b7864109d9302818e6d5471b8096b4",
+      "reference": null
     }
   ],
-  "scenario": "On one operator-reported V1.2 sample, first RAM-load a diagnostic kernel and exercise the littlefs root on NOR with the full VFS checker. Then boot the installed SPL/FIT/kernel from NOR with an ordinary POWER off/on and no BOOT press, verify the littlefs root and prior synced marker, remount read-write, and run a separate write/sync/read smoke check.",
-  "expected": "The RAM-loaded VFS check succeeds; the ordinary NOR boot reaches a single-user shell with a littlefs root, retains the earlier synced marker, and completes the read-write remount and smoke check.",
-  "observed": "In the RAM-loaded run, littlefs mounted from NOR flash1 (10 MiB at offset 0x600000) as root, root metadata loaded, the root mount completed and a shell was reached. The read-write remount returned 0; the full VFS checker passed mmap/msync, metadata, symlink/readlink, truncate/fsync, rename, unlink and cleanup and returned 0; sync returned 0. In the separate normal POWER off/on boot without BOOT, the NOR-resident SPL loaded the FIT and the kernel mounted the littlefs root, preserved marker mosaico-nor-littlefs-20261108, and reached the single-user shell. Root mount occurred 4.902 seconds after the kernel timestamp origin; this is not wall time to shell. The read-write remount returned 0, and the separate marker mosaico-nor-littlefs-boot-20261108 passed WRITE/SYNC/READ with return code 0.",
+  "scenario": "On one operator-reported V1.2 sample, a RAM-loaded diagnostic kernel exercised the NOR littlefs root with the full VFS checker. An earlier normal POWER off/on boot without BOOT used a prior FIT and checked root mount, single-user shell, marker retention, read-write remount and write/sync/read. A subsequent normal boot used the corrected firmware-FDT FIT and checked root mount, single-user shell, read-write remount, tmpfs setup and separate /dev/null O_APPEND and O_TRUNC operations.",
+  "expected": "The RAM-loaded VFS check succeeds. The earlier normal boot retains its prior synced marker and completes the bounded smoke check. The corrected-FDT normal boot mounts littlefs from flash1 and reaches a single-user shell; read-write remount, tmpfs setup and separate /dev/null O_APPEND and O_TRUNC checks succeed.",
+  "observed": "In the RAM-loaded run, littlefs mounted from NOR flash1 (10 MiB at offset 0x600000) as root, root metadata loaded, the root mount completed and a shell was reached. The read-write remount returned 0; the full VFS checker passed mmap/msync, metadata, symlink/readlink, truncate/fsync, rename, unlink and cleanup and returned 0; sync returned 0. In the separate normal POWER off/on boot without BOOT, the NOR-resident SPL loaded the FIT and the kernel mounted the littlefs root, preserved marker mosaico-nor-littlefs-20261108, and reached the single-user shell. Root mount occurred 4.902 seconds after the kernel timestamp origin; this is not wall time to shell. The read-write remount returned 0, and the separate marker mosaico-nor-littlefs-boot-20261108 passed WRITE/SYNC/READ with return code 0. In the subsequent normal POWER off/on boot without BOOT using corrected firmware-FDT FIT (SHA256 397dea9d07788b8fdfafa116f033a88b18b7864109d9302818e6d5471b8096b4), the kernel mounted littlefs from flash1 and reached a single-user shell. Read-write remount and tmpfs setup for /tmp and /var/run passed. Separate /dev/null O_APPEND and O_TRUNC checks returned 0 on character device 242,2. This run did not check marker retention.",
   "measurements": [
     {
-      "name": "root-mount-time-from-kernel-timestamp-origin",
+      "name": "prior-fit-root-mount-time-from-kernel-timestamp-origin",
       "value": 4.902,
       "unit": "second"
     },
@@ -61,8 +67,8 @@
     }
   ],
   "limits": [
-    "The full VFS checker ran in the RAM-loaded diagnostic-kernel scenario. The normal NOR boot separately verified root mount, single-user shell, read-write remount and a bounded write/sync/read smoke check; it did not repeat the full VFS checker.",
-    "One ordinary POWER off/on after a successful sync preserved the earlier test marker. This is not a sudden power-loss, crash-consistency, repeated-cycle, endurance or broader durability test.",
+    "The full VFS checker ran in the RAM-loaded diagnostic-kernel scenario. The earlier normal NOR boot separately verified root mount, single-user shell, read-write remount and bounded write/sync/read; the corrected-FDT boot verified root mount, shell, read-write remount, tmpfs setup and separate /dev/null operations.",
+    "The earlier marker-retention observation applies only to the prior FIT and root. The corrected-FDT boot did not test marker retention. Neither result is a sudden power-loss, crash-consistency, repeated-cycle, endurance or broader durability test.",
     "The normal boot was tested on one operator-reported V1.2 sample and reached single-user mode only; full services, GUI, Wi-Fi and other peripherals are not established by this result.",
     "The verbose-only trace instrumentation was present only in the earlier RAM-loaded diagnostic run. The normal-boot kernel was built from the clean published EmberBSD source revision stated above.",
     "NAND support, full PSRAM read/write and sustained reliability remain unverified.",
