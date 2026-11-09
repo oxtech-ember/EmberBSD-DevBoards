@@ -100,19 +100,31 @@ table below.
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
 without ring or allocation failures. One strict SAE/PMF-required trial and the
-latest WPA2-PSK/CCMP/PMF0 control reached native `RUN`, but neither reached
+WPA2-PSK/CCMP/PMF0 control reached native `RUN`, but neither reached
 `WPA_COMPLETED`; both ended after the PTK handshake timeout (reason 204).
 In the latest WPA2 diagnostic, the live `pp_wdev_funcs+0x198` protocol hook
-counted 122 management frames with `rxmatch0` set and no control, data or
-extension frames; the normal STA callback saw the same 122 management frames.
+counted 123 management frames with `rxmatch0` set and no control, data or
+extension frames; the normal STA callback saw the same 123 management frames.
 The `pp_wdev_funcs+0x414` sublength hook and ROM caller at +0x1f4 matched and
-counted 124 management frames, with invalid and short counts zero. The DATA
-state histogram prints only nonzero bins, so it is empty as expected when no
-DATA frames were observed. Association-stage STA and BSSID register readbacks
-were valid and matched; begin/end BSSID mismatch occurred during transition
-outside association. These hooks do not observe all hardware or over-the-air
+counted 127 management frames in the latest legacy-PHY WPA2 run; invalid and
+short counts were zero. The legacy protocol set/get calls both returned 0 and
+read back bitmap `0x3` (11b|11g); this did not resolve the timeout, so HT/HE
+mode alone does not explain the failure. The DATA-state histogram prints only
+nonzero bins, so it is empty as expected when no DATA frames were observed.
+Association-stage STA and BSSID register readbacks were valid and matched, and
+the association snapshot was captured; begin/end BSSID mismatch occurred
+during transition outside association. These hooks do not observe all hardware or over-the-air
 traffic, so they do not establish whether the AP transmitted a frame or where
-any earlier loss occurred. The AP log records station deauthentication after
+any earlier loss occurred. The separate WDEV-candidate SAE/PMF2 attempt also reached
+`ASSOCIATED` (last status `key_mgmt=SAE`, `pmf=1`) but not `WPA_COMPLETED`;
+the AP log recorded an `sae_key` event, association and station deauthentication
+after PTK timeout. These records do not establish an accepted SAE commit/confirm
+or EAPOL exchange. Local `ieee80211w` is policy: 0 disables PMF, 1 permits it
+when supported, and 2 requires it. In wpa_supplicant 2.12
+[STATUS generation](https://w1.fi/cgit/hostap/tree/src/rsn_supp/wpa.c?h=hostap_2_12#n5303),
+`pmf=1` means AP MFPC set/MFPR clear and `pmf=2` means AP MFPR set; STATUS is
+not the local policy. The attempt did not reach `WPA_COMPLETED`, so negotiated
+PMF/IGTK remains unverified. The AP log records station deauthentication after
 the PTK timeout, not M1 transmission or acknowledgement. Hardware RX values
 are opaque; internal-pool misses, fallback and NULL were zero, with 197136
 bytes minimum free. No EAPOL input, negotiated PMF, IPv4 address or accepted
