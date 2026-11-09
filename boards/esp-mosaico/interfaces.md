@@ -111,6 +111,11 @@ short counts were zero. The legacy protocol set/get calls both returned 0 and
 read back bitmap `0x3` (11b|11g); this did not resolve the timeout, so HT/HE
 mode alone does not explain the failure. The DATA-state histogram prints only
 nonzero bins, so it is empty as expected when no DATA frames were observed.
+A prior promiscuous RX-observer run counted 36–88 DATA callback frames; its first complete capture classified 8 as AP downlink,
+but none were addressed to the station (`assoc_self=1` confirmed address matching on the association response). Later captures
+classified no AP downlink, and the observer decoded no EAPOL. These captures show DATA reached the callback but do not establish
+AP transmission of M1 or station acknowledgement of it. Saved kernel banners #35/#36 postdate the source payload-offset-64 fix,
+but do not identify an exact image revision.
 Association-stage STA and BSSID register readbacks were valid and matched, and
 the association snapshot was captured; begin/end BSSID mismatch occurred
 during transition outside association. These hooks do not observe all hardware or over-the-air
