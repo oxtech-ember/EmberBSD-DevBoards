@@ -99,43 +99,22 @@ table below.
 ## Wireless
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
-without ring or allocation failures. One strict SAE/PMF-required trial and the
-WPA2-PSK/CCMP/PMF0 control reached native `RUN`, but neither reached
-`WPA_COMPLETED`; both ended after the PTK handshake timeout (reason 204).
-In the latest WPA2 diagnostic, the live `pp_wdev_funcs+0x198` protocol hook
-counted 123 management frames with `rxmatch0` set and no control, data or
-extension frames; the normal STA callback saw the same 123 management frames.
-The `pp_wdev_funcs+0x414` sublength hook and ROM caller at +0x1f4 matched and
-counted 127 management frames in the latest legacy-PHY WPA2 run; invalid and
-short counts were zero. The legacy protocol set/get calls both returned 0 and
-read back bitmap `0x3` (11b|11g); this did not resolve the timeout, so HT/HE
-mode alone does not explain the failure. The DATA-state histogram prints only
-nonzero bins, so it is empty as expected when no DATA frames were observed.
-A prior promiscuous RX-observer run counted 36–88 DATA callback frames; its first complete capture classified 8 as AP downlink,
-but none were addressed to the station (`assoc_self=1` confirmed address matching on the association response). Later captures
-classified no AP downlink, and the observer decoded no EAPOL. These captures show DATA reached the callback but do not establish
-AP transmission of M1 or station acknowledgement of it. Saved kernel banners #35/#36 postdate the source payload-offset-64 fix,
-but do not identify an exact image revision.
-Association-stage STA and BSSID register readbacks were valid and matched, and
-the association snapshot was captured; begin/end BSSID mismatch occurred
-during transition outside association. These hooks do not observe all hardware or over-the-air
-traffic, so they do not establish whether the AP transmitted a frame or where
-any earlier loss occurred. The separate WDEV-candidate SAE/PMF2 attempt also reached
-`ASSOCIATED` (last status `key_mgmt=SAE`, `pmf=1`) but not `WPA_COMPLETED`;
-the AP log recorded an `sae_key` event, association and station deauthentication
-after PTK timeout. These records do not establish an accepted SAE commit/confirm
-or EAPOL exchange. Local `ieee80211w` is policy: 0 disables PMF, 1 permits it
-when supported, and 2 requires it. In wpa_supplicant 2.12
-[STATUS generation](https://w1.fi/cgit/hostap/tree/src/rsn_supp/wpa.c?h=hostap_2_12#n5303),
-`pmf=1` means AP MFPC set/MFPR clear and `pmf=2` means AP MFPR set; STATUS is
-not the local policy. The attempt did not reach `WPA_COMPLETED`, so negotiated
-PMF/IGTK remains unverified. The AP log records station deauthentication after
-the PTK timeout, not M1 transmission or acknowledgement. Hardware RX values
-are opaque; internal-pool misses, fallback and NULL were zero, with 197136
-bytes minimum free. No EAPOL input, negotiated PMF, IPv4 address or accepted
-network data exchange followed. See the
-[association evidence](evidence/wifi-association.json). WPA2 authentication,
-DHCP/DNS, reconnect, roaming and sustained transfer remain unverified.
+without ring or allocation failures. On one operator-reported V1.2 sample, a
+normal RAM image with the published RSN app-IE ownership and controlled-port
+`auth_done` fixes completed strict SAE with local `ieee80211w=2` and normal
+WPA2-PSK. SAE remained `WPA_COMPLETED` for about five minutes. The supplicant
+reported IGTK installation at key index 4; this is the install/readiness path,
+not a forged-frame protection test. Normal WPA2 observed EAPOL M1–M4 once each
+with CCMP pairwise/group ciphers. The SAE AP observer had no capture delta, so
+SAE completion is based on supplicant/driver status.
+
+DHCPv4 configuration and nameserver remained present, DNS resolved
+`example.com`, and both small and 1400-byte gateway ICMP probes returned 3/3
+replies. An explicit scan did not disconnect the SAE session, but it found no
+second same-SSID BSSID. This is bounded basic connectivity evidence. Manual
+roaming, TCP throughput, sustained reliability, 802.11k/v/r or BTM/RRM behavior
+and forged-frame protection are not established; BTM/RRM support remains under
+investigation. See the [association evidence](evidence/wifi-association.json).
 
 ## Expansion and debug routing
 

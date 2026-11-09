@@ -5,7 +5,7 @@
   "target_id": "esp-mosaico",
   "recorded_at": "2026-11-09",
   "layer": "physical",
-  "result": "fail",
+  "result": "pass",
   "hardware": {
     "revision": "1.2",
     "carrier_id": null,
@@ -14,345 +14,132 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT legacy-PHY diagnostic FIT",
-      "revision": "Candidate RAM kernel; protocol set/get succeeded with requested and returned bitmap 0x3 (11b|11g); not a release image.",
-      "sha256": "7f41098d8d3ad9be3897ac86155289627ca82fed78cc1739c19c02e5fcd704f9",
+      "name": "ESP_MOSAICO_SC101IOT normal RAM FIT with external WPA auth_done handoff",
+      "revision": "Candidate production-auth-done-20261109; built from OS base f2e80bf8a62 plus published auth_done changes 2aae2b94f8f6f9ba25b73ed59f4b7ff7391b93e; temporary RX/debug and legacy-PHY switches disabled.",
+      "sha256": "999a8c79517274fc5133c0d155bcc55d2bb860ecb62cb451ab914251d00cb30e",
       "reference": null
     },
     {
-      "name": "ESP_MOSAICO_SC101IOT WDEV RX diagnostic FIT used for strict SAE/PMF2 attempt",
-      "revision": "Candidate RAM kernel diagnostic d76cb; not a release image.",
-      "sha256": "404573b117f6b117f0f36862ed4d75269bbc52ca9ec79ff90aa75f4b02265e01",
+      "name": "WPA2-PSK network profile",
+      "revision": "Profile identifiers and credentials omitted.",
+      "sha256": null,
       "reference": null
     },
     {
-      "name": "WPA2-PSK/CCMP/PMF0 profile and selected AP",
-      "revision": "Pinned AP0 control profile; identifiers omitted.",
+      "name": "Strict SAE network profile",
+      "revision": "Local ieee80211w=2; profile identifiers and credentials omitted.",
       "sha256": null,
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported V1.2 sample, observe one bounded WPA2-PSK/CCMP/PMF0 control attempt on the legacy-PHY diagnostic candidate and one strict SAE/PMF2 attempt on the WDEV RX diagnostic candidate. Detailed RX counters and register readback below apply to the legacy-PHY WPA2 attempt.",
-  "expected": "Reach WPA_COMPLETED while checking successful legacy PHY set/get, normal/vendor RX boundaries, association-stage register readback, native state, and AP log evidence.",
-  "observed": "Legacy-PHY protocol set_rc=0/get_rc=0 with requested and returned bitmap 0x3 (11b|11g). The control API listed the selected temporary WPA2 network before selection. The station reached native RUN at RX policy 6 but not WPA_COMPLETED; final supplicant status was SCANNING and the kernel disconnected with reason 204 after PTK 4-way handshake timeout. The normal pTxRx table at +0x3f8 matched; sta_rx_cb ran 123 times, all management frames (123/0/0/0). sta_input_table, crypto_decap, decap and sta_rx_eapol were zero. The pp_wdev_funcs hook at ppRxProtoProc+0x198 matched its live slot; its FC matrix was 0/123, 0/0, 0/0, 0/0 (management/control/data/extension × rxmatch0 clear/set). The sublength hook at pp_wdev_funcs+0x414 and ROM caller at +0x1f4 matched; its matrix was 0/127, 0/0, 0/0, 0/0; invalid and short were zero. The DATA-state histogram emits only nonzero bins, so no entries at zero DATA is expected. A prior RX-observer run successfully enabled promiscuous reception and counted 36–88 DATA callback frames. In the first complete capture, 8 frames matched the AP-data/downlink classifier, but none were addressed to the station; assoc_self=1 confirms the station-address comparison worked on the association response. Later captures had zero AP-downlink classifications, and the observer decoded no EAPOL. This shows DATA reached the promiscuous callback but does not establish AP transmission of M1 or station acknowledgement of it. The saved kernels were #35 (Nov 6) and #36 (Nov 7), after the payload-offset-64 fix landed in source on Nov 2; the UART captures do not embed an exact image or source revision. During association, captured STA/BSSID registers were valid and matched expected values; the association snapshot was captured. Begin/end BSSID mismatch occurred outside association during transition. Vendor debug PS query returned 0. AP log recorded association and station deauthentication after PTK timeout, not AP M1 transmission or ACK. Hardware getter succeeded; rx_datasuc=127 and related counters are opaque. Allocator misses, fallback, and NULL were zero; window minimum free was 197136 bytes. Switching the legacy bitmap to 11b|11g did not resolve the timeout, so HT/HE mode alone does not explain the failure. The strict SAE/PMF2 attempt on the WDEV diagnostic also reached ASSOCIATED but not WPA_COMPLETED; last status was wpa_state=ASSOCIATED, key_mgmt=SAE, pmf=1. AP records included sae_key, association, and station deauthentication after PTK timeout. No accepted SAE commit/confirm or EAPOL exchange was established. Local ieee80211w=2 is policy; STATUS pmf=1 means AP MFPC set/MFPR clear, not proof of completed PMF/IGTK negotiation.",
-  "duration_seconds": 11.131,
+  "scenario": "On one operator-reported CoreBoard V1.2 sample, verify normal-image WPA2-PSK and strict-SAE completion, IPv4/DNS configuration, gateway reachability and continuity through a scan.",
+  "expected": "Both handshakes complete; the SAE session retains network configuration and reaches DNS/gateway endpoints during a bounded check.",
+  "observed": "On the normal RAM image, strict SAE with local ieee80211w=2 reached WPA_COMPLETED and remained COMPLETED for about five minutes. DHCPv4 assigned an IPv4 /24 configuration and nameserver; the lease remained present, DNS resolved example.com, and the gateway returned 3/3 replies for both small and 1400-byte ICMP probes. An explicit scan did not disconnect the SAE session, but no second same-SSID BSSID appeared in scan results. Normal-image WPA2-PSK also reached WPA_COMPLETED with CCMP pairwise/group ciphers; the supplicant observed EAPOL M1, M2, M3 and M4 once each. The RSN app-IE ownership fix changed vendor registration from a borrowed stack IE (flag 1, retained pointer to a length-prefixed record whose first two bytes were overwritten) to vendor-owned copy mode (flag 0). The auth_done fix passes common controlled-port authorization to esp_wifi_auth_done_internal through the bounded radio worker once per join generation; a local port revoke closes traffic without repeating vendor completion if that join is reauthorized. The SAE AP observer had no capture delta, so SAE completion and IGTK installation are based on supplicant/driver reports. This is a bounded connectivity check, not a roaming or sustained-reliability result.",
+  "duration_seconds": null,
   "measurements": [
     {
-      "name": "native-run-state",
+      "name": "normal-sae-completed",
       "value": 1,
-      "unit": "state reached"
+      "unit": "WPA_COMPLETED state"
     },
     {
-      "name": "disconnect-reason",
-      "value": 204,
-      "unit": "local disconnect after PTK 4-way handshake timeout"
+      "name": "normal-sae-completed-after-5-minutes",
+      "value": 1,
+      "unit": "supplicant remained WPA_COMPLETED"
     },
     {
-      "name": "diagnostic-window",
-      "value": 11.131,
-      "unit": "seconds from vendor debug enable to counter summary"
+      "name": "sae-local-ieee80211w",
+      "value": 2,
+      "unit": "required PMF policy"
     },
     {
-      "name": "native-rx-policy-at-run",
-      "value": 6,
-      "unit": "policy value"
+      "name": "sae-status-pmf",
+      "value": 1,
+      "unit": "AP MFPC set and MFPR clear"
     },
     {
-      "name": "legacy-phy-set-rc",
-      "value": 0,
-      "unit": "return code"
+      "name": "sae-igtk-installed",
+      "value": 1,
+      "unit": "driver key-index 4 install reported"
     },
     {
-      "name": "legacy-phy-get-rc",
-      "value": 0,
-      "unit": "return code"
+      "name": "normal-wpa2-completed",
+      "value": 1,
+      "unit": "WPA_COMPLETED state"
     },
     {
-      "name": "legacy-phy-protocol-bitmap",
+      "name": "normal-wpa2-eapol-m1",
+      "value": 1,
+      "unit": "supplicant-observed frames"
+    },
+    {
+      "name": "normal-wpa2-eapol-m2",
+      "value": 1,
+      "unit": "supplicant-observed frames"
+    },
+    {
+      "name": "normal-wpa2-eapol-m3",
+      "value": 1,
+      "unit": "supplicant-observed frames"
+    },
+    {
+      "name": "normal-wpa2-eapol-m4",
+      "value": 1,
+      "unit": "supplicant-observed frames"
+    },
+    {
+      "name": "dhcpv4-configured",
+      "value": 1,
+      "unit": "IPv4 /24 and nameserver assigned; values sanitized"
+    },
+    {
+      "name": "dhcpv4-lease-retained",
+      "value": 1,
+      "unit": "lease present during SAE/WPA2 checks"
+    },
+    {
+      "name": "dns-example-com-resolved",
+      "value": 1,
+      "unit": "successful DNS resolution"
+    },
+    {
+      "name": "gateway-small-icmp-replies",
       "value": 3,
-      "unit": "requested and returned bitmap (0x3; 11b|11g)"
+      "unit": "echo replies out of 3 probes"
     },
     {
-      "name": "normal-sta-table-wrapper-match",
+      "name": "gateway-1400-byte-icmp-replies",
+      "value": 3,
+      "unit": "echo replies out of 3 probes"
+    },
+    {
+      "name": "scan-did-not-disconnect-sae",
       "value": 1,
-      "unit": "pTxRx slot +0x3f8 matched"
+      "unit": "bounded explicit scan during SAE session"
     },
     {
-      "name": "normal-sta-rx-callback-entries",
-      "value": 123,
-      "unit": "calls"
-    },
-    {
-      "name": "normal-sta-rx-callback-management",
-      "value": 123,
-      "unit": "802.11 frame type"
-    },
-    {
-      "name": "normal-sta-rx-callback-control",
+      "name": "same-ssid-second-bssid-visible",
       "value": 0,
-      "unit": "802.11 frame type"
-    },
-    {
-      "name": "normal-sta-rx-callback-data",
-      "value": 0,
-      "unit": "802.11 frame type"
-    },
-    {
-      "name": "normal-sta-rx-callback-extension",
-      "value": 0,
-      "unit": "802.11 frame type"
-    },
-    {
-      "name": "pp-rx-proto-table-wrapper-match",
-      "value": 1,
-      "unit": "pp_wdev_funcs slot +0x198 matched"
-    },
-    {
-      "name": "pp-rx-proto-management-rxmatch0-clear",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "pp-rx-proto-management-rxmatch0-set",
-      "value": 123,
-      "unit": "calls"
-    },
-    {
-      "name": "pp-rx-proto-control-rxmatch0-clear",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "pp-rx-proto-control-rxmatch0-set",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "pp-rx-proto-data-rxmatch0-clear",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "pp-rx-proto-data-rxmatch0-set",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "pp-rx-proto-extension-rxmatch0-clear",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "pp-rx-proto-extension-rxmatch0-set",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "pp-rx-proto-invalid-pointer-count",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "pp-rx-proto-short-frame-count",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "rx-sublength-table-wrapper-match",
-      "value": 1,
-      "unit": "pp_wdev_funcs slot +0x414 matched"
-    },
-    {
-      "name": "rx-sublength-rom-caller-match",
-      "value": 1,
-      "unit": "caller at ROM offset +0x1f4 matched"
-    },
-    {
-      "name": "rx-sublength-management-rxmatch0-clear",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "rx-sublength-management-rxmatch0-set",
-      "value": 127,
-      "unit": "calls"
-    },
-    {
-      "name": "rx-sublength-control-rxmatch0-clear",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "rx-sublength-control-rxmatch0-set",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "rx-sublength-data-rxmatch0-clear",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "rx-sublength-data-rxmatch0-set",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "rx-sublength-extension-rxmatch0-clear",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "rx-sublength-extension-rxmatch0-set",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "rx-sublength-invalid-pointer-count",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "rx-sublength-short-frame-count",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "association-register-readback-match",
-      "value": 1,
-      "unit": "assoc snapshot captured; STA/BSSID valid and matched expected values"
-    },
-    {
-      "name": "transition-bssid-readback-mismatch",
-      "value": 1,
-      "unit": "begin/end outside association; transitional readback"
-    },
-    {
-      "name": "vendor-debug-ps",
-      "value": 0,
-      "unit": "returned value"
-    },
-    {
-      "name": "sta-input-entries",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "crypto-decap-entries",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "decap-entries",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "sta-rx-eapol-entries",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "hardware-getter-start-rc",
-      "value": 0,
-      "unit": "return code"
-    },
-    {
-      "name": "hardware-getter-window-start-rc",
-      "value": 0,
-      "unit": "return code"
-    },
-    {
-      "name": "hardware-getter-window-end-rc",
-      "value": 0,
-      "unit": "return code"
-    },
-    {
-      "name": "hardware-rx-mpdu",
-      "value": 31770,
-      "unit": "opaque hardware counter"
-    },
-    {
-      "name": "hardware-rx-end-count",
-      "value": 31785,
-      "unit": "opaque hardware counter"
-    },
-    {
-      "name": "hardware-rx-datasuc",
-      "value": 127,
-      "unit": "opaque hardware counter; not a DATA frame count"
-    },
-    {
-      "name": "hardware-rx-fcs-error",
-      "value": 904,
-      "unit": "opaque hardware counter"
-    },
-    {
-      "name": "hardware-rx-abort",
-      "value": 2562,
-      "unit": "opaque hardware counter"
-    },
-    {
-      "name": "hardware-nrx-error-powerdrop",
-      "value": 0,
-      "unit": "opaque hardware counter"
-    },
-    {
-      "name": "hardware-rx-buffer-full",
-      "value": 0,
-      "unit": "opaque hardware counter"
-    },
-    {
-      "name": "hardware-rx-fifo-overflow",
-      "value": 0,
-      "unit": "opaque hardware counter"
-    },
-    {
-      "name": "internal-pool-window-misses",
-      "value": 0,
-      "unit": "calls"
-    },
-    {
-      "name": "internal-pool-window-fallback-successes",
-      "value": 0,
-      "unit": "allocations"
-    },
-    {
-      "name": "internal-pool-window-fallback-bytes",
-      "value": 0,
-      "unit": "bytes"
-    },
-    {
-      "name": "internal-pool-window-final-null",
-      "value": 0,
-      "unit": "allocations"
-    },
-    {
-      "name": "internal-pool-window-minimum-free",
-      "value": 197136,
-      "unit": "bytes"
-    },
-    {
-      "name": "control-api-network-id-readback",
-      "value": 0,
-      "unit": "temporary WPA2 network ID listed before selection"
+      "unit": "no second BSSID in scan result"
     }
   ],
   "limits": [
-    "One operator-reported V1.2 sample. Candidate RAM images do not establish release support, persistent Wi-Fi operation, or support for other revisions.",
-    "The ppRxProtoProc and sublength hooks observe instrumented software boundaries only; they do not establish all-hardware or over-the-air traffic. No DATA at these boundaries does not determine whether the AP transmitted or where any earlier loss occurred.",
-    "The DATA-state histogram prints only nonzero bins. Since the measured DATA count was zero, no histogram entries were emitted; this is expected, not a failed measurement.",
-    "Association-stage STA and BSSID register readback values were captured, valid and matched expected values. Begin/end BSSID mismatch was outside association during transition, not an invalid expected value.",
-    "AP logs record association and station deauthentication after PTK timeout, not AP transmission or acknowledgement of M1.",
-    "Hardware RX counters are opaque and do not identify frame type or prove memory pressure. Internal-pool misses, fallback and NULL were zero in this window.",
-    "In wpa_supplicant 2.12 STATUS generation (https://w1.fi/cgit/hostap/tree/src/rsn_supp/wpa.c?h=hostap_2_12#n5303), pmf reports AP RSN capability bits when local MFP is enabled: 1 means MFPC set/MFPR clear; 2 means MFPR set. It is not local ieee80211w policy. The strict SAE attempt did not reach WPA_COMPLETED, so negotiated PMF/IGTK was not established.",
-    "No EAPOL input, WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. Wi-Fi support remains partial."
+    "One operator-reported V1.2 sample; this does not establish support for other revisions.",
+    "SAE remained COMPLETED for about five minutes during this bounded session; this does not establish long-duration reliability.",
+    "Small and 1400-byte ICMP echo tests passed; TCP throughput and general large-payload data transfer were not measured.",
+    "An explicit scan did not disconnect the SAE session, but no second same-SSID BSSID was found. Manual client roaming is unverified.",
+    "WPA2 and strict SAE handshakes completed on the normal RAM image; no NOR-installed production boot was tested in this evidence record.",
+    "802.11k/v/r and BTM/RRM behavior are under investigation and were not validated here.",
+    "No forged-frame protection test has been completed.",
+    "STATUS pmf=1 means AP MFPC set/MFPR clear; local ieee80211w=2 is the independent required-PMF policy.",
+    "The SAE AP observer had no capture delta; SAE completion and IGTK installation rely on supplicant/driver reports, not independent AP-side capture."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
-    "mosaico-wifi-association-observation",
-    "mosaico-espwifi-radio-once-debug-source",
-    "mosaico-espwifi-rx-observer-source",
-    "mosaico-espwifi-rx-accounting-source"
+    "mosaico-espwifi-wpa-parser-source",
+    "mosaico-espwifi-config-done-callback",
+    "mosaico-espwifi-auth-join-diagnostics-source",
+    "mosaico-sae-capability-fix-source",
+    "mosaico-wifi-association-observation"
   ]
 }
