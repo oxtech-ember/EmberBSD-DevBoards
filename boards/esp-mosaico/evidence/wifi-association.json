@@ -30,11 +30,17 @@
       "revision": "Local ieee80211w=2; profile identifiers and credentials omitted.",
       "sha256": null,
       "reference": null
+    },
+    {
+      "name": "Normal NOR firmware FIT",
+      "revision": "Installed at firmware offset 0x20000; ordinary POWER reboot into LittleFS flash1.",
+      "sha256": "397cd8df5878f93317200ad58598bb73f2ff1f05b669090af63495527fff01da",
+      "reference": null
     }
   ],
-  "scenario": "On one operator-reported CoreBoard V1.2 sample, verify normal-image WPA2-PSK and strict-SAE completion, IPv4/DNS configuration, gateway reachability and continuity through a scan.",
-  "expected": "Both handshakes complete; the SAE session retains network configuration and reaches DNS/gateway endpoints during a bounded check.",
-  "observed": "On the normal RAM image, strict SAE with local ieee80211w=2 reached WPA_COMPLETED and remained COMPLETED for about five minutes. DHCPv4 assigned an IPv4 /24 configuration and nameserver; the lease remained present, DNS resolved example.com, and the gateway returned 3/3 replies for both small and 1400-byte ICMP probes. An explicit scan did not disconnect the SAE session, but no second same-SSID BSSID appeared in scan results. Normal-image WPA2-PSK also reached WPA_COMPLETED with CCMP pairwise/group ciphers; the supplicant observed EAPOL M1, M2, M3 and M4 once each. The RSN app-IE ownership fix changed vendor registration from a borrowed stack IE (flag 1, retained pointer to a length-prefixed record whose first two bytes were overwritten) to vendor-owned copy mode (flag 0). The auth_done fix passes common controlled-port authorization to esp_wifi_auth_done_internal through the bounded radio worker once per join generation; a local port revoke closes traffic without repeating vendor completion if that join is reauthorized. The SAE AP observer had no capture delta, so SAE completion and IGTK installation are based on supplicant/driver reports. This is a bounded connectivity check, not a roaming or sustained-reliability result. A later supplicant ROAM control request failed before the driver connect path, so it did not perform an over-the-air roam; its cause is still under investigation.",
+  "scenario": "On one operator-reported CoreBoard V1.2 sample, verify normal-image WPA2-PSK and strict-SAE completion, IPv4/DNS configuration, gateway reachability, scan continuity, and configured NOR multiuser network startup.",
+  "expected": "Both handshakes complete; network configuration and basic reachability remain available in bounded checks, including after the normal NOR boot path.",
+  "observed": "On the normal RAM image, strict SAE with local ieee80211w=2 reached WPA_COMPLETED and remained COMPLETED for about five minutes. DHCPv4 assigned an IPv4 /24 configuration and nameserver; the lease remained present, DNS resolved example.com, and the gateway returned 3/3 replies for both small and 1400-byte ICMP probes. A later bounded scan preserved the link, showed two same-SSID BSSIDs, and a new COMPLETED state was observed on the second BSSID before explicit ROAM. Normal-image WPA2-PSK also reached WPA_COMPLETED with CCMP pairwise/group ciphers; the supplicant observed EAPOL M1, M2, M3 and M4 once each. The RSN app-IE ownership fix changed vendor registration from a borrowed stack IE (flag 1, retained pointer to a length-prefixed record whose first two bytes were overwritten) to vendor-owned copy mode (flag 0). The auth_done fix passes common controlled-port authorization to esp_wifi_auth_done_internal through the bounded radio worker once per join generation; a local port revoke closes traffic without repeating vendor completion if that join is reauthorized. The SAE AP observer had no capture delta, so SAE completion and IGTK installation are based on supplicant/driver reports. After a normal POWER reboot of the installed NOR FIT, the multiuser system started wpa_supplicant and dhcpcd automatically without rcorder error; WPA3-SAE profile 3 was COMPLETED with CCMP and STATUS pmf=1, IPv4 and DNS resolution of example.com succeeded, and hostname ember-mosaico-01 matched. The installed root did not contain mDNS files. A replacement 10 MiB LittleFS root image with the daemon, stock service script, and configured network files has been prepared but not written; mDNS startup and host lookup remain unverified. The fresh-BSS-cache supplicant ROAM request returned OK; teardown began with rescan requested and was followed by station disconnect reason 8. Completion of transition and new association were not confirmed; subsequent STATUS/shell-marker commands received no response and the stopping point is unknown. This does not establish a radio assertion or kernel hang. This is bounded connectivity evidence, not sustained reliability or roaming acceptance.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -119,21 +125,41 @@
     },
     {
       "name": "same-ssid-second-bssid-visible",
+      "value": 1,
+      "unit": "later bounded scan showed two same-SSID BSSIDs"
+    },
+    {
+      "name": "nor-multiuser-network-autostart",
+      "value": 1,
+      "unit": "ordinary POWER reboot; wpa_supplicant and dhcpcd started without manual starts or rcorder error"
+    },
+    {
+      "name": "nor-sae-completed-after-boot",
+      "value": 1,
+      "unit": "profile 3; WPA_COMPLETED, CCMP, STATUS pmf=1"
+    },
+    {
+      "name": "nor-dns-example-com-resolved",
+      "value": 1,
+      "unit": "successful DNS resolution after automatic network startup"
+    },
+    {
+      "name": "nor-mdns-tested",
       "value": 0,
-      "unit": "no second BSSID in scan result"
+      "unit": "file-level LittleFS delta is prepared; service startup and host lookup not yet tested"
     }
   ],
   "limits": [
     "One operator-reported V1.2 sample; this does not establish support for other revisions.",
     "SAE remained COMPLETED for about five minutes during this bounded session; this does not establish long-duration reliability.",
     "Small and 1400-byte ICMP echo tests passed; TCP throughput and general large-payload data transfer were not measured.",
-    "An explicit scan did not disconnect the SAE session, but no second same-SSID BSSID was found. Manual client roaming is unverified.",
-    "WPA2 and strict SAE handshakes completed on the normal RAM image; no NOR-installed production boot was tested in this evidence record.",
+    "A later bounded scan showed two same-SSID BSSIDs and a new COMPLETED state was observed on the second BSSID; explicit ROAM was accepted, but transition completion and a new association remain unconfirmed.",
+    "The NOR-installed image passed one ordinary POWER reboot with automatic WPA/DHCP startup, SAE COMPLETED, IPv4 and DNS. A replacement root image is prepared but not written; mDNS service startup and host lookup remain unverified.",
     "802.11k/v/r and BTM/RRM behavior are under investigation and were not validated here.",
     "No forged-frame protection test has been completed.",
     "STATUS pmf=1 means AP MFPC set/MFPR clear; local ieee80211w=2 is the independent required-PMF policy.",
     "The SAE AP observer had no capture delta; SAE completion and IGTK installation rely on supplicant/driver reports, not independent AP-side capture.",
-    "A supplicant ROAM control request failed before driver connect and did not test over-the-air roaming; the request failure cause is under investigation, not evidence of a driver roaming failure."
+    "A fresh-cache ROAM request returned OK; connection teardown began with rescan requested and disconnect reason 8 followed. Transition completion and a new association are unconfirmed; subsequent STATUS/shell-marker commands did not respond, and the stopping point is unknown. This is not evidence of a kernel hang or radio assertion."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
