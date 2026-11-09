@@ -14,22 +14,22 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT normal STA RX callback diagnostic FIT",
-      "revision": "RAM-loaded diagnostic kernel from OS commit a88ec7252aa; FIT SHA256 identifies the tested package.",
-      "sha256": "0ddccdbfff3fbbee8770affcd08306542a72a12320b56a2f3c91fba92ddfc182",
+      "name": "ESP_MOSAICO_SC101IOT PP RX protocol diagnostic FIT",
+      "revision": "Candidate RAM kernel based on OS baseline a88ec7252aa plus the 4e56 PP RX diagnostic; not current main net80211.",
+      "sha256": "fc13316419e0f6695640777df6784967aa0e42ebbc1008e3a3b90c6808ce3b97",
       "reference": null
     },
     {
       "name": "WPA2-PSK/CCMP/PMF0 profile and selected AP",
-      "revision": "WPA2 trial against the configured AP; identifiers omitted.",
+      "revision": "Pinned AP0 control trial; identifiers omitted.",
       "sha256": null,
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, run WPA2-PSK/CCMP/PMF0 using the normal STA RX callback diagnostic FIT, with bounded callback, hardware-RX and internal-pool counters.",
-  "expected": "Associate and complete WPA, while recording actual STA callback frame types, opaque hardware counters and internal-pool pressure.",
-  "observed": "The station associated but did not complete WPA; it disconnected locally with reason 204 after the PTK four-way handshake timeout. The AP record shows station deauthentication after the PTK timeout, but does not establish M1 transmission or acknowledgement. The live pTxRx table pointer remained stable at 0x80625408 and slot +0x3f8 matched the instrumented sta_rx_cb wrapper. The callback ran 141 times; all 141 frames were management type, with control/data/extension counts 0/0/0. This confirms management ingress to the normal STA callback, while no data frame reached that callback during the measured window; it does not establish whether data frames reached earlier hardware or ROM stages. The four older net80211 table-wrapper counters, crypto/decap/EAPOL counters remained zero and are not a proxy for this direct callback path. Hardware RX statistics were active (getter succeeded) but remain opaque and do not identify frame type. Internal-pool misses, successful fallback and final NULL were zero; window minimum free memory was 197136 bytes. WPA_COMPLETED was not observed.",
-  "duration_seconds": null,
+  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, run one bounded WPA2-PSK/CCMP/PMF0 control trial using the PP RX protocol diagnostic FIT, recording FC type and rxmatch0 counts before the ROM routing check.",
+  "expected": "Reach WPA_COMPLETED while recording the ppRxProtoProc and normal STA callback boundaries, native state, opaque hardware counters, and internal-pool pressure.",
+  "observed": "The station reached ASSOCIATED but not WPA_COMPLETED; the final supplicant status was ASSOCIATED and the kernel later disconnected with reason 204. Native Wi-Fi state advanced init→auth→assoc→run with RX policy 6, then run→init (0xcc00). The pp_wdev_funcs table at ppRxProtoProc +0x198 remained 0x2f030070, wrapper_match=1, with slot 1 at both begin and end. Its FC matrix (management/control/data/extension × rxmatch0 clear/set) was 0/123, 0/0, 0/0, 0/0; invalid and short counts were zero. The normal pTxRx table remained 0x80625408 with the +0x3f8 wrapper matched; sta_rx_cb ran 123 times, all management type, with control/data/extension counts 0/0/0. sta_input_table, crypto_decap, decap and sta_rx_eapol each remained zero. AP0 logs recorded association, station deauthentication after a PTK 4-way handshake timeout, another association and station disassociation; these records do not prove AP M1 transmission or station ACK. Hardware statistics getter succeeded, but rx_datasuc=123 and rx_buf_fullcnt=96 are opaque values, not frame-type evidence. Internal-pool misses, fallbacks and final NULL were zero; the window minimum free was 197136 bytes.",
+  "duration_seconds": 11.531,
   "measurements": [
     {
       "name": "sta-association",
@@ -39,47 +39,137 @@
     {
       "name": "disconnect-reason",
       "value": 204,
-      "unit": "local disconnect after PTK four-way handshake timeout"
+      "unit": "local disconnect after PTK 4-way handshake timeout"
     },
     {
-      "name": "normal-sta-rx-table",
-      "value": "0x80625408",
-      "unit": "stable pTxRx pointer; slot +0x3f8 matched wrapper"
+      "name": "diagnostic-window",
+      "value": 11.531,
+      "unit": "seconds from debug enable through disconnect"
     },
     {
-      "name": "sta-rx-callback-entries",
-      "value": 141,
+      "name": "native-run-state",
+      "value": 1,
+      "unit": "state reached"
+    },
+    {
+      "name": "native-rx-policy-at-run",
+      "value": 6,
+      "unit": "policy value"
+    },
+    {
+      "name": "normal-sta-table-wrapper-match",
+      "value": 1,
+      "unit": "pTxRx pointer stable; slot +0x3f8 matched"
+    },
+    {
+      "name": "normal-sta-rx-callback-entries",
+      "value": 123,
       "unit": "calls"
     },
     {
-      "name": "sta-rx-callback-management",
-      "value": 141,
+      "name": "normal-sta-rx-callback-management",
+      "value": 123,
       "unit": "802.11 frame type"
     },
     {
-      "name": "sta-rx-callback-control",
+      "name": "normal-sta-rx-callback-control",
       "value": 0,
       "unit": "802.11 frame type"
     },
     {
-      "name": "sta-rx-callback-data",
+      "name": "normal-sta-rx-callback-data",
       "value": 0,
       "unit": "802.11 frame type"
     },
     {
-      "name": "sta-rx-callback-extension",
+      "name": "normal-sta-rx-callback-extension",
       "value": 0,
       "unit": "802.11 frame type"
     },
     {
-      "name": "older-table-crypto-decap-eapol-counters",
-      "value": 0,
-      "unit": "calls; separate path and not a proxy for direct STA callback"
+      "name": "pp-rx-proto-table-wrapper-match",
+      "value": 1,
+      "unit": "pp_wdev_funcs table stable; slot +0x198 matched"
     },
     {
-      "name": "hardware-rx-statistics",
-      "value": "active",
-      "unit": "getter succeeded; opaque values do not identify frame type"
+      "name": "pp-rx-proto-management-rxmatch0-clear",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "pp-rx-proto-management-rxmatch0-set",
+      "value": 123,
+      "unit": "calls"
+    },
+    {
+      "name": "pp-rx-proto-control-rxmatch0-clear",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "pp-rx-proto-control-rxmatch0-set",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "pp-rx-proto-data-rxmatch0-clear",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "pp-rx-proto-data-rxmatch0-set",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "pp-rx-proto-extension-rxmatch0-clear",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "pp-rx-proto-extension-rxmatch0-set",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "pp-rx-proto-invalid-pointer-count",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "pp-rx-proto-short-frame-count",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "sta-input-entries",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "crypto-decap-entries",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "decap-entries",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "sta-rx-eapol-entries",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "hardware-rx-datasuc",
+      "value": 123,
+      "unit": "opaque hardware counter; not a DATA frame count"
+    },
+    {
+      "name": "hardware-rx-buffer-full",
+      "value": 96,
+      "unit": "opaque hardware counter; not proof of allocation failure"
     },
     {
       "name": "internal-pool-window-misses",
@@ -103,15 +193,18 @@
     }
   ],
   "limits": [
-    "One operator-reported V1.2 sample and one RAM-loaded diagnostic run; the result does not establish support for other revisions or persistent Wi-Fi operation.",
-    "The 141 normal STA callback entries were management frames; zero data callbacks in this window does not establish whether the hardware or earlier ROM stages received data frames.",
-    "Hardware RX statistics are undocumented/opaque and cannot establish reception of DATA or EAPOL, nor distinguish filtering from memory pressure.",
-    "Internal-pool misses, fallback and NULL were zero in this measured window only.",
-    "The AP record confirms association and station deauthentication after the PTK timeout, not AP transmission or station acknowledgement of M1.",
+    "One operator-reported V1.2 sample and one RAM-loaded candidate diagnostic kernel; this does not establish support for other revisions or persistent Wi-Fi operation.",
+    "The ppRxProtoProc wrapper is called from both ppRxPkt routing branches after dequeue and earlier vendor stages, before fragment and rxmatch0 checks. It saw no control, DATA or extension frames in this window. It is not an over-the-air or all-hardware observer, so this result does not determine whether the AP transmitted a frame or where any earlier loss occurred.",
+    "The normal STA callback also saw management frames only. Zero DATA at either measured boundary does not establish whether DATA reached unobserved hardware or ROM stages.",
+    "AP0 logs record association and station deauthentication after the PTK timeout, not AP transmission or station acknowledgement of M1. Successful-empty association snapshots can miss short associations.",
+    "Hardware rx_datasuc and rx_buf_fullcnt are opaque counters and do not identify frame type or prove memory pressure. Internal-pool misses, fallback and NULL were zero in this measured window.",
     "No EAPOL input, WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. Wi-Fi support remains partial."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
-    "mosaico-wifi-association-observation"
+    "mosaico-wifi-association-observation",
+    "mosaico-espwifi-radio-once-debug-source",
+    "mosaico-espwifi-rx-observer-source",
+    "mosaico-espwifi-rx-accounting-source"
   ]
 }
