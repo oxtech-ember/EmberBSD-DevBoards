@@ -102,18 +102,21 @@ The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
 without ring or allocation failures. One strict SAE/PMF-required trial and the
 latest WPA2-PSK/CCMP/PMF0 control reached native `RUN`, but neither reached
 `WPA_COMPLETED`; both ended after the PTK handshake timeout (reason 204).
-The WPA2 diagnostic wrapped `ppRxProtoProc` at `pp_wdev_funcs+0x198`. Its live
-slot matched, and the wrapper counted 123 management frames with `rxmatch0`
-set and no control, data or extension frames. The normal STA callback counted
-the same 123 management frames. This wrapper covers both `ppRxPkt` branches
-before fragment and `rxmatch0` checks, after dequeue and earlier vendor stages.
-It does not observe all hardware or over-the-air traffic, so the absence of
-DATA at this boundary does not establish whether the AP transmitted a frame or
-where any earlier loss occurred. The AP log records association and station
-deauthentication after the PTK timeout, not M1 transmission or acknowledgement.
-Hardware RX values remain opaque (`rx_buf_fullcnt` 96); internal-pool misses,
-fallback and NULL were zero. No EAPOL input, negotiated PMF, IPv4 address or
-accepted network data exchange followed. See the
+In the latest WPA2 diagnostic, the live `pp_wdev_funcs+0x198` protocol hook
+counted 122 management frames with `rxmatch0` set and no control, data or
+extension frames; the normal STA callback saw the same 122 management frames.
+The `pp_wdev_funcs+0x414` sublength hook and ROM caller at +0x1f4 matched and
+counted 124 management frames, with invalid and short counts zero. The DATA
+state histogram prints only nonzero bins, so it is empty as expected when no
+DATA frames were observed. Association-stage STA and BSSID register readbacks
+were valid and matched; begin/end BSSID mismatch occurred during transition
+outside association. These hooks do not observe all hardware or over-the-air
+traffic, so they do not establish whether the AP transmitted a frame or where
+any earlier loss occurred. The AP log records station deauthentication after
+the PTK timeout, not M1 transmission or acknowledgement. Hardware RX values
+are opaque; internal-pool misses, fallback and NULL were zero, with 197136
+bytes minimum free. No EAPOL input, negotiated PMF, IPv4 address or accepted
+network data exchange followed. See the
 [association evidence](evidence/wifi-association.json). WPA2 authentication,
 DHCP/DNS, reconnect, roaming and sustained transfer remain unverified.
 

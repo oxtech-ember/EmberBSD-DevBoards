@@ -14,9 +14,9 @@
   },
   "inputs": [
     {
-      "name": "ESP_MOSAICO_SC101IOT PP RX protocol diagnostic FIT",
-      "revision": "Candidate RAM kernel based on OS baseline a88ec7252aa plus the 4e56 PP RX diagnostic; not current main net80211.",
-      "sha256": "fc13316419e0f6695640777df6784967aa0e42ebbc1008e3a3b90c6808ce3b97",
+      "name": "ESP_MOSAICO_SC101IOT WDEV RX diagnostic FIT",
+      "revision": "Candidate RAM kernel diagnostic d76cb; not a release image.",
+      "sha256": "404573b117f6b117f0f36862ed4d75269bbc52ca9ec79ff90aa75f4b02265e01",
       "reference": null
     },
     {
@@ -26,15 +26,15 @@
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported ESP-Mosaico V1.2 sample, run one bounded WPA2-PSK/CCMP/PMF0 control trial using the PP RX protocol diagnostic FIT, recording FC type and rxmatch0 counts before the ROM routing check.",
-  "expected": "Reach WPA_COMPLETED while recording the ppRxProtoProc and normal STA callback boundaries, native state, opaque hardware counters, and internal-pool pressure.",
-  "observed": "The station reached ASSOCIATED but not WPA_COMPLETED; the final supplicant status was ASSOCIATED and the kernel later disconnected with reason 204. Native Wi-Fi state advanced init→auth→assoc→run with RX policy 6, then run→init (0xcc00). The pp_wdev_funcs table at ppRxProtoProc +0x198 remained 0x2f030070, wrapper_match=1, with slot 1 at both begin and end. Its FC matrix (management/control/data/extension × rxmatch0 clear/set) was 0/123, 0/0, 0/0, 0/0; invalid and short counts were zero. The normal pTxRx table remained 0x80625408 with the +0x3f8 wrapper matched; sta_rx_cb ran 123 times, all management type, with control/data/extension counts 0/0/0. sta_input_table, crypto_decap, decap and sta_rx_eapol each remained zero. AP0 logs recorded association, station deauthentication after a PTK 4-way handshake timeout, another association and station disassociation; these records do not prove AP M1 transmission or station ACK. Hardware statistics getter succeeded, but rx_datasuc=123 and rx_buf_fullcnt=96 are opaque values, not frame-type evidence. Internal-pool misses, fallbacks and final NULL were zero; the window minimum free was 197136 bytes.",
+  "scenario": "One bounded WPA2-PSK/CCMP/PMF0 control attempt on an operator-reported V1.2 sample, with pinned AP0 and diagnostic observations at the normal STA callback, vendor protocol/sublength boundaries, association-stage register readback, and opaque hardware/allocator counters.",
+  "expected": "Reach WPA_COMPLETED while checking live diagnostic bindings, observed receive frame-type counts, association-stage register values, native state, and AP log evidence.",
+  "observed": "The station reached native RUN at RX policy 6 but did not reach WPA_COMPLETED; the supplicant ended in SCANNING and the kernel disconnected with reason 204 after the PTK 4-way handshake timeout. The normal pTxRx table at +0x3f8 matched; sta_rx_cb ran 122 times, all management frames (122/0/0/0). sta_input_table, crypto_decap, decap, and sta_rx_eapol were zero. The pp_wdev_funcs hook at ppRxProtoProc+0x198 matched its live slot; its FC matrix (management/control/data/extension × rxmatch0 clear/set) was 0/122, 0/0, 0/0, 0/0. The sublength hook at pp_wdev_funcs+0x414 and its ROM caller at +0x1f4 matched at begin/end. Its FC matrix was 0/124, 0/0, 0/0, 0/0; invalid and short were zero. The DATA-state histogram prints only nonzero bins; with no observed DATA, no histogram entries were printed, as expected. Association-stage register readback captured valid STA and BSSID values, both matching expected values. BSSID readback did not match outside the association stage during begin/end transitions; this is a phase transition, not an invalid expected address. AP logs recorded two associations, station deauthentication after the PTK timeout, and station disassociation. They do not establish AP transmission or ACK of M1. Hardware getter succeeded; rx_datasuc=124 and other hardware counters are opaque. Allocator misses, fallback, and NULL were zero; window minimum free was 197136 bytes.",
   "duration_seconds": 11.531,
   "measurements": [
     {
-      "name": "sta-association",
+      "name": "native-run-state",
       "value": 1,
-      "unit": "associated; WPA_COMPLETED not observed"
+      "unit": "state reached"
     },
     {
       "name": "disconnect-reason",
@@ -45,11 +45,6 @@
       "name": "diagnostic-window",
       "value": 11.531,
       "unit": "seconds from debug enable through disconnect"
-    },
-    {
-      "name": "native-run-state",
-      "value": 1,
-      "unit": "state reached"
     },
     {
       "name": "native-rx-policy-at-run",
@@ -63,12 +58,12 @@
     },
     {
       "name": "normal-sta-rx-callback-entries",
-      "value": 123,
+      "value": 122,
       "unit": "calls"
     },
     {
       "name": "normal-sta-rx-callback-management",
-      "value": 123,
+      "value": 122,
       "unit": "802.11 frame type"
     },
     {
@@ -98,7 +93,7 @@
     },
     {
       "name": "pp-rx-proto-management-rxmatch0-set",
-      "value": 123,
+      "value": 122,
       "unit": "calls"
     },
     {
@@ -142,6 +137,66 @@
       "unit": "calls"
     },
     {
+      "name": "rx-sublength-table-wrapper-match",
+      "value": 1,
+      "unit": "pp_wdev_funcs slot +0x414 matched"
+    },
+    {
+      "name": "rx-sublength-rom-caller-match",
+      "value": 1,
+      "unit": "caller at ROM offset +0x1f4 matched"
+    },
+    {
+      "name": "rx-sublength-management-rxmatch0-clear",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "rx-sublength-management-rxmatch0-set",
+      "value": 124,
+      "unit": "calls"
+    },
+    {
+      "name": "rx-sublength-control-rxmatch0-clear",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "rx-sublength-control-rxmatch0-set",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "rx-sublength-data-rxmatch0-clear",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "rx-sublength-data-rxmatch0-set",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "rx-sublength-extension-rxmatch0-clear",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "rx-sublength-extension-rxmatch0-set",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "rx-sublength-invalid-pointer-count",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
+      "name": "rx-sublength-short-frame-count",
+      "value": 0,
+      "unit": "calls"
+    },
+    {
       "name": "sta-input-entries",
       "value": 0,
       "unit": "calls"
@@ -162,14 +217,69 @@
       "unit": "calls"
     },
     {
+      "name": "association-register-readback-match",
+      "value": 1,
+      "unit": "during association; captured and valid STA/BSSID values matched expected values"
+    },
+    {
+      "name": "transition-bssid-readback-mismatch",
+      "value": 1,
+      "unit": "outside association at begin/end; transition readback, not invalid expected value"
+    },
+    {
+      "name": "hardware-getter-start-rc",
+      "value": 0,
+      "unit": "return code"
+    },
+    {
+      "name": "hardware-getter-window-start-rc",
+      "value": 0,
+      "unit": "return code"
+    },
+    {
+      "name": "hardware-getter-window-end-rc",
+      "value": 0,
+      "unit": "return code"
+    },
+    {
+      "name": "hardware-rx-mpdu",
+      "value": 38264,
+      "unit": "opaque hardware counter"
+    },
+    {
+      "name": "hardware-rx-end-count",
+      "value": 38504,
+      "unit": "opaque hardware counter"
+    },
+    {
       "name": "hardware-rx-datasuc",
-      "value": 123,
+      "value": 124,
       "unit": "opaque hardware counter; not a DATA frame count"
     },
     {
+      "name": "hardware-rx-fcs-error",
+      "value": 1009,
+      "unit": "opaque hardware counter"
+    },
+    {
+      "name": "hardware-rx-abort",
+      "value": 3019,
+      "unit": "opaque hardware counter"
+    },
+    {
+      "name": "hardware-nrx-error-powerdrop",
+      "value": 0,
+      "unit": "opaque hardware counter"
+    },
+    {
       "name": "hardware-rx-buffer-full",
-      "value": 96,
-      "unit": "opaque hardware counter; not proof of allocation failure"
+      "value": 0,
+      "unit": "opaque hardware counter"
+    },
+    {
+      "name": "hardware-rx-fifo-overflow",
+      "value": 0,
+      "unit": "opaque hardware counter"
     },
     {
       "name": "internal-pool-window-misses",
@@ -180,6 +290,11 @@
       "name": "internal-pool-window-fallback-successes",
       "value": 0,
       "unit": "allocations"
+    },
+    {
+      "name": "internal-pool-window-fallback-bytes",
+      "value": 0,
+      "unit": "bytes"
     },
     {
       "name": "internal-pool-window-final-null",
@@ -194,10 +309,11 @@
   ],
   "limits": [
     "One operator-reported V1.2 sample and one RAM-loaded candidate diagnostic kernel; this does not establish support for other revisions or persistent Wi-Fi operation.",
-    "The ppRxProtoProc wrapper is called from both ppRxPkt routing branches after dequeue and earlier vendor stages, before fragment and rxmatch0 checks. It saw no control, DATA or extension frames in this window. It is not an over-the-air or all-hardware observer, so this result does not determine whether the AP transmitted a frame or where any earlier loss occurred.",
-    "The normal STA callback also saw management frames only. Zero DATA at either measured boundary does not establish whether DATA reached unobserved hardware or ROM stages.",
-    "AP0 logs record association and station deauthentication after the PTK timeout, not AP transmission or station acknowledgement of M1. Successful-empty association snapshots can miss short associations.",
-    "Hardware rx_datasuc and rx_buf_fullcnt are opaque counters and do not identify frame type or prove memory pressure. Internal-pool misses, fallback and NULL were zero in this measured window.",
+    "The ppRxProtoProc and sublength hooks observe the instrumented software boundaries only; they do not establish all-hardware or over-the-air traffic. No DATA at these boundaries does not determine whether the AP transmitted or where any earlier loss occurred.",
+    "The DATA-state histogram prints only nonzero bins. Since the measured DATA count was zero, no histogram entries were emitted; this is the expected empty histogram, not a failed measurement.",
+    "Association-stage register readback captured valid STA and BSSID values matching expected values. Begin/end BSSID mismatch occurred outside the association stage during transition and is not an invalid expected value.",
+    "AP logs record association and station deauthentication after PTK timeout, not AP transmission or station acknowledgement of M1.",
+    "Hardware rx_datasuc and related counters are opaque and do not identify frame type or prove memory pressure. Internal-pool misses, fallback and NULL were zero in this measured window.",
     "No EAPOL input, WPA_COMPLETED, negotiated PMF, IP address, DNS or accepted network data exchange was observed. Wi-Fi support remains partial."
   ],
   "source_refs": [
