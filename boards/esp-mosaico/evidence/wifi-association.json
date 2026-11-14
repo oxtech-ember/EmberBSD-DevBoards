@@ -3,7 +3,7 @@
   "kind": "evidence",
   "id": "mosaico-wifi-association",
   "target_id": "esp-mosaico",
-  "recorded_at": "2026-11-09",
+  "recorded_at": "2026-11-14",
   "layer": "physical",
   "result": "pass",
   "hardware": {
@@ -42,11 +42,23 @@
       "revision": "root-d38bb7a2; 10 MiB; written at 0x600000 with esptool Hash of data verified; tested with the RAM diagnostic kernel, not yet with a normal NOR boot.",
       "sha256": "d38bb7a216b087f4bf49477fb20368e4f0323b2ddac7cda8efe72c528516bce0",
       "reference": null
+    },
+    {
+      "name": "Multiuser RAM FIT with LittleFS flash1 root",
+      "revision": "Built on 2026-11-09; tested on 2026-11-14, successfully loaded root from flash1 and reached multiuser. Persistent SPL and FIT were unchanged.",
+      "sha256": "fb7b3758a9bbe649eace7462090526b2cc39cfe0ff897f15b86d9360d2462de7",
+      "reference": null
+    },
+    {
+      "name": "Current replacement LittleFS network root",
+      "revision": "root-c5fe; 10 MiB; written at 0x600000 on 2026-11-10 with esptool hash verification; tested from LittleFS flash1 by a multiuser RAM FIT on 2026-11-14; normal NOR boot remains unverified.",
+      "sha256": "c5fe776be10930ddfaa94d2ef5d84b59b0cd3c59115e3cd1de0817fd108653f5",
+      "reference": null
     }
   ],
   "scenario": "On one operator-reported CoreBoard V1.2 sample, verify normal-image WPA2-PSK and strict-SAE completion, IPv4/DNS configuration, gateway reachability, scan continuity, and configured NOR multiuser network startup.",
   "expected": "Both handshakes complete; network configuration and basic reachability remain available in bounded checks, including after the normal NOR boot path.",
-  "observed": "On the normal RAM image, strict SAE with local ieee80211w=2 reached WPA_COMPLETED and remained COMPLETED for about five minutes. DHCPv4 assigned an IPv4 /24 configuration and nameserver; DNS resolved example.com, and the gateway returned 3/3 replies for both small and 1400-byte ICMP probes. WPA2-PSK reached WPA_COMPLETED with CCMP pairwise/group ciphers; the supplicant observed EAPOL M1–M4 once each. A bounded scan preserved the link and exposed two same-SSID BSSIDs; before explicit ROAM, a new COMPLETED state was observed on the second BSSID. The RSN app-IE ownership fix uses vendor-owned copy mode, and the auth_done fix sends common controlled-port authorization through the bounded radio worker once per join generation. The SAE AP observer had no capture delta, so SAE completion and IGTK installation rely on supplicant/driver reports. An ordinary POWER reboot of the previously installed NOR FIT started wpa_supplicant and dhcpcd automatically without rcorder error; SAE profile 3 reached COMPLETED with CCMP and STATUS pmf=1, IPv4 and DNS example.com succeeded, and the hostname was ember-mosaico-01. A replacement 10 MiB LittleFS root (SHA-256 recorded in inputs) was then written at 0x600000 and passed esptool verification; it was tested with a RAM diagnostic kernel, but a normal NOR boot of this replacement root is not yet verified. With the mDNS service started and /bin/hostname confirmed as ember-mosaico-01, host A queries for ember-mosaico-01.local received no response over either legacy-unicast UDP/5353 or multicast UDP/5353 (TTL 255), each within a 3-second window. Cause is undetermined. A separate TCP roundtrip transferred 65,536 bytes in each direction with matching SHA-256. A later bounded scan exposed two same-SSID BSSIDs. A subsequent explicit fresh-cache ROAM request returned OK; teardown began with rescan requested and was followed by station disconnect reason 8. Transition completion and a new association were not confirmed. In a later, separate diagnostic scan (not a new ROAM), the native stop/start path reported teardown generation 2, error 0, and rescan requested; this confirms return from that control path, not scan completion. A management-helper timeout produced no marker, panic, or OOM evidence and does not establish a kernel hang. This is bounded connectivity evidence, not sustained reliability or roaming acceptance.",
+  "observed": "Earlier bounded RAM checks on this V1.2 sample reached WPA_COMPLETED with strict SAE and WPA2-PSK; DHCPv4, DNS resolution, and gateway ICMP also passed in bounded checks. A prior ordinary NOR boot with the previously installed root confirmed automatic WPA3/DHCP startup and basic network access. The 65,536-byte TCP roundtrip with matching host SHA-256 and the earlier bounded mDNS no-response checks were on root d38bb7a2. On 2026-11-14, a multiuser RAM FIT built on 2026-11-09 and tested with root c5fe loaded root from LittleFS flash1 and reached multiuser; this was not a normal NOR boot. Current status reported COMPLETED with SAE, CCMP, PMF=1, IPv4, and an associated BSSID; host ping succeeded. One corrected check passed its baseline, read 17 scan rows, and returned SKIP no_fresh_compatible_candidate; no candidate file was produced and no ROAM was sent. Visible same-ESS/SAE alternatives appeared compatible, but exact byte-level candidate and freshness criteria were not established. An earlier explicit ROAM request was accepted and teardown began with rescan requested, followed by station disconnect reason 8; transition completion and a new association remain unknown. A hostname mDNS lookup on the current c5fe runtime also received no response within four seconds. Cause is undetermined.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -175,21 +187,51 @@
       "unit": "target file size 65,536 bytes; host SHA-256 of original and returned payloads matched"
     },
     {
-      "name": "latest-scan-control-stop-start",
+      "name": "previous-diagnostic-scan-control-stop-start",
       "value": 1,
-      "unit": "native teardown generation 2, error 0, rescan requested; scan/transition completion not established"
+      "unit": "separate earlier probe: teardown generation 2, error 0, rescan requested; distinct from the 2026-11-14 17-row scan"
+    },
+    {
+      "name": "current-ram-multiuser-rootflash1-boot",
+      "value": 1,
+      "unit": "multiuser reached with root loaded from LittleFS flash1"
+    },
+    {
+      "name": "current-wifi-status-completed",
+      "value": 1,
+      "unit": "SAE, CCMP, PMF=1, IPv4, and associated BSSID reported"
+    },
+    {
+      "name": "current-host-ping-replied",
+      "value": 1,
+      "unit": "host ping to the current target succeeded"
+    },
+    {
+      "name": "corrected-roam-check-scan-rows",
+      "value": 17,
+      "unit": "one corrected check; result SKIP no_fresh_compatible_candidate"
+    },
+    {
+      "name": "corrected-roam-check-command-sent",
+      "value": 0,
+      "unit": "no candidate file; no ROAM request issued"
+    },
+    {
+      "name": "current-mdns-hostname-lookup-response",
+      "value": 0,
+      "unit": "no response within four seconds"
     }
   ],
   "limits": [
     "One operator-reported V1.2 sample; this does not establish support for other revisions.",
-    "SAE remained COMPLETED for about five minutes during this bounded session; this does not establish long-duration reliability.",
-    "A 65,536-byte TCP transfer and return passed with matching host SHA-256; throughput and sustained reliability were not measured.",
+    "SAE remained COMPLETED for about five minutes during an earlier bounded session; this does not establish long-duration reliability.",
+    "A 65,536-byte TCP transfer and return passed with matching host SHA-256 on the earlier d38bb7a2 root; throughput and sustained reliability were not measured.",
     "802.11k/v/r and BTM/RRM behavior are under investigation and were not validated here.",
     "No forged-frame protection test has been completed.",
     "STATUS pmf=1 means AP MFPC set/MFPR clear; local ieee80211w=2 is the independent required-PMF policy.",
     "The SAE AP observer had no capture delta; SAE completion and IGTK installation rely on supplicant/driver reports, not independent AP-side capture.",
-    "The replacement LittleFS root was written and tested with a RAM diagnostic kernel; a normal NOR boot with that replacement root remains unverified. The daemon started, but host queries for the verified hostname received no mDNS response over unicast or multicast; cause is undetermined.",
-    "A later bounded scan exposed two same-SSID BSSIDs. A fresh-cache explicit ROAM returned OK; teardown began with rescan requested and disconnect reason 8 followed, but transition completion and a new association remain unconfirmed. A separate later diagnostic scan reported stop/start generation 2, error 0, rescan requested; it was not a new ROAM and scan completion was not established. A management-helper timeout alone does not establish a kernel hang."
+    "The c5fe root was written and tested by a multiuser RAM FIT loading root from flash1; a normal NOR boot with this root remains unverified. Hostname mDNS lookups did not receive a response; cause is undetermined.",
+    "The 2026-11-14 check read 17 scan rows but skipped before ROAM because no fresh compatible candidate was accepted. Visible same-ESS/SAE alternatives do not establish exact candidate-byte or freshness criteria, and no transition was tested in that run. An earlier accepted ROAM had an unconfirmed transition outcome."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
