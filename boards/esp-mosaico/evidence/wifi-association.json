@@ -5,7 +5,7 @@
   "target_id": "esp-mosaico",
   "recorded_at": "2026-11-14",
   "layer": "physical",
-  "result": "fail",
+  "result": "inconclusive",
   "hardware": {
     "revision": "1.2",
     "carrier_id": null,
@@ -32,9 +32,15 @@
       "reference": null
     },
     {
-      "name": "Normal NOR firmware FIT",
-      "revision": "Installed at firmware offset 0x20000; ordinary POWER reboot into LittleFS flash1.",
+      "name": "Previous normal NOR firmware FIT",
+      "revision": "Previous persistent FIT at firmware offset 0x20000; used for the earlier normal POWER boot and the prior 9c55 ROAM reconnect failure.",
       "sha256": "397cd8df5878f93317200ad58598bb73f2ff1f05b669090af63495527fff01da",
+      "reference": null
+    },
+    {
+      "name": "Current NOR firmware FIT kernel #27",
+      "revision": "OS commit 2300977a; ASan/UBSan checks for the published change passed; 1,530,880 bytes written at offset 0x20000 together with the unchanged 9c55 root. Built-in verification passed for both writes in about 66 seconds; SPL was preserved. Normal POWER boot reached root on flash1.",
+      "sha256": "cd6e15d3409d6946e62897348831eeeab20c911f34e09c4ab1f1940116b0c073",
       "reference": null
     },
     {
@@ -51,20 +57,20 @@
     },
     {
       "name": "Previous replacement LittleFS network root",
-      "revision": "root-c5fe; 10 MiB; written at 0x600000 on 2026-11-10 with esptool hash verification; tested from LittleFS flash1 by a multiuser RAM FIT on 2026-11-14; normal NOR boot remains unverified.",
+      "revision": "root-c5fe; 10 MiB; written at 0x600000 on 2026-11-10 with esptool hash verification; tested from LittleFS flash1 by a multiuser RAM FIT on 2026-11-14; normal NOR boot not established.",
       "sha256": "c5fe776be10930ddfaa94d2ef5d84b59b0cd3c59115e3cd1de0817fd108653f5",
       "reference": null
     },
     {
       "name": "Current replacement LittleFS network root",
-      "revision": "root-9c55; 10 MiB; written at 0x600000 on 2026-11-14 in 49.3 seconds; built-in hash verification passed. Normal POWER boot reached root on LittleFS flash1 with the existing persistent FIT unchanged.",
+      "revision": "root-9c55; 10 MiB at LittleFS offset 0x600000; unchanged in the 2026-11-14 combined FIT/root write, whose built-in verification passed. Normal POWER boot with kernel #27 reached root on flash1.",
       "sha256": "9c55ab6437f4f5c20e553eee1d4c383234c6c2784c2fb2a489da1551ab541375",
       "reference": null
     }
   ],
-  "scenario": "On one operator-reported CoreBoard V1.2 sample, verify normal-image WPA2-PSK and strict-SAE completion, IPv4/DNS configuration, gateway reachability, scan continuity, a requested ROAM reaching a new authorized association, and configured NOR multiuser network startup.",
-  "expected": "Both handshakes complete; network configuration and basic reachability remain available in bounded checks, including after the normal NOR boot path; a requested ROAM reaches a new authorized WPA_COMPLETED association.",
-  "observed": "Earlier bounded checks on this V1.2 sample reached WPA_COMPLETED with strict SAE and WPA2-PSK; DHCPv4, DNS, and gateway ICMP passed in bounded checks. A prior ordinary NOR boot with an earlier root confirmed automatic WPA3/DHCP startup and basic network access. The 65,536-byte TCP roundtrip with matching host SHA-256 and earlier bounded mDNS no-response checks were on root d38bb7a2. On 2026-11-14, the 10 MiB root 9c55 was written to LittleFS at 0x600000; built-in hash verification passed. An ordinary POWER boot with the existing persistent FIT reached root on flash1. The SAE baseline reached COMPLETED. A 16-row scan found two exact same-ESS SAE alternatives, and the selected candidate matched the request. The ROAM request returned OK and produced association generation 11; the adapter accepted the first EAPOL frame. Authorization completion was not observed, and the connection ended before WPA_COMPLETED. The driver reported state transition INIT with argument 1, followed by DISCONNECTED at the deadline. A bounded host ping lost all packets, and the router showed no association for the target. Host mDNS A and AAAA queries received no response within four seconds. The partial mDNS state dump reported Sent=0, Received=0, UP=1 but was incomplete; no complete table state is inferred. Restoring the stock mDNS service returned OK. WIFI_PROBE_DONE was not captured, so the probe did not produce a completion marker.",
+  "scenario": "On one operator-reported CoreBoard V1.2 sample, verify normal-image WPA2-PSK and strict-SAE completion, IPv4/DNS configuration, gateway reachability, connected-scan continuity, a requested ROAM reaching a new authorized association, and configured NOR multiuser network startup.",
+  "expected": "Both handshakes complete; network configuration and basic reachability remain available in bounded checks, including after the normal NOR boot path; connected scans preserve service; a requested ROAM reaches a new authorized WPA_COMPLETED association.",
+  "observed": "Earlier bounded checks on this V1.2 sample reached WPA_COMPLETED with strict SAE and WPA2-PSK; DHCPv4, DNS, and gateway ICMP passed in bounded checks. A prior ordinary NOR boot with an earlier root confirmed automatic WPA3/DHCP startup and basic network access. The 65,536-byte TCP roundtrip with matching host SHA-256 and earlier bounded mDNS no-response checks were on root d38bb7a2. With the previous NOR FIT (397cd8df) and root 9c55, an earlier ROAM returned OK, but authorization completion was not observed before the connection ended ahead of WPA_COMPLETED; this is prior-FIT history, not the current FIT result. On 2026-11-14, current FIT kernel #27 (OS commit 2300977a; SHA-256 recorded in inputs) and the unchanged 10 MiB 9c55 root were written together with built-in verification for both; SPL was preserved. Normal POWER boot reached root on flash1. The 120-second probe returned SKIP no_fresh_compatible_candidate before issuing ROAM. Its 15-row scan showed two same-ESS/SAE alternatives and one eligible alternate, but the candidate file and BSS detail were absent, so the exact prior selection predicate cannot be reconstructed. Runtime symptoms scan error 0x3006 and SAE_ESTale70 were not observed in this run. SAE callbacks in generation 8 completed, followed by reason 4 before EAPOL. Generation 12 later reached SAE/EAPOL and port-authorized; final saved status was COMPLETED with SAE and IPv4, and one host ping reply was received. The connected-scan legacy-disconnect boundary remains; no ordinary ROAM acceptance was tested. One host mDNS lookup timed out. The complete captured diagnostic dump showed no host A record on espwifi0, TX/RX counters 0/0, Up=1 and Down=0; the stock mDNS service was restored successfully. WIFI_PROBE_DONE was received; the capture contained 63,773 bytes and the reader closed two seconds after completion. These results do not establish full Wi-Fi or ROAM acceptance.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -153,29 +159,29 @@
       "unit": "later bounded scan showed two same-SSID BSSIDs"
     },
     {
-      "name": "nor-multiuser-network-autostart",
+      "name": "previous-nor-multiuser-network-autostart",
       "value": 1,
       "unit": "ordinary POWER reboot; wpa_supplicant and dhcpcd started without manual starts or rcorder error"
     },
     {
-      "name": "nor-sae-completed-after-boot",
+      "name": "previous-nor-sae-completed-after-boot",
       "value": 1,
       "unit": "profile 3; WPA_COMPLETED, CCMP, STATUS pmf=1"
     },
     {
-      "name": "nor-dns-example-com-resolved",
+      "name": "previous-nor-dns-example-com-resolved",
       "value": 1,
       "unit": "successful DNS resolution after automatic network startup"
     },
     {
-      "name": "replacement-root-written-and-verified",
+      "name": "d38-root-written-and-verified",
       "value": 1,
-      "unit": "10 MiB at LittleFS offset 0x600000; tested by RAM diagnostic boot, normal NOR boot pending"
+      "unit": "historical 10 MiB at LittleFS offset 0x600000; RAM diagnostic boot only"
     },
     {
-      "name": "replacement-root-mdns-service-started",
+      "name": "d38-root-mdns-service-started",
       "value": 1,
-      "unit": "normal service start returned 0"
+      "unit": "historical normal service start returned 0"
     },
     {
       "name": "mdns-host-unicast-a-query-response",
@@ -228,69 +234,164 @@
       "unit": "no response within four seconds"
     },
     {
-      "name": "current-root-normal-power-boot",
+      "name": "previous-fit-9c55-normal-power-boot",
       "value": 1,
       "unit": "root 9c55 reached LittleFS flash1; persistent FIT unchanged"
     },
     {
-      "name": "current-root-built-in-hash-verification",
+      "name": "previous-9c55-root-write-verification",
       "value": 1,
-      "unit": "10 MiB root written at 0x600000 in 49.3 seconds"
+      "unit": "previous root write: 10 MiB at 0x600000 in 49.3 seconds"
     },
     {
-      "name": "current-sae-baseline-completed",
+      "name": "previous-fit-9c55-sae-baseline-completed",
       "value": 1,
       "unit": "WPA_COMPLETED before scan and ROAM"
     },
     {
-      "name": "current-scan-row-count",
+      "name": "previous-fit-9c55-scan-row-count",
       "value": 16,
       "unit": "two exact same-ESS SAE alternatives matched"
     },
     {
-      "name": "current-roam-control-reply-ok",
+      "name": "previous-fit-9c55-roam-control-reply-ok",
       "value": 1,
       "unit": "ROAM request accepted by control interface"
     },
     {
-      "name": "current-roam-association-generation",
+      "name": "previous-fit-9c55-roam-association-generation",
       "value": 11,
-      "unit": "association generation; adapter accepted the first EAPOL frame"
+      "unit": "previous FIT/root: generation 11; adapter accepted first EAPOL frame"
     },
     {
-      "name": "current-roam-authorization-completion-observed",
+      "name": "previous-fit-9c55-roam-authorization-completion-observed",
       "value": 0,
-      "unit": "not observed; connection ended before WPA_COMPLETED"
+      "unit": "previous FIT/root: not observed; connection ended before WPA_COMPLETED"
     },
     {
-      "name": "current-bounded-ping-loss-percent",
+      "name": "previous-fit-9c55-bounded-ping-loss-percent",
       "value": 100,
       "unit": "all bounded host ping packets lost"
     },
     {
-      "name": "current-router-target-association-visible",
+      "name": "previous-fit-9c55-router-target-association-visible",
       "value": 0,
       "unit": "router showed no association for target"
     },
     {
-      "name": "current-mdns-a-aaaa-response",
+      "name": "previous-fit-9c55-mdns-a-aaaa-response",
       "value": 0,
       "unit": "no response within four seconds"
     },
     {
-      "name": "current-mdns-stock-restore-ok",
+      "name": "previous-fit-9c55-mdns-stock-restore-ok",
       "value": 1,
-      "unit": "stock service restored; command returned OK"
+      "unit": "previous FIT/root restore returned OK"
     },
     {
-      "name": "current-mdns-state-dump-complete",
+      "name": "previous-fit-9c55-mdns-state-dump-complete",
       "value": 0,
-      "unit": "partial dump only: Sent=0, Received=0, UP=1; complete table not captured"
+      "unit": "previous FIT/root: partial dump, not complete"
     },
     {
-      "name": "current-wifi-probe-done-marker",
+      "name": "previous-fit-9c55-wifi-probe-done-marker",
       "value": 0,
       "unit": "WIFI_PROBE_DONE was not captured"
+    },
+    {
+      "name": "current-kernel27-normal-rootflash1-boot",
+      "value": 1,
+      "unit": "ordinary POWER boot reached root 9c55 on LittleFS flash1"
+    },
+    {
+      "name": "current-kernel27-root-fit-write-verification",
+      "value": 1,
+      "unit": "FIT SHA-256 cd6e15d3; root SHA-256 unchanged at 9c55; both built-in verifications passed"
+    },
+    {
+      "name": "current-kernel27-scan-row-count",
+      "value": 15,
+      "unit": "two same-ESS/SAE alternatives; one eligible alternate"
+    },
+    {
+      "name": "current-kernel27-roam-control-request-sent",
+      "value": 0,
+      "unit": "probe returned SKIP no_fresh_compatible_candidate"
+    },
+    {
+      "name": "current-kernel27-candidate-predicate-reconstructible",
+      "value": 0,
+      "unit": "candidate file and BSS detail absent"
+    },
+    {
+      "name": "current-kernel27-scan-0x3006-observed",
+      "value": 0,
+      "unit": "symptom not observed in this run"
+    },
+    {
+      "name": "current-kernel27-sae-estale-70-observed",
+      "value": 0,
+      "unit": "symptom not observed in this run"
+    },
+    {
+      "name": "current-kernel27-generation-8-sae-callbacks",
+      "value": 1,
+      "unit": "callbacks completed; reason 4 occurred before EAPOL"
+    },
+    {
+      "name": "current-kernel27-generation-12-port-authorized",
+      "value": 1,
+      "unit": "SAE/EAPOL and port-authorized reported"
+    },
+    {
+      "name": "current-kernel27-final-status-completed",
+      "value": 1,
+      "unit": "saved status COMPLETED with SAE and IPv4"
+    },
+    {
+      "name": "current-kernel27-host-ping-replies",
+      "value": 1,
+      "unit": "one reply received"
+    },
+    {
+      "name": "current-kernel27-host-mdns-query-timeout",
+      "value": 1,
+      "unit": "one host query timed out"
+    },
+    {
+      "name": "current-kernel27-mdns-host-a-record-present",
+      "value": 0,
+      "unit": "complete diagnostic dump showed no host A record on espwifi0"
+    },
+    {
+      "name": "current-kernel27-mdns-tx-counter",
+      "value": 0,
+      "unit": "diagnostic dump TX counter"
+    },
+    {
+      "name": "current-kernel27-mdns-rx-counter",
+      "value": 0,
+      "unit": "diagnostic dump RX counter"
+    },
+    {
+      "name": "current-kernel27-mdns-up",
+      "value": 1,
+      "unit": "diagnostic dump state"
+    },
+    {
+      "name": "current-kernel27-mdns-down",
+      "value": 0,
+      "unit": "diagnostic dump state"
+    },
+    {
+      "name": "current-kernel27-mdns-stock-restore-ok",
+      "value": 1,
+      "unit": "stock mDNS restore returned OK"
+    },
+    {
+      "name": "current-kernel27-wifi-probe-done-marker",
+      "value": 1,
+      "unit": "captured; 63,773 bytes; reader closed two seconds later"
     }
   ],
   "limits": [
@@ -301,9 +402,11 @@
     "No forged-frame protection test has been completed.",
     "STATUS pmf=1 means AP MFPC set/MFPR clear; local ieee80211w=2 is the independent required-PMF policy.",
     "The SAE AP observer had no capture delta; SAE completion and IGTK installation rely on supplicant/driver reports, not independent AP-side capture.",
-    "Root 9c55 passed normal POWER boot to LittleFS flash1 with the existing persistent FIT. Following ROAM, the adapter accepted the first EAPOL frame, but authorization completion and reconnection were not observed before the connection ended ahead of WPA_COMPLETED; host ping lost all packets. Root cause is undetermined.",
-    "The partial mDNS dump is incomplete and does not establish the complete service table. Host A/AAAA queries timed out; the stock mDNS service was restored successfully.",
-    "WIFI_PROBE_DONE was not captured; this run has no completion marker and does not constitute full Wi-Fi or roaming acceptance."
+    "The earlier 9c55 ROAM reconnect failure occurred with the previous FIT and is retained as historical evidence. It is not the current kernel #27 result.",
+    "The current 120-second probe skipped before ROAM because it could not produce a candidate file. The scan had two same-ESS/SAE alternatives and one eligible alternate, but missing candidate/BSS detail prevents reconstruction of the exact selection predicate. ROAM was not sent.",
+    "Current scan0x3006 and SAE_ESTale70 symptoms were not observed in this single run; this does not establish general connected-scan support. Connected-scan legacy disconnect remains a boundary, and the current CAPSCAN implementation work is unpublished.",
+    "The current run reached saved COMPLETED SAE/IPv4 status and returned one host ping reply; this does not validate ROAM. A host mDNS query timed out and the complete diagnostic dump showed no host A record on espwifi0 with TX/RX counters 0/0, Up=1, Down=0. Stock mDNS was restored successfully.",
+    "WIFI_PROBE_DONE was captured for this bounded probe. The skipped ROAM and unresolved connected-scan and mDNS boundaries mean this is not full Wi-Fi or roaming acceptance."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
