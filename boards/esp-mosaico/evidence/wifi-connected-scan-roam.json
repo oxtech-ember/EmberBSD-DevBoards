@@ -1,0 +1,173 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-wifi-connected-scan-roam",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-14",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "ESP_MOSAICO_SC101IOT NOR firmware FIT kernel #28",
+      "revision": "Written at firmware offset 0x20000; flash verification passed; normal boot used this FIT.",
+      "sha256": "8400239bec5eab3537760bfa846d63265e3fe2647399d6109b0e1a96a99516e0",
+      "reference": null
+    },
+    {
+      "name": "LittleFS network root for kernel #28",
+      "revision": "10 MiB at offset 0x600000; flash verification passed; normal boot reached the configured network startup.",
+      "sha256": "fb4991d1690c9348adc31bd5c3212ca7fb9587f4701738b5ab16583f2ce7dc04",
+      "reference": null
+    },
+    {
+      "name": "Strict SAE profile",
+      "revision": "Required PMF configured locally; profile identifiers and credentials omitted.",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "EmberBSD connected-scan capability",
+      "revision": "OS main commit 73e4782783599a526a0da26e3660a5706d7f6f85.",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Ports BSD WPA connected-scan adapter",
+      "revision": "Ports main commit fba34c3745f4794b9fd6018bf520137f696f944c.",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Ports mDNS local-address advertisement",
+      "revision": "Ports main commit 9b87226ca78ce3368e7c9bf44bd4a3943b979f74.",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "EmberBSD connected-scan and roam probe script",
+      "revision": "OS main commit aa4956cac18dbc1b9666f1bf3231e602f912a660.",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "On one operator-reported CoreBoard V1.2 sample, verify normal boot and strict-SAE baseline, one connected scan with baseline continuity, one requested roam to a fresh compatible alternate, and local mDNS address-record state.",
+  "expected": "Normal boot reaches the configured network; strict SAE is completed before and through the connected scan; an accepted roam completes a new authorized association; mDNS address records are registered and observable on the network.",
+  "observed": "Both the kernel #28 FIT and 10 MiB LittleFS root were written with flash verification. Normal boot reached the configured rc/network path. The strict-SAE baseline reported WPA_COMPLETED and IPv4. The probe recorded the same baseline BSSID, SSID and security at scan_start and scan_end; it observed no lifecycle transition, SAE callback or disconnect between those markers. A fresh compatible alternate was selected. The supplicant accepted one ROAM request, but the new join (generation 4) reported scan error 0x3006 and SAE error 70, then teardown began. The probe ended FAIL deadline with final state DISCONNECTED; a completed roam was not observed. A local mDNS state dump contained host A and PTR records while AutoTargetServices was 0, but target TX/RX counters were 0/0, so on-network advertisement or response was not verified. This is one bounded connected-scan result, not a successful full roam.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "kernel28-fit-flash-verified",
+      "value": 1,
+      "unit": "write verification at firmware offset 0x20000"
+    },
+    {
+      "name": "kernel28-root-flash-verified",
+      "value": 1,
+      "unit": "10 MiB write verification at LittleFS offset 0x600000"
+    },
+    {
+      "name": "normal-rc-network-boot-reached",
+      "value": 1,
+      "unit": "kernel #28 with root fb4991d1"
+    },
+    {
+      "name": "strict-sae-baseline-completed",
+      "value": 1,
+      "unit": "WPA_COMPLETED with IPv4 before scan"
+    },
+    {
+      "name": "scan-baseline-continuity",
+      "value": 1,
+      "unit": "BSSID, SSID and security same at scan_start and scan_end"
+    },
+    {
+      "name": "scan-lifecycle-or-sae-event-between-markers",
+      "value": 0,
+      "unit": "none observed in the bounded marker interval"
+    },
+    {
+      "name": "fresh-compatible-alternate-selected",
+      "value": 1,
+      "unit": "same-network candidate passed probe selection"
+    },
+    {
+      "name": "roam-control-accepted",
+      "value": 1,
+      "unit": "supplicant control reply"
+    },
+    {
+      "name": "roam-new-join-generation",
+      "value": 4,
+      "unit": "adapter generation"
+    },
+    {
+      "name": "roam-new-join-scan-error",
+      "value": 12294,
+      "unit": "hex 0x3006"
+    },
+    {
+      "name": "roam-new-join-sae-error",
+      "value": 70,
+      "unit": "callback result"
+    },
+    {
+      "name": "roam-teardown-observed",
+      "value": 1,
+      "unit": "new association attempt was torn down"
+    },
+    {
+      "name": "roam-probe-deadline-failed",
+      "value": 1,
+      "unit": "FAIL deadline; final status DISCONNECTED"
+    },
+    {
+      "name": "mdns-host-a-ptr-records-in-local-dump",
+      "value": 1,
+      "unit": "records present in daemon state dump"
+    },
+    {
+      "name": "mdns-auto-target-services",
+      "value": 0,
+      "unit": "daemon state dump"
+    },
+    {
+      "name": "mdns-target-tx-counter",
+      "value": 0,
+      "unit": "daemon diagnostic counter"
+    },
+    {
+      "name": "mdns-target-rx-counter",
+      "value": 0,
+      "unit": "daemon diagnostic counter"
+    },
+    {
+      "name": "mdns-network-advertisement-response-verified",
+      "value": 0,
+      "unit": "not verified; no network response observed"
+    }
+  ],
+  "limits": [
+    "One operator-reported CoreBoard V1.2 sample and one bounded kernel #28 run; other revisions are not established.",
+    "The connected scan preserved sampled baseline state between scan markers in this run; this does not establish general connected-scan reliability.",
+    "ROAM control acceptance did not establish a completed transition; the probe ended with the supplicant DISCONNECTED.",
+    "802.11k/v/r and BTM/RRM behavior were not validated.",
+    "mDNS A/PTR records were present in the local daemon dump, but target TX/RX counters were zero and an on-network response was not verified.",
+    "WPA2-PSK, strict-SAE connectivity, DHCP, DNS and basic reachability were verified in earlier bounded runs; those results are not measurements from this kernel #28 run.",
+    "No forged-frame protection, throughput, or sustained-reliability test was completed."
+  ],
+  "source_refs": [
+    "mosaico-hardware-v12",
+    "mosaico-espwifi-wpa-parser-source",
+    "mosaico-espwifi-config-done-callback",
+    "mosaico-espwifi-auth-join-diagnostics-source",
+    "mosaico-sae-capability-fix-source",
+    "mosaico-wifi-association-observation",
+    "mosaico-wifi-connected-scan-roam-observation"
+  ]
+}

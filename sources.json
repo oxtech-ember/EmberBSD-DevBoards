@@ -1594,6 +1594,14 @@
       "sha256": null
     },
     {
+      "id": "mosaico-wifi-connected-scan-roam-observation",
+      "title": "ESP-Mosaico kernel #28 connected-scan and roam observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-connected-scan-roam.json",
+      "revision": null,
+      "reviewed_at": "2026-11-14",
+      "sha256": null
+    },
+    {
       "id": "mosaico-sae-capability-fix-source",
       "title": "EmberBSD ESP-Mosaico SAE feature capability fix",
       "url": "https://github.com/oxtech-ember/EmberBSD/commit/04ab058b06ce9ce1617691b9ad53cb443f0389b3",

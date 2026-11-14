@@ -5,7 +5,7 @@
   "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
   "soc": "espressif-esp32-s31",
   "board_revision": "1.2",
-  "reviewed_at": "2026-11-08",
+  "reviewed_at": "2026-11-14",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/esp-mosaico/README.md",
@@ -50,7 +50,8 @@
     "mosaico-s31-usb-hardware-guidelines",
     "mosaico-nor-littlefs-observation",
     "mosaico-nor-littlefs-kernel-source",
-    "mosaico-nor-littlefs-ports-source"
+    "mosaico-nor-littlefs-ports-source",
+    "mosaico-wifi-connected-scan-roam-observation"
   ],
   "capabilities": [
     {
@@ -91,7 +92,7 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one operator-reported V1.2 sample, the net80211 scan cache reached 18 entries without ring or allocation failures. A normal RAM image with the RSN app-IE ownership and controlled-port auth_done fixes completed strict SAE (local ieee80211w=2) and WPA2-PSK with CCMP pairwise/group ciphers; WPA2 M1–M4 were observed once each. SAE remained WPA_COMPLETED for about five minutes. DHCPv4 configuration and nameserver remained present; DNS resolved example.com, and small and 1400-byte gateway ICMP probes returned 3/3 replies. An explicit scan did not disconnect SAE but found no second same-SSID BSSID. This is bounded connectivity evidence only. Manual roaming, TCP throughput, sustained reliability, 802.11k/v/r/BTM-RRM behavior and forged-frame protection remain unverified or under investigation.",
+      "scope": "On one operator-reported V1.2 sample, normal boot with the kernel #28 FIT and 10 MiB LittleFS root reached the configured network path. Strict SAE reached WPA_COMPLETED with IPv4 before a single connected scan. The scan preserved the sampled baseline BSSID, SSID and security through scan_start/scan_end, and selected a fresh compatible alternate. The supplicant accepted a ROAM request, but the new join reported scan error 0x3006 and SAE error 70, then tore down; the bounded probe ended at its deadline with final state DISCONNECTED. This confirms one connected-scan run, not a successful roam. The daemon state dump contained host A/PTR records with AutoTargetServices=0, while target TX/RX counters were 0/0; on-network mDNS advertisement and response remain unverified. Earlier WPA2/SAE connectivity, DHCP, DNS and gateway reachability remain in the historical association evidence. Full roaming and 802.11k/v/r/BTM-RRM remain unverified.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
@@ -107,7 +108,8 @@
         "mosaico-espwifi-rx-accounting-source",
         "mosaico-espwifi-radio-once-debug-source",
         "mosaico-sae-capability-fix-source",
-        "mosaico-wifi-association-observation"
+        "mosaico-wifi-association-observation",
+        "mosaico-wifi-connected-scan-roam-observation"
       ]
     },
     {
