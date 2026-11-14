@@ -5,7 +5,7 @@
   "target_id": "esp-mosaico",
   "recorded_at": "2026-11-14",
   "layer": "physical",
-  "result": "pass",
+  "result": "fail",
   "hardware": {
     "revision": "1.2",
     "carrier_id": null,
@@ -50,15 +50,21 @@
       "reference": null
     },
     {
-      "name": "Current replacement LittleFS network root",
+      "name": "Previous replacement LittleFS network root",
       "revision": "root-c5fe; 10 MiB; written at 0x600000 on 2026-11-10 with esptool hash verification; tested from LittleFS flash1 by a multiuser RAM FIT on 2026-11-14; normal NOR boot remains unverified.",
       "sha256": "c5fe776be10930ddfaa94d2ef5d84b59b0cd3c59115e3cd1de0817fd108653f5",
       "reference": null
+    },
+    {
+      "name": "Current replacement LittleFS network root",
+      "revision": "root-9c55; 10 MiB; written at 0x600000 on 2026-11-14 in 49.3 seconds; built-in hash verification passed. Normal POWER boot reached root on LittleFS flash1 with the existing persistent FIT unchanged.",
+      "sha256": "9c55ab6437f4f5c20e553eee1d4c383234c6c2784c2fb2a489da1551ab541375",
+      "reference": null
     }
   ],
-  "scenario": "On one operator-reported CoreBoard V1.2 sample, verify normal-image WPA2-PSK and strict-SAE completion, IPv4/DNS configuration, gateway reachability, scan continuity, and configured NOR multiuser network startup.",
-  "expected": "Both handshakes complete; network configuration and basic reachability remain available in bounded checks, including after the normal NOR boot path.",
-  "observed": "Earlier bounded RAM checks on this V1.2 sample reached WPA_COMPLETED with strict SAE and WPA2-PSK; DHCPv4, DNS resolution, and gateway ICMP also passed in bounded checks. A prior ordinary NOR boot with the previously installed root confirmed automatic WPA3/DHCP startup and basic network access. The 65,536-byte TCP roundtrip with matching host SHA-256 and the earlier bounded mDNS no-response checks were on root d38bb7a2. On 2026-11-14, a multiuser RAM FIT built on 2026-11-09 and tested with root c5fe loaded root from LittleFS flash1 and reached multiuser; this was not a normal NOR boot. Current status reported COMPLETED with SAE, CCMP, PMF=1, IPv4, and an associated BSSID; host ping succeeded. One corrected check passed its baseline, read 17 scan rows, and returned SKIP no_fresh_compatible_candidate; no candidate file was produced and no ROAM was sent. Visible same-ESS/SAE alternatives appeared compatible, but exact byte-level candidate and freshness criteria were not established. An earlier explicit ROAM request was accepted and teardown began with rescan requested, followed by station disconnect reason 8; transition completion and a new association remain unknown. A hostname mDNS lookup on the current c5fe runtime also received no response within four seconds. Cause is undetermined.",
+  "scenario": "On one operator-reported CoreBoard V1.2 sample, verify normal-image WPA2-PSK and strict-SAE completion, IPv4/DNS configuration, gateway reachability, scan continuity, a requested ROAM reaching a new authorized association, and configured NOR multiuser network startup.",
+  "expected": "Both handshakes complete; network configuration and basic reachability remain available in bounded checks, including after the normal NOR boot path; a requested ROAM reaches a new authorized WPA_COMPLETED association.",
+  "observed": "Earlier bounded checks on this V1.2 sample reached WPA_COMPLETED with strict SAE and WPA2-PSK; DHCPv4, DNS, and gateway ICMP passed in bounded checks. A prior ordinary NOR boot with an earlier root confirmed automatic WPA3/DHCP startup and basic network access. The 65,536-byte TCP roundtrip with matching host SHA-256 and earlier bounded mDNS no-response checks were on root d38bb7a2. On 2026-11-14, the 10 MiB root 9c55 was written to LittleFS at 0x600000; built-in hash verification passed. An ordinary POWER boot with the existing persistent FIT reached root on flash1. The SAE baseline reached COMPLETED. A 16-row scan found two exact same-ESS SAE alternatives, and the selected candidate matched the request. The ROAM request returned OK and produced association generation 11; the adapter accepted the first EAPOL frame. Authorization completion was not observed, and the connection ended before WPA_COMPLETED. The driver reported state transition INIT with argument 1, followed by DISCONNECTED at the deadline. A bounded host ping lost all packets, and the router showed no association for the target. Host mDNS A and AAAA queries received no response within four seconds. The partial mDNS state dump reported Sent=0, Received=0, UP=1 but was incomplete; no complete table state is inferred. Restoring the stock mDNS service returned OK. WIFI_PROBE_DONE was not captured, so the probe did not produce a completion marker.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -192,34 +198,99 @@
       "unit": "separate earlier probe: teardown generation 2, error 0, rescan requested; distinct from the 2026-11-14 17-row scan"
     },
     {
-      "name": "current-ram-multiuser-rootflash1-boot",
+      "name": "previous-c5fe-ram-multiuser-rootflash1-boot",
       "value": 1,
       "unit": "multiuser reached with root loaded from LittleFS flash1"
     },
     {
-      "name": "current-wifi-status-completed",
+      "name": "previous-c5fe-wifi-status-completed",
       "value": 1,
       "unit": "SAE, CCMP, PMF=1, IPv4, and associated BSSID reported"
     },
     {
-      "name": "current-host-ping-replied",
+      "name": "previous-c5fe-host-ping-replied",
       "value": 1,
       "unit": "host ping to the current target succeeded"
     },
     {
-      "name": "corrected-roam-check-scan-rows",
+      "name": "previous-c5fe-roam-check-scan-rows",
       "value": 17,
       "unit": "one corrected check; result SKIP no_fresh_compatible_candidate"
     },
     {
-      "name": "corrected-roam-check-command-sent",
+      "name": "previous-c5fe-roam-check-command-sent",
       "value": 0,
       "unit": "no candidate file; no ROAM request issued"
     },
     {
-      "name": "current-mdns-hostname-lookup-response",
+      "name": "previous-c5fe-mdns-hostname-lookup-response",
       "value": 0,
       "unit": "no response within four seconds"
+    },
+    {
+      "name": "current-root-normal-power-boot",
+      "value": 1,
+      "unit": "root 9c55 reached LittleFS flash1; persistent FIT unchanged"
+    },
+    {
+      "name": "current-root-built-in-hash-verification",
+      "value": 1,
+      "unit": "10 MiB root written at 0x600000 in 49.3 seconds"
+    },
+    {
+      "name": "current-sae-baseline-completed",
+      "value": 1,
+      "unit": "WPA_COMPLETED before scan and ROAM"
+    },
+    {
+      "name": "current-scan-row-count",
+      "value": 16,
+      "unit": "two exact same-ESS SAE alternatives matched"
+    },
+    {
+      "name": "current-roam-control-reply-ok",
+      "value": 1,
+      "unit": "ROAM request accepted by control interface"
+    },
+    {
+      "name": "current-roam-association-generation",
+      "value": 11,
+      "unit": "association generation; adapter accepted the first EAPOL frame"
+    },
+    {
+      "name": "current-roam-authorization-completion-observed",
+      "value": 0,
+      "unit": "not observed; connection ended before WPA_COMPLETED"
+    },
+    {
+      "name": "current-bounded-ping-loss-percent",
+      "value": 100,
+      "unit": "all bounded host ping packets lost"
+    },
+    {
+      "name": "current-router-target-association-visible",
+      "value": 0,
+      "unit": "router showed no association for target"
+    },
+    {
+      "name": "current-mdns-a-aaaa-response",
+      "value": 0,
+      "unit": "no response within four seconds"
+    },
+    {
+      "name": "current-mdns-stock-restore-ok",
+      "value": 1,
+      "unit": "stock service restored; command returned OK"
+    },
+    {
+      "name": "current-mdns-state-dump-complete",
+      "value": 0,
+      "unit": "partial dump only: Sent=0, Received=0, UP=1; complete table not captured"
+    },
+    {
+      "name": "current-wifi-probe-done-marker",
+      "value": 0,
+      "unit": "WIFI_PROBE_DONE was not captured"
     }
   ],
   "limits": [
@@ -230,8 +301,9 @@
     "No forged-frame protection test has been completed.",
     "STATUS pmf=1 means AP MFPC set/MFPR clear; local ieee80211w=2 is the independent required-PMF policy.",
     "The SAE AP observer had no capture delta; SAE completion and IGTK installation rely on supplicant/driver reports, not independent AP-side capture.",
-    "The c5fe root was written and tested by a multiuser RAM FIT loading root from flash1; a normal NOR boot with this root remains unverified. Hostname mDNS lookups did not receive a response; cause is undetermined.",
-    "The 2026-11-14 check read 17 scan rows but skipped before ROAM because no fresh compatible candidate was accepted. Visible same-ESS/SAE alternatives do not establish exact candidate-byte or freshness criteria, and no transition was tested in that run. An earlier accepted ROAM had an unconfirmed transition outcome."
+    "Root 9c55 passed normal POWER boot to LittleFS flash1 with the existing persistent FIT. Following ROAM, the adapter accepted the first EAPOL frame, but authorization completion and reconnection were not observed before the connection ended ahead of WPA_COMPLETED; host ping lost all packets. Root cause is undetermined.",
+    "The partial mDNS dump is incomplete and does not establish the complete service table. Host A/AAAA queries timed out; the stock mDNS service was restored successfully.",
+    "WIFI_PROBE_DONE was not captured; this run has no completion marker and does not constitute full Wi-Fi or roaming acceptance."
   ],
   "source_refs": [
     "mosaico-hardware-v12",
