@@ -7,12 +7,18 @@ It leaves packages, `/rescue`, `/libdata/firmware`, the diagnostic directory and
 Commands run as root on the board unless a step names the serial console or another host.
 This is a procedure, not physical acceptance of a particular build.
 
-The general AArch64 rules are in the [OS base update guide](https://github.com/oxtech-ember/EmberBSD/blob/c5d1be911e44b58402a405333db205ba4ad1daaf/ember/tools/docs/aarch64-base-update.md).
-Follow its order: kernel and matching modules first, reboot and verify, then userland.
+The general AArch64 rules are in the [OS base update guide](https://github.com/oxtech-ember/EmberBSD/blob/36a600668c5ca1e36ecb6f5096b510b547a2b6d1/ember/tools/docs/aarch64-base-update.md).
+Select the installation order from the kernel/userland ABI contract before writing files.
+For the [versioned station association lifecycle](https://github.com/oxtech-ember/EmberBSD/blob/a46527bded5d83a3c9eb294d764a0d89837b129c/sys/net80211/association-lifecycle.md), install the matching kernel, modules and WPA userland before the first reboot.
+The new kernel rejects old MLME requests; the new WPA backend also requires the matching kernel.
+Do not restart networking between these installation stages.
+For a cohort that retains the installed network ABI, kernel-first boot verification remains applicable.
 
 ## Required inputs
 
 Use one recorded build cohort from a single EmberBSD commit, called `REV` below.
+Record its kernel release as `KREL` (for example, `11.1`) and the installed `uname -r` as `OLD_KREL`.
+Take `KREL` from the new kernel's build metadata, not the currently running kernel.
 Build it with the [SDK OS release builder](https://github.com/oxtech-ember/EmberBSD-SDK/blob/1e8103ae9357fa914ae82a58a1fd3d1f5c252321/docs/os-release.md) and the
 [A733 DTB target](https://github.com/oxtech-ember/EmberBSD/blob/c5d1be911e44b58402a405333db205ba4ad1daaf/sys/arch/arm/sunxi/docs/a733-boot-modes.md#native-build-target).
 The bundle contains:
@@ -30,6 +36,7 @@ The bundle contains:
 | `SHA256` | BSD-style SHA256 lines for every file above |
 
 Do not combine a new kernel with older modules or a DTB from another commit.
+Build the base WPA tools from the current prepared Ports source against that cohort's net80211 headers.
 A missing set or module stops the update; do not substitute a file from another build.
 Install the X11 sets either all together or not at all.
 `X11` below means that the bundle contains them and they are installed.
@@ -174,8 +181,8 @@ done
 mv boot.scr boot.scr.old && cp "$new/boot.scr" boot.scr
 mv boot.cmd boot.cmd.old && cp "$new/orangepi-zero4-boot.cmd" boot.cmd
 cp /netbsd /onetbsd && cp "$new/netbsd" /netbsd.new && mv /netbsd.new /netbsd
-m=/stand/evbarm/11.0
-mv "$m/modules" "$m/modules.pre-OLD"
+m=/stand/evbarm/$KREL
+if [ -d "$m/modules" ]; then mv "$m/modules" "$m/modules.pre-OLD"; fi
 sed -e 's/#.*//' /etc/modules.conf | while read -r name options; do
     [ -n "$name" ] || continue
     mkdir -p "$m/modules/$name"
@@ -187,7 +194,8 @@ sync
 Compare every installed file with the bundle's `SHA256` list.
 Do not change the diagnostic directory or `netbsd.recovery`.
 
-Reboot with `shutdown -r now` and watch the serial console.
+For the versioned MLME transition, continue directly to stage 2 without rebooting or restarting networking.
+Otherwise, reboot with `shutdown -r now` and watch the serial console.
 The normal entry must set `ember_boot_mode` to `normal` or leave it unset.
 
 After the reboot:
@@ -199,10 +207,11 @@ After the reboot:
 - SSH from another host succeeds.
 
 Use [rollback A](#rollback-a-kernel-bundle) if any check fails.
+If userland was also replaced for an ABI transition, restore its matching previous cohort with [rollback B](#rollback-b-userland) before booting normally.
 
 ## Stage 2: userland
 
-Install the userland only after stage 1 passes.
+Install userland after stage 1's file verification. For the versioned MLME transition this is before its first reboot; otherwise complete stage 1's boot checks first.
 Do not extract the `etc` or `xetc` set over `/`.
 Stop if a set fails to extract and use [rollback B](#rollback-b-userland).
 
@@ -211,7 +220,9 @@ new=/var/update/REV
 cd /
 sets="base comp"
 [ -f "$new/xbase.tar.xz" ] && sets="$sets xbase xcomp xfont xserver"   # X11 only
-for set in $sets; do tar -xpUJf "$new/$set.tar.xz" || break; done
+for set in $sets; do
+    tar -xpUJf "$new/$set.tar.xz" || { echo "Set extraction failed; use rollback B" >&2; exit 1; }
+done
 mkdir /var/update/REV-etc
 tar -xpJf "$new/etc.tar.xz" -C /var/update/REV-etc
 [ -f "$new/xetc.tar.xz" ] && tar -xpJf "$new/xetc.tar.xz" -C /var/update/REV-etc
@@ -262,14 +273,17 @@ for dtb in sun60i-a733-orangepi-zero3w.dtb sun60i-a733-orangepi-zero4.dtb; do
 done
 mv boot.scr.old boot.scr && mv boot.cmd.old boot.cmd
 mv /onetbsd /netbsd
-m=/stand/evbarm/11.0
-mv "$m/modules" "$m/modules.failed" && mv "$m/modules.pre-OLD" "$m/modules"
+m=/stand/evbarm/$KREL
+mv "$m/modules" "$m/modules.failed"
+if [ "$KREL" = "$OLD_KREL" ]; then mv "$m/modules.pre-OLD" "$m/modules"; fi
 sync
 ```
 
 Delete `netbsd.failed` only if FAT space is needed later.
 Compare the restored files with the members of `boot.tar` and `stand.tar` in the backup.
-Reboot normally and confirm that `kern.buildinfo` reports `EmberBSD:OLD`.
+When `KREL` differs from `OLD_KREL`, the old release's module directory was left in place.
+For an ABI transition, if the new userland is still installed, restore the previous userland with rollback B before rebooting normally.
+Then confirm that `kern.buildinfo` reports `EmberBSD:OLD`.
 
 ## Rollback B: userland
 
@@ -286,7 +300,8 @@ cd /
 Remove the regular files and links listed in `$bk/added`.
 This also removes X11 files that the update added.
 Remove listed directories only when they are empty.
-Reboot and repeat the post-update checks.
-If the kernel also needs to return, follow rollback A afterwards.
+If the kernel also needs to return, complete rollback A before rebooting.
+For an ABI transition, do not boot restored userland until its matching previous kernel and modules are restored as well.
+Then reboot and repeat the post-update checks.
 
-Sources: `os-a733-boot-modes`, `os-aarch64-base-update` and `sdk-os-release` in [sources.json](../../sources.json).
+Sources: `os-a733-boot-modes`, `os-aarch64-base-update`, `os-net80211-association-lifecycle` and `sdk-os-release` in [sources.json](../../sources.json).

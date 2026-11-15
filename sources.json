@@ -1060,9 +1060,17 @@
     {
       "id": "os-aarch64-base-update",
       "title": "EmberBSD headless AArch64 base update order",
-      "url": "https://github.com/oxtech-ember/EmberBSD/blob/c5d1be911e44b58402a405333db205ba4ad1daaf/ember/tools/docs/aarch64-base-update.md",
-      "revision": "c5d1be911e44b58402a405333db205ba4ad1daaf",
-      "reviewed_at": "2026-10-28",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/36a600668c5ca1e36ecb6f5096b510b547a2b6d1/ember/tools/docs/aarch64-base-update.md",
+      "revision": "36a600668c5ca1e36ecb6f5096b510b547a2b6d1",
+      "reviewed_at": "2026-11-15",
+      "sha256": null
+    },
+    {
+      "id": "os-net80211-association-lifecycle",
+      "title": "EmberBSD versioned station association ABI and coordinated update requirement",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/a46527bded5d83a3c9eb294d764a0d89837b129c/sys/net80211/association-lifecycle.md",
+      "revision": "a46527bded5d83a3c9eb294d764a0d89837b129c",
+      "reviewed_at": "2026-11-15",
       "sha256": null
     },
     {
