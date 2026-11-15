@@ -4,6 +4,9 @@ Reference platforms for people who build their own devices with EmberBSD.
 Use a known board to investigate a design, connect a peripheral, and establish a reproducible baseline.
 Human developers and their AI assistants use the same records.
 
+Read the [EmberBSD Developer Guide](https://github.com/oxtech-ember/EmberBSD-Docs/blob/main/modules/hardware.md)
+for hardware integration and its relationship to the OS modules.
+
 Start with [the reader guide](docs/reader-guide.md), then select a board in [catalog.json](catalog.json).
 The catalog is an index. Each board profile names its sources and the limits of its evidence.
 
