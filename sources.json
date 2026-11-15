@@ -1688,6 +1688,38 @@
       "revision": "050ebfaa5943756bcdb4787b50ac3bcd9dae5dc1",
       "reviewed_at": "2026-11-08",
       "sha256": null
+    },
+    {
+      "id": "mosaico-wifi-roam-lifecycle-source",
+      "title": "EmberBSD common net80211 association lifecycle",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/a46527bded5d83a3c9eb294d764a0d89837b129c",
+      "revision": "a46527bded5d83a3c9eb294d764a0d89837b129c",
+      "reviewed_at": "2026-11-15",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-wifi-roam-check-ipv4-source",
+      "title": "EmberBSD connected-scan and roam checker IPv4 readiness",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/a71f8001b4103f3e736695f459052f246473b91a",
+      "revision": "a71f8001b4103f3e736695f459052f246473b91a",
+      "reviewed_at": "2026-11-15",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-wifi-association-epoch-adapter-source",
+      "title": "EmberBSD Ports WPA association-epoch adapter",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/commit/4e5026e0c3e0c597611540bbe91e17aa1d8d47c2",
+      "revision": "4e5026e0c3e0c597611540bbe91e17aa1d8d47c2",
+      "reviewed_at": "2026-11-15",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-wifi-connected-scan-roam-nor-observation",
+      "title": "ESP-Mosaico kernel #31 NOR connected-scan and roam observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-connected-scan-roam-nor.json",
+      "revision": null,
+      "reviewed_at": "2026-11-15",
+      "sha256": null
     }
   ]
 }

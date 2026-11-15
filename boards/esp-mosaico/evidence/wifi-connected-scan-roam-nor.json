@@ -1,0 +1,147 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-wifi-connected-scan-roam-nor",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-15",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "ESP_MOSAICO_LITTLEFS_NOR kernel #31 FIT",
+      "revision": "Written at firmware offset 0x20000; esptool write verification passed; ordinary POWER boot used this image.",
+      "sha256": "50519214e282a59897fb2e96a1f86e915a05481b010fe37e66a53c7f31c49ce8",
+      "reference": null
+    },
+    {
+      "name": "LittleFS root image",
+      "revision": "10 MiB at offset 0x600000; esptool write verification passed; mounted as flash1 on ordinary boot.",
+      "sha256": "69ad6ad03f49fcb06c2b6d3666a2d9f3c839db32799cc1c9d013c0e2550d01da",
+      "reference": null
+    },
+    {
+      "name": "Common connected-scan and roam lifecycle",
+      "revision": "EmberBSD OS main commit a46527bded5d83a3c9eb294d764a0d89837b129c.",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Connected-scan and roam readiness checker",
+      "revision": "EmberBSD OS main commit a71f8001b4103f3e736695f459052f246473b91a; verifies IPv4 from the selected interface rather than optional wpa_cli status output.",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "WPA association-epoch adapter",
+      "revision": "EmberBSD-Ports main commit 4e5026e0c3e0c597611540bbe91e17aa1d8d47c2.",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Strict SAE profile",
+      "revision": "PMF required locally; profile identifiers and credentials omitted.",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "On one operator-reported V1.2 sample after ordinary NOR boot, run one bounded strict-SAE baseline, connected scan and explicit roam to a fresh compatible alternate, then check association and basic IP connectivity.",
+  "expected": "Baseline and scan remain associated; the accepted roam completes on the requested alternate; post-roam IPv4, DNS and gateway reachability succeed.",
+  "observed": "The combined FIT and 10 MiB root writes passed esptool's built-in verification; SPL was left unchanged. An ordinary POWER boot selected ESP_MOSAICO_LITTLEFS_NOR kernel #31 and mounted the LittleFS root from flash1. Baseline status was WPA_COMPLETED with SAE and PMF=1. The connected scan did not interrupt that association. The selected alternate BSSID matched the final BSSID and differed from the baseline. After roam, status was WPA_COMPLETED with SAE and PMF=1; IPv4 was present in ifconfig, DNS resolution and gateway ping succeeded. Host getaddrinfo resolved the assigned .local name to one IPv4 address matching the target interface address. In a separate temporary WPA2-PSK profile trial, the selected network reached WPA2-PSK/COMPLETED and a host ping succeeded. The helper restored the saved-profile configuration; a subsequent router-side read-only association view showed WPA3-PSK with PMF on the original AP.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "fit-write-verified",
+      "value": 1,
+      "unit": "1,531,392 bytes at firmware offset 0x20000"
+    },
+    {
+      "name": "littlefs-root-write-verified",
+      "value": 1,
+      "unit": "10,485,760 bytes at offset 0x600000"
+    },
+    {
+      "name": "spl-unchanged",
+      "value": 1,
+      "unit": "combined update wrote FIT and root ranges only"
+    },
+    {
+      "name": "ordinary-nor-boot",
+      "value": 1,
+      "unit": "ESP_MOSAICO_LITTLEFS_NOR kernel #31; root mounted from flash1"
+    },
+    {
+      "name": "baseline-strict-sae-completed",
+      "value": 1,
+      "unit": "WPA_COMPLETED, SAE, PMF=1"
+    },
+    {
+      "name": "connected-scan-preserved-association",
+      "value": 1,
+      "unit": "baseline association remained active through scan"
+    },
+    {
+      "name": "requested-alternate-matched-final-bssid",
+      "value": 1,
+      "unit": "requested and final BSSID matched; final differed from baseline"
+    },
+    {
+      "name": "post-roam-strict-sae-completed",
+      "value": 1,
+      "unit": "WPA_COMPLETED, SAE, PMF=1"
+    },
+    {
+      "name": "post-roam-ipv4-present",
+      "value": 1,
+      "unit": "confirmed with ifconfig"
+    },
+    {
+      "name": "post-roam-dns",
+      "value": 1,
+      "unit": "lookup succeeded"
+    },
+    {
+      "name": "post-roam-gateway-ping",
+      "value": 1,
+      "unit": "bounded ping succeeded"
+    },
+    {
+      "name": "post-roam-host-mdns-name-resolution",
+      "value": 1,
+      "unit": "host getaddrinfo returned one IPv4 matching target ifconfig"
+    },
+    {
+      "name": "temporary-wpa2-profile-connection-reported",
+      "value": 1,
+      "unit": "temporary profile helper reported connected; host ping succeeded"
+    },
+    {
+      "name": "temporary-wpa2-psk-completed",
+      "value": 1,
+      "unit": "temporary profile reached WPA2-PSK/COMPLETED"
+    },
+    {
+      "name": "temporary-wpa2-host-ping",
+      "value": 1,
+      "unit": "bounded host ping succeeded"
+    }
+  ],
+  "limits": [
+    "One operator-reported CoreBoard V1.2 sample and one bounded strict-SAE roam run; this does not establish repeated-roam reliability or support for other revisions.",
+    "The temporary WPA2-PSK profile reached COMPLETED and host ping succeeded; this does not establish WPA2 autostart or repeated WPA2 reliability. Router-side association later showed WPA3-PSK/PMF restored on the original AP.",
+    "The current ESP management adapter advertises connected scan but does not forward general AUTH/ACTION management frames; RRM/BTM integration is not implemented. The router observer showed no 802.11k/v markers for this client, so AP-initiated BTM/802.11v and 802.11r were not tested. Forged-frame protection, throughput and sustained reliability remain unvalidated."
+  ],
+  "source_refs": [
+    "mosaico-hardware-v12",
+    "mosaico-wifi-connected-scan-roam-observation",
+    "mosaico-wifi-roam-lifecycle-source",
+    "mosaico-wifi-roam-check-ipv4-source",
+    "mosaico-wifi-association-epoch-adapter-source",
+    "mosaico-wifi-connected-scan-roam-nor-observation"
+  ]
+}

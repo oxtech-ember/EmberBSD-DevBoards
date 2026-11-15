@@ -5,7 +5,7 @@
   "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
   "soc": "espressif-esp32-s31",
   "board_revision": "1.2",
-  "reviewed_at": "2026-11-14",
+  "reviewed_at": "2026-11-15",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/esp-mosaico/README.md",
@@ -51,7 +51,11 @@
     "mosaico-nor-littlefs-observation",
     "mosaico-nor-littlefs-kernel-source",
     "mosaico-nor-littlefs-ports-source",
-    "mosaico-wifi-connected-scan-roam-observation"
+    "mosaico-wifi-connected-scan-roam-observation",
+    "mosaico-wifi-roam-lifecycle-source",
+    "mosaico-wifi-roam-check-ipv4-source",
+    "mosaico-wifi-association-epoch-adapter-source",
+    "mosaico-wifi-connected-scan-roam-nor-observation"
   ],
   "capabilities": [
     {
@@ -92,7 +96,7 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one operator-reported V1.2 sample, normal boot with the kernel #28 FIT and 10 MiB LittleFS root reached the configured network path. Strict SAE reached WPA_COMPLETED with IPv4 before a single connected scan. The scan preserved the sampled baseline BSSID, SSID and security through scan_start/scan_end, and selected a fresh compatible alternate. The supplicant accepted a ROAM request, but the new join reported scan error 0x3006 and SAE error 70, then tore down; the bounded probe ended at its deadline with final state DISCONNECTED. This confirms one connected-scan run, not a successful roam. The daemon state dump contained host A/PTR records with AutoTargetServices=0, while target TX/RX counters were 0/0; on-network mDNS advertisement and response remain unverified. Earlier WPA2/SAE connectivity, DHCP, DNS and gateway reachability remain in the historical association evidence. Full roaming and 802.11k/v/r/BTM-RRM remain unverified.",
+      "scope": "On one operator-reported V1.2 sample, ordinary NOR boot with ESP_MOSAICO_LITTLEFS_NOR kernel #31 and a 10 MiB LittleFS root was followed by one bounded strict-SAE probe. The connected scan preserved the association; ROAM reached the requested alternate BSSID, which matched the final BSSID and differed from baseline. Post-roam status was WPA_COMPLETED/SAE/PMF=1; IPv4 was confirmed with ifconfig, and DNS plus gateway ping passed. This is one successful scenario, not repeated-roam acceptance. Host getaddrinfo resolved the assigned .local name to the target interface IPv4. A separate temporary WPA2-PSK profile reached WPA2-PSK/COMPLETED and host ping passed. A later router-side association view showed WPA3-PSK/PMF restored on the original AP. The ESP management adapter exposes connected scan but does not forward general AUTH/ACTION frames; RRM/BTM integration is not implemented. The router observer showed no 802.11k/v markers for this client. AP-initiated BTM/802.11v and 802.11r, forged-frame protection, throughput and sustained reliability remain unverified.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
@@ -109,7 +113,11 @@
         "mosaico-espwifi-radio-once-debug-source",
         "mosaico-sae-capability-fix-source",
         "mosaico-wifi-association-observation",
-        "mosaico-wifi-connected-scan-roam-observation"
+        "mosaico-wifi-connected-scan-roam-observation",
+        "mosaico-wifi-roam-lifecycle-source",
+        "mosaico-wifi-roam-check-ipv4-source",
+        "mosaico-wifi-association-epoch-adapter-source",
+        "mosaico-wifi-connected-scan-roam-nor-observation"
       ]
     },
     {
@@ -130,7 +138,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD has a target-built SC101IOT sensor/DVP/video(4) path, but no physical EmberBSD frame has been captured. The mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. EmberBSD radio evidence includes bounded WPA2/SAE handshakes and small/1400-byte gateway ICMP reachability on one sample; manual roaming and sustained operation remain unverified.",
+      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD has a target-built SC101IOT sensor/DVP/video(4) path, but no physical EmberBSD frame has been captured. The mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. EmberBSD radio evidence includes bounded WPA2/SAE handshakes and small/1400-byte gateway ICMP reachability on one sample; one bounded roam succeeded; repeated roaming and sustained operation remain unverified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",

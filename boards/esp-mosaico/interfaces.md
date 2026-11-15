@@ -99,22 +99,21 @@ table below.
 ## Wireless
 
 The [scan-cache check](evidence/wifi-scan.json) reached 18 net80211 entries
-without ring or allocation failures. On one operator-reported V1.2 sample, a
-normal RAM image with the published RSN app-IE ownership and controlled-port
-`auth_done` fixes completed strict SAE with local `ieee80211w=2` and normal
-WPA2-PSK. SAE remained `WPA_COMPLETED` for about five minutes. The supplicant
-reported IGTK installation at key index 4; this is the install/readiness path,
-not a forged-frame protection test. Normal WPA2 observed EAPOL M1–M4 once each
-with CCMP pairwise/group ciphers. The SAE AP observer had no capture delta, so
-SAE completion is based on supplicant/driver status.
-
-DHCPv4 configuration and nameserver remained present, DNS resolved
-`example.com`, and both small and 1400-byte gateway ICMP probes returned 3/3
-replies. An explicit scan did not disconnect the SAE session, but it found no
-second same-SSID BSSID. This is bounded basic connectivity evidence. Manual
-roaming, TCP throughput, sustained reliability, 802.11k/v/r or BTM/RRM behavior
-and forged-frame protection are not established; BTM/RRM support remains under
-investigation. See the [association evidence](evidence/wifi-association.json).
+without ring or allocation failures. On one operator-reported V1.2 sample, the
+ordinary NOR boot with kernel #31 and a 10 MiB LittleFS root passed a bounded
+strict-SAE connected-scan and roam probe. The connected scan preserved the
+association; the requested alternate BSSID matched the final BSSID and differed
+from baseline. Post-roam status was WPA_COMPLETED with SAE and PMF=1; IPv4 was
+confirmed with ifconfig, and DNS plus gateway ping passed. See the
+[kernel #31 observation](evidence/wifi-connected-scan-roam-nor.json). This is
+one successful scenario, not repeated-roam acceptance. Host getaddrinfo also
+resolved the assigned .local name to the target interface IPv4. A separate
+temporary WPA2-PSK profile reached WPA2-PSK/COMPLETED and host ping passed;
+child-client exit and reconnection to the restored strict-SAE profile remain
+unconfirmed. 802.11k/v/r
+and BTM/RRM behavior, forged-frame protection, throughput and sustained
+reliability remain unverified. Earlier WPA2/SAE and network results are recorded
+separately in the [association evidence](evidence/wifi-association.json).
 
 ## Expansion and debug routing
 
