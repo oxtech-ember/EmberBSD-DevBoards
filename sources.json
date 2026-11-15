@@ -1720,6 +1720,30 @@
       "revision": null,
       "reviewed_at": "2026-11-15",
       "sha256": null
+    },
+    {
+      "id": "mosaico-ssh-optional-profile-source",
+      "title": "EmberBSD optional SSH profile for ESP-Mosaico",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/f27f1a584987",
+      "revision": "f27f1a584987",
+      "reviewed_at": "2026-11-15",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-ssh-profile-fix-source",
+      "title": "EmberBSD local network logging configuration fix",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/e3cdbd27215d",
+      "revision": "e3cdbd27215d",
+      "reviewed_at": "2026-11-15",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-ssh-diagnostics-observation",
+      "title": "ESP-Mosaico V1.2 bounded SSH and local logging observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/ssh-diagnostics.json",
+      "revision": null,
+      "reviewed_at": "2026-11-15",
+      "sha256": null
     }
   ]
 }

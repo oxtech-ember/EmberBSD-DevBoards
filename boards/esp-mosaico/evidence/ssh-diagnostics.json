@@ -1,0 +1,64 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-ssh-diagnostics",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-15",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "Initially flashed NOR root image",
+      "revision": "Original 10 MiB LittleFS root image; ordinary POWER boot selected kernel #33 and mounted the writable filesystem from flash1. The hash identifies the original image artifact, not the subsequently modified partition.",
+      "sha256": "782a540287743e2558270bd3032ef921ec039a511626c377ad04f28acb672282",
+      "reference": null
+    },
+    {
+      "name": "Installed kernel FIT",
+      "revision": "Kernel #33 FIT, 1,541,120 bytes.",
+      "sha256": "a08d04cdd5182bd95903a423679c34b49a402a5391e0ae48767b175e8fa9d932",
+      "reference": null
+    },
+    {
+      "name": "Optional SSH profile",
+      "revision": "EmberBSD f27f1a584987",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Local syslog service configuration fix",
+      "revision": "EmberBSD e3cdbd27215d; supplies the local logging configuration fix.",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "On one reported V1.2 sample, perform an ordinary POWER boot from NOR, connect using Ed25519 key-only SSH with strict host-key checking, exercise PTY and read-only dmesg, and transfer/read back small and 510196-byte files. Check WPA/IP after transfer. Start local syslogd with -s on the running root and read back a unique logger message.",
+  "expected": "The bounded SSH session and byte comparisons succeed; WPA and IPv4 remain available after transfer; local syslog records the unique message.",
+  "observed": "Kernel #33 booted normally from NOR with LittleFS root on flash1. Pinned-host-key Ed25519 SSH succeeded, including PTY, dmesg read, a small-file byte readback, and a 510196-byte utility transfer through ssh/cat with byte verification. The utility reported TX completion and exited 0; peer ACK was not confirmed. The temporary file was removed. WPA remained COMPLETED with SAE and PMF=1 and IPv4 remained present after transfer. syslogd initially failed because generated rc.conf omitted the default -s flag; syslogd_flags=\"-s\" was added to rc.conf in the installed NOR filesystem and the existing service started. A unique logger message was read from /var/log/messages. After one service restart of mdnsd while WPA and IPv4 were already active, a direct host mDNS A query returned the target's correct IPv4; lookup at initial startup had not answered. The original root image artifact was not rebuilt or reflashed.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "utility-transfer",
+      "value": 510196,
+      "unit": "byte; readback matched"
+    }
+  ],
+  "limits": [
+    "One operator-reported V1.2 sample and one bounded run; repeated-session reliability and other revisions are not established.",
+    "The syslog -s setting was persisted in rc.conf on the installed NOR filesystem. The original root image artifact was not rebuilt or reflashed; its recorded SHA-256 does not describe the modified partition contents.",
+    "A direct host mDNS A query resolved the name to the correct IPv4 only after one mdnsd restart with WPA/IPv4 already active. This is not cold-start acceptance, does not establish automatic resolution after initial boot, and does not isolate a single cause.",
+    "SFTP was not selected; file transfer used SSH and cat.",
+    "TX completion is not peer acknowledgement, receiver acceptance, or successful Action-frame delivery; no RRM/BTM acceptance is established.",
+    "Private logs, credentials, host keys, network identifiers and binary images are not published."
+  ],
+  "source_refs": [
+    "mosaico-ssh-optional-profile-source",
+    "mosaico-ssh-profile-fix-source"
+  ]
+}
