@@ -1595,10 +1595,10 @@
     },
     {
       "id": "mosaico-wifi-connected-scan-roam-observation",
-      "title": "ESP-Mosaico kernel #28 connected-scan and roam observation",
+      "title": "ESP-Mosaico kernel #30 connected-scan and roam observation",
       "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-connected-scan-roam.json",
       "revision": null,
-      "reviewed_at": "2026-11-14",
+      "reviewed_at": "2026-11-15",
       "sha256": null
     },
     {
