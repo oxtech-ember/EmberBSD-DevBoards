@@ -1744,6 +1744,30 @@
       "revision": null,
       "reviewed_at": "2026-11-15",
       "sha256": null
+    },
+    {
+      "id": "mosaico-mdns-cold-start-ports-source",
+      "title": "EmberBSD Ports mDNS watcher-before-snapshot fix and source checksum",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/commit/ec74c4d3c",
+      "revision": "ec74c4d3c; shared patch f4b7c61df",
+      "reviewed_at": "2026-11-15",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-mdns-cold-start-os-source",
+      "title": "EmberBSD Mosaico local network logging startup fix",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/e3cdbd27215d",
+      "revision": "e3cdbd27215d",
+      "reviewed_at": "2026-11-15",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-mdns-cold-start-observation",
+      "title": "ESP-Mosaico V1.2 cold-start mDNS and logging observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/mdns-cold-start.json",
+      "revision": null,
+      "reviewed_at": "2026-11-15",
+      "sha256": null
     }
   ]
 }

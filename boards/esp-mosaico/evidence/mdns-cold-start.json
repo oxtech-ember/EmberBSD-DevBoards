@@ -1,0 +1,67 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-mdns-cold-start",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-15",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "LittleFS network root",
+      "revision": "10 MiB image written at NOR offset 0x600000; built-in flash verification passed. Kernel FIT #33 and SPL were preserved.",
+      "sha256": "8f4d361d7be40a80cc40e8a02640b87d9f7e24cbd7832b48bb74431963de37ba",
+      "reference": null
+    },
+    {
+      "name": "Preserved kernel FIT",
+      "revision": "Kernel #33 FIT, 1,541,120 bytes; unchanged from the preceding SSH diagnostic acceptance.",
+      "sha256": "a08d04cdd5182bd95903a423679c34b49a402a5391e0ae48767b175e8fa9d932",
+      "reference": null
+    },
+    {
+      "name": "Ports mDNS watcher-before-snapshot fix",
+      "revision": "Ports main ec74c4d3c; shared mDNS patch f4b7c61df.",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Local network logging startup fix",
+      "revision": "EmberBSD e3cdbd27215d.",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "After writing only the new 10 MiB root to NOR on one reported V1.2 sample, perform an ordinary POWER boot with the installed kernel FIT #33 and SPL unchanged. Check WPA/IP, syslog startup and one logger nonce, then query the host mDNS A record, resolve its name with getaddrinfo, and make a strict pinned-key SSH echo by name. Do not restart mdnsd.",
+  "expected": "The system boots from the installed NOR root; WPA/IPv4, local logging and automatic name resolution are available without restarting mdnsd.",
+  "observed": "The ordinary POWER boot reached kernel #33 with the new LittleFS root mounted from flash1 and no panic was reported. WPA reached COMPLETED with SAE and PMF=1 and IPv4 was present. syslogd started through the configured service path and one unique logger nonce was read back. Without restarting mdnsd, a raw mDNS query received an A answer with TTL 10 and the correct address; getaddrinfo resolved the name, and strict pinned-key SSH echo by name exited 0.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "root-image-size",
+      "value": 10485760,
+      "unit": "byte"
+    },
+    {
+      "name": "name-based-ssh-echo-exit-status",
+      "value": 0,
+      "unit": "strict pinned-key SSH by resolved name"
+    }
+  ],
+  "limits": [
+    "One ordinary cold boot on one operator-reported V1.2 sample; repeated-boot reliability, long-duration stability and other board revisions are not established.",
+    "This observation confirms the scoped cold-start mDNS/name-resolution and local-logging path. It does not establish full Wi-Fi functionality, peer acknowledgement, Action-frame delivery, RRM or BTM acceptance.",
+    "The watcher-before-snapshot fix addresses the reproduced subscription-order race in the shared mDNS backend. This run does not prove it was the sole historical cause of the earlier startup failure.",
+    "Private logs, credentials, host keys, network identifiers and local paths are not published."
+  ],
+  "source_refs": [
+    "mosaico-mdns-cold-start-ports-source",
+    "mosaico-mdns-cold-start-os-source"
+  ]
+}
