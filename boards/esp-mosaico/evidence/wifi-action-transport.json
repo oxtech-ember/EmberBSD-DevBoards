@@ -14,33 +14,38 @@
   },
   "inputs": [
     {
-      "name": "RAM kernel with shared station Action transport",
-      "revision": "EmberBSD 44b863992e8aec80fe660cbc50376932deaa04f9; outer FIT loaded through ROM and UART.",
+      "name": "44b FIT with shared station Action transport",
+      "revision": "EmberBSD 44b863992e8aec80fe660cbc50376932deaa04f9; same FIT bytes as the prior RAM probe, now written to NOR with the candidate root. The previous NOR FIT was replaced; SPL was retained.",
       "sha256": "3553f80f0d09ab1e5f94ad91d082264ff6289092b89350bcc1f8827d1c71328f",
       "reference": null
     },
     {
-      "name": "Preserved LittleFS network root",
-      "revision": "Static network userland from EmberBSD 272f1a3025211c8142b0b42c9c66057c57325b8a; unchanged during the RAM probe.",
-      "sha256": "8f4d361d7be40a80cc40e8a02640b87d9f7e24cbd7832b48bb74431963de37ba",
-      "reference": "boards/esp-mosaico/evidence/mdns-cold-start.json"
+      "name": "Candidate 10 MiB LittleFS network root",
+      "revision": "Built from OS e04ddc0046bcd3a7b18ec4ef361200413d51778b plus source-refresh log fix 09a88d10264c4e969a06efef3c4fad77f39e6caf; SDK source-aware refresh 7a09e684793c54e7c1e313bb0acbd611623ec41a; Ports fb64a41f2132a4e9f92e5ee417ed9e396219c84c including WPA fix bd34723babd9cd45816f8b79724f4908f3f99ca5. The WPA supplicant object was compiled from the prepared WPA 2.12 source and final console-tools link succeeded.",
+      "sha256": "b13533aa769b9709e70a9d32c63b24e3b67aa1ea683ea90b9b9c505bfccd49a0",
+      "reference": null
     }
   ],
-  "scenario": "Boot the candidate kernel from RAM with the existing NOR root. Through pinned-key SSH, check SAE/PMF and IPv4, then issue neighbor_rep_request and wnm_bss_query 0. Capture the supplicant DEBUG output with a verified temporary syslog sink; restore normal logging afterward.",
+  "scenario": "After a combined FIT and LittleFS write to NOR, with SPL retained, ordinary POWER-boot the image. The FIT contains the same 44b bytes as the prior RAM probe and replaces the previous NOR FIT. Through pinned-key SSH, check SAE/PMF and IPv4, then issue neighbor_rep_request and wnm_bss_query 0. Capture the supplicant DEBUG output with a verified temporary syslog sink; restore normal logging afterward.",
   "expected": "The supplicant submits the requests and receives the corresponding peer response while the SAE/PMF connection remains available.",
-  "observed": "The RAM kernel reached multiuser mode and SSH; WPA reported COMPLETED, SAE and PMF=1 with IPv4 available. The neighbor request failed locally with 'No RRM in current connection' before Action submission. The BTM query returned OK and produced a correlated BSD STA TX status for category 10, action 6, followed by EVENT_TX_STATUS. No BTM peer response was observed in the bounded capture. INFO logging and the normal local-only syslog service were restored; SSH and WPA remained available.",
+  "observed": "An ordinary NOR boot reached OpenSBI, U-Boot, kernel and the LittleFS root on flash1, then login. Pinned-key SSH succeeded; WPA reported COMPLETED with SAE, PMF=1 and IPv4. The AP advertised capability 0x1c11 with RRM bit 12 set, Neighbor Report IE 70 of length 5, and Extended Capabilities BTM bit 19 set. A verified DEBUG syslog sink received the probe nonce. neighbor_rep_request returned OK with token 1, and four parsed RRM-NEIGHBOR-REP-RECEIVED entries arrived. wnm_bss_query 0 returned OK; correlated TX status had cookie 2, generation 1, category 10, action 6, token 1 and ack=0 (unconfirmed). No AP BTM peer response arrived within 12 seconds. Post-probe status retained SAE/PMF, IPv4 and SSH; syslog configuration bytes matched the pre-probe check, log level INFO and timestamp 0 were restored, and helper RESTORE_RESULT was 0.",
   "duration_seconds": null,
   "measurements": [
     {
-      "name": "btm-response-observation-window",
-      "value": 5,
-      "unit": "second after the instrumented query"
+      "name": "neighbor-report-parsed-entry-count",
+      "value": 4,
+      "unit": "entries"
+    },
+    {
+      "name": "btm-peer-response-observation-window",
+      "value": 12,
+      "unit": "second after the query"
     }
   ],
   "limits": [
-    "A correlated transmit completion confirms completion of the selected firmware transport operation. The callback provides no peer ACK indication; ack=0 means unconfirmed, not a negative ACK result.",
-    "The Neighbor Report request was rejected by the installed supplicant before transmission. Its failure does not test Action RX or the access point response path.",
-    "This run does not establish a completed RRM/BTM peer exchange, AP-initiated transition, PMF replay/forgery resistance, repeatability or sustained reliability.",
+    "The Neighbor Report request and four parsed neighbor entries passed in this bounded run; this does not establish repeated behavior or an AP-initiated transition.",
+    "The AP's BTM capability advertisement was verified; the absence of a BTM peer response in this 12-second window does not mean BTM was not advertised or identify why no response arrived. The TX completion is correlated to the request, but the firmware callback does not report peer ACK; ack=0 means unconfirmed, not a negative ACK result.",
+    "This run does not establish a completed BTM peer exchange or full IEEE 802.11k/v behavior, PMF replay/forgery resistance or sustained reliability.",
     "Private logs, credentials, host keys, network identifiers and local paths are not published."
   ],
   "source_refs": [
