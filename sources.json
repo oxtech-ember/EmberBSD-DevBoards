@@ -1768,6 +1768,22 @@
       "revision": null,
       "reviewed_at": "2026-11-15",
       "sha256": null
+    },
+    {
+      "id": "mosaico-wifi-action-transport-source",
+      "title": "EmberBSD shared station Action lifetime and ESP RRM/BTM transport",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/44b863992e8aec80fe660cbc50376932deaa04f9",
+      "revision": "44b863992e8aec80fe660cbc50376932deaa04f9; transport integration 1cc0669ff2bb839f8f388a5bb9662b23ead921ee",
+      "reviewed_at": "2026-11-16",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-wifi-action-transport-observation",
+      "title": "ESP-Mosaico V1.2 bounded Action transport and RRM connection-state observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-action-transport.json",
+      "revision": null,
+      "reviewed_at": "2026-11-16",
+      "sha256": null
     }
   ]
 }

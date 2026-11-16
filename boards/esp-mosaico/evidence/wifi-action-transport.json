@@ -1,0 +1,49 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-wifi-action-transport",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-16",
+  "layer": "physical",
+  "result": "inconclusive",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled kit with operator-reported CoreBoard V1.2."
+  },
+  "inputs": [
+    {
+      "name": "RAM kernel with shared station Action transport",
+      "revision": "EmberBSD 44b863992e8aec80fe660cbc50376932deaa04f9; outer FIT loaded through ROM and UART.",
+      "sha256": "3553f80f0d09ab1e5f94ad91d082264ff6289092b89350bcc1f8827d1c71328f",
+      "reference": null
+    },
+    {
+      "name": "Preserved LittleFS network root",
+      "revision": "Static network userland from EmberBSD 272f1a3025211c8142b0b42c9c66057c57325b8a; unchanged during the RAM probe.",
+      "sha256": "8f4d361d7be40a80cc40e8a02640b87d9f7e24cbd7832b48bb74431963de37ba",
+      "reference": "boards/esp-mosaico/evidence/mdns-cold-start.json"
+    }
+  ],
+  "scenario": "Boot the candidate kernel from RAM with the existing NOR root. Through pinned-key SSH, check SAE/PMF and IPv4, then issue neighbor_rep_request and wnm_bss_query 0. Capture the supplicant DEBUG output with a verified temporary syslog sink; restore normal logging afterward.",
+  "expected": "The supplicant submits the requests and receives the corresponding peer response while the SAE/PMF connection remains available.",
+  "observed": "The RAM kernel reached multiuser mode and SSH; WPA reported COMPLETED, SAE and PMF=1 with IPv4 available. The neighbor request failed locally with 'No RRM in current connection' before Action submission. The BTM query returned OK and produced a correlated BSD STA TX status for category 10, action 6, followed by EVENT_TX_STATUS. No BTM peer response was observed in the bounded capture. INFO logging and the normal local-only syslog service were restored; SSH and WPA remained available.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "btm-response-observation-window",
+      "value": 5,
+      "unit": "second after the instrumented query"
+    }
+  ],
+  "limits": [
+    "A correlated transmit completion confirms completion of the selected firmware transport operation. The callback provides no peer ACK indication; ack=0 means unconfirmed, not a negative ACK result.",
+    "The Neighbor Report request was rejected by the installed supplicant before transmission. Its failure does not test Action RX or the access point response path.",
+    "This run does not establish a completed RRM/BTM peer exchange, AP-initiated transition, PMF replay/forgery resistance, repeatability or sustained reliability.",
+    "Private logs, credentials, host keys, network identifiers and local paths are not published."
+  ],
+  "source_refs": [
+    "mosaico-wifi-action-transport-source"
+  ]
+}

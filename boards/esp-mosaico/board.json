@@ -96,7 +96,7 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one operator-reported V1.2 sample, ordinary NOR boot with ESP_MOSAICO_LITTLEFS_NOR kernel #31 and a 10 MiB LittleFS root was followed by one bounded strict-SAE probe. The connected scan preserved the association; ROAM reached the requested alternate BSSID, which matched the final BSSID and differed from baseline. Post-roam status was WPA_COMPLETED/SAE/PMF=1; IPv4 was confirmed with ifconfig, and DNS plus gateway ping passed. This is one successful scenario, not repeated-roam acceptance. Host getaddrinfo resolved the assigned .local name to the target interface IPv4. A separate temporary WPA2-PSK profile reached WPA2-PSK/COMPLETED and host ping passed. A later router-side association view showed WPA3-PSK/PMF restored on the original AP. The ESP management adapter exposes connected scan but does not forward general AUTH/ACTION frames; RRM/BTM integration is not implemented. The router observer showed no 802.11k/v markers for this client. AP-initiated BTM/802.11v and 802.11r, forged-frame protection, throughput and sustained reliability remain unverified.",
+      "scope": "On one operator-reported V1.2 sample, ordinary NOR boot with ESP_MOSAICO_LITTLEFS_NOR kernel #31 and a 10 MiB LittleFS root was followed by one bounded strict-SAE probe. The connected scan preserved the association; ROAM reached the requested alternate BSSID, which matched the final BSSID and differed from baseline. Post-roam status was WPA_COMPLETED/SAE/PMF=1; IPv4 was confirmed with ifconfig, and DNS plus gateway ping passed. This is one successful scenario, not repeated-roam acceptance. Host getaddrinfo resolved the assigned .local name to the target interface IPv4. A separate temporary WPA2-PSK profile reached WPA2-PSK/COMPLETED and host ping passed. A later router-side association view showed WPA3-PSK/PMF restored on the original AP. The shared station Action path is now integrated. A RAM probe with EmberBSD 44b8639 preserved SAE/PMF and SSH and reported correlated BTM TX completion; the firmware callback leaves peer ACK unconfirmed. The installed supplicant rejected Neighbor Report locally because its RRM connection state was unset. No RRM/BTM peer exchange was established. AP-initiated BTM/802.11v and 802.11r, forged-frame protection, throughput and sustained reliability remain unverified.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
@@ -117,7 +117,9 @@
         "mosaico-wifi-roam-lifecycle-source",
         "mosaico-wifi-roam-check-ipv4-source",
         "mosaico-wifi-association-epoch-adapter-source",
-        "mosaico-wifi-connected-scan-roam-nor-observation"
+        "mosaico-wifi-connected-scan-roam-nor-observation",
+        "mosaico-wifi-action-transport-source",
+        "mosaico-wifi-action-transport-observation"
       ]
     },
     {

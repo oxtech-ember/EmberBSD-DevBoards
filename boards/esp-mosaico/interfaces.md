@@ -115,6 +115,13 @@ and BTM/RRM behavior, forged-frame protection, throughput and sustained
 reliability remain unverified. Earlier WPA2/SAE and network results are recorded
 separately in the [association evidence](evidence/wifi-association.json).
 
+The [Action transport probe](evidence/wifi-action-transport.json) used a RAM
+kernel from EmberBSD 44b8639 with the existing LittleFS root. SAE/PMF, IPv4 and
+SSH remained available. BTM produced a correlated TX completion; the firmware
+callback does not report peer ACK. The installed supplicant rejected Neighbor
+Report before transmission because RRM connection state was unset. This is
+partial transport evidence; a completed RRM/BTM peer exchange remains unverified.
+
 ## Expansion and debug routing
 
 Use the revision-specific vendor schematic for connector orientation and contact numbers.
