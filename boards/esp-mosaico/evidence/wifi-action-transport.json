@@ -3,7 +3,7 @@
   "kind": "evidence",
   "id": "mosaico-wifi-action-transport",
   "target_id": "esp-mosaico",
-  "recorded_at": "2026-11-16",
+  "recorded_at": "2026-11-17",
   "layer": "physical",
   "result": "inconclusive",
   "hardware": {
@@ -14,61 +14,104 @@
   },
   "inputs": [
     {
-      "name": "44b FIT with shared station Action transport",
-      "revision": "EmberBSD 44b863992e8aec80fe660cbc50376932deaa04f9; same FIT bytes as the prior RAM probe, now written to NOR with the candidate root. The previous NOR FIT was replaced; SPL was retained.",
+      "name": "44b FIT with shared station Action transport (prior NOR run)",
+      "revision": "EmberBSD 44b863992e8aec80fe660cbc50376932deaa04f9; prior normal NOR run with the previous LittleFS candidate. The previous NOR FIT was replaced during that run; SPL was retained.",
       "sha256": "3553f80f0d09ab1e5f94ad91d082264ff6289092b89350bcc1f8827d1c71328f",
       "reference": null
     },
     {
-      "name": "Candidate 10 MiB LittleFS network root",
-      "revision": "Built from OS e04ddc0046bcd3a7b18ec4ef361200413d51778b plus source-refresh log fix 09a88d10264c4e969a06efef3c4fad77f39e6caf; SDK source-aware refresh 7a09e684793c54e7c1e313bb0acbd611623ec41a; Ports fb64a41f2132a4e9f92e5ee417ed9e396219c84c including WPA fix bd34723babd9cd45816f8b79724f4908f3f99ca5. The WPA supplicant object was compiled from the prepared WPA 2.12 source and final console-tools link succeeded.",
+      "name": "10 MiB LittleFS root used by the prior 44b NOR run and unchanged in the 107b RAM follow-up",
+      "revision": "Built from OS e04ddc0046bcd3a7b18ec4ef361200413d51778b plus source-refresh log fix 09a88d10264c4e969a06efef3c4fad77f39e6caf; SDK source-aware refresh 7a09e684793c54e7c1e313bb0acbd611623ec41a; Ports fb64a41f2132a4e9f92e5ee417ed9e396219c84c including WPA fix bd34723babd9cd45816f8b79724f4908f3f99ca5. This root was unchanged during the later 107b RAM-only trial.",
       "sha256": "b13533aa769b9709e70a9d32c63b24e3b67aa1ea683ea90b9b9c505bfccd49a0",
+      "reference": null
+    },
+    {
+      "name": "107b ESP association-capability RAM candidate FIT",
+      "revision": "Built from OS base 09a88d10264c4e969a06efef3c4fad77f39e6caf plus the reviewed association-capability changes later published as EmberBSD commit 107b01843ada72042c0be9913f23bb352552ecfa; 1,541,632-byte outer FIT loaded to RAM only. NOR SPL, installed FIT and LittleFS root were not written or changed.",
+      "sha256": "a73179f4653ae73a5f59f253a16ae096188423e6824e743c6352bbcf8289a383",
       "reference": null
     }
   ],
-  "scenario": "After a combined FIT and LittleFS write to NOR with SPL retained, ordinary POWER-boot the image. Check pinned-key SSH and SAE/PMF/IPv4. At the initial AP, issue one neighbor_rep_request and one wnm_bss_query 0. Run a connected scan and station-initiated ROAM to the compatible alternate AP, then issue the same pair there. Capture supplicant DEBUG output through a verified temporary syslog sink, restore INFO/timestamp 0 and remove the temporary sink.",
-  "expected": "Both APs advertise RRM and BTM; Neighbor Report requests yield parsed reports and each BTM query receives a peer response while SAE/PMF and IPv4 remain available.",
-  "observed": "An ordinary NOR boot reached OpenSBI, U-Boot, kernel and the LittleFS root on flash1, then login. Pinned-key SSH succeeded; WPA reported COMPLETED with SAE, PMF=1 and IPv4. At the initial AP, capability 0x1c11 had RRM bit 12 set, RRM Enabled Capabilities IE 70 had length 5, and Extended Capabilities BTM bit 19 was set. neighbor_rep_request token 1 returned four parsed RRM-NEIGHBOR-REP-RECEIVED entries. The BTM query TX status correlated cookie 2, generation 1, category 10/action 6, token 1, ack=0 (unconfirmed); no peer response arrived in its 12-second window. A connected scan preserved the association, and ROAM moved to the requested alternate AP. That AP also advertised RRM and BTM capabilities. neighbor_rep_request token 2 returned three parsed RRM-NEIGHBOR-REP-RECEIVED entries. The BTM query TX status correlated cookie 4, generation 4, category 10/action 6, token 1, ack=0 (unconfirmed); no peer response or incoming BTM Request arrived in its 12-second window. After both pairs, WPA remained COMPLETED with SAE/PMF=1 and IPv4, and pinned-key SSH remained available. The verified DEBUG sink received the nonce; syslog configuration bytes were restored, logging returned to INFO/timestamp 0, and the temporary sink was removed.",
+  "scenario": "Two separately scoped observations on one operator-reported V1.2 sample: first, the 44b FIT plus LittleFS root in an ordinary NOR boot, with connected scan/ROAM and bounded Neighbor Report/BTM queries; later, a RAM-only 107b association-capability FIT with existing NOR SPL/FIT/root unchanged, checking UART WPA state, live router capability flags, one Neighbor Report request and one BTM query. Do not transfer measurements between these inputs.",
+  "expected": "The prior 44b run records Neighbor Report results and the unresolved BTM peer response. The separate 107b RAM candidate retains SAE/PMF and IPv4 while the router reports station k/v capability; its Neighbor Report request yields entries, while a completed BTM peer exchange remains unconfirmed.",
+  "observed": "In the prior ordinary NOR run with the 44b FIT and 10 MiB root, pinned-key SSH and WPA COMPLETED/SAE/PMF=1/IPv4 were present. At the initial AP, capability 0x1c11 had RRM bit 12 set, RRM Enabled Capabilities IE 70 had length 5, and Extended Capabilities BTM bit 19 was set. neighbor_rep_request token 1 returned four parsed RRM-NEIGHBOR-REP-RECEIVED entries. The BTM query TX status correlated cookie 2, generation 1, category 10/action 6, token 1, ack=0 (unconfirmed); no peer response arrived in its 12-second window. A connected scan preserved the association, and ROAM moved to the requested alternate AP. That AP also advertised RRM and BTM capabilities. neighbor_rep_request token 2 returned three parsed entries. The BTM query TX status correlated cookie 4, generation 4, category 10/action 6, token 1, ack=0 (unconfirmed); no peer response or incoming BTM Request arrived in its 12-second window. These scan, ROAM, Neighbor Report and BTM observations apply only to the 44b input. In a later RAM-only boot with the 107b association-capability FIT, the installed NOR SPL, FIT and LittleFS root were unchanged. UART showed WPA COMPLETED with SAE, PMF=1 and IPv4. A read-only live router association snapshot showed the target station on WifiMaster0/AccessPoint0 with both _11 k and v flags. One neighbor_rep_request token 1 returned three parsed RRM-NEIGHBOR-REP-RECEIVED entries. The BTM query used category 10/action 6/token 1 and TX cookie 2/generation 5; ACK status is unknown and no BTM Request or response was observed in its 12-second window. SSH became available after recovery; WPA remained COMPLETED with SAE/PMF=1 and IPv4. Log level was restored to INFO/timestamp 0. A completed BTM peer exchange is not established for this 107b RAM trial.",
   "duration_seconds": null,
   "measurements": [
     {
-      "name": "initial-ap-neighbor-report-token-1-parsed-report-count",
+      "name": "44b-initial-ap-neighbor-report-token-1-parsed-report-count",
       "value": 4,
       "unit": "entries"
     },
     {
-      "name": "initial-ap-btm-query-tx-status",
+      "name": "44b-initial-ap-btm-query-tx-status",
       "value": 1,
       "unit": "cookie 2, generation 1, category 10/action 6, token 1, ack=0 unconfirmed"
     },
     {
-      "name": "initial-ap-btm-peer-response-window",
+      "name": "44b-initial-ap-btm-peer-response-window",
       "value": 12,
       "unit": "seconds; no peer response observed"
     },
     {
-      "name": "post-roam-ap-neighbor-report-token-2-parsed-report-count",
+      "name": "44b-post-roam-ap-neighbor-report-token-2-parsed-report-count",
       "value": 3,
       "unit": "entries"
     },
     {
-      "name": "post-roam-ap-btm-query-tx-status",
+      "name": "44b-post-roam-ap-btm-query-tx-status",
       "value": 1,
       "unit": "cookie 4, generation 4, category 10/action 6, token 1, ack=0 unconfirmed"
     },
     {
-      "name": "post-roam-ap-btm-observation-window",
+      "name": "44b-post-roam-ap-btm-observation-window",
       "value": 12,
       "unit": "seconds; no peer response or incoming BTM Request observed"
+    },
+    {
+      "name": "107b-ram-only-candidate-booted",
+      "value": 1,
+      "unit": "NOR SPL, FIT and LittleFS root unchanged"
+    },
+    {
+      "name": "107b-uart-sae-pmf-ipv4",
+      "value": 1,
+      "unit": "WPA_COMPLETED, SAE, PMF=1; IPv4 present"
+    },
+    {
+      "name": "107b-live-router-station-kv",
+      "value": 1,
+      "unit": "current association snapshot reported _11 k and v"
+    },
+    {
+      "name": "107b-neighbor-report-token-1-parsed-report-count",
+      "value": 3,
+      "unit": "entries"
+    },
+    {
+      "name": "107b-btm-query-tx-status",
+      "value": 1,
+      "unit": "cookie 2, generation 5, category 10/action 6, token 1; ACK unknown"
+    },
+    {
+      "name": "107b-btm-peer-response-window",
+      "value": 12,
+      "unit": "seconds; no BTM Request or response observed"
+    },
+    {
+      "name": "107b-post-recovery-ssh",
+      "value": 1,
+      "unit": "pinned SSH became available after recovery"
     }
   ],
   "limits": [
-    "Both APs advertised RRM/Neighbor Report and BTM capability, and both Neighbor Report requests returned parsed entries. This is one bounded run on one sample and does not establish repeated behavior or AP-initiated transition reliability.",
-    "Each BTM query produced a correlated TX completion, but firmware provides no peer ACK indication; ack=0 is unconfirmed, not a negative ACK. No peer response was observed in either 12-second window, and no incoming BTM Request was observed in the post-roam window.",
-    "The run does not establish a completed BTM peer exchange or full IEEE 802.11k/v behavior, PMF replay/forgery resistance, throughput or sustained reliability.",
+    "The scan, ROAM and Neighbor Report results above apply only to the 44b FIT run; the 107b RAM follow-up did not repeat them.",
+    "On the 44b run, each BTM query produced correlated TX completion, but firmware provides no peer ACK indication; ack=0 is unconfirmed, not a negative ACK. No peer response was observed in either 12-second window, and no incoming BTM Request was observed in the post-roam window.",
+    "The 107b RAM follow-up confirms UART WPA COMPLETED/SAE/PMF=1/IPv4, pinned SSH after recovery, router-reported station k/v flags and three parsed Neighbor Report entries. Its BTM query had unknown ACK status and no BTM Request or response was observed in one 12-second window; this does not establish a completed peer exchange.",
+    "These are bounded observations on one sample and do not establish repeated behavior, full IEEE 802.11k/v behavior, PMF replay/forgery resistance, throughput or sustained reliability.",
     "Private logs, credentials, host keys, network identifiers and local paths are not published."
   ],
   "source_refs": [
-    "mosaico-wifi-action-transport-source"
+    "mosaico-wifi-action-transport-source",
+    "mosaico-wifi-association-capabilities-source"
   ]
 }

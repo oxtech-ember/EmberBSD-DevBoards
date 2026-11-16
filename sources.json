@@ -1778,6 +1778,14 @@
       "sha256": null
     },
     {
+      "id": "mosaico-wifi-association-capabilities-source",
+      "title": "EmberBSD host-owned ESP association capabilities",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/107b01843ada72042c0be9913f23bb352552ecfa",
+      "revision": "107b01843ada72042c0be9913f23bb352552ecfa",
+      "reviewed_at": "2026-11-17",
+      "sha256": null
+    },
+    {
       "id": "mosaico-wifi-action-transport-observation",
       "title": "ESP-Mosaico V1.2 bounded Action transport and RRM connection-state observation",
       "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-action-transport.json",
