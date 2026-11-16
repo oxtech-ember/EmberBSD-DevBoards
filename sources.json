@@ -1699,11 +1699,11 @@
     },
     {
       "id": "mosaico-wifi-roam-check-ipv4-source",
-      "title": "EmberBSD connected-scan and roam checker IPv4 readiness",
-      "url": "https://github.com/oxtech-ember/EmberBSD/commit/a71f8001b4103f3e736695f459052f246473b91a",
-      "revision": "a71f8001b4103f3e736695f459052f246473b91a",
-      "reviewed_at": "2026-11-15",
-      "sha256": null
+      "title": "EmberBSD wifi-roam-check.sh IPv4 readiness helper",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/aa4956cac18dbc1b9666f1bf3231e602f912a660/ember/tools/wifi-roam-check.sh",
+      "revision": "aa4956cac18dbc1b9666f1bf3231e602f912a660",
+      "reviewed_at": "2026-11-16",
+      "sha256": "f944252627e7b8f12025d51196a9e95aa88588aebfa33ccb34493f8b8cd8f285"
     },
     {
       "id": "mosaico-wifi-association-epoch-adapter-source",
@@ -1715,10 +1715,10 @@
     },
     {
       "id": "mosaico-wifi-connected-scan-roam-nor-observation",
-      "title": "ESP-Mosaico kernel #31 NOR connected-scan and roam observation",
+      "title": "ESP-Mosaico 44b NOR connected-scan and roam observation",
       "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/wifi-connected-scan-roam-nor.json",
-      "revision": null,
-      "reviewed_at": "2026-11-15",
+      "revision": "44b FIT SHA-256 3553f80f0d09ab1e5f94ad91d082264ff6289092b89350bcc1f8827d1c71328f; LittleFS root SHA-256 b13533aa769b9709e70a9d32c63b24e3b67aa1ea683ea90b9b9c505bfccd49a0.",
+      "reviewed_at": "2026-11-16",
       "sha256": null
     },
     {

@@ -26,26 +26,46 @@
       "reference": null
     }
   ],
-  "scenario": "After a combined FIT and LittleFS write to NOR, with SPL retained, ordinary POWER-boot the image. The FIT contains the same 44b bytes as the prior RAM probe and replaces the previous NOR FIT. Through pinned-key SSH, check SAE/PMF and IPv4, then issue neighbor_rep_request and wnm_bss_query 0. Capture the supplicant DEBUG output with a verified temporary syslog sink; restore normal logging afterward.",
-  "expected": "The supplicant submits the requests and receives the corresponding peer response while the SAE/PMF connection remains available.",
-  "observed": "An ordinary NOR boot reached OpenSBI, U-Boot, kernel and the LittleFS root on flash1, then login. Pinned-key SSH succeeded; WPA reported COMPLETED with SAE, PMF=1 and IPv4. The AP advertised capability 0x1c11 with RRM bit 12 set, Neighbor Report IE 70 of length 5, and Extended Capabilities BTM bit 19 set. A verified DEBUG syslog sink received the probe nonce. neighbor_rep_request returned OK with token 1, and four parsed RRM-NEIGHBOR-REP-RECEIVED entries arrived. wnm_bss_query 0 returned OK; correlated TX status had cookie 2, generation 1, category 10, action 6, token 1 and ack=0 (unconfirmed). No AP BTM peer response arrived within 12 seconds. Post-probe status retained SAE/PMF, IPv4 and SSH; syslog configuration bytes matched the pre-probe check, log level INFO and timestamp 0 were restored, and helper RESTORE_RESULT was 0.",
+  "scenario": "After a combined FIT and LittleFS write to NOR with SPL retained, ordinary POWER-boot the image. Check pinned-key SSH and SAE/PMF/IPv4. At the initial AP, issue one neighbor_rep_request and one wnm_bss_query 0. Run a connected scan and station-initiated ROAM to the compatible alternate AP, then issue the same pair there. Capture supplicant DEBUG output through a verified temporary syslog sink, restore INFO/timestamp 0 and remove the temporary sink.",
+  "expected": "Both APs advertise RRM and BTM; Neighbor Report requests yield parsed reports and each BTM query receives a peer response while SAE/PMF and IPv4 remain available.",
+  "observed": "An ordinary NOR boot reached OpenSBI, U-Boot, kernel and the LittleFS root on flash1, then login. Pinned-key SSH succeeded; WPA reported COMPLETED with SAE, PMF=1 and IPv4. At the initial AP, capability 0x1c11 had RRM bit 12 set, RRM Enabled Capabilities IE 70 had length 5, and Extended Capabilities BTM bit 19 was set. neighbor_rep_request token 1 returned four parsed RRM-NEIGHBOR-REP-RECEIVED entries. The BTM query TX status correlated cookie 2, generation 1, category 10/action 6, token 1, ack=0 (unconfirmed); no peer response arrived in its 12-second window. A connected scan preserved the association, and ROAM moved to the requested alternate AP. That AP also advertised RRM and BTM capabilities. neighbor_rep_request token 2 returned three parsed RRM-NEIGHBOR-REP-RECEIVED entries. The BTM query TX status correlated cookie 4, generation 4, category 10/action 6, token 1, ack=0 (unconfirmed); no peer response or incoming BTM Request arrived in its 12-second window. After both pairs, WPA remained COMPLETED with SAE/PMF=1 and IPv4, and pinned-key SSH remained available. The verified DEBUG sink received the nonce; syslog configuration bytes were restored, logging returned to INFO/timestamp 0, and the temporary sink was removed.",
   "duration_seconds": null,
   "measurements": [
     {
-      "name": "neighbor-report-parsed-entry-count",
+      "name": "initial-ap-neighbor-report-token-1-parsed-report-count",
       "value": 4,
       "unit": "entries"
     },
     {
-      "name": "btm-peer-response-observation-window",
+      "name": "initial-ap-btm-query-tx-status",
+      "value": 1,
+      "unit": "cookie 2, generation 1, category 10/action 6, token 1, ack=0 unconfirmed"
+    },
+    {
+      "name": "initial-ap-btm-peer-response-window",
       "value": 12,
-      "unit": "second after the query"
+      "unit": "seconds; no peer response observed"
+    },
+    {
+      "name": "post-roam-ap-neighbor-report-token-2-parsed-report-count",
+      "value": 3,
+      "unit": "entries"
+    },
+    {
+      "name": "post-roam-ap-btm-query-tx-status",
+      "value": 1,
+      "unit": "cookie 4, generation 4, category 10/action 6, token 1, ack=0 unconfirmed"
+    },
+    {
+      "name": "post-roam-ap-btm-observation-window",
+      "value": 12,
+      "unit": "seconds; no peer response or incoming BTM Request observed"
     }
   ],
   "limits": [
-    "The Neighbor Report request and four parsed neighbor entries passed in this bounded run; this does not establish repeated behavior or an AP-initiated transition.",
-    "The AP's BTM capability advertisement was verified; the absence of a BTM peer response in this 12-second window does not mean BTM was not advertised or identify why no response arrived. The TX completion is correlated to the request, but the firmware callback does not report peer ACK; ack=0 means unconfirmed, not a negative ACK result.",
-    "This run does not establish a completed BTM peer exchange or full IEEE 802.11k/v behavior, PMF replay/forgery resistance or sustained reliability.",
+    "Both APs advertised RRM/Neighbor Report and BTM capability, and both Neighbor Report requests returned parsed entries. This is one bounded run on one sample and does not establish repeated behavior or AP-initiated transition reliability.",
+    "Each BTM query produced a correlated TX completion, but firmware provides no peer ACK indication; ack=0 is unconfirmed, not a negative ACK. No peer response was observed in either 12-second window, and no incoming BTM Request was observed in the post-roam window.",
+    "The run does not establish a completed BTM peer exchange or full IEEE 802.11k/v behavior, PMF replay/forgery resistance, throughput or sustained reliability.",
     "Private logs, credentials, host keys, network identifiers and local paths are not published."
   ],
   "source_refs": [
