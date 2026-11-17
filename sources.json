@@ -1792,6 +1792,14 @@
       "revision": null,
       "reviewed_at": "2026-11-16",
       "sha256": null
+    },
+    {
+      "id": "mosaico-wpa-wnm-candidate-opclass-source",
+      "title": "EmberBSD WPA BTM candidate operating-class mapping and regression",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/commit/7dd175747a946630c18a2f653783eff720b3e188",
+      "revision": "7dd175747a946630c18a2f653783eff720b3e188",
+      "reviewed_at": "2026-11-17",
+      "sha256": null
     }
   ]
 }

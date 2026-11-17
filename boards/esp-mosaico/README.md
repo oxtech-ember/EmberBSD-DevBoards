@@ -87,6 +87,8 @@ A separate temporary WPA2-PSK profile reached WPA2-PSK/COMPLETED and host ping p
 
 A separate RAM-only follow-up used the reviewed association-capability changes later published in [OS commit 107b018](https://github.com/oxtech-ember/EmberBSD/commit/107b01843ada72042c0be9913f23bb352552ecfa), leaving NOR SPL/FIT/root unchanged. UART showed SAE/PMF=1 and IPv4; the live router association showed station k/v, and one Neighbor Report request returned three entries. BTM TX ACK is unknown and no peer request/response arrived in 12 seconds; SSH became available after recovery. This does not extend the 44b scan/roam evidence.
 
+A later WPA userland source fix corrects channel-class mapping in the BTM candidate list; its prepared-source regression covers the serializer and channel helpers ([Ports commit 7dd1757](https://github.com/oxtech-ember/EmberBSD-Ports/commit/7dd175747a946630c18a2f653783eff720b3e188), [test source and invocation](https://github.com/oxtech-ember/EmberBSD-Ports/blob/7dd175747a946630c18a2f653783eff720b3e188/pkgsrc/net/wpa_supplicant/tests/README.md)). No new device trial has run with this userland change, so the recorded BTM peer-exchange result remains unchanged.
+
 A separate [factory-firmware observation](evidence/factory-peripherals.json) followed a
 restore that wrote only the two ranges replaced by the OS installation. Before
 writing, the full NOR matched the expected installed state; afterward, it matched
