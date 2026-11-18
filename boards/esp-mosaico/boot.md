@@ -61,6 +61,23 @@ while the charge LED was reported white. No ROM idle timeout was established;
 confirm the mode through a ROM response rather than the LED color
 ([bounded LED and ROM observation](evidence/charge-led-rom.json)).
 
+## EmberBSD boot display on V1.2
+
+The Mosaico U-Boot display profile shows the EmberBSD logo on the CO5300 and
+updates a status line when it checks the kernel image, finishes loading it and
+hands over control. SPL and OpenSBI run before the panel is initialized.
+The kernel resets the panel when its driver attaches, so the display may go
+dark again until the first system startup message. UART carries the full
+console output throughout. See the [U-Boot profile](https://github.com/oxtech-ember/EmberBSD-Ports/tree/main/pkgsrc/sysutils/u-boot-source#boot-messages-on-the-mosaico-v12-display).
+
+Select the `display` toolset in the [network root profile](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/image/cix-p1-userland.md)
+to show the startup scripts and their results on `/dev/ttyE0`.
+
+The [solid-color U-Boot test](evidence/uboot-red-kernel-black.json) and the
+[kernel display and touch test](evidence/row-pair-display-touch.json) document
+the panel paths exercised on the sample. Visual confirmation of the complete
+boot message sequence is pending.
+
 ## Distinct startup paths
 
 | Path | Purpose and prerequisite |
