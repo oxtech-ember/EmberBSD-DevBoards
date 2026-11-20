@@ -1,0 +1,57 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-boot-display-normal-power-20261120",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-20",
+  "layer": "operator-report",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One operator-reported ESP-Mosaico V1.2 kit."
+  },
+  "inputs": [
+    {
+      "name": "Installed NOR FIT",
+      "revision": "FIT used in the reported normal POWER boot; build revision and digest not supplied",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Installed NOR LittleFS image",
+      "revision": "LittleFS image used in the reported normal POWER boot; build revision and digest not supplied",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "NetBSD kernel",
+      "revision": "NetBSD 11.1 ESP_MOSAICO_LITTLEFS_NOR #6",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "U-Boot",
+      "revision": "2026.10",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "One ordinary POWER-on boot of an installed V1.2 system; serial output was observed separately from the display.",
+  "expected": "The display shows a boot indication and the serial console reaches the installed NetBSD kernel.",
+  "observed": "The operator confirmed that a boot indicator appeared during normal POWER startup. Separately, UART output reached SPL, OpenSBI, U-Boot 2026.10, FIT handoff and the NetBSD 11.1 ESP_MOSAICO_LITTLEFS_NOR #6 banner. Post-write verification separately reported a matching esptool hash for the FIT and for the LittleFS image; the digest values were not supplied for this record.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "One operator-reported V1.2 unit and one normal POWER boot.",
+    "The report does not identify the displayed text, sequence, or whether every startup/rc line appeared.",
+    "No rc completion or login was confirmed.",
+    "The FIT and LittleFS digest values and exact build-source revisions were not supplied; this record does not pin them.",
+    "This result does not establish repeated-boot reliability or full startup completion."
+  ],
+  "source_refs": [
+    "mosaico-s31-uart-fit-ports",
+    "mosaico-nor-littlefs-kernel-source"
+  ]
+}

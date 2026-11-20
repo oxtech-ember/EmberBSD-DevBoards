@@ -1800,6 +1800,14 @@
       "revision": "7dd175747a946630c18a2f653783eff720b3e188",
       "reviewed_at": "2026-11-17",
       "sha256": null
+    },
+    {
+      "id": "mosaico-boot-display-normal-power-observation",
+      "title": "ESP-Mosaico V1.2 normal POWER boot display and UART banner operator report",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/boot-display-normal-power.json",
+      "revision": null,
+      "reviewed_at": "2026-11-20",
+      "sha256": null
     }
   ]
 }

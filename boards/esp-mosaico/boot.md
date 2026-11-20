@@ -75,8 +75,13 @@ to show the startup scripts and their results on `/dev/ttyE0`.
 
 The [solid-color U-Boot test](evidence/uboot-red-kernel-black.json) and the
 [kernel display and touch test](evidence/row-pair-display-touch.json) document
-the panel paths exercised on the sample. Visual confirmation of the complete
-boot message sequence is pending.
+separate panel paths. In one later normal POWER boot, the operator confirmed
+that a boot indicator appeared; the report did not identify its text, sequence
+or every startup line. UART separately reached the NetBSD 11.1
+`ESP_MOSAICO_LITTLEFS_NOR` #6 banner after SPL, OpenSBI and U-Boot 2026.10.
+FIT and LittleFS post-write hashes were each verified with esptool. The exact
+hash values were not supplied. No rc completion or login was confirmed; see the
+[bounded boot observation](evidence/boot-display-normal-power.json).
 
 ## Distinct startup paths
 

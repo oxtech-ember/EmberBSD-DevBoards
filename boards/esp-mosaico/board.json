@@ -55,7 +55,8 @@
     "mosaico-wifi-roam-lifecycle-source",
     "mosaico-wifi-roam-check-ipv4-source",
     "mosaico-wifi-association-epoch-adapter-source",
-    "mosaico-wifi-connected-scan-roam-nor-observation"
+    "mosaico-wifi-connected-scan-roam-nor-observation",
+    "mosaico-boot-display-normal-power-observation"
   ],
   "capabilities": [
     {
@@ -75,7 +76,8 @@
         "mosaico-nor-os-observation",
         "mosaico-nor-littlefs-observation",
         "mosaico-nor-littlefs-kernel-source",
-        "mosaico-nor-littlefs-ports-source"
+        "mosaico-nor-littlefs-ports-source",
+        "mosaico-boot-display-normal-power-observation"
       ]
     },
     {
