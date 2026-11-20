@@ -62,14 +62,16 @@
     "mosaico-wifi-roam-check-ipv4-source",
     "mosaico-wifi-association-epoch-adapter-source",
     "mosaico-wifi-connected-scan-roam-nor-observation",
-    "mosaico-boot-display-normal-power-observation"
+    "mosaico-boot-display-normal-power-observation",
+    "mosaico-rcorder-selection-source",
+    "mosaico-network-appliance-startup-profile-observation"
   ],
   "capabilities": [
     {
       "id": "boot",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one operator-reported V1.2 sample, normal POWER boot of the R3 NOR FIT and LittleFS image reached NetBSD 11.1 ESP_MOSAICO_LITTLEFS_NOR #6, mounted the 10 MiB littlefs root from flash1 at 0x600000, and reached the final Startup complete message. A subsequent pinned-host-key SSH session succeeded and stayed connected for 52 seconds; WPA status was COMPLETED with SAE and IPv4 present during the session. The /var/run/rc.log interval was 4 minutes 43 seconds with rc exit status 0; the device clock reported a date in 2010, so only the within-log interval is recorded. Earlier bounded tests on this sample reached a single-user shell, retained a synced marker across one normal power cycle, and passed a read-write remount plus write/sync/read smoke check; a RAM-loaded run passed the full VFS checker against the NOR root. This does not establish repeated-cycle reliability, sudden-power-loss durability, full services, NAND, full PSRAM read/write or general peripheral support.",
+      "scope": "On one operator-reported V1.2 sample, normal POWER boot of the R3 NOR FIT and LittleFS image reached NetBSD 11.1 ESP_MOSAICO_LITTLEFS_NOR #6, mounted the 10 MiB littlefs root from flash1 at 0x600000, and reached the final Startup complete message. A subsequent pinned-host-key SSH session succeeded and stayed connected for 52 seconds; WPA status was COMPLETED with SAE and IPv4 present during the session. The /var/run/rc.log interval was 4 minutes 43 seconds with rc exit status 0; the device clock reported a date in 2010, so only the within-log interval is recorded. A later R4 network-appliance profile was validated by rcorder and unpacked offline, but its activation and runtime were not measured; an R3 attempt with a misplaced KEYWORD reached login without SSH. Do not transfer the ordinary R3 boot's 283-second duration or network status to R4. Earlier bounded tests on this sample reached a single-user shell, retained a synced marker across one normal power cycle, and passed a read-write remount plus write/sync/read smoke check; a RAM-loaded run passed the full VFS checker against the NOR root. This does not establish repeated-cycle reliability, sudden-power-loss durability, full services, NAND, full PSRAM read/write or general peripheral support.",
       "source_refs": [
         "mosaico-vendor-webui-observation",
         "mosaico-device-modes",
@@ -83,7 +85,9 @@
         "mosaico-nor-littlefs-observation",
         "mosaico-nor-littlefs-kernel-source",
         "mosaico-nor-littlefs-ports-source",
-        "mosaico-boot-display-normal-power-observation"
+        "mosaico-boot-display-normal-power-observation",
+        "mosaico-rcorder-selection-source",
+        "mosaico-network-appliance-startup-profile-observation"
       ]
     },
     {

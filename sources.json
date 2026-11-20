@@ -1856,6 +1856,22 @@
       "revision": null,
       "reviewed_at": "2026-11-20",
       "sha256": null
+    },
+    {
+      "id": "mosaico-rcorder-selection-source",
+      "title": "EmberBSD rcorder script metadata parsing and keyword selection",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/379a9dcfe4843631379869c56264c0dbedd73fa6/sbin/rcorder/rcorder.c",
+      "revision": "379a9dcfe4843631379869c56264c0dbedd73fa6",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-network-appliance-startup-profile-observation",
+      "title": "ESP-Mosaico R4 network-appliance startup-profile preparation and bounded result",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/network-appliance-startup-profile.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }

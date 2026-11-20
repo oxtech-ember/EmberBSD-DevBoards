@@ -1,0 +1,81 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-network-appliance-startup-profile-20261121",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "operator-report",
+  "result": "inconclusive",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One operator-reported ESP-Mosaico V1.2 sample and a separately prepared R4 LittleFS image."
+  },
+  "inputs": [
+    {
+      "name": "R4 network-appliance LittleFS image",
+      "revision": "Profile recipe validated and image unpacked offline; not boot tested",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "R3 misplaced-keyword startup attempt",
+      "revision": "network-appliance KEYWORD outside the initial rcorder metadata block",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Validate the R4 startup selection with the host-built rcorder and inspect its unpacked LittleFS image; measure available space on the live root before software reboot.",
+  "expected": "rcorder selects the intended 13 startup scripts in dependency order, the unpacked image retains its provisioned network/SSH inputs and special devices, and removing the standalone ssh-keygen increases available root space.",
+  "observed": "The host-built rcorder selected, in order: root, sysctl, mountcritlocal, network_tmpdirs, ttys, network, network_logfs, syslogd, wpa_supplicant, dhcpcd, staticroute, mdnsd, sshd. For this selection, each # KEYWORD: network-appliance line must be inside the script's initial contiguous PROVIDE/REQUIRE/BEFORE/KEYWORD metadata block. The unpacked R4 image retained the checked network and SSH inputs and special devices, with 1788 KiB free; the offline image comparison was 704 KiB to 1788 KiB free. Before software reboot, live-root statvfs free space changed from 171 to 424 blocks of 4096 bytes after removing the standalone ssh-keygen (an increase of 1,036,288 bytes). An R3 attempt with the keyword outside the metadata block reached login after reboot but did not start SSH. R4 activation and its /etc/rc duration have not been measured; no R4 Wi-Fi or SSH success is established. The separate ordinary cold POWER baseline remains 283 seconds for /etc/rc with exit status 0.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "rcorder-selected-script-count",
+      "value": 13,
+      "unit": "scripts"
+    },
+    {
+      "name": "offline-littlefs-free-space-before",
+      "value": 704,
+      "unit": "KiB"
+    },
+    {
+      "name": "offline-littlefs-free-space-after",
+      "value": 1788,
+      "unit": "KiB"
+    },
+    {
+      "name": "live-root-free-blocks-before-keygen-removal",
+      "value": 171,
+      "unit": "4096-byte blocks"
+    },
+    {
+      "name": "live-root-free-blocks-after-keygen-removal-before-reboot",
+      "value": 424,
+      "unit": "4096-byte blocks"
+    },
+    {
+      "name": "live-root-free-space-increase-before-reboot",
+      "value": 1036288,
+      "unit": "bytes"
+    },
+    {
+      "name": "ordinary-cold-power-rc-baseline",
+      "value": 283,
+      "unit": "seconds; rc exit status 0, from separate baseline observation"
+    }
+  ],
+  "limits": [
+    "R4 was validated and unpacked offline but was not activated by reboot in this observation; no R4 boot duration or runtime service status is established.",
+    "The login-without-SSH result belongs to the R3 attempt with the KEYWORD outside the initial metadata block, not to R4.",
+    "Live-root space values were measured before software reboot; offline image free-space values are a separate comparison.",
+    "The 283-second cold POWER baseline is from the separate ordinary R3 boot observation and is not an R4 result.",
+    "No working Wi-Fi, SSH, or QML display result is claimed for R4."
+  ],
+  "source_refs": [
+    "mosaico-rcorder-selection-source",
+    "mosaico-boot-display-normal-power-observation"
+  ]
+}
