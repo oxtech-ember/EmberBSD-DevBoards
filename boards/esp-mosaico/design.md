@@ -18,6 +18,10 @@ a visible interface after the published two-row RASET worker fix; the operator
 also confirmed changing touch coordinates. This is a RAM-only scenario on one
 sample. Touch orientation/calibration, audio playback and sustained operation
 remain unverified; camera support is identity-only and DVP capture is not implemented.
+After a normal POWER boot of the R3 system, one V1.2 sample also displayed the
+LVGL weather example's fixed `MOSAICO`, `21 C` and `SUNNY` labels on a dark
+background ([bounded hardware observation](evidence/weather-lvgl-normal-power.json)).
+The labels are sample content, not sensor or online weather readings.
 Power, Wi-Fi and other expansion features retain their own integration limits.
 Check the actual flash layout and a usable console/recovery route before selecting an image.
 

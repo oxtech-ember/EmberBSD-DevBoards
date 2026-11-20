@@ -5,7 +5,7 @@
   "vendor_model": "ESP-Mosaico CoreBoard and supplied BaseBoard",
   "soc": "espressif-esp32-s31",
   "board_revision": "1.2",
-  "reviewed_at": "2026-11-15",
+  "reviewed_at": "2026-11-20",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/esp-mosaico/README.md",
@@ -43,6 +43,8 @@
     "mosaico-spi-line-mode-kernel-source",
     "mosaico-row-pair-kernel-source",
     "mosaico-row-pair-display-touch-observation",
+    "mosaico-weather-lvgl-example",
+    "mosaico-weather-lvgl-normal-power-observation",
     "mosaico-envsys-sensors-kernel-source",
     "mosaico-bq27220-kernel-source",
     "mosaico-audio-kernel-source",
@@ -63,7 +65,7 @@
       "id": "boot",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one operator-reported V1.2 sample, normal POWER off/on without BOOT booted the installed NOR SPL/FIT/kernel, mounted a littlefs root from flash1 (10 MiB at 0x600000), and reached a single-user shell. After one normal power cycle, an earlier synced test marker remained; a read-write remount and bounded write/sync/read smoke check passed. A separate RAM-loaded diagnostic run passed the full VFS checker against the NOR root. This does not establish crash or sudden-power-loss durability, repeated-cycle reliability, full services, NAND, full PSRAM read/write or general peripheral support.",
+      "scope": "On one operator-reported V1.2 sample, normal POWER boot of the R3 NOR FIT and LittleFS image reached NetBSD 11.1 ESP_MOSAICO_LITTLEFS_NOR #6, mounted the 10 MiB littlefs root from flash1 at 0x600000, and reached the final Startup complete message. A subsequent pinned-host-key SSH session succeeded and stayed connected for 52 seconds; WPA status was COMPLETED with SAE and IPv4 present during the session. The /var/run/rc.log interval was 4 minutes 43 seconds with rc exit status 0; the device clock reported a date in 2010, so only the within-log interval is recorded. Earlier bounded tests on this sample reached a single-user shell, retained a synced marker across one normal power cycle, and passed a read-write remount plus write/sync/read smoke check; a RAM-loaded run passed the full VFS checker against the NOR root. This does not establish repeated-cycle reliability, sudden-power-loss durability, full services, NAND, full PSRAM read/write or general peripheral support.",
       "source_refs": [
         "mosaico-vendor-webui-observation",
         "mosaico-device-modes",
@@ -91,14 +93,15 @@
         "mosaico-ram-littlefs-observation",
         "mosaico-nor-littlefs-observation",
         "mosaico-nor-littlefs-kernel-source",
-        "mosaico-nor-littlefs-ports-source"
+        "mosaico-nor-littlefs-ports-source",
+        "mosaico-boot-display-normal-power-observation"
       ]
     },
     {
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one operator-reported V1.2 sample, ordinary NOR boot with ESP_MOSAICO_LITTLEFS_NOR kernel #31 and a 10 MiB LittleFS root was followed by one bounded strict-SAE probe. The connected scan preserved the association; ROAM reached the requested alternate BSSID, which matched the final BSSID and differed from baseline. Post-roam status was WPA_COMPLETED/SAE/PMF=1; IPv4 was confirmed with ifconfig, and DNS plus gateway ping passed. This is one successful scenario, not repeated-roam acceptance. Host getaddrinfo resolved the assigned .local name to the target interface IPv4. A separate temporary WPA2-PSK profile reached WPA2-PSK/COMPLETED and host ping passed. A later router-side association view showed WPA3-PSK/PMF restored on the original AP. The shared station Action path is now integrated. A RAM probe with EmberBSD 44b8639 preserved SAE/PMF and SSH and reported correlated BTM TX completion; the firmware callback leaves peer ACK unconfirmed. The installed supplicant rejected Neighbor Report locally because its RRM connection state was unset. No RRM/BTM peer exchange was established. AP-initiated BTM/802.11v and 802.11r, forged-frame protection, throughput and sustained reliability remain unverified.",
+      "scope": "On one operator-reported V1.2 sample, ordinary NOR boot with ESP_MOSAICO_LITTLEFS_NOR kernel #31 and a 10 MiB LittleFS root was followed by one bounded strict-SAE probe. The connected scan preserved the association; ROAM reached the requested alternate BSSID, which matched the final BSSID and differed from baseline. Post-roam status was WPA_COMPLETED/SAE/PMF=1; IPv4 was confirmed with ifconfig, and DNS plus gateway ping passed. A separate later pinned-host-key SSH session after R3 startup remained connected for 52 seconds with WPA COMPLETED/SAE and IPv4 present. These are bounded scenarios, not sustained network acceptance. Host getaddrinfo resolved the assigned .local name to the target interface IPv4. A separate temporary WPA2-PSK profile reached WPA2-PSK/COMPLETED and host ping passed. A later router-side association view showed WPA3-PSK/PMF restored on the original AP. The shared station Action path is now integrated. A RAM probe with EmberBSD 44b8639 preserved SAE/PMF and SSH and reported correlated BTM TX completion; the firmware callback leaves peer ACK unconfirmed. The installed supplicant rejected Neighbor Report locally because its RRM connection state was unset. No RRM/BTM peer exchange was established. AP-initiated BTM/802.11v and 802.11r, forged-frame protection, throughput and sustained reliability remain unverified.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-vendor-webui-observation",
@@ -121,7 +124,8 @@
         "mosaico-wifi-association-epoch-adapter-source",
         "mosaico-wifi-connected-scan-roam-nor-observation",
         "mosaico-wifi-action-transport-source",
-        "mosaico-wifi-action-transport-observation"
+        "mosaico-wifi-action-transport-observation",
+        "mosaico-boot-display-normal-power-observation"
       ]
     },
     {
@@ -142,7 +146,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD has a target-built SC101IOT sensor/DVP/video(4) path, but no physical EmberBSD frame has been captured. The mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. EmberBSD radio evidence includes bounded WPA2/SAE handshakes and small/1400-byte gateway ICMP reachability on one sample; one bounded roam succeeded; repeated roaming and sustained operation remain unverified.",
+      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. A later normal POWER boot with the R3 root displayed the fixed MOSAICO, 21 C and SUNNY LVGL sample on a dark background. The sample does not read sensors or online weather. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD has a target-built SC101IOT sensor/DVP/video(4) path, but no physical EmberBSD frame has been captured. The mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. EmberBSD radio evidence includes bounded WPA2/SAE handshakes and small/1400-byte gateway ICMP reachability on one sample; one bounded roam succeeded; repeated roaming and sustained operation remain unverified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
@@ -156,6 +160,8 @@
         "mosaico-spi-line-mode-kernel-source",
         "mosaico-row-pair-kernel-source",
         "mosaico-row-pair-display-touch-observation",
+        "mosaico-weather-lvgl-example",
+        "mosaico-weather-lvgl-normal-power-observation",
         "mosaico-espwifi-scan-kernel-source",
         "mosaico-espwifi-wpa-parser-source",
         "mosaico-espwifi-mac-v3-kernel-source",

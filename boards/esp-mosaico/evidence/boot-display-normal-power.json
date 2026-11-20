@@ -15,14 +15,14 @@
   "inputs": [
     {
       "name": "Installed NOR FIT",
-      "revision": "FIT used in the reported normal POWER boot; build revision and digest not supplied",
-      "sha256": null,
+      "revision": "Mosaico boot-display FIT used in the R3 root trial",
+      "sha256": "da3ba8521fd8123bc748897b48735fc92bca4e9c7710543ff39d9c49c8ece8a6",
       "reference": null
     },
     {
       "name": "Installed NOR LittleFS image",
-      "revision": "LittleFS image used in the reported normal POWER boot; build revision and digest not supplied",
-      "sha256": null,
+      "revision": "boot-display root image R3",
+      "sha256": "185a53f44d993531798fd4916e06f2663228c28880933f6f4f8f60a89a21a40d",
       "reference": null
     },
     {
@@ -39,16 +39,22 @@
     }
   ],
   "scenario": "One ordinary POWER-on boot of an installed V1.2 system; serial output was observed separately from the display.",
-  "expected": "The display shows a boot indication and the serial console reaches the installed NetBSD kernel.",
-  "observed": "The operator confirmed that a boot indicator appeared during normal POWER startup. Separately, UART output reached SPL, OpenSBI, U-Boot 2026.10, FIT handoff and the NetBSD 11.1 ESP_MOSAICO_LITTLEFS_NOR #6 banner. Post-write verification separately reported a matching esptool hash for the FIT and for the LittleFS image; the digest values were not supplied for this record.",
+  "expected": "Normal POWER startup shows the boot indicator, mounts the installed NOR LittleFS root, and reaches the end of startup.",
+  "observed": "UART recorded POWERON SPI, SPL, OpenSBI, U-Boot 2026.10, FIT handoff, the NetBSD 11.1 ESP_MOSAICO_LITTLEFS_NOR #6 banner, and LittleFS mounted from flash1. The operator separately reported seeing LOGIN, then sshd, then the final Startup complete message. The /var/run/rc.log timestamps spanned 12:00:09 to 12:04:52, and rc exited with status 0. A subsequent SSH session using the pinned host key succeeded and remained connected for 52 seconds. WPA status was COMPLETED with key_mgmt SAE, and IPv4 was present during that session. Post-write esptool hash verification passed for the FIT and R3 LittleFS image; their SHA-256 values are recorded in inputs.",
   "duration_seconds": null,
-  "measurements": [],
+  "measurements": [
+    {
+      "name": "rc-log-interval",
+      "value": 283,
+      "unit": "seconds between /var/run/rc.log timestamps; rc exit status 0"
+    }
+  ],
   "limits": [
-    "One operator-reported V1.2 unit and one normal POWER boot.",
-    "The report does not identify the displayed text, sequence, or whether every startup/rc line appeared.",
-    "No rc completion or login was confirmed.",
-    "The FIT and LittleFS digest values and exact build-source revisions were not supplied; this record does not pin them.",
-    "This result does not establish repeated-boot reliability or full startup completion."
+    "One reported V1.2 unit and one ordinary POWER boot are covered.",
+    "The report does not identify the boot indicator text or establish that every startup line appeared.",
+    "The device clock reported a date in 2010; the rc duration is the timestamp delta within the same log, not an absolute wall-clock measurement.",
+    "The bounded 52-second SSH session does not establish longer-term stability or repeated-boot reliability.",
+    "The source-level explanation for the previous root reset is separate from this physical boot observation."
   ],
   "source_refs": [
     "mosaico-s31-uart-fit-ports",

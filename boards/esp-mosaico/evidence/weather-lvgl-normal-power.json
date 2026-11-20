@@ -1,0 +1,68 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-weather-lvgl-normal-power-20261120",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-20",
+  "layer": "operator-report",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One operator-reported ESP-Mosaico V1.2 kit."
+  },
+  "inputs": [
+    {
+      "name": "Installed NOR FIT",
+      "revision": "Mosaico boot-display FIT used with the R3 root",
+      "sha256": "da3ba8521fd8123bc748897b48735fc92bca4e9c7710543ff39d9c49c8ece8a6",
+      "reference": null
+    },
+    {
+      "name": "Installed NOR LittleFS image",
+      "revision": "boot-display root image R3",
+      "sha256": "185a53f44d993531798fd4916e06f2663228c28880933f6f4f8f60a89a21a40d",
+      "reference": null
+    },
+    {
+      "name": "NetBSD kernel",
+      "revision": "NetBSD 11.1 ESP_MOSAICO_LITTLEFS_NOR #6",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Weather LVGL executable",
+      "revision": "EmberBSD-Examples b8f88598119bd68d811f6dcd8d34f00bd4f2300c; stripped RV32",
+      "sha256": "35981671ad01d15f9503138bb1e93d522d480cbff7e3aab072cf588517ea3988",
+      "reference": null
+    },
+    {
+      "name": "LVGL",
+      "revision": "9.6.0",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "After an ordinary POWER boot of the R3 system, run the weather-lvgl program from /tmp on the installed NetBSD #6 system.",
+  "expected": "The 480 x 480 screen shows MOSAICO, 21 C and SUNNY on a dark background.",
+  "observed": "The operator confirmed that the screen showed MOSAICO, 21 C and SUNNY on a dark background. The tested stripped RV32 executable was 992,984 bytes and used LVGL 9.6.0.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "weather-lvgl-executable-size",
+      "value": 992984,
+      "unit": "bytes"
+    }
+  ],
+  "limits": [
+    "One reported V1.2 sample and one displayed scene are covered.",
+    "The temperature and weather labels are fixed sample content; no sensor reading or online weather source was tested.",
+    "This observation does not establish touch input, graphics stability over time or other board revisions."
+  ],
+  "source_refs": [
+    "mosaico-hardware-v12",
+    "mosaico-weather-lvgl-example",
+    "mosaico-boot-display-normal-power-observation"
+  ]
+}

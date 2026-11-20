@@ -1298,6 +1298,22 @@
       "sha256": null
     },
     {
+      "id": "mosaico-weather-lvgl-example",
+      "title": "EmberBSD Mosaico weather LVGL example and acceptance notes",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/blob/5d8fe8c49f539a01caf4e4797d926ba1b64629d0/desktop/mosaico-weather/README.md",
+      "revision": "5d8fe8c49f539a01caf4e4797d926ba1b64629d0",
+      "reviewed_at": "2026-11-20",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-weather-lvgl-normal-power-observation",
+      "title": "ESP-Mosaico V1.2 normal-boot LVGL weather sample observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/weather-lvgl-normal-power.json",
+      "revision": null,
+      "reviewed_at": "2026-11-20",
+      "sha256": null
+    },
+    {
       "id": "mosaico-i2c-reader-example",
       "title": "EmberBSD addressed I²C register-read example",
       "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/eac32cff3302728d3661bb00b06c4c8cc57d61cf/diagnostics/i2c-register-read",

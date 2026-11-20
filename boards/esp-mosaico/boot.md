@@ -75,13 +75,31 @@ to show the startup scripts and their results on `/dev/ttyE0`.
 
 The [solid-color U-Boot test](evidence/uboot-red-kernel-black.json) and the
 [kernel display and touch test](evidence/row-pair-display-touch.json) document
-separate panel paths. In one later normal POWER boot, the operator confirmed
-that a boot indicator appeared; the report did not identify its text, sequence
-or every startup line. UART separately reached the NetBSD 11.1
-`ESP_MOSAICO_LITTLEFS_NOR` #6 banner after SPL, OpenSBI and U-Boot 2026.10.
-FIT and LittleFS post-write hashes were each verified with esptool. The exact
-hash values were not supplied. No rc completion or login was confirmed; see the
-[bounded boot observation](evidence/boot-display-normal-power.json).
+separate panel paths. After the R3 root image was written, one ordinary POWER
+boot on a reported V1.2 sample showed the boot indicator. UART recorded the
+POWERON SPI path, SPL, OpenSBI, U-Boot 2026.10, the NetBSD 11.1
+`ESP_MOSAICO_LITTLEFS_NOR` #6 banner, and the LittleFS root mounted from
+`flash1`. The operator separately reported seeing `LOGIN`, then `sshd`, then
+the final `Startup complete` message. A subsequent SSH session using the
+pinned host key succeeded and remained connected for 52 seconds; WPA status was
+`COMPLETED` with `key_mgmt=SAE`, and IPv4 was present during that session.
+Post-write esptool verification passed for both the FIT and R3 LittleFS image;
+their SHA-256 values are in the [bounded boot observation](evidence/boot-display-normal-power.json).
+The `/var/run/rc.log` timestamps spanned 12:00:09 to 12:04:52, and `rc` exited
+with status 0. The device clock reported a date in 2010, so the recorded
+4-minute-43-second value is the timestamp interval within that log. The SSH
+session duration is a separate 52-second interval. These bounded observations
+do not establish repeated-boot reliability.
+
+The previous root candidate's reset has a separate source-level explanation:
+it lacked `/dev/console`, and init's no-console recovery path could not run
+`MAKEDEV`; init then exited and PID 1 triggered a reboot. R3 restored the
+profile's standard device nodes alongside `ttyE0`. The successful R3 boot is
+consistent with that correction, but does not by itself isolate it as the sole
+cause. The behavior belongs to the [OS init path](https://github.com/oxtech-ember/EmberBSD/blob/main/sbin/init/init.c),
+[PID 1 exit handling](https://github.com/oxtech-ember/EmberBSD/blob/main/sys/kern/kern_exit.c),
+and [root profile selection](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/image/static-profile.py)
+plus [root spec generation](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/image/cix-p1-build-userland.sh).
 
 ## Distinct startup paths
 
