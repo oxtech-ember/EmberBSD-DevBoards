@@ -1,0 +1,44 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-weather-qml-run-20261120",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-20",
+  "layer": "operator-report",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One operator-reported ESP-Mosaico V1.2 kit."
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD QML weather executable",
+      "revision": "EmberBSD-Examples 5db98b446e5f83d69ee8c07a2a1819dc860fed6e; stripped RV32",
+      "sha256": "82431333c028e8897f487b78fa24feb0cd161d5164edb58917abb517620f86ee",
+      "reference": null
+    }
+  ],
+  "scenario": "Run weather-qml on one V1.2 sample. In one process, render the initial QML value of 21 C, submit an update to -8, and sample the process RSS once.",
+  "expected": "The renderer completes the initial scene presentation and a second presentation after the temperature update.",
+  "observed": "Two presentations completed in one process, first for the initial 21 C value and then after the -8 update. One RSS sample measured 468 KiB. The operator has not confirmed that -8 was visible on screen.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "weather-qml-rss-sample",
+      "value": 468,
+      "unit": "KiB"
+    }
+  ],
+  "limits": [
+    "One reported V1.2 sample, one process and one RSS sample are covered; the RSS value is not a peak measurement.",
+    "The completion of both presentations does not establish the visible appearance of the -8 update.",
+    "This QML run is separate from the LVGL display observation; the LVGL screen confirmation does not apply to this result."
+  ],
+  "source_refs": [
+    "mosaico-weather-qml-example",
+    "mosaico-qml-compiler-sdk-source",
+    "mosaico-qml-runtime-source"
+  ]
+}

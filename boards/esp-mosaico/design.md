@@ -22,6 +22,10 @@ After a normal POWER boot of the R3 system, one V1.2 sample also displayed the
 LVGL weather example's fixed `MOSAICO`, `21 C` and `SUNNY` labels on a dark
 background ([bounded hardware observation](evidence/weather-lvgl-normal-power.json)).
 The labels are sample content, not sensor or online weather readings.
+A separate EmberBSD QML run completed presentations for its initial 21 C value
+and a subsequent -8 update in one process, with one 468 KiB RSS sample. The
+visible -8 result remains unconfirmed ([bounded QML observation](evidence/weather-qml-run.json));
+the LVGL display result does not establish QML rendering.
 Power, Wi-Fi and other expansion features retain their own integration limits.
 Check the actual flash layout and a usable console/recovery route before selecting an image.
 

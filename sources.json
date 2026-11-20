@@ -1824,6 +1824,38 @@
       "revision": null,
       "reviewed_at": "2026-11-20",
       "sha256": null
+    },
+    {
+      "id": "mosaico-weather-qml-example",
+      "title": "EmberBSD Mosaico weather QML example and build path",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/blob/5db98b446e5f83d69ee8c07a2a1819dc860fed6e/desktop/mosaico-weather/README.md",
+      "revision": "5db98b446e5f83d69ee8c07a2a1819dc860fed6e",
+      "reviewed_at": "2026-11-20",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-qml-compiler-sdk-source",
+      "title": "EmberBSD SDK embedded QML compiler and supported language profile",
+      "url": "https://github.com/oxtech-ember/EmberBSD-SDK/blob/f4acfaa7e3ca287ee5a06164b8fb534be1ebbf16/docs/qml.md",
+      "revision": "f4acfaa7e3ca287ee5a06164b8fb534be1ebbf16",
+      "reviewed_at": "2026-11-20",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-qml-runtime-source",
+      "title": "EmberBSD Runtime QML scene renderer and wsdisplay adapter",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Runtime/tree/c974b7dd0bc8a6a809f69d9d1d613416175d7ed7/qml",
+      "revision": "c974b7dd0bc8a6a809f69d9d1d613416175d7ed7",
+      "reviewed_at": "2026-11-20",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-weather-qml-run-observation",
+      "title": "ESP-Mosaico V1.2 EmberBSD QML weather run operator report",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/weather-qml-run.json",
+      "revision": null,
+      "reviewed_at": "2026-11-20",
+      "sha256": null
     }
   ]
 }
