@@ -121,6 +121,13 @@ SSH remained available. BTM produced a correlated TX completion; the firmware
 callback does not report peer ACK. The installed supplicant rejected Neighbor
 Report before transmission because RRM connection state was unset. This is
 partial transport evidence; a completed RRM/BTM peer exchange remains unverified.
+A separate ordinary NOR boot with kernel #6 and the R3 root returned three
+Neighbor Report entries. Its BTM Query completed local TX with `tx_error=0`;
+`ack_known=0` leaves peer ACK unknown. No incoming BTM Request, station
+Response or roaming was observed during 12 seconds. A scan-based variant
+skipped the Query because no fresh candidate was available. WPA remained
+COMPLETED and logging was restored to INFO/0; this separate result does not
+establish a completed BTM peer exchange.
 
 ## Expansion and debug routing
 
