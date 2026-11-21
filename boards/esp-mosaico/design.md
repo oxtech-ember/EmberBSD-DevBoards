@@ -48,7 +48,9 @@ the directory cursor and reading NOR metadata in 256-byte units reduced the
 instrumented cold boot from 280.82 to 73.79 seconds. Root mount to the network
 announcement fell from 112.86 to 29.61 seconds, and the WPA announcement to
 the login line from 115.55 to 25.56 seconds. The largest measured reduction
-inside the 13 scripts was in setup before the service actions ran.
+inside the 13 scripts was in setup before the service actions ran. The final
+normal boot with the temporary markers removed reached the login line in
+72.15 seconds, down from 247.31 seconds with the previous kernel.
 [Measurement conditions](evidence/r5-startup-io.json) and
 [per-service intervals](evidence/r5-startup-io-cold.csv).
 

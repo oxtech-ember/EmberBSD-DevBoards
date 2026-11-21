@@ -22,7 +22,7 @@
   ],
   "scenario": "Start the static RV32 application after service startup. The touch adaptation of Qt Quick dialcontrol presents five set points with a layered dial, needle and text readout. After startup, tap 100 and then 25.",
   "expected": "The RV32 binary remains running and presents its first frame to the RGB565 display. Touching a set point changes the red needle and numeric percentage.",
-  "observed": "On kernel #6 the binary launched from tmpfs over SSH and remained running after the session closed. cofb0 reported equal changed and sent row counts and zero errors. The separate host reference check rendered all five settings and restored the zero frame byte-for-byte. The operator confirmed that touches on the physical screen changed both the needle and the percentage.",
+  "observed": "On kernel #6 the binary launched from tmpfs over SSH and remained running after the session closed. cofb0 reported equal changed and sent row counts and zero errors. The separate host reference check rendered all five settings and restored the zero frame byte-for-byte. The operator confirmed that touches on the physical screen changed both the needle and the percentage. The same ELF was launched again after the final normal boot on kernel #11; the process remained active and cofb0 reported zero errors.",
   "duration_seconds": null,
   "measurements": [
     {
