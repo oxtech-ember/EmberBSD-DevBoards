@@ -85,6 +85,13 @@ were not collected. This is one session: photos are temporary to the running
 application, and durable worktree attachments or live synchronization were not
 tested.
 
+A separate [Spark Workshop transport check](evidence/spark-workshop-ask-transport.json)
+downloaded the public package catalog over HTTP and HTTPS with identical
+verified bytes, then exercised the target worker against a local Responses
+fixture using a synthetic PNG. The fixture returned an explicit test marker;
+this was not a live model response or a physical Ask-button test. The GUI was
+running at Home while the Ask interaction awaited confirmation.
+
 The [earlier WPA association baseline](evidence/wifi-association.json) records bounded WPA2/SAE completion, IPv4/DNS and gateway reachability from previous runs. The historical [kernel #30 record](evidence/wifi-connected-scan-roam.json) documents an unsuccessful roam attempt.
 
 A bounded [SSH diagnostic profile](evidence/ssh-diagnostics.json) passed on one reported V1.2 sample after ordinary NOR boot: pinned-host-key Ed25519 access, PTY, dmesg read, and byte-verified file transfers, with WPA/IPv4 still present afterward. Its local logging and mDNS checks used the then-installed root; its mDNS answer required one `mdnsd` restart while WPA/IPv4 were active. A separate [cold-start mDNS and logging check](evidence/mdns-cold-start.json) passed after writing a new 10 MiB root while preserving FIT #33 and SPL: after ordinary POWER boot, syslogd started, WPA/IPv4 were available, and mDNS A, `getaddrinfo`, and strict pinned-key SSH by name passed without restarting mdnsd. The cold-start result is one bounded boot; repeated reliability and full Wi-Fi behavior remain unestablished. Neither record establishes peer acknowledgement of Wi-Fi TX, RRM or BTM acceptance.

@@ -1,0 +1,75 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-spark-workshop-ask-transport",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-22",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One operator-reported ESP-Mosaico R5 V1.2 kit."
+  },
+  "inputs": [
+    {
+      "name": "Spark Workshop GUI RV32 executable",
+      "revision": null,
+      "sha256": "328b1e66b4bca4b696ea34ff7a9ae92da8095d0c36e06f23ef9b3769a8c87ed0",
+      "reference": null
+    },
+    {
+      "name": "Spark agent-lua RV32 executable",
+      "revision": null,
+      "sha256": "2043b64dd27ab1bfce4a73b36402f557d9bf3d2f9fa084ea0a87c82ebb443e1a",
+      "reference": null
+    }
+  ],
+  "scenario": "On one R5 V1.2 device, fetch the public package catalog over HTTP and HTTPS, then separately exercise the target Spark worker against a local Responses fixture using a synthetic image. Start the Workshop GUI.",
+  "expected": "Both catalog downloads succeed with identical bytes; the fixture accepts the worker's model-list and response requests and validates the synthetic PNG and step context.",
+  "observed": "The anonymous catalog GET returned HTTP 200 over both HTTP and HTTPS, 2,156 bytes each, with identical SHA-256 ca9a3620ca49a3b01869a7a43415f099e5746c6be8b37fd2bd6794de80b34e00. HTTPS peer and host verification were enabled with the public ISRG Root X2 certificate. Separately, the target worker received HTTP 200 for GET /v1/models and POST /v1/responses from a local fixture. The fixture received a synthetic 640×480 PNG (972 bytes), checked step 2 title/instruction and the PNG data URI, and returned its explicit FIXTURE RESPONSE marker. The Workshop GUI process was started and Home was displayed; no physical Ask interaction was confirmed at recording time.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "catalog-http-status",
+      "value": 200,
+      "unit": "HTTP status"
+    },
+    {
+      "name": "catalog-https-status",
+      "value": 200,
+      "unit": "HTTP status"
+    },
+    {
+      "name": "catalog-body-size",
+      "value": 2156,
+      "unit": "bytes per request"
+    },
+    {
+      "name": "fixture-model-list-status",
+      "value": 200,
+      "unit": "HTTP status"
+    },
+    {
+      "name": "fixture-response-status",
+      "value": 200,
+      "unit": "HTTP status"
+    },
+    {
+      "name": "fixture-image-size",
+      "value": 972,
+      "unit": "bytes"
+    }
+  ],
+  "limits": [
+    "The package-catalog HTTP/HTTPS check and local Responses-fixture worker check were separate operations.",
+    "The fixture test used only a synthetic image and an explicit fixture response; it does not establish a live model response or an Ask-button interaction.",
+    "No user photograph, credential or private endpoint was recorded. The GUI was running at Home, but physical Ask interaction remained unconfirmed."
+  ],
+  "source_refs": [
+    "emberbsd-package-current-catalog",
+    "mosaico-spark-ask-worker-source",
+    "mosaico-spark-workshop-example"
+  ]
+}

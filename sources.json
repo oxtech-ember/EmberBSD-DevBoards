@@ -2082,6 +2082,22 @@
       "sha256": null
     },
     {
+      "id": "mosaico-spark-ask-worker-source",
+      "title": "Spark photo question worker",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Spark/blob/b5ae5c3922614eddafa3dbb56f78c428eb144ae5/examples/ask-photo.lua",
+      "revision": "b5ae5c3922614eddafa3dbb56f78c428eb144ae5",
+      "reviewed_at": "2026-11-22",
+      "sha256": "6cc1f8a4478ed2393816676564279b11294a9a211554f61c16f6ee0cdfe34629"
+    },
+    {
+      "id": "emberbsd-package-current-catalog",
+      "title": "Public EmberBSD package catalog blob used for transport parity check",
+      "url": "https://emberbsd-pkg.oxteam.me/current.p7m",
+      "revision": null,
+      "reviewed_at": "2026-11-22",
+      "sha256": "ca9a3620ca49a3b01869a7a43415f099e5746c6be8b37fd2bd6794de80b34e00"
+    },
+    {
       "id": "littlefs-nor-lookup-source",
       "title": "LittleFS NOR read size, name cache and directory traversal",
       "url": "https://github.com/oxtech-ember/EmberBSD/commit/e9783b85d8530d90ad7abaacb7e7d934194a4521",
