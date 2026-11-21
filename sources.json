@@ -2058,6 +2058,30 @@
       "sha256": null
     },
     {
+      "id": "mosaico-spark-workshop-example",
+      "title": "Spark Workshop QML application and offline guide projection",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/894d58cb984c837c87dec84f6c18636f5cf4c842/desktop/spark-workshop",
+      "revision": "894d58cb984c837c87dec84f6c18636f5cf4c842",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-spark-worktree-offline-source",
+      "title": "Spark cached worktree and offline projection implementation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Spark/tree/a72ccec17a92e5edf2e5b3284c3054d6f245eb67/lua",
+      "revision": "a72ccec17a92e5edf2e5b3284c3054d6f245eb67",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-spark-workshop-offline-camera-observation",
+      "title": "ESP-Mosaico V1.2 Spark Workshop offline camera and photo observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/spark-workshop-offline-camera.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
       "id": "littlefs-nor-lookup-source",
       "title": "LittleFS NOR read size, name cache and directory traversal",
       "url": "https://github.com/oxtech-ember/EmberBSD/commit/e9783b85d8530d90ad7abaacb7e7d934194a4521",

@@ -1,0 +1,69 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-spark-workshop-offline-camera-20261121",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "operator-report",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One operator-reported ESP-Mosaico V1.2 kit."
+  },
+  "inputs": [
+    {
+      "name": "Spark Workshop RV32 executable",
+      "revision": "EmberBSD-Examples 894d58cb984c837c87dec84f6c18636f5cf4c842; static RV32",
+      "sha256": "4a51c0cc1032f5585ef661a081deb04fb32f18eddc2c05afe519015beaeb45f0",
+      "reference": null
+    },
+    {
+      "name": "Offline guide projection",
+      "revision": "EmberBSD-Examples 894d58cb984c837c87dec84f6c18636f5cf4c842",
+      "sha256": "f335f86fb0d5be8424cea25aa89286d62c926a0ff34c0558d391ff8d9a6c5c5f",
+      "reference": null
+    },
+    {
+      "name": "Spark Worktree offline projection executable",
+      "revision": "EmberBSD-Spark a72ccec17a92e5edf2e5b3284c3054d6f245eb67; R5 RV32 static",
+      "sha256": "dc3c95218541a811b94f0f8b408a4161591cfe90198a83461cde7ddf7a6c09a5",
+      "reference": null
+    }
+  ],
+  "scenario": "On the running EmberBSD instance, seed a local Spark worktree cache, project the selected Markdown guide again in offline mode, and open that guide in the QML Workshop. Navigate to step 2, capture one camera frame, and accept it with Use Photo.",
+  "expected": "The cached offline projection is byte-identical to the seeded guide. After accepting the frame, the application returns to the same guide step with its photo thumbnail.",
+  "observed": "The on-device seed and offline projection outputs matched byte-for-byte (335 bytes; SHA-256 f335f86fb0d5be8424cea25aa89286d62c926a0ff34c0558d391ff8d9a6c5c5f). On one V1.2 kit, the operator confirmed the returned step `Inspect the latch`, position 2 of 3, and the captured detail thumbnail. The Workshop process remained active. Metadata inspection found three temporary photo files, each 921654 bytes with mode 0600; no image contents were read or transferred.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "workshop-executable-size",
+      "value": 216048,
+      "unit": "bytes"
+    },
+    {
+      "name": "guide-projection-size",
+      "value": 335,
+      "unit": "bytes"
+    },
+    {
+      "name": "temporary-camera-file-count",
+      "value": 3,
+      "unit": "files"
+    },
+    {
+      "name": "temporary-camera-file-size",
+      "value": 921654,
+      "unit": "bytes per file"
+    }
+  ],
+  "limits": [
+    "The displayed step and thumbnail were confirmed by the operator; image contents were not independently inspected or retained.",
+    "Photos remained in temporary files for the running process. Durable worktree attachments, a full Spark client, live server synchronization, other board revisions and repeated-session reliability were not tested."
+  ],
+  "source_refs": [
+    "mosaico-spark-workshop-example",
+    "mosaico-spark-worktree-offline-source"
+  ]
+}
