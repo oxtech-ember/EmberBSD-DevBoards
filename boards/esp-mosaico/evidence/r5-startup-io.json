@@ -20,9 +20,9 @@
       "reference": "boards/esp-mosaico/evidence/compact-dropbear-root.json"
     }
   ],
-  "scenario": "Run the same /sbin/rcorder -s nostart -k network-appliance on the mounted /etc/rc.network.d directory and on a tmpfs copy of its 31 entries. Time both on the host using a monotonic clock and one open SSH session.",
+  "scenario": "Run the same /sbin/rcorder -s nostart -k network-appliance on the mounted /etc/rc.network.d directory and on a tmpfs copy of its 31 entries. Time both on the host using a monotonic clock and one open SSH session. For the cold control, power the board off and on, timestamp the serial console on the host, and emit service, command and action boundaries from the rc producer to its original console descriptor.",
   "expected": "Both runs exit successfully and produce the same ordered list of 13 service basenames.",
-  "observed": "On kernel #6, rcorder took 23.855 s using NOR and 2.935 s using tmpfs. Both selected the same services in the same order. A second timing of the installed NOR directory took approximately 23.96 s.",
+  "observed": "On kernel #6, rcorder took 23.855 s using NOR and 2.935 s using tmpfs. Both selected the same services in the same order. A second timing of the installed NOR directory took approximately 23.96 s. During the instrumented cold control, building the input list took 10.744 s and the initial rcorder took 22.555 s. Starting the WPA daemon returned in 4.246 s. mDNS and Dropbear took 20.443 s and 19.036 s respectively between entry into their rc scripts and their startup announcements. On the running control, testing all 13 script headers for the interactive keyword took 10.027 s. The same shell and loop without opening the scripts took 0.706 s.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -39,10 +39,42 @@
       "name": "copy-31-inputs-from-nor-to-tmpfs",
       "value": 52.656,
       "unit": "seconds"
+    },
+    {
+      "name": "control-cold-root-to-network-announcement",
+      "value": 112.862,
+      "unit": "seconds"
+    },
+    {
+      "name": "control-cold-wpa-announcement-to-login-line",
+      "value": 115.546,
+      "unit": "seconds"
+    },
+    {
+      "name": "control-cold-poweron-to-login-line",
+      "value": 280.819,
+      "unit": "seconds"
+    },
+    {
+      "name": "control-cold-rc-producer-end-to-login-line",
+      "value": 30.76,
+      "unit": "seconds"
+    },
+    {
+      "name": "control-warm-13-header-checks",
+      "value": 10.026557,
+      "unit": "seconds"
+    },
+    {
+      "name": "control-warm-matching-empty-loop",
+      "value": 0.705732,
+      "unit": "seconds"
     }
   ],
   "limits": [
-    "The directories were tested on a running board. The elapsed times include process startup and SSH marker delivery. The filesystem cache state was not reset between runs."
+    "The directories were tested on a running board. The elapsed times include process startup and SSH marker delivery. The filesystem cache state was not reset between runs.",
+    "The cold service markers measure elapsed time around startup commands. Completion of a daemon launch does not establish association, address acquisition or service readiness.",
+    "For this pair the login endpoint is the first completed UART line containing the prompt. getty can write a prompt before the newline is received. The rc producer end marker precedes rc postprocessing and init starting getty."
   ],
   "source_refs": [
     "mosaico-rcorder-selection-source"

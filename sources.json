@@ -2024,6 +2024,22 @@
       "revision": null,
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "mosaico-qml-dial-control-example",
+      "title": "Touch dial example and Qt reference frames",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/fa44c86dfedcbfa8887149e8e669296c7b8a0e67/desktop/qml-qt-tests",
+      "revision": "fa44c86dfedcbfa8887149e8e669296c7b8a0e67",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-qml-dial-control-observation",
+      "title": "Touch dial execution on Mosaico R5",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/qml-dial-control.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }

@@ -1,0 +1,41 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-qml-dial-control",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "R5 LittleFS profile, 480 × 480 CO5300 display and CST92xx touch."
+  },
+  "inputs": [
+    {
+      "name": "RV32 dial ELF with compiled image assets",
+      "revision": "fa44c86dfedcbfa8887149e8e669296c7b8a0e67",
+      "sha256": "331db7ec1edc3a9ed8a8ae6dc9d8458713a8e7fbc5a948c7f3f7ca28d52e0401",
+      "reference": null
+    }
+  ],
+  "scenario": "Start the static RV32 application after service startup. The touch adaptation of Qt Quick dialcontrol presents five set points with a layered dial, needle and text readout.",
+  "expected": "The RV32 binary remains running and presents its first frame to the RGB565 display.",
+  "observed": "On kernel #6 the binary launched from tmpfs over SSH and remained running after the session closed. cofb0 reported equal changed and sent row counts and zero errors. The separate host reference check rendered all five settings and restored the zero frame byte-for-byte.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "static-rv32-elf-size",
+      "value": 355504,
+      "unit": "bytes"
+    }
+  ],
+  "limits": [
+    "The target example uses five discrete settings and pre-rendered needle sprites. Native Qt runs the original continuous dial as the reference.",
+    "Driver counters are cumulative. Visual inspection and physical touch response for this dial were pending when recorded."
+  ],
+  "source_refs": [
+    "mosaico-qml-dial-control-example"
+  ]
+}
