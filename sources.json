@@ -1976,6 +1976,46 @@
       "revision": null,
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "mosaico-qt-visual-opacity-example",
+      "title": "Original Qt visual-opacity scene, RV32 device runner and Qt reference comparison",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/3cb03c6c1050b4cb21cc21afe9ec7b57eb7a9fb3/desktop/qml-qt-tests",
+      "revision": "3cb03c6c1050b4cb21cc21afe9ec7b57eb7a9fb3",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-syslogd-discovery-source",
+      "title": "Profile-selectable chroot socket discovery in syslogd",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/9a619237d6de21653deead87cfe4d2cf5f63472d/etc/rc.d/syslogd",
+      "revision": "9a619237d6de21653deead87cfe4d2cf5f63472d",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-syslogd-profile-producer",
+      "title": "Image producer selection for a closed set of startup services",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/4eb065e965cd4f755125a6facfa56f09f41fa17a/ember/image/static-profile.py",
+      "revision": "4eb065e965cd4f755125a6facfa56f09f41fa17a",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-syslogd-cold-start-observation",
+      "title": "Mosaico R5 paired cold starts with and without syslogd chroot discovery",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/r5-syslogd-cold-start.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-qt-visual-opacity-observation",
+      "title": "Mosaico R5 upstream Qt Quick opacity and visibility test",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/qml-visual-opacity.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }

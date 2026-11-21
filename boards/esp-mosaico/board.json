@@ -66,7 +66,9 @@
     "mosaico-rcorder-selection-source",
     "mosaico-network-appliance-startup-profile-observation",
     "mosaico-behavior-observation",
-    "mosaico-r5-service-times"
+    "mosaico-r5-service-times",
+    "mosaico-syslogd-cold-start-observation",
+    "mosaico-qt-visual-opacity-observation"
   ],
   "capabilities": [
     {

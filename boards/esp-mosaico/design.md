@@ -35,6 +35,12 @@ total. Initial `rcorder` took 35 seconds. The `syslogd` startup script took
 31 seconds, including a second scan for scripts that request chroot sockets.
 [Per-service timings and measurement limits](evidence/r5-service-times.json).
 [CSV with start, finish and intervals between scripts](evidence/r5-service-times.csv).
+In a paired cold-start test, the nested syslogd scan took 14.40 seconds.
+The interval from the network message to the syslogd start message was
+42.03 seconds in the baseline and 24.11 seconds on the boot that skipped the scan.
+The full POWERON-to-login interval increased from 211.09 to 247.31 seconds
+across this pair. Both boots started the same 13 services.
+[Cold-start intervals and logging check](evidence/r5-syslogd-cold-start.json).
 Three upstream Qt Quick scenes also matched the Qt reference RGB565 checksums
 on RV32. Two exercise stacking order and one exercises Grid spacing.
 [Qt reference scene measurements](evidence/qml-qt-reference-scenes.json).
@@ -51,6 +57,10 @@ With region rendering and two-row CO5300 transfers limited to the changed
 columns, the operator saw smooth motion on repeated taps. The updated kernel
 ran from RAM during this comparison.
 [Touch events and rendering times](evidence/qml-behavior-touch.json).
+The upstream `visual-opacity.qml` scene also ran on R5. It uses nested items,
+a translucent rectangle and a touch area. The operator hid and restored the
+blue square by tapping the physical display.
+[Scene, reference frames and device result](evidence/qml-visual-opacity.json).
 Power, Wi-Fi and other expansion features retain their own integration limits.
 Check the actual flash layout and a usable console/recovery route before selecting an image.
 

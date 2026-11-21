@@ -1,0 +1,118 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-r5-syslogd-cold-start",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "R5 LittleFS network appliance, normal NOR boot with the same SPL and kernel #6."
+  },
+  "inputs": [
+    {
+      "name": "Installed R5 root image before the script and configuration updates",
+      "revision": "R5",
+      "sha256": "5fa3d4d045a2b6c3f026ceb77d3fbaa1b45aa9e03b24bf1a959dd285157b789c",
+      "reference": "boards/esp-mosaico/evidence/compact-dropbear-root.json"
+    },
+    {
+      "name": "Profile-tagged syslogd service with optional chroot discovery",
+      "revision": "OS 9a619237d6de21653deead87cfe4d2cf5f63472d with the original R5 startup dependencies and network-appliance keyword",
+      "sha256": "3e1349d698692d1ed3d83c1c99f4d8d2a8c3eb8187284ee6dcc2f41a0fea24c5",
+      "reference": null
+    }
+  ],
+  "scenario": "Compare ordinary POWER off/on boots on the same board. Capture POWERON and the first login prompt on the host monotonic UART clock. Read the start and end markers from rc.log. In the baseline, wrap only the nested rcorder in syslogd with a CLOCK_MONOTONIC timer. In the second boot, select the empty chroot service set for this image.",
+  "expected": "The same startup scripts and local logging run in both boots. The second boot omits the nested scan.",
+  "observed": "The nested rcorder took 14.402433 s in the baseline. The compact profile skipped the scan in the second boot. Both boots ran all 13 services in the same order and rc returned zero. After the change, logger wrote a message that was found in /var/log/messages on tmpfs. From the network message to the syslogd start message the second boot was 17.920 s faster. The whole second boot was slower, with most additional elapsed time before the network message and after the WPA startup message.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "baseline-nested-rcorder",
+      "value": 14.402433,
+      "unit": "seconds"
+    },
+    {
+      "name": "baseline-rc-start-to-finish",
+      "value": 175,
+      "unit": "seconds"
+    },
+    {
+      "name": "baseline-poweron-to-login",
+      "value": 211.094,
+      "unit": "seconds"
+    },
+    {
+      "name": "updated-rc-start-to-finish",
+      "value": 197,
+      "unit": "seconds"
+    },
+    {
+      "name": "updated-poweron-to-login",
+      "value": 247.309,
+      "unit": "seconds"
+    },
+    {
+      "name": "baseline-poweron-to-root",
+      "value": 10.806,
+      "unit": "seconds"
+    },
+    {
+      "name": "updated-poweron-to-root",
+      "value": 10.814,
+      "unit": "seconds"
+    },
+    {
+      "name": "baseline-root-to-network-start-message",
+      "value": 75.535,
+      "unit": "seconds"
+    },
+    {
+      "name": "updated-root-to-network-start-message",
+      "value": 103.367,
+      "unit": "seconds"
+    },
+    {
+      "name": "baseline-network-to-syslogd-start-message",
+      "value": 42.031,
+      "unit": "seconds"
+    },
+    {
+      "name": "updated-network-to-syslogd-start-message",
+      "value": 24.111,
+      "unit": "seconds"
+    },
+    {
+      "name": "baseline-syslogd-to-wpa-start-message",
+      "value": 7.826,
+      "unit": "seconds"
+    },
+    {
+      "name": "updated-syslogd-to-wpa-start-message",
+      "value": 9.739,
+      "unit": "seconds"
+    },
+    {
+      "name": "baseline-wpa-start-message-to-login",
+      "value": 74.896,
+      "unit": "seconds"
+    },
+    {
+      "name": "updated-wpa-start-message-to-login",
+      "value": 99.278,
+      "unit": "seconds"
+    }
+  ],
+  "limits": [
+    "One physical power cycle per configuration. Board wall-clock rc.log intervals have one-second resolution. The independent UART interval includes bootloader and kernel startup. The baseline helper times fork, command execution and wait; starting the helper itself adds some unmeasured overhead to the baseline boot.",
+    "The syslogd start message follows its pre-start function. Its interval from the network message includes other work as well as discovery. The WPA start message precedes several later services. This pair does not identify the cause of their timing variation or establish a total boot-time improvement."
+  ],
+  "source_refs": [
+    "mosaico-syslogd-discovery-source",
+    "mosaico-syslogd-profile-producer"
+  ]
+}

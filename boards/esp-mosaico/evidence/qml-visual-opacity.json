@@ -1,0 +1,47 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-qml-visual-opacity",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "R5 LittleFS profile, 480 × 480 CO5300 display and CST92xx touch."
+  },
+  "inputs": [
+    {
+      "name": "Qt Declarative visual-opacity.qml",
+      "revision": "4332fbbb4c340463dc8cee36dda0c85d932122d8",
+      "sha256": "6688229618fdf7a1556262e6838d8c2e2dd201d55f36569707718a1496ebbbc2",
+      "reference": null
+    },
+    {
+      "name": "Static RV32 device application",
+      "revision": "Runtime 8e8b8ecbb7be141021057c1c1856aaa696763b20, SDK 2b16922460b33551f62be4895bbf4013c7407b1b, Examples 3cb03c6c1050b4cb21cc21afe9ec7b57eb7a9fb3",
+      "sha256": "a50a3e2b41019ea025cbe3b512e71033ccf539a06db832fefb318d473253812f",
+      "reference": null
+    }
+  ],
+  "scenario": "Present the 320 × 480 scene centered on the display. Tap outside its active area, then tap inside twice to hide and restore the translucent blue square over the red square.",
+  "expected": "The outside tap preserves the scene. Inside taps alternate between an opaque red square and the original red and blue composition.",
+  "observed": "On the physical display the application presented its 320 × 480 scene at (80, 0). The operator tapped the overlapping squares and saw the blue square disappear. A second tap on the red square restored the blue square. In the separate host comparison, Qt Quick and EmberBSD QML produced the same geometry in all four states. The hidden frame and the red/blue overlap matched exactly.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "static-rv32-elf-size",
+      "value": 131984,
+      "unit": "bytes"
+    }
+  ],
+  "limits": [
+    "Native Qt blends before packing to RGB565. On the host the visible blue over the dark background differed by one blue level in 9600 pixels. The runtime produced 0x10b1 and Qt produced 0x10b2.",
+    "Physical acceptance covers two taps inside the touch area and both visible state changes. The outside tap and the pixel comparisons were checked on the host."
+  ],
+  "source_refs": [
+    "mosaico-qt-visual-opacity-example"
+  ]
+}
