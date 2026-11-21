@@ -34,7 +34,7 @@
   ],
   "scenario": "Execute the compiled scenes on RV32 and compute CRC32/ISO-HDLC over every pixel, in row-major little-endian RGB565 order. Compare with the independent Qt Quick host output. Present visualparent2 on the physical panel through wsdisplay.",
   "expected": "For all three unchanged QML sources the board checksum matches the Qt reference. Nested rectangles extend past their parent and sibling subtrees retain their stacking order.",
-  "observed": "The board produced 91908b04 for visualparent.qml (320 x 480), 68a77208 for visualparent2.qml (320 x 480), and a14dd879 for grid-spacing.qml (112 x 112). Each CRC matched the complete Qt reference frame. The host renderer also matched the Qt frame byte for byte. A separate display process presented visualparent2 centered at x=80 on the 480 x 480 panel.",
+  "observed": "The board produced 91908b04 for visualparent.qml (320 x 480), 68a77208 for visualparent2.qml (320 x 480), and a14dd879 for grid-spacing.qml (112 x 112). Each CRC matched the complete Qt reference frame. The host renderer also matched the Qt frame byte for byte. A separate display process presented visualparent2 centered at x=80 on the 480 x 480 panel. The operator confirmed on the physical display that the red rectangle extended past the right edge of the green parent and the blue rectangle covered part of that red area, as in the Qt reference.",
   "duration_seconds": null,
   "measurements": [
     {
