@@ -1,0 +1,47 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-qml-network-lab",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "R5 LittleFS, CO5300 display and CST92xx touch"
+  },
+  "inputs": [
+    {
+      "name": "First Network Lab RV32 executable used on kernel #11",
+      "revision": null,
+      "sha256": "e524c406e864380758ef3089258d9abeb42e0efc9085c19632e492b9d79205e6",
+      "reference": null
+    },
+    {
+      "name": "Published Network Lab static RV32 executable used on RAM kernel #13",
+      "revision": "5e9fa454fa7004c49e46d60ee934f4c2bd1cc226",
+      "sha256": "5fe402ffbf4715c4e91339ae8711927c14dda92602c6e1853405d56e2ec0fe97",
+      "reference": null
+    }
+  ],
+  "scenario": "Start Network Lab from tmpfs over SSH. Observe a time-server reply, an IPv4 resolver answer, tab changes, refresh actions and display transfer counters.",
+  "expected": "The board receives fresh samples while the interactive QML scene continues to process touch and present display changes.",
+  "observed": "The first build accepted a reply from time.google.com, resolved example.org and reported subsequent lookups. It logged the DNS tab, two refresh actions and the return to the clock. On RAM kernel #13 the published executable pointed at an unused local UDP port reported the time server unavailable while DNS succeeded. With its normal endpoints it accepted SNTP and DNS replies and the CO5300 driver reported 5290 changed and transmitted rows with zero errors. After the peripheral tests on RAM kernel #18 the same binary was left running on the panel. DNS returned in 299 ms and the time server round trip took 182 ms; the driver reported 3156 changed and transmitted rows with zero errors.",
+  "duration_seconds": null,
+  "measurements": [
+    { "name": "first-sntp-round-trip", "value": 183, "unit": "ms" },
+    { "name": "first-ipv4-resolver-lookup", "value": 238, "unit": "ms" },
+    { "name": "published-static-elf", "value": 449164, "unit": "bytes" },
+    { "name": "published-build-sntp-round-trip", "value": 168, "unit": "ms" },
+    { "name": "published-build-ipv4-resolver-lookup", "value": 251, "unit": "ms" }
+  ],
+  "limits": [
+    "One connected board and two public endpoints. Resolver timing includes local processing. Display counters and touch events do not measure animation frame rate.",
+    "The first physical build predates the separate QML application signal and bounded text redraws in the published example. The CO5300 row counters are cumulative."
+  ],
+  "source_refs": [
+    "mosaico-qml-network-lab-example"
+  ]
+}

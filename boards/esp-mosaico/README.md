@@ -60,22 +60,19 @@ changing touch coordinates. The published [CO5300 row-pair fix](https://github.c
 uses two-row RASET windows to satisfy the panel's even-height requirement,
 with 1920-byte width-4 pixel transfers. This confirms that configured RAM-boot
 scenario on one sample; it does not establish support for other revisions.
-Touch orientation/calibration, audio playback and sustained operation remain
+Touch orientation, quantitative calibration and sustained operation remain
 unverified. Factory UI, touch and changing camera preview are separate
 vendor-firmware evidence in the [factory observation](evidence/factory-peripherals.json).
-The optional sensor, fuel-gauge and I²S/ES8311 paths now compile into the
-SC101IOT target kernel; physical sensor telemetry and audio playback/capture
-remain unverified. The SPI NAND tool only reads identification and status; NAND
-data, ECC/BBT and filesystem support are not established. See [interface
-limits](interfaces.md#camera-and-other-peripherals).
+The [R5 peripheral checks](evidence/r5-physical-peripherals.json) returned valid
+acceleration and angular velocity on all BMI270 axes and valid readings on all
+four BQ27220 gauge channels. One of the two BMM150 magnetometers reported an
+invalid Y axis. The ES8311 delivered 24,000 PCM samples after the codec data
+pins and DMA settings were corrected. Audible speaker output remains unconfirmed.
 
-The optional [SC101IOT EmberBSD configuration](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/arch/riscv/conf/ESP_MOSAICO_SC101IOT)
-now includes sensor mode control and a DVP-to-video(4) capture path. The
-configuration and Wi-Fi variant compile for the target. No physical EmberBSD
-frame or preview has been captured; the earlier [identity observation](evidence/display-output.json)
-is separate evidence. The mode table describes 640 × 480 UYVY and requires a
-20 MHz XCLK; the fitted oscillator frequency and actual frame rate have not
-been measured. See [interface limits](interfaces.md#camera-and-other-peripherals).
+The optional [SC101IOT camera profile](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/arch/riscv/conf/ESP_MOSAICO_SC101IOT)
+reported 640 × 480 UYVY and accepted two capture buffers. On RAM kernel #18, video(4) timed out after five seconds while waiting for
+the first frame. SPI NAND support is limited to identification and
+status commands. See [the peripheral interfaces](interfaces.md#camera-and-other-peripherals).
 
 The [earlier WPA association baseline](evidence/wifi-association.json) records bounded WPA2/SAE completion, IPv4/DNS and gateway reachability from previous runs. The historical [kernel #30 record](evidence/wifi-connected-scan-roam.json) documents an unsuccessful roam attempt.
 

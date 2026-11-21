@@ -2042,10 +2042,82 @@
       "sha256": null
     },
     {
+      "id": "mosaico-qml-network-lab-example",
+      "title": "Network Lab QML touchscreen application and resolver probes",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/5e9fa454fa7004c49e46d60ee934f4c2bd1cc226/desktop/qml-network-lab",
+      "revision": "5e9fa454fa7004c49e46d60ee934f4c2bd1cc226",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-qml-network-lab-observation",
+      "title": "Mosaico R5 Network Lab SNTP, DNS and touchscreen observation",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/qml-network-lab.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
       "id": "littlefs-nor-lookup-source",
       "title": "LittleFS NOR read size, name cache and directory traversal",
       "url": "https://github.com/oxtech-ember/EmberBSD/commit/e9783b85d8530d90ad7abaacb7e7d934194a4521",
       "revision": "e9783b85d8530d90ad7abaacb7e7d934194a4521",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-speaker-amplifier-config",
+      "title": "Mosaico kernel configuration for the NS4150B speaker amplifier",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/bc88f22b6a15c91ec17634827cdd78b73058c858",
+      "revision": "bc88f22b6a15c91ec17634827cdd78b73058c858",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-r5-physical-peripherals",
+      "title": "Mosaico R5 physical checks of the audio, camera and sensor interfaces",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/r5-physical-peripherals.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-s31-i2s-dma-update",
+      "title": "ESP32-S31 I²S configuration update and DMA receive period",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/d25d4946452cd424943c5f307d0030580147d697",
+      "revision": "d25d4946452cd424943c5f307d0030580147d697",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-s31-dvp-de-vsync",
+      "title": "ESP32-S31 camera receiver DE and VSYNC selection",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/2f0539f353c5005e7c33f91065c454458e7300e1",
+      "revision": "2f0539f353c5005e7c33f91065c454458e7300e1",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-es8311-data-routing",
+      "title": "Mosaico ES8311 ADC and DAC data pin routing",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/36a2595a5b8ac23b6d429e29f661c43d44a1a89f",
+      "revision": "36a2595a5b8ac23b6d429e29f661c43d44a1a89f",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-sc101iot-dma-frame-tail",
+      "title": "Mosaico camera DMA tail and nominal video payload handling",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/2a8da51369b891b9cd37dcec7f27c60b1872f762",
+      "revision": "2a8da51369b891b9cd37dcec7f27c60b1872f762",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-sc101iot-pclk-delay",
+      "title": "Mosaico SC101IOT pixel clock delay selection",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/b93271cfa0e0d07b181d778ad85cdff3d1e85e5e",
+      "revision": "b93271cfa0e0d07b181d778ad85cdff3d1e85e5e",
       "reviewed_at": "2026-11-21",
       "sha256": null
     }

@@ -16,8 +16,9 @@ Keep the 16 MB PSRAM budget explicit. Storage capacity is not working RAM.
 On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed
 a visible interface after the published two-row RASET worker fix; the operator
 also confirmed changing touch coordinates. This is a RAM-only scenario on one
-sample. Touch orientation/calibration, audio playback and sustained operation
-remain unverified; camera support is identity-only and DVP capture is not implemented.
+sample. Touch orientation and quantitative calibration remain unmeasured. The
+SC101IOT configuration exposes a 640 × 480 UYVY stream through video(4). See the
+[peripheral interfaces](interfaces.md#camera-and-other-peripherals) for hardware results.
 After a normal POWER boot of the R3 system, one V1.2 sample also displayed the
 LVGL weather example's fixed `MOSAICO`, `21 C` and `SUNNY` labels on a dark
 background ([bounded hardware observation](evidence/weather-lvgl-normal-power.json)).
@@ -78,6 +79,9 @@ The embedded Qt Quick Dial Control adaptation also ran from tmpfs on R5. Its
 355,504-byte static RV32 binary embeds the face, needle and glass layers. A tap
 on a set point changed both the needle and the displayed percentage.
 [Device execution and reference comparison](evidence/qml-dial-control.json).
+On R5, Network Lab received a network time sample and IPv4 resolver answers
+while processing touch on its clock and DNS tabs.
+[Physical network and display observations](evidence/qml-network-lab.json).
 Power, Wi-Fi and other expansion features retain their own integration limits.
 Check the actual flash layout and a usable console/recovery route before selecting an image.
 

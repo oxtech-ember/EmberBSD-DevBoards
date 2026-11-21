@@ -78,9 +78,9 @@ replaces invalid one-row RASET windows with even-height two-row windows and
 1920-byte width-4 pixel transfers, satisfying the CO5300 requirement. See the
 [bounded display/touch observation](evidence/row-pair-display-touch.json).
 This confirms one configured V1.2 sample only. Touch orientation and quantitative
-calibration, audio playback and sustained operation remain unverified. The
-optional SC101IOT EmberBSD configuration now has a target-built sensor/DVP/video(4)
-capture path, but no physical EmberBSD frame has been captured. The mode table
+calibration and sustained operation remain unverified. The
+optional SC101IOT configuration links the sensor and DVP receiver to video(4).
+On R5 the device answered a format query. Frame delivery remains unverified. The mode table
 describes 640 × 480 UYVY at a required 20 MHz XCLK; oscillator frequency and
 actual frame rate remain unmeasured. See [camera and other peripherals](#camera-and-other-peripherals).
 A software transfer trace is not a voltage measurement of the switched LCD supply.
@@ -90,11 +90,9 @@ V1.2 sample the EmberBSD driver identified CST9220, project 0x6854, at 480 × 48
 and attached `wsmouse`. A [subsequent input check](evidence/touch-input.json)
 observed contact/release events and changing absolute coordinates; orientation
 and calibration have not been verified.
-The earlier peripheral observation read BMI270 and ES8311 identification registers; it did not
-verify motion measurements or audio playback. EmberBSD now has target-built sensor,
-fuel-gauge and audio paths; their physical telemetry and audio operation remain
-unverified. See the [bounded observation](evidence/gui-peripherals.json) and the
-table below.
+The [initial peripheral observation](evidence/gui-peripherals.json) read BMI270 and ES8311
+identification registers. The [R5 physical checks](evidence/r5-physical-peripherals.json)
+exercise the BSD device interfaces listed below.
 
 ## Wireless
 
@@ -163,10 +161,10 @@ uses the [SC101IOT driver](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924
 at 7-bit SCCB address `0x68`; it identifies the sensor and configures the
 source-backed 640 × 480 UYVY mode. The [S31 DVP driver](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/arch/riscv/espressif/esp32s31_dvp.c)
 transports frames through video(4). Both standard and Wi-Fi kernel configurations
-target-build. No physical EmberBSD capture is established. The mode table requires
+target-build. On RAM kernel #18, video(4) returned two capture buffers and STREAMON
+succeeded. The first dequeue timed out after five seconds, with zero frames delivered. The mode table requires
 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate
-are unmeasured. The earlier identity and factory-preview observations remain
-separate from this source/build result.
+are unmeasured.
 The common kernel configuration no longer selects the OV3640 driver. Its FDT node
 is marked disabled, and the generic FDT I²C enumerator skips disabled children.
 See the bounded
@@ -184,17 +182,22 @@ Follow the [BSP examples and resource rules](https://github.com/esp-mosaico/esp-
 ## Camera and other peripherals
 
 The hardware details below follow the [BSP revision 7cbfb39](https://github.com/esp-mosaico/esp-mosaico-bsp/tree/7cbfb390638dcb93522fc3cde094b2d43cf907c2).
-The OS support statements refer to the linked published sources and target builds,
-not physical peripheral acceptance.
+The table distinguishes component wiring from the behavior checked on this sample.
 
 | Device | BSP/source interface | EmberBSD source status |
 | --- | --- | --- |
-| BMI270 | Shared I²C at 7-bit address `0x69`; BSP `onboard/sensors.c` initializes it. | The [native envsys driver](https://github.com/oxtech-ember/EmberBSD/blob/718a9c6ba45/sys/dev/i2c/bmi270_driver.c) is present and the `ESP_MOSAICO_SC101IOT_WIFI` kernel linked with it. Motion samples have not been checked on the board. |
-| BMM150 ×2 | Shared I²C at addresses `0x11` and `0x12`; BSP `onboard/sensors.c` configures and reads both. | The [native SensorAPI-backed envsys driver](https://github.com/oxtech-ember/EmberBSD/blob/718a9c6ba45/sys/dev/i2c/bmm150_driver.c) is present; both addresses are configured in the board tree and the target kernel linked. Physical magnetometer samples remain unverified. |
-| BQ27220 | Shared I²C at address `0x55`; BSP `onboard/battery.c` attaches and reads the gauge. | The [read-only native envsys driver](https://github.com/oxtech-ember/EmberBSD/blob/df97773b7b3/sys/dev/i2c/bq27220.c) is present and included in the target kernel build. Board telemetry has not been checked. |
-| ES8311 audio | I²S codec on the onboard audio bus; BSP `onboard/audio.c` and the V1.2 schematic describe the codec and amplifier path. | The [S31 I²S/AHB-DMA driver](https://github.com/oxtech-ember/EmberBSD/blob/d27e2d790a2/sys/arch/riscv/espressif/esp_i2s.c) and [ES8311 codec driver](https://github.com/oxtech-ember/EmberBSD/blob/d27e2d790a2/sys/dev/i2c/es8311ac.c) are present and the target kernel linked. No EmberBSD playback or capture has been tested. |
+| BMI270 | Shared I²C at 7-bit address `0x69`; BSP `onboard/sensors.c` initializes it. | The [native envsys driver](https://github.com/oxtech-ember/EmberBSD/blob/718a9c6ba45/sys/dev/i2c/bmi270_driver.c) is present and the `ESP_MOSAICO_SC101IOT_WIFI` kernel linked with it. On R5 kernel #11 all six accelerometer and gyroscope axes returned valid readings. |
+| BMM150 ×2 | Shared I²C at addresses `0x11` and `0x12`; BSP `onboard/sensors.c` configures and reads both. | The [native SensorAPI-backed envsys driver](https://github.com/oxtech-ember/EmberBSD/blob/718a9c6ba45/sys/dev/i2c/bmm150_driver.c) is present; both addresses are configured in the board tree and the target kernel linked. On kernel #11 the first sensor returned three valid axes. The second returned valid X and Z and invalid Y. |
+| BQ27220 | Shared I²C at address `0x55`; BSP `onboard/battery.c` attaches and reads the gauge. | The [read-only native envsys driver](https://github.com/oxtech-ember/EmberBSD/blob/df97773b7b3/sys/dev/i2c/bq27220.c) is present and included in the target kernel build. All four gauge readings were valid on kernel #11. |
+| ES8311 audio | The analogue LMA2718B331-OE1R22 microphone feeds the ES8311 ADC. Its DAC drives the NS4150B speaker amplifier, enabled by GPIO45, and BaseBoard connector H4. I²S links the codec to the SoC. | The [S31 I²S/AHB-DMA driver](https://github.com/oxtech-ember/EmberBSD/blob/d27e2d790a2/sys/arch/riscv/espressif/esp_i2s.c) and [ES8311 codec driver](https://github.com/oxtech-ember/EmberBSD/blob/d27e2d790a2/sys/dev/i2c/es8311ac.c) are present and the target kernel linked. On R5 kernel #11 audioctl identified the codec card. The driver delivered 24,000 PCM samples in 50 blocks on RAM kernel #14. The operator heard no tone on #12. A concurrent 800 Hz playback and microphone test on #17 showed no clear acoustic response. |
 | SPI NAND | BSP identifies GigaDevice GD5F1GM7UEYIGR on SPI3, using GPIO20–25 for clock, data, chip select, HOLD and WP. | SPI3 pin routing and the [read-only `spinandctl` utility](https://github.com/oxtech-ember/EmberBSD/blob/88fea10b9fd/usr.sbin/spinandctl/spinandctl.c) are present. It issues READ ID and status-register commands only. No NAND page data, ECC, bad-block table, filesystem, boot or physical ID/status test is established. |
 | USB | Type-C ROM USB-OTG download/readback is recorded in [ROM evidence](evidence/rom-readback.json). S31 USB 2.0 HS OTG uses dedicated package pads 44/45. | The board kernel does not integrate an S31 OTG controller/role path. ROM download is not EmberBSD USB support. Host VBUS/CC role and power behavior are not verified, so USB host mode is not part of the prepared board configuration. |
+
+The CoreBoard names the I²S data nets from the codec’s perspective. ES8311 pin 7 (ASDOUT) drives GPIO40 on `I2S_DOUT`. GPIO52 drives ES8311 pin 9 (DSDIN) on `I2S_DIN`. The pin routing appears on sheets 2 and 4 of the [V1.2 CoreBoard schematic](https://dl.espressif.com/AE/Mosaico/SCH_SCH_ESP-Mosaico_CoreBoard_V1_2_1_2026-09-24.pdf).
+The [board kernel configuration](https://github.com/oxtech-ember/EmberBSD/blob/bc88f22b6a15c91ec17634827cdd78b73058c858/sys/arch/riscv/conf/ESP_MOSAICO_COMMON) selects the amplifier driver for GPIO45.
+The speaker outputs reach H4 on [BaseBoard sheet 1](https://dl.espressif.com/AE/Mosaico/SCH_SCH_ESP-Mosaico_BaseBoard_A_V1_2_1_2026-09-24.pdf).
+The [BSP audio path](https://github.com/esp-mosaico/esp-mosaico-bsp/blob/7cbfb390638dcb93522fc3cde094b2d43cf907c2/components/esp-mosaico-bsp/onboard/audio.c) configures analogue microphone input.
+The SoC pins named SD_CLK and SD_CMD connect to the SPI NAND. The BSP declares no onboard SD card.
 
 Package pads 44 and 45 are USB_D+ and USB_D−; they are not GPIO44 and GPIO45.
 The V1.2 schematic and BSP assign GPIO44 to LCD reset and GPIO45 to audio PA

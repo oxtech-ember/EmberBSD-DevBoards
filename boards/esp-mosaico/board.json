@@ -70,7 +70,9 @@
     "mosaico-syslogd-cold-start-observation",
     "mosaico-r5-startup-io-observation",
     "mosaico-qt-visual-opacity-observation",
-    "mosaico-qml-dial-control-observation"
+    "mosaico-qml-dial-control-observation",
+    "mosaico-qml-network-lab-observation",
+    "mosaico-r5-physical-peripherals"
   ],
   "capabilities": [
     {
@@ -161,7 +163,7 @@
       "id": "hmi",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. A later normal POWER boot with the R3 root displayed the fixed MOSAICO, 21 C and SUNNY LVGL sample on a dark background. The EmberBSD QML weather example rendered 21 C and -8 C in one process. After R4 boot the operator confirmed -8 C on the physical display. The same executable had individual RSS samples of 468 KiB and 908 KiB across the two runs. The weather samples do not read sensors or online weather. Touch orientation/calibration, audio playback and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; EmberBSD has a target-built SC101IOT sensor/DVP/video(4) path, but no physical EmberBSD frame has been captured. The mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. EmberBSD radio evidence includes bounded WPA2/SAE handshakes and small/1400-byte gateway ICMP reachability on one sample; one bounded roam succeeded; repeated roaming and sustained operation remain unverified.",
+      "scope": "On one V1.2 sample, the standard CO5300 framebuffer/genfb/LVGL path displayed a visible interface after the published two-row RASET fix; the user also confirmed changing touch coordinates. This is one RAM-only scenario, not acceptance of other revisions. A later normal POWER boot with the R3 root displayed the fixed MOSAICO, 21 C and SUNNY LVGL sample on a dark background. The EmberBSD QML weather example rendered 21 C and -8 C in one process. After R4 boot the operator confirmed -8 C on the physical display. The same executable had individual RSS samples of 468 KiB and 908 KiB across the two runs. The weather samples do not read sensors or online weather. Touch orientation, quantitative calibration and sustained operation remain unverified. Factory camera preview is vendor-firmware evidence; the R5 video(4) device reported 640 × 480 UYVY. EmberBSD frame delivery remains unverified. The mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. EmberBSD radio evidence includes bounded WPA2/SAE handshakes and small/1400-byte gateway ICMP reachability on one sample; one bounded roam succeeded; repeated roaming and sustained operation remain unverified.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-hardware-v12",
@@ -196,23 +198,30 @@
       "id": "onboard-sensors",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "The BMI270, two BMM150 sensors and BQ27220 have native envsys drivers included in a target-linked ESP_MOSAICO_SC101IOT_WIFI kernel. Physical readings from these drivers have not been tested; prior BMI270 identification-register reads do not establish motion sampling.",
+      "scope": "On NOR kernel #11, envsys reported valid readings for all six BMI270 accelerometer/gyroscope axes and all four BQ27220 gauge channels. The first BMM150 returned three valid axes; the second returned valid X and Z with invalid Y. The test sampled one board without a motion or calibration reference.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-bsp",
         "mosaico-envsys-sensors-kernel-source",
-        "mosaico-bq27220-kernel-source"
+        "mosaico-bq27220-kernel-source",
+        "mosaico-r5-physical-peripherals"
       ]
     },
     {
       "id": "audio",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "S31 I2S/AHB-DMA and ES8311 drivers are present and the combined ESP_MOSAICO_SC101IOT_WIFI kernel linked. No physical playback or capture has been tested.",
+      "scope": "The ES8311 card enumerated through ausoc. With corrected DMA and data pin routing, it delivered 24000 PCM samples in 50 blocks. The operator heard no test tone with the earlier amplifier configuration; a later 800 Hz playback produced no clear increase at that frequency in microphone capture.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-bsp",
-        "mosaico-audio-kernel-source"
+        "mosaico-audio-kernel-source",
+        "mosaico-r5-physical-peripherals",
+        "mosaico-speaker-amplifier-config",
+        "mosaico-coreboard-v12-schematic",
+        "mosaico-baseboard-v12-schematic",
+        "mosaico-s31-i2s-dma-update",
+        "mosaico-es8311-data-routing"
       ]
     },
     {
@@ -230,7 +239,7 @@
       "id": "expansion",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, the left-slot camera EEPROM descriptor had valid CRCs and hardware-version field 0x0102. The factory firmware separately reported SC101IOT PID 0xda4a and rendered a changing 1280 × 720 UYVY preview. The optional EmberBSD driver read SC101IOT PID 0xda4a at 0x68 in a RAM trial. Published source now adds a target-built 640 × 480 UYVY sensor/DVP/video(4) path, but no physical EmberBSD frame has been captured. Its mode table requires 20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate are unmeasured. The factory and EmberBSD results apply only to this sample and do not establish sensor identity for other modules.",
+      "scope": "On one V1.2 sample, the left-slot camera EEPROM had valid CRCs and a hardware-version field of 0x0102. The factory firmware identified SC101IOT PID 0xda4a and displayed a changing 1280 × 720 UYVY preview. The EmberBSD sensor driver read the same PID at 0x68. With the 640 × 480 UYVY mode on RAM kernel #18, two capture buffers and STREAMON succeeded, but first dequeue timed out after five seconds. No frame or measured frame rate was obtained. The mode table calls for 20 MHz XCLK; fitted oscillator frequency was not measured.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-gui-peripheral-observation",
@@ -240,7 +249,11 @@
         "mosaico-sc101iot-profile-kernel",
         "mosaico-fdt-i2c-status-kernel",
         "mosaico-display-output-observation",
-        "mosaico-dvp-video-kernel-source"
+        "mosaico-dvp-video-kernel-source",
+        "mosaico-r5-physical-peripherals",
+        "mosaico-s31-dvp-de-vsync",
+        "mosaico-sc101iot-dma-frame-tail",
+        "mosaico-sc101iot-pclk-delay"
       ]
     }
   ]

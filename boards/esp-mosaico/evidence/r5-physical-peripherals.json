@@ -1,0 +1,194 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-r5-physical-peripherals",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled R5 network appliance with a left-slot camera and the installed LittleFS root."
+  },
+  "inputs": [
+    {
+      "name": "NOR firmware FIT with corrected LittleFS, kernel #11",
+      "revision": "e9783b85d8530d90ad7abaacb7e7d934194a4521",
+      "sha256": "946aabccf3e1bdc41cd3b7b953dcdf818094a5110346478896edd92f68f96b55",
+      "reference": null
+    },
+    {
+      "name": "RAM kernel FIT with the NS4150B amplifier driver (#12)",
+      "revision": "bc88f22b6a15c91ec17634827cdd78b73058c858",
+      "sha256": "3c1758210a343c3bab02560798f83521bf2165dbbc691584047141bfc743c34a",
+      "reference": null
+    },
+    {
+      "name": "RAM kernel FIT with I²S DMA changes, corrected data pins and DVP sync selection (#14)",
+      "revision": "DVP 2f0539f353c5, I²S d25d4946452c, board wiring 36a2595a5b8a",
+      "sha256": "6e8d5d082f714bda8ff55a09d4f2997f029d8e635ac1aaae717eeb5b5d5bc144",
+      "reference": null
+    },
+    {
+      "name": "Temporary RAM kernel FIT with read-only CAM/GDMA snapshots (#15)",
+      "revision": "Local diagnostic build from #14",
+      "sha256": "e7c14b16b474ce2e8aebb38c7e68e49714732d6b19301c0741befb871762bd62",
+      "reference": null
+    },
+    {
+      "name": "RAM kernel FIT with separate DVP capture tail and buffer bounds checks (#17)",
+      "revision": "2a8da51369b891b9cd37dcec7f27c60b1872f762",
+      "sha256": "918bdc848225f3fee33d9dd2467dd716c2d55e05de42b4cdf7d0886ae81ef6f8",
+      "reference": null
+    },
+    {
+      "name": "Final RAM kernel FIT with Mosaico sensor pixel clock delay (#18)",
+      "revision": "b93271cfa0e0d07b181d778ad85cdff3d1e85e5e",
+      "sha256": "42eeea1187068a05536f68a5410edda1d98c1d46faf9e9b5333dc83a9cadea6f",
+      "reference": null
+    }
+  ],
+  "scenario": "Read the onboard devices through envsys, audio(4) and video(4) on one R5 system. Prepare the diagnostic tools and device nodes in tmpfs. Capture PCM, play a raw tone and request two video buffers.",
+  "expected": "Obtain valid sensor readings, microphone samples, an audible reference tone and at least one complete camera frame.",
+  "observed": "Sensors. Kernel #11 returned six valid BMI270 axes, three valid axes on the first BMM150, and valid X/Z with invalid Y on the second. All four battery gauge channels were valid.\n\nAudio. The card identified itself as Mosaico ES8311 via ausoc. It advertised full duplex and signed 16-bit little-endian PCM. On #12, the amplifier attached and raw 440 Hz playback exited successfully, but the operator beside the unit heard no tone. Capture timed out before the first sample on #12. With the GPIO and DMA settings corrected, #14 delivered 24000 samples in 50 blocks. The subsequent no-tone sample had a DC mean between −5380 and −5371 counts and an AC RMS of 127.9–128.0 counts. On #17, the 800 Hz playback command returned 0. Concurrent capture had AC RMS near 128 counts and an 800 Hz component of 2–8 counts, with no clear tone response. The mixer master level was restored to 171.\n\nCamera. On the final RAM kernel #18, the SC101IOT device reported 640 × 480 UYVY, 614400 bytes per frame. REQBUFS returned two buffers and STREAMON succeeded. The first dequeue timed out after five seconds with ETIMEDOUT. Zero frames, payloads or image checksums were returned. Earlier checks also timed out.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "bmi270-valid-axes",
+      "value": 6,
+      "unit": "axes"
+    },
+    {
+      "name": "first-bmm150-valid-axes",
+      "value": 3,
+      "unit": "axes"
+    },
+    {
+      "name": "second-bmm150-valid-axes",
+      "value": 2,
+      "unit": "axes"
+    },
+    {
+      "name": "bq27220-valid-readings",
+      "value": 4,
+      "unit": "readings"
+    },
+    {
+      "name": "kernel-12-captured-pcm-samples",
+      "value": 0,
+      "unit": "samples"
+    },
+    {
+      "name": "bmi270-acceleration-x",
+      "value": 94571,
+      "unit": "µm/s²"
+    },
+    {
+      "name": "bmi270-acceleration-y",
+      "value": -25738,
+      "unit": "µm/s²"
+    },
+    {
+      "name": "bmi270-acceleration-z",
+      "value": 9806650,
+      "unit": "µm/s²"
+    },
+    {
+      "name": "bmi270-angular-velocity-x",
+      "value": -305,
+      "unit": "mdps"
+    },
+    {
+      "name": "bmi270-angular-velocity-y",
+      "value": 122,
+      "unit": "mdps"
+    },
+    {
+      "name": "bmi270-angular-velocity-z",
+      "value": -122,
+      "unit": "mdps"
+    },
+    {
+      "name": "bmm150-0-field-x",
+      "value": -36625,
+      "unit": "nT"
+    },
+    {
+      "name": "bmm150-0-field-y",
+      "value": 9750,
+      "unit": "nT"
+    },
+    {
+      "name": "bmm150-0-field-z",
+      "value": 12000,
+      "unit": "nT"
+    },
+    {
+      "name": "bmm150-1-field-x",
+      "value": -67250,
+      "unit": "nT"
+    },
+    {
+      "name": "bmm150-1-field-z",
+      "value": 2000,
+      "unit": "nT"
+    },
+    {
+      "name": "bq27220-voltage",
+      "value": 4.201,
+      "unit": "V"
+    },
+    {
+      "name": "bq27220-current",
+      "value": 0,
+      "unit": "A"
+    },
+    {
+      "name": "bq27220-temperature",
+      "value": 312.2,
+      "unit": "K"
+    },
+    {
+      "name": "bq27220-reported-charge",
+      "value": 100,
+      "unit": "%"
+    },
+    {
+      "name": "kernel-14-captured-pcm-samples",
+      "value": 24000,
+      "unit": "samples"
+    },
+    {
+      "name": "kernel-14-captured-pcm-blocks",
+      "value": 50,
+      "unit": "blocks"
+    },
+    {
+      "name": "kernel-18-camera-frames-dequeued",
+      "value": 0,
+      "unit": "frames"
+    }
+  ],
+  "limits": [
+    "Measurements apply to one V1.2 kit and its installed modules. The diagnostic kernels booted from RAM with the existing NOR root. The probes did not install new firmware in NOR. A single sensor snapshot does not establish orientation, accuracy or battery capacity.",
+    "PCM delivery was observed. The tests did not establish acoustic microphone response, speech intelligibility, audible output on the corrected kernel or sustained full-duplex operation.",
+    "The camera mode describes the requested format. Without a completed frame there is no measurement of payload integrity, image content or frame rate."
+  ],
+  "source_refs": [
+    "mosaico-r5-startup-io-observation",
+    "mosaico-audio-kernel-source",
+    "mosaico-speaker-amplifier-config",
+    "mosaico-dvp-video-kernel-source",
+    "mosaico-envsys-sensors-kernel-source",
+    "mosaico-coreboard-v12-schematic",
+    "mosaico-baseboard-v12-schematic",
+    "mosaico-bsp",
+    "mosaico-s31-i2s-dma-update",
+    "mosaico-s31-dvp-de-vsync",
+    "mosaico-es8311-data-routing",
+    "mosaico-sc101iot-dma-frame-tail",
+    "mosaico-sc101iot-pclk-delay"
+  ]
+}
