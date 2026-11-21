@@ -1,0 +1,50 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-r5-startup-io",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "R5 network appliance, LittleFS on NOR and tmpfs mounted on /tmp."
+  },
+  "inputs": [
+    {
+      "name": "Installed R5 root image before the script and configuration updates",
+      "revision": "R5",
+      "sha256": "5fa3d4d045a2b6c3f026ceb77d3fbaa1b45aa9e03b24bf1a959dd285157b789c",
+      "reference": "boards/esp-mosaico/evidence/compact-dropbear-root.json"
+    }
+  ],
+  "scenario": "Run the same /sbin/rcorder -s nostart -k network-appliance on the mounted /etc/rc.network.d directory and on a tmpfs copy of its 31 entries. Time both on the host using a monotonic clock and one open SSH session.",
+  "expected": "Both runs exit successfully and produce the same ordered list of 13 service basenames.",
+  "observed": "On kernel #6, rcorder took 23.855 s using NOR and 2.935 s using tmpfs. Both selected the same services in the same order. A second timing of the installed NOR directory took approximately 23.96 s.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "running-system-nor-rcorder",
+      "value": 23.855,
+      "unit": "seconds"
+    },
+    {
+      "name": "running-system-tmpfs-rcorder",
+      "value": 2.935,
+      "unit": "seconds"
+    },
+    {
+      "name": "copy-31-inputs-from-nor-to-tmpfs",
+      "value": 52.656,
+      "unit": "seconds"
+    }
+  ],
+  "limits": [
+    "The directories were tested on a running board. The elapsed times include process startup and SSH marker delivery. The filesystem cache state was not reset between runs."
+  ],
+  "source_refs": [
+    "mosaico-rcorder-selection-source"
+  ]
+}

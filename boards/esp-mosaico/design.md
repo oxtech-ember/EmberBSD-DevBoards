@@ -41,6 +41,10 @@ The interval from the network message to the syslogd start message was
 The full POWERON-to-login interval increased from 211.09 to 247.31 seconds
 across this pair. Both boots started the same 13 services.
 [Cold-start intervals and logging check](evidence/r5-syslogd-cold-start.json).
+On the running R5 system, ordering the same 31 script files took 23.86 seconds
+on the NOR root and 2.94 seconds on tmpfs. Both invocations selected the same
+13 services in the same order. [Startup I/O measurements](evidence/r5-startup-io.json).
+
 Three upstream Qt Quick scenes also matched the Qt reference RGB565 checksums
 on RV32. Two exercise stacking order and one exercises Grid spacing.
 [Qt reference scene measurements](evidence/qml-qt-reference-scenes.json).

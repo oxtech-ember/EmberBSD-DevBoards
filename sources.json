@@ -2016,6 +2016,14 @@
       "revision": null,
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "mosaico-r5-startup-io-observation",
+      "title": "Mosaico R5 startup filesystem timings",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/r5-startup-io.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }

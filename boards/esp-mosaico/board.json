@@ -68,6 +68,7 @@
     "mosaico-behavior-observation",
     "mosaico-r5-service-times",
     "mosaico-syslogd-cold-start-observation",
+    "mosaico-r5-startup-io-observation",
     "mosaico-qt-visual-opacity-observation"
   ],
   "capabilities": [
