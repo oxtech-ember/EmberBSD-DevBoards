@@ -67,7 +67,8 @@ The [R5 peripheral checks](evidence/r5-physical-peripherals.json) returned valid
 acceleration and angular velocity on all BMI270 axes and valid readings on all
 four BQ27220 gauge channels. One of the two BMM150 magnetometers reported an
 invalid Y axis. The ES8311 delivered 24,000 PCM samples after the codec data
-pins and DMA settings were corrected. Audible speaker output remains unconfirmed.
+pins and DMA settings were corrected. On RAM kernel #18 the operator heard a
+440 Hz tone from the onboard speaker.
 
 The optional [SC101IOT camera profile](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/arch/riscv/conf/ESP_MOSAICO_SC101IOT)
 reported 640 × 480 UYVY and accepted two capture buffers. On RAM kernel #18, video(4) timed out after five seconds while waiting for

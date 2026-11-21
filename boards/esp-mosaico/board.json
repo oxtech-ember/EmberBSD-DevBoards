@@ -211,7 +211,7 @@
       "id": "audio",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "The ES8311 card enumerated through ausoc. With corrected DMA and data pin routing, it delivered 24000 PCM samples in 50 blocks. The operator heard no test tone with the earlier amplifier configuration; a later 800 Hz playback produced no clear increase at that frequency in microphone capture.",
+      "scope": "The ES8311 card enumerated through ausoc. With corrected DMA and data pin routing, it delivered 24000 PCM samples in 50 blocks. On RAM kernel #18 the operator heard a 440 Hz tone from the onboard speaker. Microphone response to the tone and to an external handclap test remains unverified.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-bsp",
