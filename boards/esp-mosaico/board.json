@@ -175,6 +175,7 @@
         "mosaico-qml-runtime-source",
         "mosaico-weather-qml-run-observation",
         "mosaico-qt-reference-scenes-observation",
+        "mosaico-mousearea-observation",
         "mosaico-espwifi-scan-kernel-source",
         "mosaico-espwifi-wpa-parser-source",
         "mosaico-espwifi-mac-v3-kernel-source",

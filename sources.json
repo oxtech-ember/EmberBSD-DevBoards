@@ -1888,6 +1888,22 @@
       "revision": null,
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "mosaico-mousearea-example",
+      "title": "Original Qt MouseArea and EmberBSD RV32 device runner",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/fb1b2b137599428990b20f0dce8ad2ac4566858e/desktop/qml-qt-tests",
+      "revision": "fb1b2b137599428990b20f0dce8ad2ac4566858e",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-mousearea-observation",
+      "title": "Qt MouseArea physical touch and drag on ESP-Mosaico V1.2",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/qml-mousearea-touch.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }

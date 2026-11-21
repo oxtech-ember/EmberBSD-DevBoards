@@ -1,0 +1,59 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-qml-mousearea-touch",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One R4 LittleFS network-appliance kit with a 480 x 480 CO5300 display and CST92xx touch controller."
+  },
+  "inputs": [
+    {
+      "name": "Qt Declarative mousearea.qml, unchanged",
+      "revision": "v6.12.0",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "RV32 ILP32 soft-float ELF tested from tmpfs",
+      "revision": "Input adapter before the backward wall-clock adjustment regression fix",
+      "sha256": "f0b6895d3a328413dc61d1ebad7433f9ab8c1151bda7b624891ad9c51e98f4fa",
+      "reference": null
+    },
+    {
+      "name": "Published reference build, compiled after the hardware observation",
+      "revision": "SDK aa7316fa52c3bc982aa70ba9e103aca4f3cdcd2b, Runtime 122c6dd95ac670addc5b39c2c5036b5d9dd4554d, Examples fb1b2b137599428990b20f0dce8ad2ac4566858e",
+      "sha256": "f6ed4bf7e583053bd69df7991584964035508ae0c04d233b1ae6b7f23ff59759",
+      "reference": null
+    }
+  ],
+  "scenario": "Launch from tmpfs over SSH. Center the 320 x 480 compiled upstream scene at x=80 on wsdisplay. Open a temporary wsmouse0 device node (character 212:0, mode 0600) for the attached controller. Observe physical contact, release and drag.",
+  "expected": "A finger press reaches the red MouseArea and moving a finger with a grab on the blue rectangle changes its position within the bounds declared in QML.",
+  "observed": "The app presented the initial frame and received physical DOWN/UP events. The original red area logged Entered, Pressed (LeftButton shift=false), Exited (pressed=true) when moving outside during contact, and Exited (pressed=false) after a release. The blue rectangle moved from (190,10) to (194,61), (200,89) and (182,166). The operator confirmed the app worked.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "physically-tested-rv32-elf",
+      "value": 515408,
+      "unit": "bytes"
+    },
+    {
+      "name": "published-source-rv32-elf",
+      "value": 515440,
+      "unit": "bytes"
+    }
+  ],
+  "limits": [
+    "The R4 image omitted /dev/wsmouse0. This run used the existing driver through a tmpfs node and did not change NOR or startup configuration.",
+    "Click, hold and double-click labels were compared with independent Qt Quick on the host. The on-device QML log covers entered, pressed and exited.",
+    "The later adapter revision bounds stale input timestamps after a backward wall-clock change. Its RV32 build and host regression passed; the measured hardware ELF is the first binary listed."
+  ],
+  "source_refs": [
+    "mosaico-mousearea-example"
+  ]
+}

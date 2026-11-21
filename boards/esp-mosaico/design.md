@@ -30,6 +30,9 @@ completed `/etc/rc` in 189 seconds on one cold POWER boot and accepted SSH by na
 Three upstream Qt Quick scenes also matched the Qt reference RGB565 checksums
 on RV32. Two exercise stacking order and one exercises Grid spacing.
 [Qt reference scene measurements](evidence/qml-qt-reference-scenes.json).
+The original Qt `mousearea.qml` also handled a physical press on its red
+square and a drag of its blue square through wscons on R4.
+[Input events and positions](evidence/qml-mousearea-touch.json).
 Power, Wi-Fi and other expansion features retain their own integration limits.
 Check the actual flash layout and a usable console/recovery route before selecting an image.
 
