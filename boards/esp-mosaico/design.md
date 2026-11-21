@@ -43,7 +43,14 @@ across this pair. Both boots started the same 13 services.
 [Cold-start intervals and logging check](evidence/r5-syslogd-cold-start.json).
 On the running R5 system, ordering the same 31 script files took 23.86 seconds
 on the NOR root and 2.94 seconds on tmpfs. Both invocations selected the same
-13 services in the same order. [Startup I/O measurements](evidence/r5-startup-io.json).
+13 services in the same order. Using the BSD name cache for lookups, reusing
+the directory cursor and reading NOR metadata in 256-byte units reduced the
+instrumented cold boot from 280.82 to 73.79 seconds. Root mount to the network
+announcement fell from 112.86 to 29.61 seconds, and the WPA announcement to
+the login line from 115.55 to 25.56 seconds. The largest measured reduction
+inside the 13 scripts was in setup before the service actions ran.
+[Measurement conditions](evidence/r5-startup-io.json) and
+[per-service intervals](evidence/r5-startup-io-cold.csv).
 
 Three upstream Qt Quick scenes also matched the Qt reference RGB565 checksums
 on RV32. Two exercise stacking order and one exercises Grid spacing.

@@ -10,7 +10,7 @@
     "revision": "1.2",
     "carrier_id": null,
     "carrier_revision": null,
-    "variant": "R5 network appliance, LittleFS on NOR and tmpfs mounted on /tmp."
+    "variant": "R5 network appliance with the same writable LittleFS root, NOR bootstrap, CO5300 driver, startup scripts and Wi-Fi configuration for both cold boots."
   },
   "inputs": [
     {
@@ -18,11 +18,23 @@
       "revision": "R5",
       "sha256": "5fa3d4d045a2b6c3f026ceb77d3fbaa1b45aa9e03b24bf1a959dd285157b789c",
       "reference": "boards/esp-mosaico/evidence/compact-dropbear-root.json"
+    },
+    {
+      "name": "Control NOR firmware FIT, kernel #6",
+      "revision": "kernel #6",
+      "sha256": "da3ba8521fd8123bc748897b48735fc92bca4e9c7710543ff39d9c49c8ece8a6",
+      "reference": null
+    },
+    {
+      "name": "NOR firmware FIT with corrected LittleFS, kernel #11",
+      "revision": "e9783b85d8530d90ad7abaacb7e7d934194a4521",
+      "sha256": "946aabccf3e1bdc41cd3b7b953dcdf818094a5110346478896edd92f68f96b55",
+      "reference": null
     }
   ],
-  "scenario": "Run the same /sbin/rcorder -s nostart -k network-appliance on the mounted /etc/rc.network.d directory and on a tmpfs copy of its 31 entries. Time both on the host using a monotonic clock and one open SSH session. For the cold control, power the board off and on, timestamp the serial console on the host, and emit service, command and action boundaries from the rc producer to its original console descriptor.",
-  "expected": "Both runs exit successfully and produce the same ordered list of 13 service basenames.",
-  "observed": "On kernel #6, rcorder took 23.855 s using NOR and 2.935 s using tmpfs. Both selected the same services in the same order. A second timing of the installed NOR directory took approximately 23.96 s. During the instrumented cold control, building the input list took 10.744 s and the initial rcorder took 22.555 s. Starting the WPA daemon returned in 4.246 s. mDNS and Dropbear took 20.443 s and 19.036 s respectively between entry into their rc scripts and their startup announcements. On the running control, testing all 13 script headers for the interactive keyword took 10.027 s. The same shell and loop without opening the scripts took 0.706 s.",
+  "scenario": "Run the same /sbin/rcorder -s nostart -k network-appliance on the mounted /etc/rc.network.d directory and on a tmpfs copy of its 31 entries. Time both on the host using a monotonic clock and one open SSH session. For the cold control, power the board off and on, timestamp the serial console on the host, and emit service, command and action boundaries from the rc producer to its original console descriptor. Repeat with kernel #11. Both boots use the same service markers and the same console-line endpoints. The CO5300 object and kernel DTB match the control. The firmware FIT is the only flash range updated between measurements.",
+  "expected": "Both runs exit successfully and produce the same ordered list of 13 service basenames. The corrected kernel should start the same services and reduce time spent reading directories and service files.",
+  "observed": "On kernel #6, rcorder took 23.855 s using NOR and 2.935 s using tmpfs. Both selected the same services in the same order. A second timing of the installed NOR directory took approximately 23.96 s. During the instrumented cold control, building the input list took 10.744 s and the initial rcorder took 22.555 s. Starting the WPA daemon returned in 4.246 s. mDNS and Dropbear took 20.443 s and 19.036 s respectively between entry into their rc scripts and their startup announcements. On the running control, testing all 13 script headers for the interactive keyword took 10.027 s. The same shell and loop without opening the scripts took 0.706 s. The 13 service scripts exited successfully on both cold boots. Time spent inside them decreased from 171.569 to 33.548 s; the cumulative time before each action or command decreased from 107.474 to 15.382 s. The initial rcorder decreased from 22.555 to 8.829 s. The POWERON-to-login-line interval decreased from 280.819 to 73.785 s. On the corrected kernel the same 13-header pass took 1.086 s versus 0.159 s for its control loop. Pinned-key SSH succeeded, the Wi-Fi station reported SAE, CCMP and enabled PMF, and the device-side LittleFS test passed mmap/msync, metadata operations, symlinks, truncate, replacing an open file and unlink.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -69,14 +81,51 @@
       "name": "control-warm-matching-empty-loop",
       "value": 0.705732,
       "unit": "seconds"
+    },
+    {
+      "name": "candidate-cold-root-to-network-announcement",
+      "value": 29.609,
+      "unit": "seconds"
+    },
+    {
+      "name": "candidate-cold-wpa-announcement-to-login-line",
+      "value": 25.555,
+      "unit": "seconds"
+    },
+    {
+      "name": "candidate-cold-poweron-to-login-line",
+      "value": 73.785,
+      "unit": "seconds"
+    },
+    {
+      "name": "candidate-cold-rc-producer-end-to-login-line",
+      "value": 5.935,
+      "unit": "seconds"
+    },
+    {
+      "name": "candidate-cold-poweron-to-first-login-prompt-bytes",
+      "value": 73.027,
+      "unit": "seconds"
+    },
+    {
+      "name": "candidate-warm-13-header-checks",
+      "value": 1.085811,
+      "unit": "seconds"
+    },
+    {
+      "name": "candidate-warm-matching-empty-loop",
+      "value": 0.15932,
+      "unit": "seconds"
     }
   ],
   "limits": [
     "The directories were tested on a running board. The elapsed times include process startup and SSH marker delivery. The filesystem cache state was not reset between runs.",
     "The cold service markers measure elapsed time around startup commands. Completion of a daemon launch does not establish association, address acquisition or service readiness.",
-    "For this pair the login endpoint is the first completed UART line containing the prompt. getty can write a prompt before the newline is received. The rc producer end marker precedes rc postprocessing and init starting getty."
+    "For this pair the login endpoint is the first completed UART line containing the prompt. getty can write a prompt before the newline is received. The rc producer end marker precedes rc postprocessing and init starting getty.",
+    "One instrumented cold boot per kernel. The interval from power-on to mounting flash1 was 10.814 s on the control and 10.805 s on the candidate. Each per-script interval includes shell setup and config-file access."
   ],
   "source_refs": [
-    "mosaico-rcorder-selection-source"
+    "mosaico-rcorder-selection-source",
+    "littlefs-nor-lookup-source"
   ]
 }

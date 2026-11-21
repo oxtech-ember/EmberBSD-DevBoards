@@ -2040,6 +2040,14 @@
       "revision": null,
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "littlefs-nor-lookup-source",
+      "title": "LittleFS NOR read size, name cache and directory traversal",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/e9783b85d8530d90ad7abaacb7e7d934194a4521",
+      "revision": "e9783b85d8530d90ad7abaacb7e7d934194a4521",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }
