@@ -27,6 +27,9 @@ The same ELF gave individual RSS samples of 468 KiB and 908 KiB across two runs.
 [QML display observation](evidence/weather-qml-run.json). The network appliance profile
 completed `/etc/rc` in 189 seconds on one cold POWER boot and accepted SSH by name.
 [Startup measurements](evidence/network-appliance-startup-profile.json).
+On R5 the compact libc and Dropbear reduced the regular files in the 10 MiB
+root partition from 8,200,008 to 4,767,619 bytes. The existing SSH host-key
+pin worked after a cold boot. [R5 measurements](evidence/compact-dropbear-root.json).
 Three upstream Qt Quick scenes also matched the Qt reference RGB565 checksums
 on RV32. Two exercise stacking order and one exercises Grid spacing.
 [Qt reference scene measurements](evidence/qml-qt-reference-scenes.json).

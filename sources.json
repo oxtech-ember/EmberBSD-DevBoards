@@ -1928,6 +1928,22 @@
       "revision": null,
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "mosaico-compact-dropbear-ports",
+      "title": "Dropbear appliance package for the compact network root",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Ports/tree/0ff3eeea1ba75462c5b0c88ce3a61c2747f6e7cb/pkgsrc/security/dropbear-appliance",
+      "revision": "0ff3eeea1ba75462c5b0c88ce3a61c2747f6e7cb",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-compact-dropbear-observation",
+      "title": "R5 compact libc and Dropbear on ESP-Mosaico",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/compact-dropbear-root.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }

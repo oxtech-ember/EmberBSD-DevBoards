@@ -87,7 +87,8 @@
         "mosaico-nor-littlefs-ports-source",
         "mosaico-boot-display-normal-power-observation",
         "mosaico-rcorder-selection-source",
-        "mosaico-network-appliance-startup-profile-observation"
+        "mosaico-network-appliance-startup-profile-observation",
+        "mosaico-compact-dropbear-observation"
       ]
     },
     {

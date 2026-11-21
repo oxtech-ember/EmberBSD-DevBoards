@@ -1,0 +1,82 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-compact-dropbear-root",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One ESP-Mosaico kit, NOR kernel #6, R5 10 MiB LittleFS root."
+  },
+  "inputs": [
+    {
+      "name": "LLVM static C foundation, RV32 ILP32 soft-float",
+      "revision": "SDK 29268ac8774bfed07c70670a7015a85b732711e6, USE_JEMALLOC=no",
+      "sha256": "95f2f61e60d5a5854c744bba4668e333064bb35a407c2c482eebe3c9c83a962e",
+      "reference": null
+    },
+    {
+      "name": "Dropbear daemon from security/dropbear-appliance",
+      "revision": "2026.94, Ports 0ff3eeea1ba75462c5b0c88ce3a61c2747f6e7cb",
+      "sha256": "0cea1563aa2617998a63b8315b69a9b95e64dcc30cc556fd9ac308722c3e2476",
+      "reference": null
+    }
+  ],
+  "scenario": "Relink the base commands with the compact C foundation and install the static Dropbear server and its service script. Convert the provisioned Ed25519 host key on the build host. Replace the root partition at 0x600000 and boot normally using POWER. Connect using the same pinned host key and authorized client key.",
+  "expected": "EmberBSD boots from NOR, starts its configured network services and accepts the established SSH identity.",
+  "observed": "UART reported flash1 as root, then started the WPA supplicant, DHCP, mDNS and Dropbear, and reached login. The station reported COMPLETED, SAE, PMF and an IPv4 address. The existing client authenticated using its saved Ed25519 host-key pin and client public key. A remote command returned successfully. A forced terminal session reported an allocated PTY, returned its marker and exited with status 0. A separate command echoed all 4096 bytes of a binary stream. The official-foundation allocator smoke ran on the board and exited successfully.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "r4-regular-files",
+      "value": 8200008,
+      "unit": "bytes"
+    },
+    {
+      "name": "r5-regular-files",
+      "value": 4767619,
+      "unit": "bytes"
+    },
+    {
+      "name": "r5-console-tools",
+      "value": 2940288,
+      "unit": "bytes"
+    },
+    {
+      "name": "r5-login",
+      "value": 533620,
+      "unit": "bytes"
+    },
+    {
+      "name": "r5-dropbear",
+      "value": 1053064,
+      "unit": "bytes"
+    },
+    {
+      "name": "poweron-to-dropbear",
+      "value": 192.098,
+      "unit": "seconds"
+    },
+    {
+      "name": "poweron-to-login",
+      "value": 209.558,
+      "unit": "seconds"
+    },
+    {
+      "name": "etc-rc-elapsed",
+      "value": 177,
+      "unit": "seconds"
+    }
+  ],
+  "limits": [
+    "One cold POWER boot. POWERON-to-service and login times use a host monotonic clock. The rc interval (12:00:08 through 12:03:05) is from the board clock, whose calendar date was unset.",
+    "The fixed-size NOR partition occupies 10 MiB in both configurations. The size comparison counts regular-file data once per inode."
+  ],
+  "source_refs": [
+    "mosaico-compact-dropbear-ports"
+  ]
+}
