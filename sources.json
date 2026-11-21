@@ -1904,6 +1904,30 @@
       "revision": null,
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "mosaico-qt-row-original",
+      "title": "Qt Quick Row with differently sized children and layout direction",
+      "url": "https://github.com/qt/qtdeclarative/blob/4332fbbb4c340463dc8cee36dda0c85d932122d8/tests/auto/quick/qquickpositioners/data/horizontal-spacing.qml",
+      "revision": "4332fbbb4c340463dc8cee36dda0c85d932122d8",
+      "reviewed_at": "2026-11-21",
+      "sha256": "a2e2a548b8e5a45769ecc515984fcd66429128ea6e5be7b16f57b8886360f1da"
+    },
+    {
+      "id": "mosaico-qt-row-example",
+      "title": "EmberBSD QML Row display runner and Qt reference comparison",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/2330aeddf12d170d159a10552fe6ae5131155528/desktop/qml-qt-tests",
+      "revision": "2330aeddf12d170d159a10552fe6ae5131155528",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-qt-row-observation",
+      "title": "Qt Quick Row on the ESP-Mosaico display",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/qml-row-spacing.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }

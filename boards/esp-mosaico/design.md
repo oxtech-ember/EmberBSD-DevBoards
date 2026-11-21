@@ -33,6 +33,10 @@ on RV32. Two exercise stacking order and one exercises Grid spacing.
 The original Qt `mousearea.qml` also handled a physical press on its red
 square and a drag of its blue square through wscons on R4.
 [Input events and positions](evidence/qml-mousearea-touch.json).
+A second positioner example displayed three red rectangles from the original
+Qt Quick `horizontal-spacing.qml` on the panel. The RV32 renderer matched the
+Qt reference frame for the same viewport.
+[Row sizes and frame checksum](evidence/qml-row-spacing.json).
 Power, Wi-Fi and other expansion features retain their own integration limits.
 Check the actual flash layout and a usable console/recovery route before selecting an image.
 

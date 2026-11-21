@@ -1,0 +1,59 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-qml-row-spacing",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One R4 LittleFS kit with the 480 × 480 CO5300 display."
+  },
+  "inputs": [
+    {
+      "name": "Qt Declarative horizontal-spacing.qml",
+      "revision": "v6.12.0, commit 4332fbbb4c340463dc8cee36dda0c85d932122d8",
+      "sha256": "a2e2a548b8e5a45769ecc515984fcd66429128ea6e5be7b16f57b8886360f1da",
+      "reference": null
+    },
+    {
+      "name": "Static RV32 ILP32 framebuffer-independent test executable",
+      "revision": null,
+      "sha256": "94e01226324f341d2949fd7fcb5a8ad08752c57106cdf1ec429fafee692deb44",
+      "reference": null
+    },
+    {
+      "name": "Static RV32 display executable",
+      "revision": "EmberBSD QML built from the Qt source. SDK 978c00ee51269260c8b4f6687ebf228e4ea6c82b, Examples 2330aeddf12d170d159a10552fe6ae5131155528.",
+      "sha256": "057d87a310522d0af517046b8d8342355338ee87fa4d2c8841a40f033efb36f5",
+      "reference": null
+    }
+  ],
+  "scenario": "Compile the original Qt source with EmberBSD QML. Render the initial scene in a 320 × 240 viewport using RGB565 on the host and on the target CPU. Present the viewport centered on wsdisplay.",
+  "expected": "Three top-aligned red rectangles, 50 × 50, 20 × 10 and 40 × 20 pixels, separated by 10 pixels on white.",
+  "observed": "The RV32 CPU run matched the host Qt reference (RGB565 CRC32 2755e523). The display application presented the scene on ttyE0 and the operator identified all three rectangles. A separate host run with the initial boolean changed to true matched the Qt right-to-left reference (CRC32 44817ce7).",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "rv32-cpu-test-elf",
+      "value": 118188,
+      "unit": "bytes"
+    },
+    {
+      "name": "rv32-display-elf",
+      "value": 120080,
+      "unit": "bytes"
+    }
+  ],
+  "limits": [
+    "The physical observation covers the initial left-to-right scene. The host compared both initial directions in separate builds.",
+    "The board ran the executables on the existing R4 system."
+  ],
+  "source_refs": [
+    "mosaico-qt-row-original",
+    "mosaico-qt-row-example"
+  ]
+}
