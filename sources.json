@@ -1944,6 +1944,38 @@
       "revision": null,
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "mosaico-behavior-qt",
+      "title": "Qt Quick manual accessibility example with Behavior on x",
+      "url": "https://github.com/qt/qtdeclarative/blob/4332fbbb4c340463dc8cee36dda0c85d932122d8/tests/manual/accessibility/behavior.qml",
+      "revision": "4332fbbb4c340463dc8cee36dda0c85d932122d8",
+      "reviewed_at": "2026-11-21",
+      "sha256": "37fa1bdaa61d10e2e43142808046fd207f4e4ac390db9fa4a5315abc1c5093b4"
+    },
+    {
+      "id": "mosaico-behavior-example",
+      "title": "EmberBSD QML device runner and native Qt touch animation trace",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/e3376c72aa8b7a0fa0827d8964687f51bf9989fb/desktop/qml-qt-tests",
+      "revision": "e3376c72aa8b7a0fa0827d8964687f51bf9989fb",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-behavior-observation",
+      "title": "Touch-driven QML animation on ESP-Mosaico R5",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/qml-behavior-touch.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-r5-service-times",
+      "title": "Individual rc service startup times on ESP-Mosaico R5",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/r5-service-times.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }

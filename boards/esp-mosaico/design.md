@@ -30,6 +30,11 @@ completed `/etc/rc` in 189 seconds on one cold POWER boot and accepted SSH by na
 On R5 the compact libc and Dropbear reduced the regular files in the 10 MiB
 root partition from 8,200,008 to 4,767,619 bytes. The existing SSH host-key
 pin worked after a cold boot. [R5 measurements](evidence/compact-dropbear-root.json).
+On a separate instrumented reboot, all 13 startup scripts took 183 seconds in
+total. Initial `rcorder` took 35 seconds. The `syslogd` startup script took
+31 seconds, including a second scan for scripts that request chroot sockets.
+[Per-service timings and measurement limits](evidence/r5-service-times.json).
+[CSV with start, finish and intervals between scripts](evidence/r5-service-times.csv).
 Three upstream Qt Quick scenes also matched the Qt reference RGB565 checksums
 on RV32. Two exercise stacking order and one exercises Grid spacing.
 [Qt reference scene measurements](evidence/qml-qt-reference-scenes.json).
@@ -40,6 +45,9 @@ A second positioner example displayed three red rectangles from the original
 Qt Quick `horizontal-spacing.qml` on the panel. The RV32 renderer matched the
 Qt reference frame for the same viewport.
 [Row sizes and frame checksum](evidence/qml-row-spacing.json).
+On R5, physical taps moved the labeled square from the original Qt Quick
+`behavior.qml`. The operator reported uneven motion.
+[Touch events, coordinates and timing limits](evidence/qml-behavior-touch.json).
 Power, Wi-Fi and other expansion features retain their own integration limits.
 Check the actual flash layout and a usable console/recovery route before selecting an image.
 

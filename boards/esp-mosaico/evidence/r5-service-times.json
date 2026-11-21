@@ -1,0 +1,122 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-r5-service-times",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "R5 LittleFS network appliance. Ordinary reboot from NOR."
+  },
+  "inputs": [
+    {
+      "name": "Installed R5 root image before temporary timing instrumentation",
+      "revision": "R5",
+      "sha256": "5fa3d4d045a2b6c3f026ceb77d3fbaa1b45aa9e03b24bf1a959dd285157b789c",
+      "reference": "boards/esp-mosaico/evidence/compact-dropbear-root.json"
+    }
+  ],
+  "scenario": "During one normal reboot, sample the native sh SECONDS variable on the producer side before and after rcorder and each run_rc_script invocation. Buffer timestamps and exit statuses in shell memory and emit one final rc.log record. Use the host monotonic UART clock for the independent root-mount and login markers.",
+  "expected": "Obtain both boundaries and an exit status for every configured startup script; retain the normal boot order.",
+  "observed": "All 13 scripts and rcorder returned status zero. The scripts account for 183 s and the initial order calculation for 35 s. Another 35 s falls outside those intervals within the 253 s producer window. The broader rc.log date markers span 257 s. The R5 syslogd pre-start function separately calls rcorder -k chrootdir on the selected scripts. None of those scripts declares that keyword.",
+  "duration_seconds": 253,
+  "measurements": [
+    {
+      "name": "rcorder-including-directory-enumeration",
+      "value": 35,
+      "unit": "seconds"
+    },
+    {
+      "name": "root",
+      "value": 10,
+      "unit": "seconds"
+    },
+    {
+      "name": "sysctl",
+      "value": 4,
+      "unit": "seconds"
+    },
+    {
+      "name": "mountcritlocal",
+      "value": 19,
+      "unit": "seconds"
+    },
+    {
+      "name": "network-tmpdirs",
+      "value": 5,
+      "unit": "seconds"
+    },
+    {
+      "name": "ttys",
+      "value": 8,
+      "unit": "seconds"
+    },
+    {
+      "name": "network",
+      "value": 16,
+      "unit": "seconds"
+    },
+    {
+      "name": "network-logfs",
+      "value": 11,
+      "unit": "seconds"
+    },
+    {
+      "name": "syslogd",
+      "value": 31,
+      "unit": "seconds"
+    },
+    {
+      "name": "wpa-supplicant",
+      "value": 13,
+      "unit": "seconds"
+    },
+    {
+      "name": "dhcpcd",
+      "value": 18,
+      "unit": "seconds"
+    },
+    {
+      "name": "staticroute",
+      "value": 7,
+      "unit": "seconds"
+    },
+    {
+      "name": "mdnsd",
+      "value": 21,
+      "unit": "seconds"
+    },
+    {
+      "name": "dropbear",
+      "value": 20,
+      "unit": "seconds"
+    },
+    {
+      "name": "outside-command-intervals-within-producer-window",
+      "value": 35,
+      "unit": "seconds"
+    },
+    {
+      "name": "rc-log-start-to-finish",
+      "value": 257,
+      "unit": "seconds"
+    },
+    {
+      "name": "uart-root-mount-to-login",
+      "value": 300.986,
+      "unit": "seconds"
+    }
+  ],
+  "limits": [
+    "One instrumented software reboot. The earlier uninstrumented cold POWER boot took 177 s between the rc.log date markers. Its per-script times were not recorded.",
+    "SECONDS uses whole seconds of board wall time. A script measurement includes its shell setup and pre-start operations through return, and background processes may become ready later.",
+    "UART observations use a different clock and different boundaries. The cost of the nested rcorder call inside syslogd was not separately timed."
+  ],
+  "source_refs": [
+    "mosaico-rcorder-selection-source"
+  ]
+}
