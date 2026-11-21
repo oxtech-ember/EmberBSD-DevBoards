@@ -5,17 +5,17 @@
   "target_id": "esp-mosaico",
   "recorded_at": "2026-11-21",
   "layer": "operator-report",
-  "result": "inconclusive",
+  "result": "pass",
   "hardware": {
     "revision": "1.2",
     "carrier_id": null,
     "carrier_revision": null,
-    "variant": "One operator-reported ESP-Mosaico V1.2 sample and a separately prepared R4 LittleFS image."
+    "variant": "One provisioned ESP-Mosaico V1.2 kit with an existing SSH host key."
   },
   "inputs": [
     {
       "name": "R4 network-appliance LittleFS image",
-      "revision": "Profile recipe validated and image unpacked offline; not boot tested",
+      "revision": "R4 provisioned network-appliance profile, 10 MiB LittleFS at NOR offset 0x600000; native writer hash verification passed.",
       "sha256": null,
       "reference": null
     },
@@ -26,10 +26,10 @@
       "reference": null
     }
   ],
-  "scenario": "Validate the R4 startup selection with the host-built rcorder and inspect its unpacked LittleFS image; measure available space on the live root before software reboot.",
-  "expected": "rcorder selects the intended 13 startup scripts in dependency order, the unpacked image retains its provisioned network/SSH inputs and special devices, and removing the standalone ssh-keygen increases available root space.",
-  "observed": "The host-built rcorder selected, in order: root, sysctl, mountcritlocal, network_tmpdirs, ttys, network, network_logfs, syslogd, wpa_supplicant, dhcpcd, staticroute, mdnsd, sshd. For this selection, each # KEYWORD: network-appliance line must be inside the script's initial contiguous PROVIDE/REQUIRE/BEFORE/KEYWORD metadata block. The unpacked R4 image retained the checked network and SSH inputs and special devices, with 1788 KiB free; the offline image comparison was 704 KiB to 1788 KiB free. Before software reboot, live-root statvfs free space changed from 171 to 424 blocks of 4096 bytes after removing the standalone ssh-keygen (an increase of 1,036,288 bytes). An R3 attempt with the keyword outside the metadata block reached login after reboot but did not start SSH. R4 activation and its /etc/rc duration have not been measured; no R4 Wi-Fi or SSH success is established. The separate ordinary cold POWER baseline remains 283 seconds for /etc/rc with exit status 0.",
-  "duration_seconds": null,
+  "scenario": "Boot the R4 root from NOR using POWER, measure rc, and sign in by its mDNS hostname using the pinned SSH host key.",
+  "expected": "The 13 selected startup scripts run in dependency order. The board associates with WPA3/PMF, obtains IPv4 and accepts SSH by name.",
+  "observed": "The operator saw the EmberBSD logo and startup messages. Cold NOR boot reached login. The rc log spanned 189 seconds (12:00:08 to 12:03:17). Host-monotonic UART timing from SPI_FAST_FLASH_BOOT was 194.730 seconds to Starting sshd and 219.802 seconds to the login prompt. The station reported COMPLETED, SAE, CCMP and pmf=1; espwifi0 had IPv4 and pinned SSH by mDNS name succeeded. The initial contiguous rcorder directive block in each selected script contains the network-appliance keyword. The unpacked R4 root retained its provisioned keys and network profiles. It has 1788 KiB available, compared with 704 KiB in the baseline image. The earlier live filesystem measurement before restart increased from 171 to 424 blocks of 4096 bytes after removing the standalone ssh-keygen.",
+  "duration_seconds": 189,
   "measurements": [
     {
       "name": "rcorder-selected-script-count",
@@ -65,14 +65,27 @@
       "name": "ordinary-cold-power-rc-baseline",
       "value": 283,
       "unit": "seconds; rc exit status 0, from separate baseline observation"
+    },
+    {
+      "name": "r4-cold-power-rc",
+      "value": 189,
+      "unit": "seconds"
+    },
+    {
+      "name": "r4-spi-boot-marker-to-sshd-start",
+      "value": 194.73,
+      "unit": "seconds"
+    },
+    {
+      "name": "r4-spi-boot-marker-to-login-prompt",
+      "value": 219.802,
+      "unit": "seconds"
     }
   ],
   "limits": [
-    "R4 was validated and unpacked offline but was not activated by reboot in this observation; no R4 boot duration or runtime service status is established.",
-    "The login-without-SSH result belongs to the R3 attempt with the KEYWORD outside the initial metadata block, not to R4.",
-    "Live-root space values were measured before software reboot; offline image free-space values are a separate comparison.",
-    "The 283-second cold POWER baseline is from the separate ordinary R3 boot observation and is not an R4 result.",
-    "No working Wi-Fi, SSH, or QML display result is claimed for R4."
+    "Single cold POWER run on one kit. The rc timestamps measure elapsed time; its wall clock was unset. The rc exit code was not captured for R4.",
+    "The live-root and unpacked-image free-space measurements cover different filesystem states.",
+    "The DHCP daemon started and the interface had IPv4. Lease acquisition timing was not measured."
   ],
   "source_refs": [
     "mosaico-rcorder-selection-source",
