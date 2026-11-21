@@ -212,7 +212,7 @@
       "id": "audio",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "The operator heard a 440 Hz speaker tone on #18. On RAM kernel #19 the ES8311 delivered 48000 mono PCM16 samples in 0.993 s. During a two-clap test, two above-background transients were measured 1.005 s apart.",
+      "scope": "The operator heard the onboard speaker on RAM kernels #18 and #19. On RAM kernel #19 the ES8311 delivered 48000 mono PCM16 samples in 0.993 s. During a two-clap test, two above-background transients were measured 1.005 s apart.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-bsp",

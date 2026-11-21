@@ -66,8 +66,8 @@ vendor-firmware evidence in the [factory observation](evidence/factory-periphera
 The [R5 peripheral checks](evidence/r5-physical-peripherals.json) returned valid
 acceleration and angular velocity on all BMI270 axes and valid readings on all
 four BQ27220 gauge channels. One of the two BMM150 magnetometers reported an
-invalid Y axis. The operator heard a 440 Hz tone from the onboard speaker on
-kernel #18. On kernel #19 a one-second microphone read at 48 kHz completed in
+invalid Y axis. The operator heard the onboard speaker on RAM kernels #18 and
+#19. On #19 a one-second microphone read at 48 kHz completed in
 0.993 s. Two transients 1.005 s apart matched the spacing of two reported
 handclaps. See the [ES8311 audio measurements](evidence/r5-es8311-pcm.json).
 
