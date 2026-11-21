@@ -2090,6 +2090,14 @@
       "sha256": "6cc1f8a4478ed2393816676564279b11294a9a211554f61c16f6ee0cdfe34629"
     },
     {
+      "id": "mosaico-spark-workshop-ask-example",
+      "title": "Spark Workshop Ask QML example and HIL controller",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/72db71a95170be462a8a95224b9fa7d66856bcd9/desktop/spark-workshop",
+      "revision": "72db71a95170be462a8a95224b9fa7d66856bcd9",
+      "reviewed_at": "2026-11-22",
+      "sha256": null
+    },
+    {
       "id": "emberbsd-package-current-catalog",
       "title": "Public EmberBSD package catalog blob used for transport parity check",
       "url": "https://emberbsd-pkg.oxteam.me/current.p7m",

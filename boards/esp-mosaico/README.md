@@ -87,10 +87,11 @@ tested.
 
 A separate [Spark Workshop transport check](evidence/spark-workshop-ask-transport.json)
 downloaded the public package catalog over HTTP and HTTPS with identical
-verified bytes, then exercised the target worker against a local Responses
-fixture using a synthetic PNG. The fixture returned an explicit test marker;
-this was not a live model response or a physical Ask-button test. The GUI was
-running at Home while the Ask interaction awaited confirmation.
+verified bytes. Programmatic QML HIL then exercised Open→Next→Capture→Use→Ask
+with a synthetic image and, separately, a real SC101IOT frame; both requests
+went only to a loopback Responses fixture, which returned test text and a
+thumbnail while Back returned to step 2/3. This is not a live model response
+or a physical user touch.
 
 The [earlier WPA association baseline](evidence/wifi-association.json) records bounded WPA2/SAE completion, IPv4/DNS and gateway reachability from previous runs. The historical [kernel #30 record](evidence/wifi-connected-scan-roam.json) documents an unsuccessful roam attempt.
 

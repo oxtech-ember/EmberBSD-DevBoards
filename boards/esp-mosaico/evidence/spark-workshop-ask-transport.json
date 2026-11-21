@@ -15,20 +15,26 @@
   "inputs": [
     {
       "name": "Spark Workshop GUI RV32 executable",
-      "revision": null,
+      "revision": "EmberBSD-Examples 72db71a95170be462a8a95224b9fa7d66856bcd9; static RV32",
       "sha256": "328b1e66b4bca4b696ea34ff7a9ae92da8095d0c36e06f23ef9b3769a8c87ed0",
       "reference": null
     },
     {
       "name": "Spark agent-lua RV32 executable",
-      "revision": null,
+      "revision": "EmberBSD-Spark b5ae5c3922614eddafa3dbb56f78c428eb144ae5; static RV32",
       "sha256": "2043b64dd27ab1bfce4a73b36402f557d9bf3d2f9fa084ea0a87c82ebb443e1a",
+      "reference": null
+    },
+    {
+      "name": "Spark Workshop QML HIL runner",
+      "revision": "EmberBSD-Examples 72db71a95170be462a8a95224b9fa7d66856bcd9; static RV32",
+      "sha256": "cd50435899d2e4d6ea145ccfe9ed4cbf8878306a07c523b25f4dd762a680c617",
       "reference": null
     }
   ],
-  "scenario": "On one R5 V1.2 device, fetch the public package catalog over HTTP and HTTPS, then separately exercise the target Spark worker against a local Responses fixture using a synthetic image. Start the Workshop GUI.",
-  "expected": "Both catalog downloads succeed with identical bytes; the fixture accepts the worker's model-list and response requests and validates the synthetic PNG and step context.",
-  "observed": "The anonymous catalog GET returned HTTP 200 over both HTTP and HTTPS, 2,156 bytes each, with identical SHA-256 ca9a3620ca49a3b01869a7a43415f099e5746c6be8b37fd2bd6794de80b34e00. HTTPS peer and host verification were enabled with the public ISRG Root X2 certificate. Separately, the target worker received HTTP 200 for GET /v1/models and POST /v1/responses from a local fixture. The fixture received a synthetic 640×480 PNG (972 bytes), checked step 2 title/instruction and the PNG data URI, and returned its explicit FIXTURE RESPONSE marker. The Workshop GUI process was started and Home was displayed; no physical Ask interaction was confirmed at recording time.",
+  "scenario": "On one R5 V1.2 device, check the package catalog over HTTP and HTTPS, then run the compiled QML controller through Open, Next, Capture, Use and Ask with both a synthetic test image and a camera frame. The test harness supplies programmatic touches and a loopback Responses fixture.",
+  "expected": "Catalog downloads have identical bytes. Each worker request contains the active step and a PNG image, the fixture response and thumbnail appear in QML, and Back returns to the same step.",
+  "observed": "The anonymous catalog GET returned HTTP 200 over both HTTP and HTTPS, 2,156 bytes each, with identical SHA-256 ca9a3620ca49a3b01869a7a43415f099e5746c6be8b37fd2bd6794de80b34e00. HTTPS peer and host verification were enabled with the public ISRG Root X2 certificate. In synthetic-image HIL, programmatic touches drove Open→Next→Capture→Use→Ask; the local fixture received exactly one successful POST (5,437 bytes) containing a synthetic 640×480 PNG (972 bytes) and step 2 context. The expected first response line matched and the thumbnail appeared; Back returned to step 2/3. A second HIL run used a real 640×480 frame from /dev/video0 (SC101IOT), encoded as a 5,626-byte PNG through IEND, and posted it only to the board's loopback fixture. The fixture verified the full step title and instruction; QML showed its explicit test response and thumbnail, and Back returned to step 2/3. The GUI process remained active. These were programmatic touches, not physical user touches.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -60,16 +66,27 @@
       "name": "fixture-image-size",
       "value": 972,
       "unit": "bytes"
+    },
+    {
+      "name": "synthetic-fixture-post-size",
+      "value": 5437,
+      "unit": "bytes"
+    },
+    {
+      "name": "camera-png-size-through-iend",
+      "value": 5626,
+      "unit": "bytes"
     }
   ],
   "limits": [
     "The package-catalog HTTP/HTTPS check and local Responses-fixture worker check were separate operations.",
-    "The fixture test used only a synthetic image and an explicit fixture response; it does not establish a live model response or an Ask-button interaction.",
-    "No user photograph, credential or private endpoint was recorded. The GUI was running at Home, but physical Ask interaction remained unconfirmed."
+    "Both QML HIL runs used programmatic touches. The loopback fixture returned explicit test responses; no live model or external image upload was tested.",
+    "The camera frame was used only in the on-device loopback test. Its contents, credentials and private endpoints were not collected in this record."
   ],
   "source_refs": [
     "emberbsd-package-current-catalog",
     "mosaico-spark-ask-worker-source",
+    "mosaico-spark-workshop-ask-example",
     "mosaico-spark-workshop-example"
   ]
 }
