@@ -3,7 +3,7 @@
   "kind": "evidence",
   "id": "mosaico-weather-qml-run-20261120",
   "target_id": "esp-mosaico",
-  "recorded_at": "2026-11-20",
+  "recorded_at": "2026-11-21",
   "layer": "operator-report",
   "result": "pass",
   "hardware": {
@@ -20,21 +20,25 @@
       "reference": null
     }
   ],
-  "scenario": "Run weather-qml on one V1.2 sample. In one process, render the initial QML value of 21 C, submit an update to -8, and sample the process RSS once.",
+  "scenario": "Run weather-qml on one V1.2 kit with temperatures 21 and -8 in the same process. Repeat on a normal R4 boot using the existing executable and check the physical screen.",
   "expected": "The renderer completes the initial scene presentation and a second presentation after the temperature update.",
-  "observed": "Two presentations completed in one process, first for the initial 21 C value and then after the -8 update. One RSS sample measured 468 KiB. The operator has not confirmed that -8 was visible on screen.",
+  "observed": "Both runs completed two scene presentations. On R4, one program owned the display, read -8 from stdin and continued after the SSH session closed. The operator confirmed -8 C on the physical panel. RSS samples were 468 KiB in the original run and 908 KiB in the R4 run.",
   "duration_seconds": null,
   "measurements": [
     {
       "name": "weather-qml-rss-sample",
       "value": 468,
       "unit": "KiB"
+    },
+    {
+      "name": "weather-qml-r4-rss-sample",
+      "value": 908,
+      "unit": "KiB"
     }
   ],
   "limits": [
-    "One reported V1.2 sample, one process and one RSS sample are covered; the RSS value is not a peak measurement.",
-    "The completion of both presentations does not establish the visible appearance of the -8 update.",
-    "This QML run is separate from the LVGL display observation; the LVGL screen confirmation does not apply to this result."
+    "Both observations concern the same kit and executable. RSS is a point-in-time sample for each process, not a peak.",
+    "The physical observation covers the final temperature in the R4 run. The update input was a test value."
   ],
   "source_refs": [
     "mosaico-weather-qml-example",
