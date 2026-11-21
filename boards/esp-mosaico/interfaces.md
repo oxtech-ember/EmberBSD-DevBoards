@@ -80,9 +80,8 @@ replaces invalid one-row RASET windows with even-height two-row windows and
 This confirms one configured V1.2 sample only. Touch orientation and quantitative
 calibration and sustained operation remain unverified. The
 optional SC101IOT configuration links the sensor and DVP receiver to video(4).
-On R5 the device answered a format query. Frame delivery remains unverified. The mode table
-describes 640 × 480 UYVY at a required 20 MHz XCLK; oscillator frequency and
-actual frame rate remain unmeasured. See [camera and other peripherals](#camera-and-other-peripherals).
+Video applications can capture 640 × 480 UYVY frames on the tested left-slot
+module. See the [capture measurements](evidence/r5-sc101iot-frames.json).
 A software transfer trace is not a voltage measurement of the switched LCD supply.
 
 The guides name CST9220-series touch; the pinned BSP names CST9217. On one
@@ -160,11 +159,13 @@ camera support. The optional published
 uses the [SC101IOT driver](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/dev/i2c/sc101iot.c)
 at 7-bit SCCB address `0x68`; it identifies the sensor and configures the
 source-backed 640 × 480 UYVY mode. The [S31 DVP driver](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/arch/riscv/espressif/esp32s31_dvp.c)
-transports frames through video(4). Both standard and Wi-Fi kernel configurations
-target-build. On RAM kernel #18, video(4) returned two capture buffers and STREAMON
-succeeded. The first dequeue timed out after five seconds, with zero frames delivered. The mode table requires
-20 MHz XCLK and names 15 fps; fitted oscillator frequency and actual frame rate
-are unmeasured.
+transports frames through video(4). On one V1.2 board, the Wi-Fi kernel returned consecutive
+614400-byte UYVY frames from the left-slot sensor. Applications use V4L2
+MMAP capture through video(4). With the media device node and utility installed,
+run `videoctl -d /dev/video0 -c 3` to print frame sizes and checksums.
+The sensor mode specifies a 20 MHz input clock and a nominal 15 fps.
+Userspace received 36 full frames in 4.6161 seconds (7.8 fps).
+See the [on-board capture measurements](evidence/r5-sc101iot-frames.json).
 The common kernel configuration no longer selects the OV3640 driver. Its FDT node
 is marked disabled, and the generic FDT I²C enumerator skips disabled children.
 See the bounded

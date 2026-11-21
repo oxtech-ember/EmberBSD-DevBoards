@@ -2136,6 +2136,30 @@
       "revision": null,
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "mosaico-r5-sc101iot-frames",
+      "title": "Mosaico R5 SC101IOT frame capture measurements",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/r5-sc101iot-frames.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-sc101iot-uyvy-order",
+      "title": "SC101IOT UYVY wire order",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/abbc982b81160a1b226285ded987ad3270d4f618",
+      "revision": "abbc982b81160a1b226285ded987ad3270d4f618",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-dvp-stream-boundaries",
+      "title": "ESP32-S31 DVP startup and frame boundary handling",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/0b36b13868813e26c29883aed2f73c1a655a335b",
+      "revision": "0b36b13868813e26c29883aed2f73c1a655a335b",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }

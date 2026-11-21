@@ -72,8 +72,9 @@ invalid Y axis. The operator heard the onboard speaker on RAM kernels #18 and
 handclaps. See the [ES8311 audio measurements](evidence/r5-es8311-pcm.json).
 
 The optional [SC101IOT camera profile](https://github.com/oxtech-ember/EmberBSD/blob/4ac7924ecb7/sys/arch/riscv/conf/ESP_MOSAICO_SC101IOT)
-reported 640 × 480 UYVY and accepted two capture buffers. On RAM kernel #18, video(4) timed out after five seconds while waiting for
-the first frame. SPI NAND support is limited to identification and
+delivered consecutive 640 × 480 UYVY frames through video(4) on one V1.2 board.
+The operator saw hand movement in the live preview on the built-in display.
+See the [on-board capture measurements](evidence/r5-sc101iot-frames.json). SPI NAND support is limited to identification and
 status commands. See [the peripheral interfaces](interfaces.md#camera-and-other-peripherals).
 
 The [earlier WPA association baseline](evidence/wifi-association.json) records bounded WPA2/SAE completion, IPv4/DNS and gateway reachability from previous runs. The historical [kernel #30 record](evidence/wifi-connected-scan-roam.json) documents an unsuccessful roam attempt.

@@ -73,7 +73,8 @@
     "mosaico-qml-dial-control-observation",
     "mosaico-qml-network-lab-observation",
     "mosaico-r5-physical-peripherals",
-    "mosaico-r5-es8311-pcm"
+    "mosaico-r5-es8311-pcm",
+    "mosaico-r5-sc101iot-frames"
   ],
   "capabilities": [
     {
@@ -241,7 +242,7 @@
       "id": "expansion",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On one V1.2 sample, the left-slot camera EEPROM had valid CRCs and a hardware-version field of 0x0102. The factory firmware identified SC101IOT PID 0xda4a and displayed a changing 1280 × 720 UYVY preview. The EmberBSD sensor driver read the same PID at 0x68. With the 640 × 480 UYVY mode on RAM kernel #18, two capture buffers and STREAMON succeeded, but first dequeue timed out after five seconds. No frame or measured frame rate was obtained. The mode table calls for 20 MHz XCLK; fitted oscillator frequency was not measured.",
+      "scope": "On one V1.2 sample the left-slot module had a CRC-valid EEPROM descriptor (hardware-version field 0x0102). The factory firmware identified SC101IOT PID 0xda4a and displayed a changing 1280 × 720 UYVY preview. EmberBSD identified the same sensor at SCCB address 0x68 and delivered consecutive 640 × 480 UYVY frames of 614400 bytes through video(4). The operator saw hand movement in the live EmberBSD preview on the board display.",
       "source_refs": [
         "mosaico-bsp",
         "mosaico-gui-peripheral-observation",
@@ -255,7 +256,8 @@
         "mosaico-r5-physical-peripherals",
         "mosaico-s31-dvp-de-vsync",
         "mosaico-sc101iot-dma-frame-tail",
-        "mosaico-sc101iot-pclk-delay"
+        "mosaico-sc101iot-pclk-delay",
+        "mosaico-r5-sc101iot-frames"
       ]
     }
   ]
