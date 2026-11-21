@@ -66,7 +66,8 @@ a translucent rectangle and a touch area. The operator hid and restored the
 blue square by tapping the physical display.
 [Scene, reference frames and device result](evidence/qml-visual-opacity.json).
 The embedded Qt Quick Dial Control adaptation also ran from tmpfs on R5. Its
-355,504-byte static RV32 binary embeds the face, needle and glass layers.
+355,504-byte static RV32 binary embeds the face, needle and glass layers. A tap
+on a set point changed both the needle and the displayed percentage.
 [Device execution and reference comparison](evidence/qml-dial-control.json).
 Power, Wi-Fi and other expansion features retain their own integration limits.
 Check the actual flash layout and a usable console/recovery route before selecting an image.

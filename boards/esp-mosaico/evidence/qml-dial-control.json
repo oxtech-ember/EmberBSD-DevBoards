@@ -20,9 +20,9 @@
       "reference": null
     }
   ],
-  "scenario": "Start the static RV32 application after service startup. The touch adaptation of Qt Quick dialcontrol presents five set points with a layered dial, needle and text readout.",
-  "expected": "The RV32 binary remains running and presents its first frame to the RGB565 display.",
-  "observed": "On kernel #6 the binary launched from tmpfs over SSH and remained running after the session closed. cofb0 reported equal changed and sent row counts and zero errors. The separate host reference check rendered all five settings and restored the zero frame byte-for-byte.",
+  "scenario": "Start the static RV32 application after service startup. The touch adaptation of Qt Quick dialcontrol presents five set points with a layered dial, needle and text readout. After startup, tap 100 and then 25.",
+  "expected": "The RV32 binary remains running and presents its first frame to the RGB565 display. Touching a set point changes the red needle and numeric percentage.",
+  "observed": "On kernel #6 the binary launched from tmpfs over SSH and remained running after the session closed. cofb0 reported equal changed and sent row counts and zero errors. The separate host reference check rendered all five settings and restored the zero frame byte-for-byte. The operator confirmed that touches on the physical screen changed both the needle and the percentage.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -33,7 +33,7 @@
   ],
   "limits": [
     "The target example uses five discrete settings and pre-rendered needle sprites. Native Qt runs the original continuous dial as the reference.",
-    "Driver counters are cumulative. Visual inspection and physical touch response for this dial were pending when recorded."
+    "Driver row counters are cumulative; no frame rate was recorded."
   ],
   "source_refs": [
     "mosaico-qml-dial-control-example"
