@@ -1,0 +1,63 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-qt-reference-scenes-20261121",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "operator-report",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One provisioned development board running the R4 LittleFS profile."
+  },
+  "inputs": [
+    {
+      "name": "Qt Declarative reference scenes and independent Qt Quick pixel comparison",
+      "revision": "a0be73a8d37950d080e88636c9e245eabc17860c",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "EmberBSD QML host compiler",
+      "revision": "5ebd194ed689d4c0ba28d26d16722cc39151f45b",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "EmberBSD Runtime scene ABI 2 renderer",
+      "revision": "55f3b73407c59d12962d0d0a2cb0e311e7496787",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Execute the compiled scenes on RV32 and compute CRC32/ISO-HDLC over every pixel, in row-major little-endian RGB565 order. Compare with the independent Qt Quick host output. Present visualparent2 on the physical panel through wsdisplay.",
+  "expected": "For all three unchanged QML sources the board checksum matches the Qt reference. Nested rectangles extend past their parent and sibling subtrees retain their stacking order.",
+  "observed": "The board produced 91908b04 for visualparent.qml (320 x 480), 68a77208 for visualparent2.qml (320 x 480), and a14dd879 for grid-spacing.qml (112 x 112). Each CRC matched the complete Qt reference frame. The host renderer also matched the Qt frame byte for byte. A separate display process presented visualparent2 centered at x=80 on the 480 x 480 panel.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "positive-target-scenes",
+      "value": 3,
+      "unit": "scenes"
+    },
+    {
+      "name": "pixels-per-visualparent-frame",
+      "value": 153600,
+      "unit": "pixels"
+    },
+    {
+      "name": "pixels-per-grid-frame",
+      "value": 12544,
+      "unit": "pixels"
+    }
+  ],
+  "limits": [
+    "Each result covers the named fixture and the specified kit. Only visualparent2 was presented to the panel.",
+    "The interactive mousearea.qml case is a host compiler diagnostic test. These three targets do not exercise pointer events or animation."
+  ],
+  "source_refs": [
+    "mosaico-qt-reference-scenes-examples"
+  ]
+}

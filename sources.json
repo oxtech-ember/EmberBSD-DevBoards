@@ -1872,6 +1872,22 @@
       "revision": null,
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "mosaico-qt-reference-scenes-examples",
+      "title": "Unmodified Qt Quick 6.12 scenes and RGB565 comparator",
+      "url": "https://github.com/oxtech-ember/EmberBSD-Examples/tree/a0be73a8d37950d080e88636c9e245eabc17860c/desktop/qml-qt-tests",
+      "revision": "a0be73a8d37950d080e88636c9e245eabc17860c",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-qt-reference-scenes-observation",
+      "title": "ESP-Mosaico V1.2 Qt reference scene rendering on RV32",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/qml-qt-reference-scenes.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }
