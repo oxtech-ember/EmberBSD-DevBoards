@@ -72,7 +72,8 @@
     "mosaico-qt-visual-opacity-observation",
     "mosaico-qml-dial-control-observation",
     "mosaico-qml-network-lab-observation",
-    "mosaico-r5-physical-peripherals"
+    "mosaico-r5-physical-peripherals",
+    "mosaico-r5-es8311-pcm"
   ],
   "capabilities": [
     {
@@ -211,7 +212,7 @@
       "id": "audio",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "The ES8311 card enumerated through ausoc. With corrected DMA and data pin routing, it delivered 24000 PCM samples in 50 blocks. On RAM kernel #18 the operator heard a 440 Hz tone from the onboard speaker. Microphone response to the tone and to an external handclap test remains unverified.",
+      "scope": "The operator heard a 440 Hz speaker tone on #18. On RAM kernel #19 the ES8311 delivered 48000 mono PCM16 samples in 0.993 s. During a two-clap test, two above-background transients were measured 1.005 s apart.",
       "source_refs": [
         "mosaico-hardware-v12",
         "mosaico-bsp",
@@ -221,7 +222,8 @@
         "mosaico-coreboard-v12-schematic",
         "mosaico-baseboard-v12-schematic",
         "mosaico-s31-i2s-dma-update",
-        "mosaico-es8311-data-routing"
+        "mosaico-es8311-data-routing",
+        "mosaico-r5-es8311-pcm"
       ]
     },
     {

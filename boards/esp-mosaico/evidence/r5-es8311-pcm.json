@@ -1,0 +1,87 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "mosaico-r5-es8311-pcm",
+  "target_id": "esp-mosaico",
+  "recorded_at": "2026-11-21",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": "1.2",
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "One assembled Mosaico V1.2 with the onboard ES8311, microphone and speaker."
+  },
+  "inputs": [
+    {
+      "name": "Final RAM kernel FIT with Mosaico sensor pixel clock delay (#18)",
+      "revision": "b93271cfa0e0d07b181d778ad85cdff3d1e85e5e",
+      "sha256": "42eeea1187068a05536f68a5410edda1d98c1d46faf9e9b5333dc83a9cadea6f",
+      "reference": null
+    },
+    {
+      "name": "RAM kernel #19, inner kernel FIT",
+      "revision": "035e57898ccdff16c5810f046fd043a3b9d02fa9",
+      "sha256": "8341b0d78dce572f4dd287da380cfe7ada803f7c481474b8b2b34039ba3696fa",
+      "reference": null
+    }
+  ],
+  "scenario": "Read 96000 bytes from audio0 at 48000 Hz, mono, signed 16-bit little-endian PCM. Time the blocking read on the board and compute statistics in memory after it returns. Compare the old and corrected kernels using the same hardware and installed root. In a separate full-duplex trial, play successive 440 Hz and 880 Hz tone bursts while computing the microphone amplitude in the two frequency bands. During a separate 60 s capture, ask the operator to clap twice near the microphone about one second apart. Retain only numerical summaries of 100 ms windows.",
+  "expected": "Deliver one second of linear PCM in about one second, with the RX DMA and audio block counts agreeing.",
+  "observed": "On #18 the read took 8.008 s and returned only -5504 and -5248. On #19 it took 0.993337 s. The quiet sample had mean 0, AC RMS 41 and a range of -192 to +209 counts. The post-read snapshots showed 102 RX DMA interrupts and 102 audio blocks. AUDIO_RERROR returned zero. During simultaneous capture and playback, the read returned 81600 frames in 1.681 s with zero reported capture drops. The measured components at 440 Hz (0–2 counts) and 880 Hz (0–1 count) stayed near background. The operator reported two claps. The 60 s capture completed with zero reported drops. At 40.987 s and 41.992 s the AC RMS rose to 141 and 129 counts, compared with a median of 42 and a 95th percentile of 74. The peak amplitudes were 402 and 349 counts. These two transients were 1.005 s apart, consistent with the reported claps.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "frames-per-read",
+      "value": 48000,
+      "unit": "frames"
+    },
+    {
+      "name": "kernel-18-read-time",
+      "value": 8008,
+      "unit": "ms"
+    },
+    {
+      "name": "kernel-19-read-time",
+      "value": 993.337,
+      "unit": "ms"
+    },
+    {
+      "name": "kernel-19-quiet-rms",
+      "value": 41,
+      "unit": "PCM counts"
+    },
+    {
+      "name": "external-sound-median-rms",
+      "value": 42,
+      "unit": "PCM counts"
+    },
+    {
+      "name": "first-transient-rms",
+      "value": 141,
+      "unit": "PCM counts"
+    },
+    {
+      "name": "second-transient-rms",
+      "value": 129,
+      "unit": "PCM counts"
+    },
+    {
+      "name": "transient-spacing",
+      "value": 1005,
+      "unit": "ms"
+    }
+  ],
+  "limits": [
+    "These values describe one unit and the time to read buffered audio through audio(4). The test exercised RAM kernels with the same NOR root.",
+    "The two-tone trial established simultaneous delivery of PCM. It did not establish acoustic coupling between the speaker and microphone.",
+    "The operator supplied the external stimulus without a shared event timestamp. The test supports a response to external sound and does not measure microphone sensitivity. Audibility of the two test tones on kernel #19 was not assessed by the operator."
+  ],
+  "source_refs": [
+    "mosaico-s31-linear-pcm-clock",
+    "mosaico-r5-physical-peripherals",
+    "mosaico-audio-kernel-source",
+    "mosaico-coreboard-v12-schematic",
+    "mosaico-baseboard-v12-schematic"
+  ]
+}

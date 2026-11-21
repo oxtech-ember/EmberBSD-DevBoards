@@ -2120,6 +2120,22 @@
       "revision": "b93271cfa0e0d07b181d778ad85cdff3d1e85e5e",
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "mosaico-s31-linear-pcm-clock",
+      "title": "ESP32-S31 linear PCM and receive clock configuration",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/035e57898ccdff16c5810f046fd043a3b9d02fa9",
+      "revision": "035e57898ccdff16c5810f046fd043a3b9d02fa9",
+      "reviewed_at": "2026-11-21",
+      "sha256": null
+    },
+    {
+      "id": "mosaico-r5-es8311-pcm",
+      "title": "Mosaico R5 ES8311 audio capture measurements",
+      "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/esp-mosaico/evidence/r5-es8311-pcm.json",
+      "revision": null,
+      "reviewed_at": "2026-11-21",
+      "sha256": null
     }
   ]
 }
