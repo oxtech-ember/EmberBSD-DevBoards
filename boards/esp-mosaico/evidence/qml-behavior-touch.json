@@ -24,11 +24,23 @@
       "revision": "Examples e3376c72aa8b7a0fa0827d8964687f51bf9989fb, SDK f19fe129d3b522c3b97c3e6f0ec0deb36d63fd82, Runtime e57a2a1514c9312f64d875d8964696a6501dc0c9",
       "sha256": "103c2124022116f0ec7c30fd14e149f2eacf400484c44ddea9b387a1b3c0c348",
       "reference": null
+    },
+    {
+      "name": "RV32 device application with region rendering",
+      "revision": "Examples 6418efa79cf23059cbf2bbe8778467addce9ef89, Runtime 856bcd3f7744cfb5e26d60fb8283c918bf4edd15",
+      "sha256": "c1775fab0d2c9bcc958e3bc09ca9d1aceb4cd76c9ba89423088077a7292eb524",
+      "reference": null
+    },
+    {
+      "name": "CO5300 narrow-window kernel FIT used for the final physical test",
+      "revision": "CO5300 driver from OS fd92a74af9e5ced92b5942b19c14b9929c5a6941, RAM boot with the R5 LittleFS root on NOR",
+      "sha256": "83ac4477952c51711ca1f8d983047c73c12de9bf6f5aa3d9ffae3ddd01057ce6",
+      "reference": null
     }
   ],
   "scenario": "Build the original QML and present its centered 400 × 400 scene on wsdisplay. Tap the red square, wait one second, then tap it at its new position.",
   "expected": "Each tap moves the red square to the right by 50 pixels over 1000 milliseconds.",
-  "observed": "The application remained active on the display after SSH disconnected. The operator saw two moves and reported visible judder. The input log recorded three press/release pairs. The presented red square moved 0 to 50, 50 to 100 and 100 to 150 pixels along x. Every move included intermediate geometry.",
+  "observed": "On the original R5 kernel, the operator saw the square move after tapping it and reported visible judder. After region rendering and the CO5300 update, the operator repeated the test and reported noticeably smoother motion with no visible jerks. The running application recorded three physical press/release pairs in this final session. The latest driver transfer covered 102 columns starting at x=188 across two rows. The driver reported zero transfer errors.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -37,19 +49,86 @@
       "unit": "bytes"
     },
     {
-      "name": "recorded-taps",
+      "name": "baseline-recorded-taps",
       "value": 3,
       "unit": "count"
     },
     {
-      "name": "distinct-app-positions-per-50-pixel-move-including-endpoints",
+      "name": "baseline-distinct-app-positions-per-50-pixel-move-including-endpoints",
       "value": 25,
       "unit": "count"
+    },
+    {
+      "name": "rv32-region-display-elf",
+      "value": 132144,
+      "unit": "bytes"
+    },
+    {
+      "name": "baseline-full-present-mean-first-move",
+      "value": 36.67,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "baseline-region-present-mean-first-move",
+      "value": 2.74,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "baseline-full-present-mean-second-move",
+      "value": 36.76,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "baseline-region-present-mean-second-move",
+      "value": 2.7,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "baseline-full-present-mean-third-move",
+      "value": 37.4,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "baseline-region-present-mean-third-move",
+      "value": 2.71,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "ram-kernel-full-present-mean-first-move",
+      "value": 54.56,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "ram-kernel-full-present-mean-second-move",
+      "value": 53.68,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "ram-kernel-full-present-mean-third-move",
+      "value": 51.98,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "ram-kernel-region-present-mean-first-move",
+      "value": 2.87,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "ram-kernel-region-present-mean-second-move",
+      "value": 2.85,
+      "unit": "milliseconds"
+    },
+    {
+      "name": "ram-kernel-region-present-mean-third-move",
+      "value": 2.87,
+      "unit": "milliseconds"
     }
   ],
   "limits": [
-    "The independent Qt Quick 6.12 host run checks intermediate positions and both endpoints. It does not measure panel refresh rate.",
-    "This acceptance covers physical input and on-screen movement. The runner recorded 25 distinct drawn x coordinates per move. The baseline trace has no frame timestamps and does not establish the number of panel refreshes; the operator saw uneven motion."
+    "The original physical trace recorded 25 distinct drawn x coordinates including endpoints per 50-pixel move, without frame timestamps. The Qt Quick 6.12 host reference checks the intermediate positions and endpoints.",
+    "Separate full-scene and region benchmark runs each replayed three scripted taps on the physical display. Each reported time is the mean userspace wsdisplay presentation call for one move. On the original kernel, full rendering produced 28 distinct application positions per move and region rendering produced 27, 30 and 30. On the RAM kernel, the counts were 20, 19 and 20 for full rendering and 23, 26 and 26 for region rendering.",
+    "The panel driver counts successful rows. Physical smoothness was assessed by the operator. Optical frame rate and touch-to-photon latency were not measured.",
+    "Only the running RAM kernel included the CO5300 changes during acceptance. The normal NOR boot still selected the previous kernel."
   ],
   "source_refs": [
     "mosaico-behavior-qt",
