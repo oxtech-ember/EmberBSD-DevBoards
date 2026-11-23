@@ -314,6 +314,14 @@
       "sha256": "ce152a079f53f4ed3e28f083a7b68d9ad7e51366c280e64ec637243dacfd0a3a"
     },
     {
+      "id": "os-ember64-config",
+      "title": "EmberBSD EMBER64 general AArch64 kernel configuration",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/7af6ff0d4e75962db5e0a32ea315552b02368b89/sys/arch/evbarm/conf/EMBER64",
+      "revision": "7af6ff0d4e75962db5e0a32ea315552b02368b89",
+      "reviewed_at": "2026-11-23",
+      "sha256": "f4259e8a8c95fdf6c4afe6c15d0092d50a668ccf6e2a5d74a47dd52476c01f77"
+    },
+    {
       "id": "os-gtdt-watchdog",
       "title": "EmberBSD GTDT walk and SBSA watchdog on CIX P1",
       "url": "https://github.com/oxtech-ember/EmberBSD/blob/7cd7fe340fe49c4eb68ae7022a71074b3a8dc831/sys/dev/acpi/docs/gtdt-watchdog.md",

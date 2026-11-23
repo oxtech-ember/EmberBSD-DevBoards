@@ -1,0 +1,57 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "cix-p1-ember64-boot",
+  "target_id": "cix-p1-orangepi6plus",
+  "recorded_at": "2026-11-23",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "CIX P1 CD8180; stock UEFI V1.4 with Support SPCR enabled; no RTC backup battery; root on microSD"
+  },
+  "inputs": [
+    {
+      "name": "NetBSD 11.1 (EMBER64) #0 ELF, built by the SDK kernel profile from this revision plus one CI and documentation commit (BUILDINFO 18d9cd0fcdfc8b85c61817dc925115d0b270b767)",
+      "revision": "7af6ff0d4e75962db5e0a32ea315552b02368b89",
+      "sha256": "f46716df4fa2c142bf7cb1603b034b872bb2added14d4fd5b484a8c2c012d9f1",
+      "reference": null
+    },
+    {
+      "name": "gzip of that kernel on the EFI system partition",
+      "revision": null,
+      "sha256": "ba9679a0e1017ad7a19c8d2ea0e2674ed9e581e87087eccc6e30073df36f2c59",
+      "reference": null
+    },
+    {
+      "name": "EmberBSD CIX P1 peripherals trial kernel for the comparison boot",
+      "revision": "166d6c2e509458977318f6f151fefd11c9aaafc3",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Warm reboot. At the loader prompt, run 'acpi cix-spcr' and 'userconf disable acpibat', then boot the EMBER64 kernel with the existing FFS root. Read dmesg over SSH. Reboot to the trial kernel and compare dmesg.",
+  "expected": "The general EMBER64 kernel reaches multi-user operation with the DEBUG UART2 console, the FFS root and network access.",
+  "observed": "The loader reported 'CIX SPCR: shadow installed (MMIO 0x040d0000, GSI 330)'. plcom2 became the console and the kernel mounted the FFS root with log. rc completed to the login prompt and SSH over the rge Ethernet link worked. kern.buildinfo matched the input. dmesg had no panic or uvm_fault. wdogctl reported sbsawdt0 armed in kernel tickle mode. The device set matched the trial kernel, except the trial-only cixscmi0, cixgpioin0 and gpio0. dmesg had two autoconfiguration errors: 'cixclk0: GCLK returned clock status 4294967292' and 'cixvpu0: VPU resource probe failed: 5', with cleanup 0 and ACPI AE_OK. EMBER64 selects the cixvpu resource query (flags 0x1); the trial kernel selects descriptions only (flags 0x0) and does not read GCLK. Both kernels printed 'clock lost 1861 days'.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "autoconfiguration-errors",
+      "value": 2,
+      "unit": "count"
+    }
+  ],
+  "limits": [
+    "One warm boot on one board with UEFI V1.4. Board revision was not recorded.",
+    "With Support SPCR disabled, EMBER64 has no kernel console on this firmware; that path was not booted.",
+    "Cold boot, Wi-Fi, NVMe, camera input and long operation were not tested.",
+    "The cixvpu GCLK query result on UEFI V1.5 is not recorded."
+  ],
+  "source_refs": [
+    "os-ember64-config",
+    "os-cix-spcr",
+    "os-cix-vpu-attachment"
+  ]
+}
