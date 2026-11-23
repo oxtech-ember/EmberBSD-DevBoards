@@ -6,7 +6,7 @@ Distinct diagnostic kernels qualify distinct operations; they do not form one fu
 | Function | Current bounded evidence |
 |---|---|
 | CPU and memory | 12 CPUs and about 32 GB enumerated; SMP stress and memory integrity unqualified |
-| DEBUG console | UART2 at 115200 8N1; exact SPCR correction or gated kernel fallback, described in [boot](boot.md) |
+| DEBUG console | UART2 at 115200 8N1; EMBER64 selects it on a known DSDT with or without SPCR, described in [boot](boot.md) |
 | UART1/UART3 | Native plcom1/plcom3 and termios setup at checked 100 MHz functional clocks; external wire traffic unqualified |
 | GPI5 inputs | GPIO015/016/017 read high; output changes refused and bounds checked; external transitions, IRQ and PPS unqualified |
 | Ethernet | Both RTL8126 ports negotiate 5GBASE-T; 4096 alternating raw frames at four lengths pass payload/FCS checks; IP/TCP, throughput and sustained use pending |

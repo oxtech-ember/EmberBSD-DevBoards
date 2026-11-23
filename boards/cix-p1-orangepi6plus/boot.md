@@ -30,7 +30,7 @@ Sources: `os-cix-p1`, `os-cix-spcr` in [sources.json](../../sources.json).
 The bounded profile targets CD8180, 32 GB, A4 PHECDA-Rev A and stock `BiosV1.5-W20260706-e321056a`.
 It uses a reduced GCC16 static C root, not a complete base release or unattended disk installer.
 The checked UART2 kernel passed automatic cold and warm default boots.
-An exact DSDT-gated kernel fallback also works when SPCR is absent; it does not remove the need to match firmware tables.
+EMBER64 selects UART2 on a known DSDT with or without SPCR ([evidence](evidence/ember64-uart2-console.json)). Another DSDT gets the SPCR console.
 
 Keep a working UART and a separately bootable kernel/RAM-root pair.
 Inspect SD sector size, GPT identity and existing partition extents. Retain verified GPT copies and boot partitions.

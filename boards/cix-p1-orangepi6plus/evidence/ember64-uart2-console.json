@@ -1,0 +1,48 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "cix-p1-ember64-uart2-console",
+  "target_id": "cix-p1-orangepi6plus",
+  "recorded_at": "2026-11-23",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "CIX P1 CD8180; stock UEFI V1.4; no RTC backup battery; root on microSD"
+  },
+  "inputs": [
+    {
+      "name": "NetBSD 11.1 (EMBER64) #0 ELF with the CIX UART2 console gate, built by the SDK kernel profile before a rebase that changed one EMBER64 comment (BUILDINFO 9ec520426468ab237c99a047b21452c8a6a15f40)",
+      "revision": "f3ccf50b6a7ba9e6077a61b364886becdcb6d9f1",
+      "sha256": "34a3bb57f5f14c667ffa2faf21d9dac62c7615f147e3fcf076483942546472ca",
+      "reference": null
+    },
+    {
+      "name": "gzip of that kernel on the EFI system partition",
+      "revision": null,
+      "sha256": "aec3bdddb1fa277b646e1193c801848092155cba7b0b5c64cee14fc70875c256",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the kernel three times at the loader prompt with the existing FFS root: Support SPCR enabled without 'acpi cix-spcr'; Support SPCR enabled with 'acpi cix-spcr'; Support SPCR disabled in UEFI setup. Read dmesg over SSH after each boot. Then enable Support SPCR again.",
+  "expected": "In all three boots, the kernel selects DEBUG UART2 as console and reaches multi-user operation.",
+  "observed": "Each boot printed 'CIX UART2 console: selected (0)' and 'plcom2: console', mounted the FFS root, completed rc and accepted SSH over Ethernet. kern.buildinfo matched the input. dmesg had no panic or uvm_fault, and sbsawdt0 was armed. With Support SPCR disabled, the loader printed 'CIX SPCR: SPCR or DBG2 is missing' and acpidump listed no SPCR. Restore AC Power Loss stayed 'Power On'. Two early 'WARNING: no console device' lines also appear with the earlier trial kernel.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "boots-with-uart2-console",
+      "value": 3,
+      "unit": "count"
+    }
+  ],
+  "limits": [
+    "Three warm boots on one board with UEFI V1.4. Board revision was not recorded.",
+    "UEFI V1.5 and a boot after input power removal were not tested with this kernel.",
+    "The cixvpu GCLK query errors of the general kernel remain."
+  ],
+  "source_refs": [
+    "os-cix-uart2-console"
+  ]
+}

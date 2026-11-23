@@ -314,6 +314,14 @@
       "sha256": "ce152a079f53f4ed3e28f083a7b68d9ad7e51366c280e64ec637243dacfd0a3a"
     },
     {
+      "id": "os-cix-uart2-console",
+      "title": "EmberBSD kernel console on a known CIX DSDT (CIXP1_UART2_CONSOLE in EMBER64)",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/f3ccf50b6a7ba9e6077a61b364886becdcb6d9f1/sys/stand/efiboot/docs/cix-spcr.md",
+      "revision": "f3ccf50b6a7ba9e6077a61b364886becdcb6d9f1",
+      "reviewed_at": "2026-11-23",
+      "sha256": "5377a981a7d56336d9af70ffda7872adff4143a0fc921add7cc0f64aa18ad4f8"
+    },
+    {
       "id": "os-ember64-config",
       "title": "EmberBSD EMBER64 general AArch64 kernel configuration",
       "url": "https://github.com/oxtech-ember/EmberBSD/blob/7af6ff0d4e75962db5e0a32ea315552b02368b89/sys/arch/evbarm/conf/EMBER64",

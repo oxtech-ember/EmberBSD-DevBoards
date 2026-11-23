@@ -28,9 +28,10 @@
       "id": "debug-console",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "DEBUG UART2 at 115200 8N1 uses exact SPCR correction or gated kernel fallback when SPCR is absent; electrical contact mapping remains unknown.",
+      "scope": "DEBUG UART2 at 115200 8N1. EMBER64 selects it on a known DSDT with or without SPCR; the exact loader SPCR correction also works. Electrical contact mapping remains unknown.",
       "source_refs": [
-        "os-cix-p1-reference"
+        "os-cix-p1-reference",
+        "os-cix-uart2-console"
       ]
     },
     {
