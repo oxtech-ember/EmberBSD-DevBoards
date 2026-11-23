@@ -24,16 +24,28 @@
       "revision": null,
       "sha256": "e45dccd81697375c01982edeaa43566d659b084201b3a7dd43d4932b8002e3b9",
       "reference": null
+    },
+    {
+      "name": "Clean build of the EMBER64 AArch64 Image for the second boot",
+      "revision": "7af6ff0d4e75962db5e0a32ea315552b02368b89",
+      "sha256": "abd2962919f9f334d4afafd9ba3a2310c2123b0e16714dec9e04075c71abdd59",
+      "reference": null
+    },
+    {
+      "name": "Android v2 RAM boot container for the second boot",
+      "revision": null,
+      "sha256": "f1e078af8dd381552265976e25cbda31c518b2053fbf54190e5c065610766eb1",
+      "reference": null
     }
   ],
   "scenario": "At the vendor U-Boot prompt, set the UDISK root in the volatile boot arguments and control device tree. Boot the container from RAM.",
   "expected": "The general EMBER64 kernel selects the UDISK root without operator input at the kernel prompt.",
-  "observed": "NetBSD 11.1 (EMBER64) #0 mounted UDISK as a read-write FFS root on dk16 without a root prompt. The tablet subsequently returned to its installed operating system.",
+  "observed": "Both images reached rc and mounted UDISK on dk16 as a read-write FFS root without a root prompt. The clean build attached a133codec0, gt9xx0 and sunxilradc0. The tablet returned to its installed kernel after each test.",
   "duration_seconds": null,
   "measurements": [],
   "limits": [
-    "One RAM boot with manually selected loader settings. The boot partition was not written. Board revision and test duration were not recorded.",
-    "Cold boot, persistent installation, graphics output, touch operation and WLAN association were outside this run."
+    "Two RAM boots on one tablet with volatile loader settings. Board revision and test duration were not recorded.",
+    "The tests did not cover cold boot, persistent installation, graphics output, touch operation or WLAN association."
   ],
   "source_refs": [
     "os-ys-m33-board",

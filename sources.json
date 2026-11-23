@@ -2223,7 +2223,7 @@
       "url": "https://github.com/oxtech-ember/EmberBSD-DevBoards/blob/main/boards/ys-m33-a133/evidence/ember64-ram-boot.json",
       "revision": null,
       "reviewed_at": "2026-11-23",
-      "sha256": "ce990cddbd8ce649f8ed9544d51fab4ff03d723ba3c826505763e144ac0cf91a"
+      "sha256": "8ea815744edea19e82555ff80969aea5fed0083e04753b9462a08347a59dfa33"
     },
     {
       "id": "os-ys-m33-ember64-root",
