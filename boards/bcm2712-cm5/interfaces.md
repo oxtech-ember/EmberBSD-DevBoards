@@ -3,7 +3,7 @@
 | Interface or function | Integration entry | Boundary to check |
 |---|---|---|
 | eMMC | Module variant and EmberBSD UEFI/ACPI storage path | Boot, data integrity and recovery on that variant |
-| Ethernet | `if_cemac_acpi` and carrier PHY/connector wiring | Link and traffic; repeated down/up is a separate scenario |
+| Ethernet | `cemac` built into `EMBER64` and carrier PHY/connector wiring | Link and traffic; repeated down/up is a separate scenario |
 | Wi-Fi | `bwfm`, vendor radio firmware and `wpa_supplicant` | Required authentication, PMF, reconnect and throughput |
 | GPU | Native V3D DRM path and Mesa in Ports | Accelerated HDMI Plasma and automatic startup checked; see [graphics](graphics.md) for prerequisites and limits |
 | GPIO, I2C and camera | Module signals, carrier routing and pinmux | No general application acceptance in the cited board record |
