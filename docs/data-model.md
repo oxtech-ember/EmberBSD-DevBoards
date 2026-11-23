@@ -43,6 +43,13 @@ An unfinished worksheet uses `template` outside the catalog.
 An external bundle can be referenced by URL and SHA256 without copying its binaries.
 Label templates explicitly as unfinished worksheets. Label installable or deployed configurations with their verified applicability.
 
+A trial or diagnostic kernel is a configuration too. Its file has the kernel
+configuration name, includes a general-purpose
+[OS configuration](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/development/kernel.md#kernel-configurations)
+and changes only the trial options. Its name differs from each OS configuration.
+Evidence names the kernel it booted in `kernel_configuration`.
+When the trial is accepted, its options move into the OS configuration and the trial is removed.
+
 An evidence record states hardware identity, software/firmware inputs, scenario, expected result,
 observed result, result status, validation layer, duration, measurements and exclusions.
 Use `pass`, `fail`, `inconclusive` or `not-run` for the result.

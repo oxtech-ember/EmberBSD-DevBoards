@@ -34,7 +34,7 @@ boards/<id>/                Board identity, boot, interfaces and design transfer
   boot.md                   Boot stages and recovery route
   interfaces.md             Exposed interfaces, driver dependencies and gaps
   design.md                 What changes when you make your own device
-  configs/<scenario>/       Configuration plus its applicability manifest
+  configs/<scenario>/       Configuration plus its applicability manifest, including a trial kernel
   evidence/<scenario>.json  Bounded observations with reproducible inputs
 carriers/<id>/              Carrier wiring, connector numbers, buttons and power routing
 socs/                       Shared silicon facts and implementation entry points
