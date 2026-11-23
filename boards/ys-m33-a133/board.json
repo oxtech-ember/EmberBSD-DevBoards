@@ -5,7 +5,7 @@
   "vendor_model": "YS-M33 wall tablet",
   "soc": "allwinner-a133",
   "board_revision": null,
-  "reviewed_at": "2026-10-22",
+  "reviewed_at": "2026-11-23",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/ys-m33-a133/README.md",
@@ -74,9 +74,10 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "RTL8723DS discovery and bounded function-ready/restore only; no radio initialization or network interface.",
+      "scope": "A physical SDIO diagnostic checked discovery, register reads and function-ready restoration. A separate native driver can register a WLAN interface with an explicit radio profile.",
       "source_refs": [
-        "os-a133-rtl8723ds-function"
+        "os-a133-rtl8723ds-function",
+        "os-a133-native-sdio"
       ]
     }
   ]

@@ -2208,6 +2208,14 @@
       "revision": "0b36b13868813e26c29883aed2f73c1a655a335b",
       "reviewed_at": "2026-11-21",
       "sha256": null
+    },
+    {
+      "id": "os-a133-native-sdio",
+      "title": "Native RTL8723DS SDIO attachment and WLAN profile selection",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/775153d32fe2dd97185a98b5f6656a0fbfccba2f/sys/dev/sdmmc/if_rtw88_sdio.c",
+      "revision": "775153d32fe2dd97185a98b5f6656a0fbfccba2f",
+      "reviewed_at": "2026-11-23",
+      "sha256": "a19d7526426a4c410aa4c1d9a4bc8cd539485beb135c4747e7e1d4246e371ba5"
     }
   ]
 }

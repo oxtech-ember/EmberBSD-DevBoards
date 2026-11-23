@@ -15,7 +15,7 @@ The closed-enclosure sample supplies [installation evidence](evidence/cable-inst
 | RTC | PCF8563 reads and retained time across reboot |
 | Audio | Bounded audible playback, MIC1 capture and simultaneous streams; one processed phrase intelligible |
 | USB-A | EHCI/OHCI, powered four-port hub and one CDC serial device through ordinary eMMC reboot |
-| Wi-Fi | RTL8723DS SDIO discovery, register reads and function-ready/restore only; no network interface |
+| Wi-Fi | RTL8723DS SDIO discovery, register reads and function-ready restoration on the reference sample. The native WLAN trial uses a separate attachment. |
 | Bluetooth and USB-C peripherals | Not validated |
 
 Touch exposes one wscons pointer polled every 20 ms. Multitouch, interrupt-driven input and suspend/resume are unvalidated.
@@ -48,7 +48,9 @@ MMC1 uses PG0–PG5 at four-bit width and 25 MHz in the bounded diagnostic.
 Common CIS identifies 024c:d723; per-function MANFID is absent.
 CMD52 register reads and function 1 readiness/restoration succeeded in RAM-only diagnostics.
 These results do not establish cold power sequencing, firmware loading, CMD53 traffic, SDIO interrupts or association.
-The diagnostic opt-ins and exact resource guards belong to the OS implementation.
+The read probe has no network interface. The warm WLAN handoff uses the native driver.
+With a valid radio profile, that driver can register a 2.4 GHz interface and keeps RF off until interface initialization.
+The [native attachment](https://github.com/oxtech-ember/EmberBSD/blob/775153d32fe2dd97185a98b5f6656a0fbfccba2f/sys/dev/sdmmc/if_rtw88_sdio.c) defines the profile checks.
 
 Sources: `os-ys-m33-reference`, `os-a133-audio-driver`, `os-a133-audio-streams`, `os-a133-usb-host`,
 `os-a133-sdio-probe`, `os-a133-rtl8723ds-read` and `os-a133-rtl8723ds-function` in [sources.json](../../sources.json).
