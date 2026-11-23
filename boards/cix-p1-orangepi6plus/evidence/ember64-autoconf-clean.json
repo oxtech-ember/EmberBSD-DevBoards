@@ -1,0 +1,48 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "cix-p1-ember64-autoconf-clean",
+  "target_id": "cix-p1-orangepi6plus",
+  "recorded_at": "2026-11-23",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "CIX P1 CD8180; stock UEFI V1.4 with Support SPCR enabled; no RTC backup battery; root on microSD"
+  },
+  "inputs": [
+    {
+      "name": "NetBSD 11.1 (EMBER64) #0 ELF with cixvpu flags 0x0, built by the SDK kernel profile before a documentation-only amend (BUILDINFO 28fd727a5e803554ff2e5166daa910d86e14df3f)",
+      "revision": "38d23dc3475d06250cce0d91df49d054ef0ad6a6",
+      "sha256": "10a464d2862b04fc755bb019441f43b35519469602f835807740232e4f512dea",
+      "reference": null
+    },
+    {
+      "name": "gzip of that kernel on the EFI system partition",
+      "revision": null,
+      "sha256": "5ca4f22bc62436ddcb0d64fd34e7bfdd8d5e06f9682534645d3d970cd3e4298e",
+      "reference": null
+    }
+  ],
+  "scenario": "Warm reboot. At the loader prompt, run 'userconf disable acpibat' and boot the kernel with the existing FFS root, without 'acpi cix-spcr'. Read dmesg over SSH.",
+  "expected": "EMBER64 reaches multi-user operation and reports no autoconfiguration error from cixclk0 or cixvpu0.",
+  "observed": "The kernel selected the UART2 console, mounted the FFS root, completed rc to the login prompt and accepted SSH over Ethernet. kern.buildinfo matched the input. dmesg had no panic, no uvm_fault, no autoconfiguration error and no 'errors while detecting hardware' line. cixclk0 attached without a GCLK message. cixvpu0 printed its two memory windows, GSI 358, _CCA 0 and 'codec disabled' as normal lines. The remaining warnings were the RTC clock loss and two early 'no console device' lines, which the earlier trial kernel also prints.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "autoconfiguration-errors",
+      "value": 0,
+      "unit": "count"
+    }
+  ],
+  "limits": [
+    "One warm boot on one board with UEFI V1.4. Board revision was not recorded.",
+    "UEFI V1.5 was not booted with this kernel.",
+    "The flags 0x1 GCLK query for clock 67 still returns SCMI NOT_FOUND on the PMMX channel; this kernel does not run it."
+  ],
+  "source_refs": [
+    "os-cix-vpu-attachment"
+  ]
+}

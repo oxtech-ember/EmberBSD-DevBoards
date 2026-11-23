@@ -39,6 +39,8 @@ The bounded probe retained ordinary MTU 1500 afterward. It does not qualify came
 
 The observed `CIXH3010` describes two 64 KiB windows, GSI 358 and `_CCA=0`.
 Clock67 is the VPU APB gate. Four cores and four slots were identified; the bounded preparation/bootstrap profile uses one core.
+EMBER64 describes the VPU only and reports no autoconfiguration error ([evidence](evidence/ember64-autoconf-clean.json)).
+The AML GCLK query for clock67 returns SCMI NOT_FOUND on UEFI V1.4 and V1.5; the native SCMI channel reaches clock67 on V1.5.
 Noncoherent DMA, firmware ownership and safe teardown remain implementation contracts.
 A physical bootstrap completed the first allocation, fixed 512 KiB resize and a second 16 KiB allocation, followed by SWITCHED_IN and PONG.
 It retained exposed pages and claims with the IRQ masked. This is firmware protocol progress, not a codec session.
