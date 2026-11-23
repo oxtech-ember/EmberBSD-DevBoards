@@ -2248,6 +2248,46 @@
       "revision": "7af6ff0d4e75962db5e0a32ea315552b02368b89",
       "reviewed_at": "2026-11-23",
       "sha256": "1748009807aff6b855cf88c6a9384073a607a548b6f93334ea5e0a3a88dc6e96"
+    },
+    {
+      "id": "os-zero4-aarch64-release",
+      "title": "EmberBSD AArch64 release used for the Zero 4 graphics check",
+      "url": "https://github.com/oxtech-ember/EmberBSD/releases/tag/build-890901061cd9b49f0ab6843ee99ee482d8116372-aarch64-sysroot",
+      "revision": "890901061cd9b49f0ab6843ee99ee482d8116372",
+      "reviewed_at": "2026-11-23",
+      "sha256": null
+    },
+    {
+      "id": "os-zero4-graphics-mode",
+      "title": "EmberBSD A733 boot mode selection and recovery",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/9e63456660e5bafc5c75e5555446b5b32b0a1816/sys/arch/arm/sunxi/docs/a733-boot-modes.md",
+      "revision": "9e63456660e5bafc5c75e5555446b5b32b0a1816",
+      "reviewed_at": "2026-11-23",
+      "sha256": "15e65100b1cbbaf4406bafbbbba286144788db52a7d76555cfbca6c9eecfc853"
+    },
+    {
+      "id": "os-zero4-pvr-render-check",
+      "title": "EmberBSD PowerVR render-node identity check",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/9e63456660e5bafc5c75e5555446b5b32b0a1816/ember/tools/pvr-render-check.c",
+      "revision": "9e63456660e5bafc5c75e5555446b5b32b0a1816",
+      "reviewed_at": "2026-11-23",
+      "sha256": "901558c301bb900899df0b508c7ad11ac1f937eaeef918ee2bb95911b0b0f32b"
+    },
+    {
+      "id": "os-a733-hdmi-native",
+      "title": "EmberBSD A733 HDMI controller contract",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/9e63456660e5bafc5c75e5555446b5b32b0a1816/sys/arch/arm/sunxi/docs/a733-hdmi-native.md",
+      "revision": "9e63456660e5bafc5c75e5555446b5b32b0a1816",
+      "reviewed_at": "2026-11-23",
+      "sha256": "0951b2e79fc227e7292a639e81aaabc4ae4400836f7ce44ec07f540a08ca0cb1"
+    },
+    {
+      "id": "os-zero4-graphics-dts",
+      "title": "EmberBSD Zero 4 graphics device tree source",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/9e63456660e5bafc5c75e5555446b5b32b0a1816/sys/external/gpl2/dts/dist/arch/arm64/boot/dts/allwinner/sun60i-a733-orangepi-zero4-graphics.dts",
+      "revision": "9e63456660e5bafc5c75e5555446b5b32b0a1816",
+      "reviewed_at": "2026-11-23",
+      "sha256": "280793491462f1aff1ccbe26c31df242b8a6adb48a8f8c67737adfc9a67619ea"
     }
   ]
 }

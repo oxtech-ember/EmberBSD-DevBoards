@@ -4,4 +4,8 @@ An eight-core microSD and gigabit Ethernet reference with AIC8800D80 wireless. S
 
 [Boot and recovery](boot.md) · [Interfaces and current support](interfaces.md) · [Design transfer](design.md) · [Machine-readable profile](board.json)
 
-Source: `os-zero4-reference` in [sources.json](../../sources.json). The original record does not identify every tested kernel, firmware revision or test date. Its source pin identifies the documentation, not a newly accepted build. Board revision is unknown.
+The graphics DTB has [offscreen Vulkan evidence](evidence/graphics-offscreen.json) and
+[accelerated Plasma with captured desktop pixels on a virtual output](evidence/plasma-virtual.json).
+Physical HDMI output and NPU operation require separate checks. The board revision is unknown.
+
+Source for the original platform baseline: `os-zero4-reference` in [sources.json](../../sources.json).

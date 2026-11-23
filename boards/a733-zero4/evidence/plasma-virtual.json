@@ -1,0 +1,92 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-plasma-virtual",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-23",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD netbsd.img, EMBER64, NetBSD 11.1",
+      "revision": "890901061cd9b49f0ab6843ee99ee482d8116372",
+      "sha256": "fb1e646c587060980fc5aa40f8e570fa8be7daa7f7ace52c6aae66496bdf1c15",
+      "reference": "sources.json"
+    },
+    {
+      "name": "Opt-in Zero 4 graphics DTB",
+      "revision": "9e63456660e5bafc5c75e5555446b5b32b0a1816",
+      "sha256": "e7b3efccc08ee5f35c4041bac6dd25a8fcfe46ae31861f3da8b656dc21959a8d",
+      "reference": "boards/a733-zero4/boot.md"
+    },
+    {
+      "name": "PowerVR rogue_36.56.104.183_v1.fw",
+      "revision": null,
+      "sha256": "1db1c399c17401d1f79d46c880db81c724d748c784d4639433b076aba2f9c0d2",
+      "reference": null
+    },
+    {
+      "name": "Mesa PowerVR Vulkan ICD",
+      "revision": "26.3.0",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "KWin and Plasma",
+      "revision": "6.8.2",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Run Plasma with KWin VirtualBackend as an ordinary user outside the wheel group. Check the compositor, shell, applet models and services. Use a readiness minimum of 30 seconds before requesting normal logout. Capture Virtual-0 through ScreenShot2.CaptureScreen.",
+  "expected": "The virtual output is 1280x1024 with active hardware composition. Qt Quick uses PowerVR, the compositor capture shows the desktop, and the session exits through normal logout.",
+  "observed": "KWin 6.8.2 reported VirtualBackend at 1280x1024 and active OpenGL ES composition. PlasmaShell Qt Quick reported zink Vulkan 1.2 PowerVR B-Series BXM-4-64 MC1. Six applet models, Xwayland and Activities responded. Normal logout completed. ScreenShot2.CaptureScreen returned a 1280x1024 RGB PNG from Virtual-0. It showed the wallpaper, lower panel, clock and a notification. PNG SHA-256: e118920136b27075b1627c28085bba4685b01765201392428f52c0db7307ea50.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "virtual-output-width",
+      "value": 1280,
+      "unit": "pixels"
+    },
+    {
+      "name": "virtual-output-height",
+      "value": 1024,
+      "unit": "pixels"
+    },
+    {
+      "name": "applet-models",
+      "value": 6,
+      "unit": "count"
+    },
+    {
+      "name": "readiness-minimum",
+      "value": 30,
+      "unit": "seconds"
+    },
+    {
+      "name": "captured-unique-colors",
+      "value": 131924,
+      "unit": "count"
+    }
+  ],
+  "limits": [
+    "The board revision is unknown.",
+    "The captured Plasma session used the graphics DTB at the original Zero 4 DTB filename. The offscreen graphics evidence records a separate successful reboot through the explicit graphics loader mode.",
+    "The compositor capture shows the virtual output on the physical board. A physical HDMI signal and monitor pixels remain unverified.",
+    "HDMI output, input, seat operation and long runs were not tested.",
+    "This test did not exercise the NPU. Zero 3W results have a separate scope."
+  ],
+  "source_refs": [
+    "os-zero4-aarch64-release",
+    "os-zero4-graphics-mode",
+    "os-zero4-pvr-render-check",
+    "os-a733-hdmi-native",
+    "os-zero4-graphics-dts"
+  ]
+}

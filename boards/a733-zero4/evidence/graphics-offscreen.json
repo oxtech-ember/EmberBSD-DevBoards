@@ -1,0 +1,76 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-graphics-offscreen",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-23",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD netbsd.img, EMBER64, NetBSD 11.1",
+      "revision": "890901061cd9b49f0ab6843ee99ee482d8116372",
+      "sha256": "fb1e646c587060980fc5aa40f8e570fa8be7daa7f7ace52c6aae66496bdf1c15",
+      "reference": "sources.json"
+    },
+    {
+      "name": "Opt-in Zero 4 graphics DTB",
+      "revision": "9e63456660e5bafc5c75e5555446b5b32b0a1816",
+      "sha256": "e7b3efccc08ee5f35c4041bac6dd25a8fcfe46ae31861f3da8b656dc21959a8d",
+      "reference": "boards/a733-zero4/boot.md"
+    },
+    {
+      "name": "PowerVR rogue_36.56.104.183_v1.fw",
+      "revision": null,
+      "sha256": "1db1c399c17401d1f79d46c880db81c724d748c784d4639433b076aba2f9c0d2",
+      "reference": null
+    },
+    {
+      "name": "Mesa PowerVR Vulkan ICD",
+      "revision": "26.3.0",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Boot Zero 4 with the graphics DTB with no HDMI sink. Check the native DRM render device identity. Submit one Vulkan render-pass clear to an offscreen RGBA8 image and compare its readback. Observe the KMS startup state.",
+  "expected": "PowerVR starts with the expected BVNC. All 256 pixels match. The DE3.52 and HDMI providers attach and KMS retries without a permanent fault while the sink is absent.",
+  "observed": "PowerVR firmware service ran at 600 MHz. The native DRM driver reported BVNC 36.56.104.183. Mesa enumerated the hardware Vulkan device and read back 256 matching RGBA8 pixels. DE3.52 and HDMI providers attached. KMS retried with EAGAIN and fault=0 without a sink. A separate physical reboot selected the graphics DTB through the explicit graphics loader mode. With the standard Zero 4 DTB restored under its normal name, the native KMS frontend attached and waited for HDMI hot-plug detect with fault=0. PowerVR firmware service ran at 600 MHz, and an ordinary user passed all 115 render checks.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "gpu-clock",
+      "value": 600,
+      "unit": "MHz"
+    },
+    {
+      "name": "matching-offscreen-pixels",
+      "value": 256,
+      "unit": "count"
+    },
+    {
+      "name": "render-checks-after-explicit-graphics-boot",
+      "value": 115,
+      "unit": "count"
+    }
+  ],
+  "limits": [
+    "The board revision and test duration are unknown.",
+    "The offscreen test covers one Vulkan clear and readback. It does not qualify Vulkan conformance or sustained rendering.",
+    "There was no HDMI sink. Visible output, EDID, hotplug, input and a display session remain unverified.",
+    "This test did not exercise the NPU. Zero 3W results have a separate scope.",
+    "The normal DTB and boot-normal.scr were preserved. Emergency fallback was not exercised."
+  ],
+  "source_refs": [
+    "os-zero4-aarch64-release",
+    "os-zero4-graphics-mode",
+    "os-zero4-pvr-render-check",
+    "os-a733-hdmi-native",
+    "os-zero4-graphics-dts"
+  ]
+}

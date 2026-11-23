@@ -5,7 +5,7 @@
   "vendor_model": "Orange Pi Zero 4",
   "soc": "allwinner-a733",
   "board_revision": null,
-  "reviewed_at": "2026-10-22",
+  "reviewed_at": "2026-11-23",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/a733-zero4/README.md",
@@ -14,7 +14,12 @@
     "design": "boards/a733-zero4/design.md"
   },
   "source_refs": [
-    "os-zero4-reference"
+    "os-zero4-reference",
+    "os-zero4-aarch64-release",
+    "os-zero4-graphics-mode",
+    "os-zero4-pvr-render-check",
+    "os-a733-hdmi-native",
+    "os-zero4-graphics-dts"
   ],
   "capabilities": [
     {
@@ -54,10 +59,34 @@
       ]
     },
     {
-      "id": "accelerators",
+      "id": "gpu",
+      "hardware": "present",
+      "emberbsd": "verified-scenario",
+      "scope": "Graphics DTB: PowerVR BVNC 36.56.104.183 at 600 MHz, Vulkan offscreen readback, and accelerated Plasma with captured desktop pixels from a virtual output. Physical HDMI remains unverified.",
+      "source_refs": [
+        "os-zero4-aarch64-release",
+        "os-zero4-graphics-mode",
+        "os-zero4-pvr-render-check",
+        "os-zero4-graphics-dts"
+      ]
+    },
+    {
+      "id": "hdmi",
+      "hardware": "present",
+      "emberbsd": "partial",
+      "scope": "DE3.52 and HDMI attach in the graphics mode. KMS retries with EAGAIN and fault=0 without a display connected. Visible output is unverified.",
+      "source_refs": [
+        "os-zero4-aarch64-release",
+        "os-zero4-graphics-mode",
+        "os-a733-hdmi-native",
+        "os-zero4-graphics-dts"
+      ]
+    },
+    {
+      "id": "npu",
       "hardware": "present",
       "emberbsd": "unknown",
-      "scope": "Software provider checks do not establish GPU/NPU operation on this board.",
+      "scope": "No physical NPU operation was verified on Zero 4.",
       "source_refs": [
         "os-zero4-reference"
       ]
