@@ -14,7 +14,7 @@
   },
   "inputs": [
     {
-      "name": "EmberBSD kernel EMBER64_CIX_PERIPHERALS",
+      "name": "EmberBSD kernel CIX peripherals trial",
       "revision": "3d9255b15d32d689e99c32152d70782027cc7eb5",
       "sha256": null,
       "reference": null

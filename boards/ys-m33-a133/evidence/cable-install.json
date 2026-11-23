@@ -14,7 +14,7 @@
   },
   "inputs": [
     {
-      "name": "32 MiB boot image with kernel EMBER64_A133_AUDIO #5",
+      "name": "32 MiB boot image with kernel A133 audio trial",
       "revision": "2db8e449fd25c82afbdbdb0c7e304303b89ed96e",
       "sha256": "a3a5dbc0aee395f2638a33632e7f4f190293080937a69072af3652ca1cf5491a",
       "reference": null

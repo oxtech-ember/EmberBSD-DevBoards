@@ -14,7 +14,7 @@
   },
   "inputs": [
     {
-      "name": "EmberBSD EMBERV3DRENDER, GCC 16.2.0",
+      "name": "EmberBSD V3D render trial, GCC 16.2.0",
       "revision": "ab6f88f04ca73c6958adb39d0e1c717f629e7901",
       "sha256": null,
       "reference": "boards/bcm2712-cm5/configs/thermal-fan/manifest.json"
