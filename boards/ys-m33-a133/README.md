@@ -12,3 +12,5 @@ Check the current owner documentation before any device operation.
 
 The physical installation record is in [evidence/cable-install.json](evidence/cable-install.json).
 It records a tested scenario, not a released installer.
+
+In a [physical RAM boot](evidence/ember64-ram-boot.json), the general `EMBER64` kernel mounted the UDISK root selected in vendor U-Boot.

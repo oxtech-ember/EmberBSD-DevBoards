@@ -37,10 +37,11 @@
       "id": "emmc-boot",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "An installed FFSv2 root on the UDISK eMMC partition booted on one factory sample. Cold power-cycle acceptance and full Android restoration remain untested.",
+      "scope": "An installed FFSv2 root on the UDISK eMMC partition booted on one factory sample. Cold power-cycle acceptance and full Android restoration remain untested. In a separate RAM boot, EMBER64 mounted UDISK after the operator selected its GPT label in the loader.",
       "source_refs": [
         "os-ys-m33-board",
-        "os-ys-m33-cable-receipt"
+        "os-ys-m33-cable-receipt",
+        "ys-m33-ember64-ram-observation"
       ]
     },
     {
