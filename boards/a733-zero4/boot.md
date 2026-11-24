@@ -38,7 +38,8 @@ hot-plug detect with `fault=0`. The normal DTB and `boot-normal.scr` were
 preserved for recovery. Emergency fallback was not exercised.
 The [offscreen Vulkan evidence](evidence/graphics-offscreen.json) covers KMS with no HDMI sink.
 The [virtual Plasma evidence](evidence/plasma-virtual.json) includes captured compositor pixels.
-Physical HDMI output and the board revision remain unverified.
+A [separate physical test](evidence/plasma-hdmi.json) recorded the HDMI mode
+and active rendering after reboot with a diagnostic kernel. The board revision is unknown.
 
 The [combined graphics and NPU run](evidence/graphics-npu-plasma.json) used a reference
 microSD configured to select `graphics` at each boot. Other Zero 4

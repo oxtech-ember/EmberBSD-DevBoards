@@ -10,7 +10,8 @@ The [native NPU evidence](evidence/npu-tile-contours.json) covers 24 offline
 96 × 96 parts-contour frames and cold and warm runs of a single 720 × 540
 frame with the fixed INT8 model. A separate [combined graphics and NPU run](evidence/graphics-npu-plasma.json)
 covers on-demand NPU preparation and two clip runs in an accelerated virtual Plasma session.
-The `normal` loader mode leaves the NPU disabled. Physical HDMI remains unverified.
+The `normal` loader mode leaves the NPU disabled.
+A [physical Plasma test](evidence/plasma-hdmi.json) verified HDMI output and USB-C pointer input.
 The board revision is unknown.
 
 Source for the original platform baseline: `os-zero4-reference` in [sources.json](../../sources.json).

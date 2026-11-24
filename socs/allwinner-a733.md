@@ -8,7 +8,10 @@ and [GPU execution path](https://github.com/oxtech-ember/EmberBSD/blob/main/sys/
 are implementation entry points. A provider attaching does not establish successful command execution.
 [Native Vulkan Compute](https://github.com/oxtech-ember/EmberBSD/blob/58a0ae471cf2162f6c4add28764761f868f65a3f/ember/boot/a733-pvr-execution.md#physical-compute-boundary) has bounded hardware acceptance on Zero 3W.
 [Offscreen graphics and four KWin/Zink frames](https://github.com/oxtech-ember/EmberBSD/blob/8735c9333e50d62a33a64a99b39e1af4f0dce3c1/ember/boards/orange-pi-zero-3w.md#accelerator-acceptance-2026-10-20)
-have bounded physical acceptance. Physical HDMI and a complete Plasma session remain unaccepted.
+have bounded physical acceptance on Zero 3W. Physical HDMI and a complete
+Plasma session remain unaccepted on Zero 3W. A separate
+[Zero 4 test](../boards/a733-zero4/evidence/plasma-hdmi.json) verified monitor
+output and USB-C pointer input in Plasma.
 Compute and rendering do not establish conformance or model inference.
 
 ## Fixed NPU profile

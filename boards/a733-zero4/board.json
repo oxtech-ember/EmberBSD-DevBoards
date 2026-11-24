@@ -56,7 +56,7 @@
       "id": "usb",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "USB-C high-speed storage tested in one orientation; SuperSpeed and host-port peripherals unqualified.",
+      "scope": "USB-C high-speed storage tested in one orientation. A Logitech 046d:c534 USB-C receiver provided pointer input. SuperSpeed and USB-A peripherals remain unqualified.",
       "source_refs": [
         "os-zero4-reference"
       ]
@@ -65,7 +65,7 @@
       "id": "gpu",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "Graphics DTB: PowerVR BVNC 36.56.104.183 at 600 MHz, Vulkan offscreen readback, and accelerated Plasma with captured desktop pixels from a virtual output. Physical HDMI remains unverified.",
+      "scope": "Graphics DTB: PowerVR BVNC 36.56.104.183 at 600 MHz, Vulkan offscreen readback, and accelerated Plasma on virtual and physical HDMI outputs.",
       "source_refs": [
         "os-zero4-aarch64-release",
         "os-zero4-graphics-mode",
@@ -77,7 +77,7 @@
       "id": "hdmi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "DE3.52 and HDMI attach in the graphics mode. KMS retries with EAGAIN and fault=0 without a display connected. Visible output is unverified.",
+      "scope": "Plasma displayed on a physical monitor. After reboot, KWin reported 1280 × 1024 at 60.02 Hz. Intermittent RCQ and TV0 retirement timeouts occurred in separate KMS tests.",
       "source_refs": [
         "os-zero4-aarch64-release",
         "os-zero4-graphics-mode",

@@ -9,13 +9,13 @@
 | PMIC and I2C | AXP8191 outputs read, two core supplies driven; always-on I2C works |
 | GPIO | Pinmux and outputs tested; pin interrupts absent |
 | RTC and watchdog | RTC retained time across reboot; watchdog tested |
-| USB-C | High-speed storage read at 22 MB/s; one plug orientation; SuperSpeed untested |
+| USB-C | High-speed storage read at 22 MB/s in one plug orientation. A Logitech `046d:c534` receiver used `ums` and `wsmouse`. The operator confirmed cursor movement. SuperSpeed remains untested. |
 | USB-A controllers | EHCI/OHCI attach; external devices not tested |
 | Random generator | Crypto engine generator seeds the kernel |
 | Audio and fan | No accepted audio or fan-control path |
 | GPU | The opt-in graphics DTB enabled PowerVR firmware service at 600 MHz. BVNC 36.56.104.183 and the native DRM driver were verified. Mesa 26.3.0 read back 256 expected RGBA8 pixels through its PowerVR Vulkan ICD without a display. |
-| Plasma | An ordinary user outside the wheel group ran KWin 6.8.2 on a 1280×1024 virtual output. KWin reported active OpenGL ES composition. PlasmaShell Qt Quick reported zink Vulkan 1.2 PowerVR B-Series BXM-4-64 MC1. Six applet models, Xwayland and Activities responded. Normal logout completed after the readiness minimum of 30 seconds. KWin ScreenShot2 captured the wallpaper, lower panel, clock and a notification from Virtual-0. Physical HDMI remains unverified. |
-| HDMI | DE3.52 and HDMI providers attached. Without a sink, KMS retried with `EAGAIN` and `fault=0`. Visible output, EDID, hotplug and an HDMI desktop session remain unverified. |
+| Plasma | A separate Virtual-0 test captured the desktop and completed logout. The physical test showed active KWin composition through Zink and OpenGL ES 3.1 on PowerVR B-Series BXM-4-64 MC1. |
+| HDMI | Plasma ran on a physical monitor. After reboot, KWin reported 1280 × 1024 at 60.02 Hz. Separate KMS tests reproduced intermittent RCQ and TV0 retirement timeouts. Display hotplug and sustained operation remain unqualified. |
 | NPU | The opt-in DTB and privileged tile ioctl ran the fixed INT8 profile at 300 MHz. The 24-frame 96 × 96 clip and cold and warm runs of a 720 × 540 frame matched the CPU reference. |
 
 Wi-Fi requires `fmacfw_8800d80_u02.bin`; Bluetooth requires four vendor patch files.
@@ -29,6 +29,16 @@ The source reports no sustained-use acceptance.
 
 See the [offscreen Vulkan evidence](evidence/graphics-offscreen.json) and
 [virtual Plasma session evidence](evidence/plasma-virtual.json) for inputs and limits.
+The [physical Plasma evidence](evidence/plasma-hdmi.json) covers the monitor and pointer.
+In a separate Qt/Vulkan test, the window produced approximately 1 to 1.3
+`frameSwapped` signals per second with KWin blur enabled. With blur disabled,
+it produced approximately 12 to 13. This result applies to the tested workload.
+
+[Ports source revision 9de0dcd9](https://github.com/oxtech-ember/EmberBSD-Ports/commit/9de0dcd99b83d6e9a330b9c366ec952cdefc484e)
+checks DRM event readiness before KWin dispatch. The separately verified
+signed package is `plasma6-kwin-6.8.3nb1`, SHA-256
+`1705b0dbe1be1202fb6d0f6300bc1b3693cd1e7ba5d7bc53cc32e733c48cb1f7`.
+See the [signed release metadata](https://emberbsd-pkg.oxteam.me/current/metadata/578776c62d19f3f1f0f7c64f7ca1309de8a04c42bcdce3b3c00d506dbe9d7ff5/release.p7m).
 The [native NPU evidence](evidence/npu-tile-contours.json) records the exact
 identity, inputs and checked results. The [NPU observation evidence](evidence/npu-passive.json)
 covers the earlier diagnostic attach and baseline ioctl refusal.

@@ -1,0 +1,78 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-plasma-hdmi",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-24",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733"
+  },
+  "inputs": [
+    {
+      "name": "Diagnostic EmberBSD kernel from the earlier input test",
+      "revision": "a6f1c5c36d0368b6e70fc6e22f3038e269bf86dd",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Diagnostic EmberBSD netbsd.img, EMBER64, NetBSD 11.1",
+      "revision": "cd33561f8aedf848255cc0805c15fa5fe8e6df72",
+      "sha256": "bab0ef735bfb3be16d3448ca38db377265f4f4031df1803defbd6f13cc8d7f1c",
+      "reference": null
+    },
+    {
+      "name": "Installed sun60i-a733-orangepi-zero4-graphics.dtb",
+      "revision": null,
+      "sha256": "7b93979d1c05fdb90e38fe0678a1d0b94879ed5c9405530a06b82268ac38f5a7",
+      "reference": "boards/a733-zero4/boot.md"
+    },
+    {
+      "name": "Mesa PowerVR with Zink",
+      "revision": "26.3.0",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Logitech USB receiver 046d:c534",
+      "revision": null,
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Check pointer input in a physical Plasma Wayland session. After a kernel update and reboot, check the HDMI mode, compositor renderer and pointer enumeration.",
+  "expected": "The physical monitor shows Plasma with active PowerVR composition. Mouse movement changes the visible cursor position.",
+  "observed": "With kernel a6f1c5c36, the operator confirmed visible cursor movement from the Logitech receiver. The receiver used ums and wsmouse. After reboot with cd33561f8, KWin reported HDMI-A-1 with active OpenGL ES 3.1 composition through Zink on PowerVR B-Series BXM-4-64 MC1. KWin listed wsmouse0. DRM and DE reported zero fault at the status check.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "output-width",
+      "value": 1280,
+      "unit": "pixels"
+    },
+    {
+      "name": "output-height",
+      "value": 1024,
+      "unit": "pixels"
+    },
+    {
+      "name": "output-refresh",
+      "value": 60.02,
+      "unit": "Hz"
+    }
+  ],
+  "limits": [
+    "The board revision is unknown. The DTB hash identifies the installed file used for both boots.",
+    "The kernel revisions and image hash identify diagnostic builds. The direct pointer check and the post-reboot status check cover separate boots.",
+    "Separate KMS tests encountered intermittent RCQ and TV0 retirement timeouts.",
+    "Hotplug, sustained operation and wider display and input coverage remain unqualified."
+  ],
+  "source_refs": [
+    "os-a733-hdmi-native",
+    "os-zero4-graphics-mode"
+  ]
+}
