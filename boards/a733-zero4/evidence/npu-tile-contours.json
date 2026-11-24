@@ -1,0 +1,128 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-npu-tile-contours",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-24",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD EMBER64 kernel boot image",
+      "revision": "ff55aa034d41208744ee3e21d5620e1df8156813",
+      "sha256": "8272de260aec025a99de7f5beb91fbfbbe9b43241e95686eb7fd7c64bad4c90e",
+      "reference": "sources.json"
+    },
+    {
+      "name": "Opt-in Zero 4 NPU observation DTB",
+      "revision": "ff55aa034d41208744ee3e21d5620e1df8156813",
+      "sha256": "d64b0985268eccd7b462581877a5ae80d7c0320b5f36de7c1ca22ffc7bdd66d2",
+      "reference": "boards/a733-zero4/boot.md"
+    },
+    {
+      "name": "T-LESS Primesense scene 000001, frames 000000 through 000023, FFV1 clip",
+      "revision": null,
+      "sha256": "1223d86659f87206b09ec1dae1bb7c19958c75737f1d76d553d2f46fb3ae0ef5",
+      "reference": "boards/a733-zero4/evidence/npu-passive.json"
+    },
+    {
+      "name": "Unscaled 720 × 540 grayscale frame 000000",
+      "revision": null,
+      "sha256": "4aa5c6bc74063e2fd5ab7d2ff0728a4254df2c5ddfda9dd1b2cabf97a4aa5499",
+      "reference": null
+    },
+    {
+      "name": "Prepared 96 × 96 grayscale work-area frames",
+      "revision": null,
+      "sha256": "7a39112dc68833cd57a82b33960aa81e38084b0261cd601e5e5d6c351b92e0cb",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot with the matching Zero 4 kernel and NPU observation DTB. Complete identification stages 1 through 4. Run frame 000000 at its 720 × 540 raster through the privileged fixed INT8 ioctl. Reuse the context for 24 frames cropped to the 350 × 350 area at (190, 95) and resized to 96 × 96. Run the original 720 × 540 raster of frame 000000 again. Compare the output bytes with the CPU reference.",
+  "expected": "The driver identifies the NPU and accepts the fixed profile. Each accepted tile produces one new IRQ and passes all numerical and terminal checks. The complete contour byte stream matches the CPU reference.",
+  "observed": "AXP8191 DCDC2 reported enabled at 800 mV. The NPU and AHB clocks reported 300 MHz and 200 MHz. Stage 4 returned success. The admitted identity was model 0x9000, revision 0x9202, product 0x05090009, ECO 0x08000000 and customer 0x1000003b. The cold 720 × 540 frame passed in 61.00 s across 6,120 tiles. The 24 work-area frames passed in 22.46 s across 3,456 tiles. The warm 720 × 540 frame passed in 59.71 s across 6,120 tiles. The IRQ count advanced from 0 to 6,120, 9,576 and 15,696 on the same boot. The last tile in each run set the model-pass and final-valid flags. All output bytes matched the CPU reference. SHA-256 was 245a45c973ad988cf770225e0002c848353893afc896c8e9ec88860ed1330978 for each 720 × 540 frame and e6e8f6d823cc10b77a6db35de3eb587975dbed440648a536f5819ea790216b59 for the 96 × 96 clip. The 777f3341 candidate timed out. The tested revision completed both 720 × 540 runs.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "npu-clock",
+      "value": 300,
+      "unit": "MHz"
+    },
+    {
+      "name": "ahb-clock",
+      "value": 200,
+      "unit": "MHz"
+    },
+    {
+      "name": "dcdc2-voltage",
+      "value": 800,
+      "unit": "mV"
+    },
+    {
+      "name": "cold-full-frame-verified-tiles",
+      "value": 6120,
+      "unit": "count"
+    },
+    {
+      "name": "cold-full-frame-elapsed",
+      "value": 61.0,
+      "unit": "s"
+    },
+    {
+      "name": "work-area-frames",
+      "value": 24,
+      "unit": "count"
+    },
+    {
+      "name": "work-area-verified-tiles",
+      "value": 3456,
+      "unit": "count"
+    },
+    {
+      "name": "work-area-matched-bytes",
+      "value": 221184,
+      "unit": "count"
+    },
+    {
+      "name": "work-area-elapsed",
+      "value": 22.46,
+      "unit": "s"
+    },
+    {
+      "name": "warm-full-frame-verified-tiles",
+      "value": 6120,
+      "unit": "count"
+    },
+    {
+      "name": "warm-full-frame-elapsed",
+      "value": 59.71,
+      "unit": "s"
+    },
+    {
+      "name": "matched-bytes-per-full-frame",
+      "value": 388800,
+      "unit": "count"
+    },
+    {
+      "name": "final-irq-count",
+      "value": 15696,
+      "unit": "count"
+    }
+  ],
+  "limits": [
+    "Elapsed time covers each tile client command. It excludes clip decode, preparation of the cropped work raster, host comparison and encode.",
+    "The fixed INT8 network runs through a privileged interface. These checks qualify one 96 × 96 clip and two runs of the same 720 × 540 frame.",
+    "General model execution, full-raster video and sustained-load qualification remain open.",
+    "The board revision is unknown."
+  ],
+  "source_refs": [
+    "os-zero4-reference",
+    "os-zero4-npu-native-tile"
+  ]
+}

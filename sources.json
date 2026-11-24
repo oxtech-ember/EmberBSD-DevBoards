@@ -2288,6 +2288,22 @@
       "revision": "9e63456660e5bafc5c75e5555446b5b32b0a1816",
       "reviewed_at": "2026-11-23",
       "sha256": "280793491462f1aff1ccbe26c31df242b8a6adb48a8f8c67737adfc9a67619ea"
+    },
+    {
+      "id": "os-a733-npu-diagnostic-vipcore",
+      "title": "EmberBSD A733 NPU diagnostic attachment and VIPLite subset",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/b338b5c833b512a4f3e115194e2b9c87b43abdb9/sys/arch/arm/sunxi/docs/a733-npu-vip.md",
+      "revision": "b338b5c833b512a4f3e115194e2b9c87b43abdb9",
+      "reviewed_at": "2026-11-24",
+      "sha256": "503a2d09e6a725f2d3a9381b51a442d8abbfbb44bfbd002276abf885520a9689"
+    },
+    {
+      "id": "os-zero4-npu-native-tile",
+      "title": "EmberBSD A733 fixed native NPU tile interface",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/ff55aa034d41208744ee3e21d5620e1df8156813/sys/arch/arm/sunxi/docs/a733-npu-tile.md",
+      "revision": "ff55aa034d41208744ee3e21d5620e1df8156813",
+      "reviewed_at": "2026-11-24",
+      "sha256": "4c1b284b49848e22f4143c1c3bae0632eb4d750c91a854855f876695ec11e1f7"
     }
   ]
 }

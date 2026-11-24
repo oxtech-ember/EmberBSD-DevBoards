@@ -1,0 +1,72 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-npu-passive",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-24",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD EMBER64 baseline boot image",
+      "revision": "890901061cd9b49f0ab6843ee99ee482d8116372",
+      "sha256": "fb1e646c587060980fc5aa40f8e570fa8be7daa7f7ace52c6aae66496bdf1c15",
+      "reference": "sources.json"
+    },
+    {
+      "name": "Opt-in Zero 4 NPU observation DTB",
+      "revision": null,
+      "sha256": "36ae5689ab1c96563e3593ef9ec3f4dcbfb37f676b224f2c53d87fd1067f6065",
+      "reference": "boards/a733-zero4/boot.md"
+    },
+    {
+      "name": "FFmpeg",
+      "revision": "9.0.2",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "T-LESS Primesense scene 000001, frames 000000 through 000023, FFV1 clip",
+      "revision": null,
+      "sha256": "1223d86659f87206b09ec1dae1bb7c19958c75737f1d76d553d2f46fb3ae0ef5",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the NPU observation DTB on a Zero 4. Check driver registration and the PMIC rail. Decode the FFV1 clip to 8-bit grayscale before running the read-only diagnostic stages. Check the baseline kernel response to the typed tile ioctl.",
+  "expected": "The diagnostic driver attaches at stage 0 with no task attempt. Decode all 24 frames. Stages 1 and 2 succeed and stage 3 returns EBUSY. The baseline kernel returns ENOTTY for the typed tile ioctl.",
+  "observed": "The A733 diagnostic driver registered vipcore. AXP8191 reported DCDC2 enabled at 800 mV. FFmpeg 9.0.2 decoded all 24 FFV1 frames at 720 × 540 before stage 1. The raw grayscale SHA-256 is 8cc965a92a20cd3bc74f0752ec0819c8292f41bd8a7473b03e3af9c5e2ae8dd6. Read-only stages 1 and 2 returned success. Stage 3 returned EBUSY. The tile ioctl returned ENOTTY and the task attempt counter stayed at zero.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "dcdc2-voltage",
+      "value": 800,
+      "unit": "mV"
+    },
+    {
+      "name": "ffv1-decoded-frames",
+      "value": 24,
+      "unit": "count"
+    },
+    {
+      "name": "task-attempts",
+      "value": 0,
+      "unit": "count"
+    }
+  ],
+  "limits": [
+    "This baseline run stopped at stage 3 before NPU identity reads, DMA, IRQ or model execution.",
+    "The clip decode is a media input check. It provides no NPU throughput or contour quality measurement.",
+    "The test records the attached driver and observed rail. The board revision is unknown."
+  ],
+  "source_refs": [
+    "os-zero4-reference",
+    "os-a733-npu-diagnostic-vipcore",
+    "os-zero4-aarch64-release"
+  ]
+}

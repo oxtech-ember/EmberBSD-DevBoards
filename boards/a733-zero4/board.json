@@ -5,7 +5,7 @@
   "vendor_model": "Orange Pi Zero 4",
   "soc": "allwinner-a733",
   "board_revision": null,
-  "reviewed_at": "2026-11-23",
+  "reviewed_at": "2026-11-24",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/a733-zero4/README.md",
@@ -19,7 +19,9 @@
     "os-zero4-graphics-mode",
     "os-zero4-pvr-render-check",
     "os-a733-hdmi-native",
-    "os-zero4-graphics-dts"
+    "os-zero4-graphics-dts",
+    "os-a733-npu-diagnostic-vipcore",
+    "os-zero4-npu-native-tile"
   ],
   "capabilities": [
     {
@@ -85,10 +87,12 @@
     {
       "id": "npu",
       "hardware": "present",
-      "emberbsd": "unknown",
-      "scope": "No physical NPU operation was verified on Zero 4.",
+      "emberbsd": "verified-scenario",
+      "scope": "Explicit NPU observation mode and privileged fixed INT8 tile ioctl. At 300 MHz, a 24-frame 96 × 96 contour clip and one 720 × 540 frame run from cold and warm contexts matched the CPU reference.",
       "source_refs": [
-        "os-zero4-reference"
+        "os-zero4-reference",
+        "os-a733-npu-diagnostic-vipcore",
+        "os-zero4-npu-native-tile"
       ]
     }
   ]

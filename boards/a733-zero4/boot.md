@@ -37,4 +37,18 @@ The [offscreen Vulkan evidence](evidence/graphics-offscreen.json) covers KMS wit
 The [virtual Plasma evidence](evidence/plasma-virtual.json) includes captured compositor pixels.
 Physical HDMI output and the board revision remain unverified.
 
+## NPU observation mode
+
+Normal boot leaves the NPU disabled. Select `ember_boot_mode=npu-observe`
+with the matching Zero 4 NPU observation DTB and kernel. Follow the
+[OS boot mode contract](https://github.com/oxtech-ember/EmberBSD/blob/ff55aa034d41208744ee3e21d5620e1df8156813/sys/arch/arm/sunxi/docs/a733-boot-modes.md).
+Keep a separate normal entry for recovery.
+
+The opt-in DTB attaches the diagnostic driver at stage 0. Explicit stages
+prepare identification and then admit the fixed INT8 profile. The physical
+[execution record](evidence/npu-tile-contours.json) covers an enabled 800 mV
+DCDC2 rail, 300 MHz NPU and 200 MHz AHB clocks, and the privileged repeated
+tile path. The [baseline observation record](evidence/npu-passive.json)
+covers an older kernel that returned `ENOTTY` for the tile ioctl.
+
 Source for the boot baseline: `os-zero4-reference` in [sources.json](../../sources.json).
