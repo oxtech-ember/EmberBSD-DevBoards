@@ -1,0 +1,292 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-plasma-hdmi-mdio",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-24",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733"
+  },
+  "inputs": [
+    {
+      "name": "Baseline netbsd.img, EMBER64",
+      "revision": "e29c9e337c3faa4a3c8d0efda3b998636b6a0dcf",
+      "sha256": "dd66726cf422a035d5d330afa2a4b916a06a3deb17905ebec5d7b14c567d123d",
+      "reference": "boards/a733-zero4/evidence/plasma-hdmi.json"
+    },
+    {
+      "name": "MDIO polling netbsd.img, EMBER64",
+      "revision": "73b65deb5e591092473bfe2d83c4239bcddac349",
+      "sha256": "add8f9af206a2fcffdf6500cc5c9aa6c21445791cc14225ffdf65bc83ffd8161",
+      "reference": null
+    },
+    {
+      "name": "Installed sun60i-a733-orangepi-zero4-graphics.dtb",
+      "revision": null,
+      "sha256": "7b93979d1c05fdb90e38fe0678a1d0b94879ed5c9405530a06b82268ac38f5a7",
+      "reference": "boards/a733-zero4/boot.md"
+    }
+  ],
+  "scenario": "Compare the baseline and the MDIO polling kernel at 1280 × 1024 and 60.020 Hz. Run 20 media queries and 150 native KMS flips per kernel. Separately compare two 60-second Qt/Vulkan workloads in warmed, unlocked Plasma sessions. One workload keeps the window size fixed. The other changes it. Verify a bidirectional transfer over the wired link on the MDIO polling kernel. Run 2000 additional native KMS flips on the MDIO polling kernel and restart Plasma.",
+  "expected": "Measure media query latency and physical HDMI cadence with each kernel.",
+  "observed": "The MDIO polling kernel shortened SIOCGIFMEDIA latency. Each kernel completed 150 native flips. In the 149 consecutive DRM event intervals, the median was near 66.64 ms for both kernels. The 95th percentile fell from 166.612 ms to 66.644 ms. Both warmed Qt/Vulkan workloads reported shorter 95th percentile intervals and more frameSwapped signals with the MDIO polling kernel. The Ethernet link reported 1000baseT full duplex. A 4 MiB transfer in each direction matched its SHA-256 digest. Interface error counters stayed at their initial values. The extended native run completed all 2000 flips in 118.342 s. DRM and DE reported zero errors. Plasma restarted after the run.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "output-width",
+      "value": 1280,
+      "unit": "pixels"
+    },
+    {
+      "name": "output-height",
+      "value": 1024,
+      "unit": "pixels"
+    },
+    {
+      "name": "output-refresh",
+      "value": 60.02,
+      "unit": "Hz"
+    },
+    {
+      "name": "ifmedia-queries-per-kernel",
+      "value": 20,
+      "unit": "queries"
+    },
+    {
+      "name": "native-kms-flips-per-kernel",
+      "value": 150,
+      "unit": "flips"
+    },
+    {
+      "name": "native-drm-intervals-per-kernel",
+      "value": 149,
+      "unit": "intervals"
+    },
+    {
+      "name": "plasma-workload-duration",
+      "value": 60,
+      "unit": "s"
+    },
+    {
+      "name": "baseline-ifmedia-p50",
+      "value": 90.029,
+      "unit": "ms"
+    },
+    {
+      "name": "mdio-ifmedia-p50",
+      "value": 0.416,
+      "unit": "ms"
+    },
+    {
+      "name": "baseline-ifmedia-p95",
+      "value": 189.885,
+      "unit": "ms"
+    },
+    {
+      "name": "mdio-ifmedia-p95",
+      "value": 0.426,
+      "unit": "ms"
+    },
+    {
+      "name": "baseline-native-drm-interval-p50",
+      "value": 66.645,
+      "unit": "ms"
+    },
+    {
+      "name": "mdio-native-drm-interval-p50",
+      "value": 66.643,
+      "unit": "ms"
+    },
+    {
+      "name": "baseline-native-drm-interval-p95",
+      "value": 166.612,
+      "unit": "ms"
+    },
+    {
+      "name": "mdio-native-drm-interval-p95",
+      "value": 66.644,
+      "unit": "ms"
+    },
+    {
+      "name": "baseline-native-drm-interval-maximum",
+      "value": 183.272,
+      "unit": "ms"
+    },
+    {
+      "name": "mdio-native-drm-interval-maximum",
+      "value": 66.649,
+      "unit": "ms"
+    },
+    {
+      "name": "baseline-native-drm-interval-over-100-ms",
+      "value": 10,
+      "unit": "intervals"
+    },
+    {
+      "name": "mdio-native-drm-interval-over-100-ms",
+      "value": 0,
+      "unit": "intervals"
+    },
+    {
+      "name": "baseline-steady-qt-frame-swapped",
+      "value": 777,
+      "unit": "signals"
+    },
+    {
+      "name": "mdio-steady-qt-frame-swapped",
+      "value": 875,
+      "unit": "signals"
+    },
+    {
+      "name": "baseline-steady-qt-frame-swapped-rate",
+      "value": 12.97,
+      "unit": "signals/s"
+    },
+    {
+      "name": "mdio-steady-qt-frame-swapped-rate",
+      "value": 14.6,
+      "unit": "signals/s"
+    },
+    {
+      "name": "baseline-steady-qt-interval-p95",
+      "value": 129,
+      "unit": "ms"
+    },
+    {
+      "name": "mdio-steady-qt-interval-p95",
+      "value": 105,
+      "unit": "ms"
+    },
+    {
+      "name": "baseline-steady-qt-interval-over-100-ms",
+      "value": 101,
+      "unit": "intervals"
+    },
+    {
+      "name": "mdio-steady-qt-interval-over-100-ms",
+      "value": 60,
+      "unit": "intervals"
+    },
+    {
+      "name": "baseline-steady-crtc-framebuffer-change-rate",
+      "value": 13.2,
+      "unit": "changes/s"
+    },
+    {
+      "name": "mdio-steady-crtc-framebuffer-change-rate",
+      "value": 14.34,
+      "unit": "changes/s"
+    },
+    {
+      "name": "baseline-resize-qt-frame-swapped",
+      "value": 796,
+      "unit": "signals"
+    },
+    {
+      "name": "mdio-resize-qt-frame-swapped",
+      "value": 854,
+      "unit": "signals"
+    },
+    {
+      "name": "baseline-resize-qt-frame-swapped-rate",
+      "value": 13.28,
+      "unit": "signals/s"
+    },
+    {
+      "name": "mdio-resize-qt-frame-swapped-rate",
+      "value": 14.25,
+      "unit": "signals/s"
+    },
+    {
+      "name": "baseline-resize-qt-interval-p95",
+      "value": 136,
+      "unit": "ms"
+    },
+    {
+      "name": "mdio-resize-qt-interval-p95",
+      "value": 111,
+      "unit": "ms"
+    },
+    {
+      "name": "baseline-resize-qt-interval-over-100-ms",
+      "value": 130,
+      "unit": "intervals"
+    },
+    {
+      "name": "mdio-resize-qt-interval-over-100-ms",
+      "value": 123,
+      "unit": "intervals"
+    },
+    {
+      "name": "baseline-resize-crtc-framebuffer-change-rate",
+      "value": 13.0,
+      "unit": "changes/s"
+    },
+    {
+      "name": "mdio-resize-crtc-framebuffer-change-rate",
+      "value": 14.09,
+      "unit": "changes/s"
+    },
+    {
+      "name": "mdio-ethernet-link",
+      "value": 1000,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "mdio-ethernet-bytes-per-direction",
+      "value": 4194304,
+      "unit": "bytes"
+    },
+    {
+      "name": "mdio-ethernet-input-error-increase",
+      "value": 0,
+      "unit": "errors"
+    },
+    {
+      "name": "mdio-ethernet-output-error-increase",
+      "value": 0,
+      "unit": "errors"
+    },
+    {
+      "name": "mdio-extended-native-kms-flips",
+      "value": 2000,
+      "unit": "flips"
+    },
+    {
+      "name": "mdio-extended-native-kms-duration",
+      "value": 118.342,
+      "unit": "s"
+    },
+    {
+      "name": "mdio-extended-native-drm-event-span",
+      "value": 118.245858,
+      "unit": "s"
+    },
+    {
+      "name": "mdio-extended-drm-fault",
+      "value": 0,
+      "unit": "error code"
+    },
+    {
+      "name": "mdio-extended-de-result",
+      "value": 0,
+      "unit": "error code"
+    }
+  ],
+  "limits": [
+    "The board revision is unknown. The measurements apply to this unit, DTB, mode and workloads.",
+    "Native KMS intervals use DRM event timestamps with Plasma stopped. The Plasma tests count Qt frameSwapped signals and separately observed CRTC framebuffer changes. The HDMI mode describes the monitor refresh rate.",
+    "Two earlier baseline boots stopped before the paired Plasma measurements. RCQ completion and readback succeeded. TV0 continued scanning with a pending vblank flag while its interrupt count did not advance. The cause and recovery of that failure remain undetermined.",
+    "Other Qt/Vulkan runs varied. This pair does not establish a general Plasma frame rate gain."
+  ],
+  "source_refs": [
+    "os-a733-hdmi-native",
+    "os-zero4-graphics-mode",
+    "os-eqos-mdio-polling"
+  ]
+}

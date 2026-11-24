@@ -30,6 +30,9 @@ The source reports no sustained-use acceptance.
 See the [offscreen Vulkan evidence](evidence/graphics-offscreen.json) and
 [virtual Plasma session evidence](evidence/plasma-virtual.json) for inputs and limits.
 The [physical Plasma evidence](evidence/plasma-hdmi.json) covers the monitor and pointer.
+A [paired MDIO comparison](evidence/plasma-hdmi-mdio.json) measured a lower
+95th percentile for native KMS intervals. It also records two Plasma workloads
+and a bidirectional Gigabit Ethernet transfer.
 In a separate Qt/Vulkan test, the window produced approximately 1 to 1.3
 `frameSwapped` signals per second with KWin blur enabled. With blur disabled,
 it produced approximately 12 to 13. This result applies to the tested workload.

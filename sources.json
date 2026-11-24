@@ -2274,6 +2274,14 @@
       "sha256": "901558c301bb900899df0b508c7ad11ac1f937eaeef918ee2bb95911b0b0f32b"
     },
     {
+      "id": "os-eqos-mdio-polling",
+      "title": "EmberBSD EQOS PHY register polling",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/73b65deb5e591092473bfe2d83c4239bcddac349/sys/dev/ic/dwc_eqos.c",
+      "revision": "73b65deb5e591092473bfe2d83c4239bcddac349",
+      "reviewed_at": "2026-11-24",
+      "sha256": "7612dc36465463a38e88ce65d651adc43a7c614b416b0384b5592caa183b0168"
+    },
+    {
       "id": "os-a733-hdmi-native",
       "title": "EmberBSD A733 HDMI controller contract",
       "url": "https://github.com/oxtech-ember/EmberBSD/blob/9e63456660e5bafc5c75e5555446b5b32b0a1816/sys/arch/arm/sunxi/docs/a733-hdmi-native.md",
