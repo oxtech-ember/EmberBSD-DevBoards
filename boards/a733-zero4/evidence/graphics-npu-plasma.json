@@ -1,0 +1,95 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-graphics-npu-plasma",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-24",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD EMBER64 kernel boot image",
+      "revision": "e120f07b8276e317e7bcb549de2816d0b49f5d84",
+      "sha256": "849a9a9e708cf7c70be21cf6590c4c3dc891120807d85cbb949d4de7cf14388e",
+      "reference": "sources.json"
+    },
+    {
+      "name": "Zero 4 graphics DTB",
+      "revision": "e120f07b8276e317e7bcb549de2816d0b49f5d84",
+      "sha256": "7b93979d1c05fdb90e38fe0678a1d0b94879ed5c9405530a06b82268ac38f5a7",
+      "reference": "boards/a733-zero4/boot.md"
+    },
+    {
+      "name": "Prepared 24-frame T-LESS scene 000001 work-area clip, 96 \u00d7 96 grayscale",
+      "revision": null,
+      "sha256": "7a39112dc68833cd57a82b33960aa81e38084b0261cd601e5e5d6c351b92e0cb",
+      "reference": "boards/a733-zero4/evidence/npu-tile-contours.json"
+    }
+  ],
+  "scenario": "Reboot twice through the existing graphics boot entry. Submit the first typed tile ioctl from stage 0 without stage writes, then compare two complete clip runs with the CPU reference in one accelerated virtual Plasma session. Run another Vulkan client during the second clip run and capture Virtual-0.",
+  "expected": "The first admitted ioctl prepares the NPU. Both clip runs match the CPU reference. Plasma retains hardware composition while the NPU runs, and the additional Vulkan client returns the expected pixels.",
+  "observed": "Both reboots used the existing graphics boot entry and kept Wi-Fi active. The first admitted typed ioctl prepared the NPU from stage 0 to stage 4 with no explicit stage writes. Two complete 24-frame runs in one Plasma session each matched all 221,184 bytes against the CPU reference. Each run added 3,456 IRQs. The count advanced from 3,456 to 6,912 and then to 10,368. Client times were 41.08 and 35.69 seconds. Both output hashes were e6e8f6d823cc10b77a6db35de3eb587975dbed440648a536f5819ea790216b59. The additional Vulkan client verified all 256 offscreen pixels while the NPU IRQ count advanced from 7,145 to 7,184. KWin used active Wayland OpenGL ES composition through Zink on PowerVR BXM-4-64 MC1 at 1280 \u00d7 1024. Virtual-0 capture SHA-256 was 87accd98f4d4cd3338dea5459b8d3f0df5d59ba571ff2d2383a6b53507af5362. The desktop stayed ready for 120 seconds and logged out normally.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "clip-frames-per-run",
+      "value": 24,
+      "unit": "count"
+    },
+    {
+      "name": "matched-bytes-per-run",
+      "value": 221184,
+      "unit": "count"
+    },
+    {
+      "name": "tiles-and-irqs-per-run",
+      "value": 3456,
+      "unit": "count"
+    },
+    {
+      "name": "first-clip-elapsed",
+      "value": 41.08,
+      "unit": "s"
+    },
+    {
+      "name": "second-clip-elapsed",
+      "value": 35.69,
+      "unit": "s"
+    },
+    {
+      "name": "vulkan-matched-pixels",
+      "value": 256,
+      "unit": "count"
+    },
+    {
+      "name": "virtual-output-width",
+      "value": 1280,
+      "unit": "pixels"
+    },
+    {
+      "name": "virtual-output-height",
+      "value": 1024,
+      "unit": "pixels"
+    },
+    {
+      "name": "desktop-readiness",
+      "value": 120,
+      "unit": "s"
+    }
+  ],
+  "limits": [
+    "Virtual output evidence applies to the captured session. Physical HDMI requires a separate check.",
+    "The NPU test covers the fixed privileged INT8 tile interface.",
+    "The board revision is unknown.",
+    "Two earlier harness sessions exceeded a five-second desktop introspection timeout. NPU numerical checks completed. The accepted session allowed 25 seconds for each of two introspection calls per sample. Across 24 samples, all 48 PlasmaShell calls succeeded. The longest observed call took two seconds."
+  ],
+  "source_refs": [
+    "os-zero4-graphics-npu"
+  ]
+}

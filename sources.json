@@ -2304,6 +2304,14 @@
       "revision": "ff55aa034d41208744ee3e21d5620e1df8156813",
       "reviewed_at": "2026-11-24",
       "sha256": "4c1b284b49848e22f4143c1c3bae0632eb4d750c91a854855f876695ec11e1f7"
+    },
+    {
+      "id": "os-zero4-graphics-npu",
+      "title": "EmberBSD Zero 4 graphics profile with on-demand NPU",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/e120f07b8276e317e7bcb549de2816d0b49f5d84",
+      "revision": "e120f07b8276e317e7bcb549de2816d0b49f5d84",
+      "reviewed_at": "2026-11-24",
+      "sha256": null
     }
   ]
 }

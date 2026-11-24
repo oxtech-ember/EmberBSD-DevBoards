@@ -32,5 +32,7 @@ See the [offscreen Vulkan evidence](evidence/graphics-offscreen.json) and
 The [native NPU evidence](evidence/npu-tile-contours.json) records the exact
 identity, inputs and checked results. The [NPU observation evidence](evidence/npu-passive.json)
 covers the earlier diagnostic attach and baseline ioctl refusal.
+The [combined graphics and NPU run](evidence/graphics-npu-plasma.json) covers direct
+privileged tile submission during hardware-accelerated virtual Plasma.
 
 Source for the earlier interface evidence: `os-zero4-reference` in [sources.json](../../sources.json).

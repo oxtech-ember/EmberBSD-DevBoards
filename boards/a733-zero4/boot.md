@@ -14,7 +14,10 @@ Power-off uses PSCI. Exact connector and recovery-control wiring remain unspecif
 Normal boot selects the standard Zero 4 DTB. It leaves the display path disabled
 and uses observation-only GPU diagnostics. The graphics DTB is an explicit opt-in
 for this board. It enables native PowerVR firmware service and the DE3.52 and HDMI
-providers. Use a kernel, DTB and PowerVR firmware that match the
+providers. With a kernel and DTB that support on-demand NPU preparation, it also
+attaches the NPU at stage 0. The first admitted privileged tile ioctl prepares
+the NPU. Later calls use the same interface and retain the warm context.
+Use a kernel, DTB and PowerVR firmware that match the
 [OS boot mode contract](https://github.com/oxtech-ember/EmberBSD/blob/9e63456660e5bafc5c75e5555446b5b32b0a1816/sys/arch/arm/sunxi/docs/a733-boot-modes.md).
 
 Keep the original DTB and boot script available before selecting graphics mode.
@@ -37,10 +40,15 @@ The [offscreen Vulkan evidence](evidence/graphics-offscreen.json) covers KMS wit
 The [virtual Plasma evidence](evidence/plasma-virtual.json) includes captured compositor pixels.
 Physical HDMI output and the board revision remain unverified.
 
+The [combined graphics and NPU run](evidence/graphics-npu-plasma.json) used a reference
+microSD configured to select `graphics` at each boot. Other Zero 4
+installations select the loader mode in their own boot entry.
+
 ## NPU observation mode
 
-Normal boot leaves the NPU disabled. Select `ember_boot_mode=npu-observe`
-with the matching Zero 4 NPU observation DTB and kernel. Follow the
+The `normal` loader mode leaves the NPU disabled. Select
+`ember_boot_mode=npu-observe` with the matching Zero 4 NPU observation DTB
+and kernel to use the explicit diagnostic stages. Follow the
 [OS boot mode contract](https://github.com/oxtech-ember/EmberBSD/blob/ff55aa034d41208744ee3e21d5620e1df8156813/sys/arch/arm/sunxi/docs/a733-boot-modes.md).
 Keep a separate normal entry for recovery.
 

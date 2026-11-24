@@ -21,7 +21,8 @@
     "os-a733-hdmi-native",
     "os-zero4-graphics-dts",
     "os-a733-npu-diagnostic-vipcore",
-    "os-zero4-npu-native-tile"
+    "os-zero4-npu-native-tile",
+    "os-zero4-graphics-npu"
   ],
   "capabilities": [
     {
@@ -88,11 +89,12 @@
       "id": "npu",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "Explicit NPU observation mode and privileged fixed INT8 tile ioctl. At 300 MHz, a 24-frame 96 × 96 contour clip and one 720 × 540 frame run from cold and warm contexts matched the CPU reference.",
+      "scope": "Explicit NPU observation mode and privileged fixed INT8 tile ioctl. At 300 MHz, a 24-frame 96 × 96 contour clip and one 720 × 540 frame run from cold and warm contexts matched the CPU reference. The graphics profile also verified direct tile submission and repeated 96 × 96 contour processing during accelerated virtual Plasma.",
       "source_refs": [
         "os-zero4-reference",
         "os-a733-npu-diagnostic-vipcore",
-        "os-zero4-npu-native-tile"
+        "os-zero4-npu-native-tile",
+        "os-zero4-graphics-npu"
       ]
     }
   ]
