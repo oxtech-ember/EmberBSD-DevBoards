@@ -14,16 +14,16 @@
   },
   "inputs": [
     {
-      "name": "Diagnostic EmberBSD kernel from the earlier input test",
+      "name": "Earlier diagnostic kernel for the visual pointer check",
       "revision": "a6f1c5c36d0368b6e70fc6e22f3038e269bf86dd",
       "sha256": null,
       "reference": null
     },
     {
-      "name": "Diagnostic EmberBSD netbsd.img, EMBER64, NetBSD 11.1",
-      "revision": "cd33561f8aedf848255cc0805c15fa5fe8e6df72",
-      "sha256": "bab0ef735bfb3be16d3448ca38db377265f4f4031df1803defbd6f13cc8d7f1c",
-      "reference": null
+      "name": "EmberBSD netbsd.img, EMBER64, NetBSD 11.1",
+      "revision": "e29c9e337c3faa4a3c8d0efda3b998636b6a0dcf",
+      "sha256": "dd66726cf422a035d5d330afa2a4b916a06a3deb17905ebec5d7b14c567d123d",
+      "reference": "boards/a733-zero4/boot.md"
     },
     {
       "name": "Installed sun60i-a733-orangepi-zero4-graphics.dtb",
@@ -44,9 +44,9 @@
       "reference": null
     }
   ],
-  "scenario": "Check pointer input in a physical Plasma Wayland session. After a kernel update and reboot, check the HDMI mode, compositor renderer and pointer enumeration.",
-  "expected": "The physical monitor shows Plasma with active PowerVR composition. Mouse movement changes the visible cursor position.",
-  "observed": "With kernel a6f1c5c36, the operator confirmed visible cursor movement from the Logitech receiver. The receiver used ums and wsmouse. After reboot with cd33561f8, KWin reported HDMI-A-1 with active OpenGL ES 3.1 composition through Zink on PowerVR B-Series BXM-4-64 MC1. KWin listed wsmouse0. DRM and DE reported zero fault at the status check.",
+  "scenario": "After a warm reboot, test physical HDMI, a bounded native KMS run, and a Qt/Vulkan resize workload with NPU activity. Record the visual pointer check from its separate earlier boot.",
+  "expected": "KWin reports active PowerVR composition on physical HDMI. Native KMS completes the requested flips. The Qt window keeps presenting during resize and the fixed arithmetic tiles match their reference.",
+  "observed": "After reboot on e29c9e337, KWin reported HDMI-A-1 and active OpenGL ES composition through Zink on PowerVR B-Series BXM-4-64 MC1. Native KMS completed 2000 flips in 126.671 s with Plasma stopped. A Qt/Vulkan window alternating between 640 × 480 and 960 × 640 reported 1534 frameSwapped signals in 116.872 s. Two independent CRTC polling intervals observed 731 and 761 framebuffer changes. DRM and DE reported zero errors after both runs. Two NPU runs during the desktop workload each verified 1024 arithmetic tiles. On this setup, disabling the KWin maximize effect reduced restore geometry latency by 63 to 317 ms in four paired comparisons. On the earlier a6f1c5c36 boot, the operator confirmed visible cursor motion using the Logitech receiver through ums and wsmouse.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -63,13 +63,69 @@
       "name": "output-refresh",
       "value": 60.02,
       "unit": "Hz"
+    },
+    {
+      "name": "native-kms-flips",
+      "value": 2000,
+      "unit": "flips"
+    },
+    {
+      "name": "native-kms-duration",
+      "value": 126.671,
+      "unit": "s"
+    },
+    {
+      "name": "qt-resize-frame-swapped",
+      "value": 1534,
+      "unit": "signals"
+    },
+    {
+      "name": "qt-resize-duration",
+      "value": 116.872,
+      "unit": "s"
+    },
+    {
+      "name": "qt-resize-crtc-first",
+      "value": 731,
+      "unit": "framebuffer changes"
+    },
+    {
+      "name": "qt-resize-crtc-second",
+      "value": 761,
+      "unit": "framebuffer changes"
+    },
+    {
+      "name": "npu-arithmetic-runs",
+      "value": 2,
+      "unit": "runs"
+    },
+    {
+      "name": "npu-arithmetic-tiles-per-run",
+      "value": 1024,
+      "unit": "tiles"
+    },
+    {
+      "name": "restore-comparison-pairs",
+      "value": 4,
+      "unit": "pairs"
+    },
+    {
+      "name": "restore-gain-minimum",
+      "value": 63,
+      "unit": "ms"
+    },
+    {
+      "name": "restore-gain-maximum",
+      "value": 317,
+      "unit": "ms"
     }
   ],
   "limits": [
-    "The board revision is unknown. The DTB hash identifies the installed file used for both boots.",
-    "The kernel revisions and image hash identify diagnostic builds. The direct pointer check and the post-reboot status check cover separate boots.",
-    "Separate KMS tests encountered intermittent RCQ and TV0 retirement timeouts.",
-    "Hotplug, sustained operation and wider display and input coverage remain unqualified."
+    "The board revision is unknown. The graphics DTB hash identifies the installed DTB.",
+    "The pointer movement was confirmed on a separate earlier boot. The current kernel source revision and image hash identify the reboot and bounded runtime tests.",
+    "The monitor refresh rate describes the HDMI mode. Qt swap signals and polled CRTC framebuffer changes are separate measurements.",
+    "The restore comparison applies to this setup. It measures reported window geometry, not optical latency.",
+    "Earlier diagnostic KMS tests encountered intermittent RCQ and TV0 retirement timeouts. Cold boot, hotplug and longer operation remain unqualified."
   ],
   "source_refs": [
     "os-a733-hdmi-native",

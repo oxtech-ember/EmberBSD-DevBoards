@@ -77,7 +77,7 @@
       "id": "hdmi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "Plasma displayed on a physical monitor. After reboot, KWin reported 1280 × 1024 at 60.02 Hz. Intermittent RCQ and TV0 retirement timeouts occurred in separate KMS tests.",
+      "scope": "Plasma displayed on a physical monitor. After reboot on EmberBSD e29c9e337, KWin reported 1280 × 1024 at 60.02 Hz. A separate native KMS run completed 2000 flips. Earlier diagnostic runs encountered RCQ and TV0 retirement timeouts.",
       "source_refs": [
         "os-zero4-aarch64-release",
         "os-zero4-graphics-mode",

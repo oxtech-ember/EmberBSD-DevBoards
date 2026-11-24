@@ -15,7 +15,7 @@
 | Audio and fan | No accepted audio or fan-control path |
 | GPU | The opt-in graphics DTB enabled PowerVR firmware service at 600 MHz. BVNC 36.56.104.183 and the native DRM driver were verified. Mesa 26.3.0 read back 256 expected RGBA8 pixels through its PowerVR Vulkan ICD without a display. |
 | Plasma | A separate Virtual-0 test captured the desktop and completed logout. The physical test showed active KWin composition through Zink and OpenGL ES 3.1 on PowerVR B-Series BXM-4-64 MC1. |
-| HDMI | Plasma ran on a physical monitor. After reboot, KWin reported 1280 × 1024 at 60.02 Hz. Separate KMS tests reproduced intermittent RCQ and TV0 retirement timeouts. Display hotplug and sustained operation remain unqualified. |
+| HDMI | Plasma ran on a physical monitor. After reboot on EmberBSD `e29c9e337`, KWin reported 1280 × 1024 at 60.02 Hz. A separate native KMS run completed 2000 flips. Earlier diagnostic tests reproduced RCQ and TV0 retirement timeouts. Cold boot, display hotplug and longer operation remain unqualified. |
 | NPU | The opt-in DTB and privileged tile ioctl ran the fixed INT8 profile at 300 MHz. The 24-frame 96 × 96 clip and cold and warm runs of a 720 × 540 frame matched the CPU reference. |
 
 Wi-Fi requires `fmacfw_8800d80_u02.bin`; Bluetooth requires four vendor patch files.

@@ -39,7 +39,8 @@ preserved for recovery. Emergency fallback was not exercised.
 The [offscreen Vulkan evidence](evidence/graphics-offscreen.json) covers KMS with no HDMI sink.
 The [virtual Plasma evidence](evidence/plasma-virtual.json) includes captured compositor pixels.
 A [separate physical test](evidence/plasma-hdmi.json) recorded the HDMI mode
-and active rendering after reboot with a diagnostic kernel. The board revision is unknown.
+and active rendering after a warm reboot on [EmberBSD e29c9e337](https://github.com/oxtech-ember/EmberBSD/commit/e29c9e337c3faa4a3c8d0efda3b998636b6a0dcf).
+The board revision is unknown.
 
 The [combined graphics and NPU run](evidence/graphics-npu-plasma.json) used a reference
 microSD configured to select `graphics` at each boot. Other Zero 4
