@@ -5,18 +5,19 @@ For OS updates on microSD with vendor U-Boot, select the procedure for the card'
 
 ## Two-slot microSD
 
-For a fresh card, select `-h a733-update` in the [A733 image builder](https://github.com/oxtech-ember/EmberBSD/blob/3d0b206a05076152a7f8a50515b7c892a2a730db/distrib/utils/embedded/README.a733.md#zero-3w-two-slot-image).
+For a fresh card, select `-h a733-update` in the [A733 image builder](https://github.com/oxtech-ember/EmberBSD/blob/c3bed3cee4443b38dea6d781f8913f88c29a2fd9/distrib/utils/embedded/README.a733.md#zero-3w-two-slot-image).
 This profile uses the normal Zero 3W device tree and the stock `EMBER64` kernel with the minimal no-LDAP userland and `comp`.
 The card has an EFI boot partition and two FFS roots, `netbsd-root` (A) and `ember-root-b` (B).
 Reserve both roots for the OS. The updater rebuilds the inactive root for each trial.
 
 On an existing card that already has these dedicated wedges, boot slot A and keep the normal `boot.scr`.
-Follow the [one-time setup for an existing card](https://github.com/oxtech-ember/EmberBSD/blob/3d0b206a05076152a7f8a50515b7c892a2a730db/distrib/utils/embedded/README.a733.md#enable-an-already-provisioned-card).
-Keep a separate recovery card and a verified [UART0 connection](boot.md#uart0-console-v12).
+Follow the [one-time setup for an existing card](https://github.com/oxtech-ember/EmberBSD/blob/c3bed3cee4443b38dea6d781f8913f88c29a2fd9/distrib/utils/embedded/README.a733.md#enable-an-already-provisioned-card).
+Keep a separate recovery card. [UART0](boot.md#uart0-console-v12) provides a console for recovery.
 
 For routine updates, follow the [automatic OS service procedure](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/automatic-system-update.md).
 The service selects the signed release for the installed profile. U-Boot and the A733 watchdog control the trial boot.
-Physical qualification of trial confirmation and watchdog rollback on Zero 3W is pending.
+On this layout a Zero 3W installed a signed release and confirmed the new root after Wi-Fi became ready.
+In a second trial, a local test stalled startup before networking. The A733 watchdog reset the board, and U-Boot selected the previous confirmed root.
 See the [update architecture](https://github.com/oxtech-ember/EmberBSD-Docs/blob/main/modules/updates.md#os-delivery-and-activation) for service settings and data shared between slots.
 
 ## Manual update on single-root microSD
