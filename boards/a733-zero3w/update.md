@@ -1,13 +1,9 @@
 # Update an installed Zero 3W
 
-This recipe updates an existing EmberBSD microSD installation that starts through vendor U-Boot and `boot.scr`.
-It replaces the native kernel, the loaded kernel modules, both A733 board DTBs, the normal boot script and the `base`, `comp` and `etc` sets.
-If the bundle contains X11 sets, it also installs `xbase`, `xcomp`, `xfont` and `xserver` and merges `xetc`.
-It leaves packages, `/rescue`, `/libdata/firmware`, the diagnostic directory and other recovery files unchanged.
-Commands run as root on the board unless a step names the serial console or another host.
-This is a procedure, not physical acceptance of a particular build.
+Use the [installed system update procedure](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/installed-system-update.md) for package and OS updates.
+This profile supplies the normal boot files, activation, hardware checks and recovery path for microSD with vendor U-Boot.
+It applies to the Zero 3W boot entry and its diagnostic entry. Commands below run on the board unless they name the serial console.
 
-The general AArch64 rules are in the [OS base update guide](https://github.com/oxtech-ember/EmberBSD/blob/36a600668c5ca1e36ecb6f5096b510b547a2b6d1/ember/tools/docs/aarch64-base-update.md).
 Select the installation order from the kernel/userland ABI contract before writing files.
 For the [versioned station association lifecycle](https://github.com/oxtech-ember/EmberBSD/blob/a46527bded5d83a3c9eb294d764a0d89837b129c/sys/net80211/association-lifecycle.md), install the matching kernel, modules and WPA userland before the first reboot.
 The new kernel rejects old MLME requests; the new WPA backend also requires the matching kernel.
@@ -20,27 +16,16 @@ The signed EmberBSD channel provides a normal boot set for the Zero 3W at OS rev
 It contains the raw and ELF kernels, four matching modules, both normal board trees and the shared U-Boot script.
 Select the set for the installed board and boot mode. The Zero 4 graphics set contains a different device tree.
 
-With native SDK client 0.26 or later, download the archive into a working directory on FFS.
-The client checks the channel signature and the archive digest. An ordinary user can run this step.
-
-```sh
-work=$(mktemp -d "$HOME/zero3w-update.XXXXXXXX") || exit 1
-cd "$work" || exit 1
-/usr/pkg/bin/python3.15 -I /usr/local/libexec/ember-sdk.pyz \
-    --config /usr/local/etc/ember-sdk.json fetch-artifact \
-    --artifact os-boot-aarch64-ember64-orangepi-zero3w-e120f07b8276e317 \
-    --output boot.tar.xz || exit 1
-tar -xpf boot.tar.xz && cksum -a sha256 -c SHA256
-```
-
-Keep the installed diagnostic entry. Obtain the matching OS sets before writing any boot file.
+Use artifact ID `os-boot-aarch64-ember64-orangepi-zero3w-e120f07b8276e317` in the [shared download procedure](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/installed-system-update.md#select-and-fetch-the-release).
+In the verified archive, check the board boot files with its `SHA256` list. Keep the installed diagnostic entry.
+The minimal headless profile also needs the matching `base` and `etc` sets before any boot file changes.
 
 ## Required inputs
 
 Use one recorded build cohort from a single EmberBSD commit, called `REV` below.
 Record its kernel release as `KREL` (for example, `11.1`) and the installed `uname -r` as `OLD_KREL`.
 Take `KREL` from the new kernel's build metadata, not the currently running kernel.
-Build it with the [SDK OS release builder](https://github.com/oxtech-ember/EmberBSD-SDK/blob/1e8103ae9357fa914ae82a58a1fd3d1f5c252321/docs/os-release.md) and the
+To produce missing files, use the [SDK OS release builder](https://github.com/oxtech-ember/EmberBSD-SDK/blob/1e8103ae9357fa914ae82a58a1fd3d1f5c252321/docs/os-release.md) and the
 [A733 DTB target](https://github.com/oxtech-ember/EmberBSD/blob/c5d1be911e44b58402a405333db205ba4ad1daaf/sys/arch/arm/sunxi/docs/a733-boot-modes.md#native-build-target).
 The bundle contains:
 
@@ -51,17 +36,17 @@ The bundle contains:
 | `sun60i-a733-orangepi-zero3w.dtb`, `sun60i-a733-orangepi-zero4.dtb` | Normal board trees selected by the boot script |
 | `boot.scr` | U-Boot script image of [`orangepi-zero4-boot.cmd`](https://github.com/oxtech-ember/EmberBSD/blob/c5d1be911e44b58402a405333db205ba4ad1daaf/ember/boot/orangepi-zero4-boot.cmd) from `REV` |
 | `modules/NAME.kmod` | One module for each name in the board's `/etc/modules.conf` |
-| `base.tar.xz`, `comp.tar.xz`, `etc.tar.xz` | Userland sets from the same destination tree |
+| `base.tar.xz`, `etc.tar.xz`, optional `comp.tar.xz` | Matching userland sets. Include `comp` when the installed profile uses it. |
 | `xbase.tar.xz`, `xcomp.tar.xz`, `xetc.tar.xz`, `xfont.tar.xz`, `xserver.tar.xz` | Optional X11 sets from the same destination tree |
 | `orangepi-zero4-boot.cmd` | Script source from `REV`, kept as `boot.cmd` |
-| `SHA256` | BSD-style SHA256 lines for every file above |
+| `SHA256` inside `boot.tar.xz` | Hashes of the boot archive members. Each OS set has its own signed artifact record. |
 
 Do not combine a new kernel with older modules or a DTB from another commit.
-Build the base WPA tools from the current prepared Ports source against that cohort's net80211 headers.
+When producing a new release, build the base WPA tools against its net80211 headers.
 A missing set or module stops the update; do not substitute a file from another build.
 Install the X11 sets either all together or not at all.
 `X11` below means that the bundle contains them and they are installed.
-Check the bundle on the build host before copying it.
+The producer checks the bundle before publishing it. On the device, verify each downloaded archive against its signed release record.
 No file may contain a build-host path.
 A Clang build must contain no GCC runtime file and no `GCC:` identification string.
 GCC-profile text in `/usr/share/mk` is build-system data, not a GCC dependency.
@@ -116,11 +101,15 @@ The X11 sets add several hundred MB.
 
 ## Stage and verify the bundle
 
-Copy the bundle to `/var/update/REV` on the root file system.
+Copy the downloaded archives into a new root-owned directory with mode 0700 on FFS.
+Use `/var/update/REV` below for this directory. Recheck each copy against its own authenticated release record.
+The outer digest of `boot.tar.xz` and the published digests of `base.tar.xz` and `etc.tar.xz` identify separate archives.
+Extract the verified boot archive in that directory and check its internal list:
 
 ```sh
-cd /var/update/REV
-cksum -a sha256 -c SHA256
+cd /var/update/REV || exit 1
+tar -xpf boot.tar.xz || exit 1
+cksum -a sha256 -c SHA256 || exit 1
 tail -c +73 boot.scr | cmp - orangepi-zero4-boot.cmd
 ```
 
@@ -132,7 +121,8 @@ Extract the sets into a test tree and run its loader, shell, OpenSSL and SSH in 
 
 ```sh
 mkdir /var/update/REV-root
-sets="base comp etc"
+sets="base etc"
+[ -f comp.tar.xz ] && sets="$sets comp"
 [ -f xbase.tar.xz ] && sets="$sets xbase xetc"   # X11 only
 for set in $sets; do tar -xpJf "$set.tar.xz" -C /var/update/REV-root; done
 mkdir -p /var/update/REV-root/dev
@@ -159,14 +149,11 @@ tar -cf "$bk/etc.tar" -C / etc
 cp -p /netbsd "$bk/netbsd.elf"
 ```
 
-Back up every existing file that the new `base`, `comp` and X11 sets replace.
-Record the files that the sets add, so that a rollback can remove them.
+Run the inventory and staging steps from the [native set procedure](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/installed-system-update.md#native-set-installation).
+Use its exact selected member list for the backup and for rollback. In the same shell:
 
 ```sh
-new=/var/update/REV
-sets="base comp"
-[ -f "$new/xbase.tar.xz" ] && sets="$sets xbase xcomp xfont xserver"   # X11 only
-for set in $sets; do tar -tJf "$new/$set.tar.xz"; done | sort -u > "$bk/set-paths"
+cp "$state/set-paths" "$bk/set-paths" || exit 1
 : > "$bk/replaced"; : > "$bk/added"
 while read -r path; do
     if [ -e "/$path" ] || [ -h "/$path" ]; then
@@ -232,35 +219,15 @@ If userland was also replaced for an ABI transition, restore its matching previo
 
 ## Stage 2: userland
 
-Install userland after stage 1's file verification. For the versioned MLME transition this is before its first reboot; otherwise complete stage 1's boot checks first.
-Do not extract the `etc` or `xetc` set over `/`.
-Stop if a set fails to extract and use [rollback B](#rollback-b-userland).
+Follow the [native set installation procedure](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/installed-system-update.md#native-set-installation) for base files and configuration.
+After a kernel-first reboot, reopen the original staging directories and load the saved selection as the common procedure describes.
+For a station ABI change, finish userland installation before the first reboot into the new kernel.
+On a headless profile, preserve both firmware locations and the installed Wi-Fi settings. Use the recorded `/etc/modules.conf` for this board.
 
-```sh
-new=/var/update/REV
-cd /
-sets="base comp"
-[ -f "$new/xbase.tar.xz" ] && sets="$sets xbase xcomp xfont xserver"   # X11 only
-for set in $sets; do
-    tar -xpUJf "$new/$set.tar.xz" || { echo "Set extraction failed; use rollback B" >&2; exit 1; }
-done
-mkdir /var/update/REV-etc
-tar -xpJf "$new/etc.tar.xz" -C /var/update/REV-etc
-[ -f "$new/xetc.tar.xz" ] && tar -xpJf "$new/xetc.tar.xz" -C /var/update/REV-etc
-etcupdate -s /var/update/REV-etc
-postinstall -s /var/update/REV-etc check
-```
-
-`-U` unlinks each file before it writes the new one; running programs keep the old file.
-In `etcupdate`, keep the installed `rc.conf`, `modules.conf`, `wpa_supplicant.conf`, SSH host keys and local accounts.
-Merge only reviewed upstream changes.
-Run `postinstall -s /var/update/REV-etc fix ITEM` only for reviewed items, then repeat `check`.
-Files that the new sets no longer contain stay installed; `postinstall -s /var/update/REV-etc check obsolete` lists them.
-
-Reboot so that services load the new libraries.
-Repeat the stage 1 checks and confirm existing services and packages start.
-With X11, run `X -version` and `xdpyinfo -version`; start X only with a display attached.
-Keep the backup and the staged bundle until the build is accepted.
+For a profile with additional sets, use the same backup and configuration merge. Install the selected `comp` and X11 payloads.
+Stage `xetc` with `etc` before merging. Keep local access and the diagnostic boot files.
+After reboot, repeat the stage 1 checks. With X11, check `X -version` and `xdpyinfo -version`; start X with the display attached.
+Use [rollback B](#rollback-b-userland) for a failed userland replacement and restore the matching kernel when the station ABI changes.
 
 ## Rollback A: kernel bundle
 
