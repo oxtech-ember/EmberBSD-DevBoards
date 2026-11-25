@@ -18,7 +18,8 @@ Select the set for the installed board and boot mode. The Zero 4 graphics set co
 
 Use artifact ID `os-boot-aarch64-ember64-orangepi-zero3w-e120f07b8276e317` in the [shared download procedure](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/installed-system-update.md#select-and-fetch-the-release).
 In the verified archive, check the board boot files with its `SHA256` list. Keep the installed diagnostic entry.
-The minimal headless profile also needs the matching `base` and `etc` sets before any boot file changes.
+Before changing boot files, obtain the [matching minimal AArch64 userland sets](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/aarch64-base-update.md#published-minimal-userland-sets).
+A minimal headless installation uses `base` and `etc`.
 
 ## Required inputs
 
