@@ -14,6 +14,27 @@ The new kernel rejects old MLME requests; the new WPA backend also requires the 
 Do not restart networking between these installation stages.
 For a cohort that retains the installed network ABI, kernel-first boot verification remains applicable.
 
+## Download the normal boot set
+
+The signed EmberBSD channel provides a normal boot set for the Zero 3W at OS revision `e120f07b8276e317e7bcb549de2816d0b49f5d84`.
+It contains the raw and ELF kernels, four matching modules, both normal board trees and the shared U-Boot script.
+Select the set for the installed board and boot mode. The Zero 4 graphics set contains a different device tree.
+
+With native SDK client 0.26 or later, download the archive into a working directory on FFS.
+The client checks the channel signature and the archive digest. An ordinary user can run this step.
+
+```sh
+work=$(mktemp -d "$HOME/zero3w-update.XXXXXXXX") || exit 1
+cd "$work" || exit 1
+/usr/pkg/bin/python3.15 -I /usr/local/libexec/ember-sdk.pyz \
+    --config /usr/local/etc/ember-sdk.json fetch-artifact \
+    --artifact os-boot-aarch64-ember64-orangepi-zero3w-e120f07b8276e317 \
+    --output boot.tar.xz || exit 1
+tar -xpf boot.tar.xz && cksum -a sha256 -c SHA256
+```
+
+Keep the installed diagnostic entry. Obtain the matching OS sets before writing any boot file.
+
 ## Required inputs
 
 Use one recorded build cohort from a single EmberBSD commit, called `REV` below.
