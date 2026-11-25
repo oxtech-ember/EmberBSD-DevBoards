@@ -1,8 +1,28 @@
 # Update an installed Zero 3W
 
 Use the [installed system update procedure](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/installed-system-update.md) for package and OS updates.
-This profile supplies the normal boot files, activation, hardware checks and recovery path for microSD with vendor U-Boot.
-It applies to the Zero 3W boot entry and its diagnostic entry. Commands below run on the board unless they name the serial console.
+For OS updates on microSD with vendor U-Boot, select the procedure for the card's layout.
+
+## Two-slot microSD
+
+For a fresh card, select `-h a733-update` in the [A733 image builder](https://github.com/oxtech-ember/EmberBSD/blob/3d0b206a05076152a7f8a50515b7c892a2a730db/distrib/utils/embedded/README.a733.md#zero-3w-two-slot-image).
+This profile uses the normal Zero 3W device tree and the stock `EMBER64` kernel with the minimal no-LDAP userland and `comp`.
+The card has an EFI boot partition and two FFS roots, `netbsd-root` (A) and `ember-root-b` (B).
+Reserve both roots for the OS. The updater rebuilds the inactive root for each trial.
+
+On an existing card that already has these dedicated wedges, boot slot A and keep the normal `boot.scr`.
+Follow the [one-time setup for an existing card](https://github.com/oxtech-ember/EmberBSD/blob/3d0b206a05076152a7f8a50515b7c892a2a730db/distrib/utils/embedded/README.a733.md#enable-an-already-provisioned-card).
+Keep a separate recovery card and a verified [UART0 connection](boot.md#uart0-console-v12).
+
+For routine updates, follow the [automatic OS service procedure](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/automatic-system-update.md).
+The service selects the signed release for the installed profile. U-Boot and the A733 watchdog control the trial boot.
+Physical qualification of trial confirmation and watchdog rollback on Zero 3W is pending.
+See the [update architecture](https://github.com/oxtech-ember/EmberBSD-Docs/blob/main/modules/updates.md#os-delivery-and-activation) for service settings and data shared between slots.
+
+## Manual update on single-root microSD
+
+The remaining steps apply to a single FFS root with a normal boot entry and an independent diagnostic entry.
+Commands run on the board unless they name the serial console.
 
 Select the installation order from the kernel/userland ABI contract before writing files.
 For the [versioned station association lifecycle](https://github.com/oxtech-ember/EmberBSD/blob/a46527bded5d83a3c9eb294d764a0d89837b129c/sys/net80211/association-lifecycle.md), install the matching kernel, modules and WPA userland before the first reboot.
@@ -10,7 +30,7 @@ The new kernel rejects old MLME requests; the new WPA backend also requires the 
 Do not restart networking between these installation stages.
 For a cohort that retains the installed network ABI, kernel-first boot verification remains applicable.
 
-## Download the normal boot set
+### Download the normal boot set
 
 The signed EmberBSD channel provides a normal boot set for the Zero 3W at OS revision `e120f07b8276e317e7bcb549de2816d0b49f5d84`.
 It contains the raw and ELF kernels, four matching modules, both normal board trees and the shared U-Boot script.
@@ -21,7 +41,7 @@ In the verified archive, check the board boot files with its `SHA256` list. Keep
 Before changing boot files, obtain the [matching minimal AArch64 userland sets](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/aarch64-base-update.md#published-minimal-userland-sets).
 A minimal headless installation uses `base` and `etc`.
 
-## Required inputs
+### Required inputs
 
 Use one recorded build cohort from a single EmberBSD commit, called `REV` below.
 Record its kernel release as `KREL` (for example, `11.1`) and the installed `uname -r` as `OLD_KREL`.
@@ -53,7 +73,7 @@ A Clang build must contain no GCC runtime file and no `GCC:` identification stri
 GCC-profile text in `/usr/share/mk` is build-system data, not a GCC dependency.
 `boot.scr` is a 64-byte legacy image header, an 8-byte script length table and the unchanged script text.
 
-## Before any change
+### Before any change
 
 1. Connect the [UART0 console](boot.md#uart0-console-v12) and confirm the U-Boot prompt after interrupting autoboot.
    Wi-Fi is not a recovery path.
@@ -87,7 +107,7 @@ GCC-profile text in `/usr/share/mk` is build-system data, not a GCC dependency.
 
 Stop if any check fails. Repair the recovery route before updating the normal bundle.
 
-### Space
+#### Space
 
 `/boot` is a small FAT volume.
 The update stages the new `netbsd.img` beside the old one before a rename.
@@ -100,7 +120,7 @@ Its free space must exceed twice the uncompressed size of the installed sets plu
 The X11 sets add several hundred MB.
 `tar -tvJf SET` lists the uncompressed sizes.
 
-## Stage and verify the bundle
+### Stage and verify the bundle
 
 Copy the downloaded archives into a new root-owned directory with mode 0700 on FFS.
 Use `/var/update/REV` below for this directory. Recheck each copy against its own authenticated release record.
@@ -135,7 +155,7 @@ rm /var/update/REV-root/dev/null
 
 `c 0 2` matches the board's existing `/dev/null`; check it with `ls -l /dev/null`.
 
-## Back up
+### Back up
 
 Keep backups readable by root only. `/etc` contains SSH host keys and Wi-Fi credentials.
 `OLD` is the revision from `kern.buildinfo`.
@@ -172,7 +192,7 @@ Copy the backup directory to another host over SSH.
 Verify the copied files with the same SHA256 list before continuing.
 Keep the previous recovery copies in `/stand` and `/boot` until the new build is accepted.
 
-## Stage 1: kernel, modules, DTBs and boot script
+### Stage 1: kernel, modules, DTBs and boot script
 
 Write the kernel image under a temporary name and rename it after `cmp` succeeds.
 Renames on the same FAT volume need no extra space.
@@ -218,7 +238,7 @@ After the reboot:
 Use [rollback A](#rollback-a-kernel-bundle) if any check fails.
 If userland was also replaced for an ABI transition, restore its matching previous cohort with [rollback B](#rollback-b-userland) before booting normally.
 
-## Stage 2: userland
+### Stage 2: userland
 
 Follow the [native set installation procedure](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/installed-system-update.md#native-set-installation) for base files and configuration.
 After a kernel-first reboot, reopen the original staging directories and load the saved selection as the common procedure describes.
@@ -230,7 +250,7 @@ Stage `xetc` with `etc` before merging. Keep local access and the diagnostic boo
 After reboot, repeat the stage 1 checks. With X11, check `X -version` and `xdpyinfo -version`; start X with the display attached.
 Use [rollback B](#rollback-b-userland) for a failed userland replacement and restore the matching kernel when the station ABI changes.
 
-## Rollback A: kernel bundle
+### Rollback A: kernel bundle
 
 If the normal boot fails, interrupt U-Boot on the serial console.
 Boot the previous files in single-user mode, so that `rc` loads no new module into the old kernel.
@@ -274,7 +294,7 @@ When `KREL` differs from `OLD_KREL`, the old release's module directory was left
 For an ABI transition, if the new userland is still installed, restore the previous userland with rollback B before rebooting normally.
 Then confirm that `kern.buildinfo` reports `EmberBSD:OLD`.
 
-## Rollback B: userland
+### Rollback B: userland
 
 Boot to single-user mode and mount `/` read-write.
 Use only `/rescue` tools, because the dynamic userland can be inconsistent.

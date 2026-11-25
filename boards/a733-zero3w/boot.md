@@ -6,6 +6,7 @@ The boards share silicon but do not expose the same Ethernet hardware.
 Follow the shared [U-Boot image and entry contract](../../bootloaders/u-boot-native-image.md).
 For FAT storage, also read the [filesystem startup checks](../../bootloaders/fat-boot-volume.md).
 Keep firmware, DTB, kernel and storage assumptions explicit when adapting a custom board.
+For updates, identify the [two-slot or single-root microSD layout](update.md) before choosing a boot entry.
 
 A separate recovery card and a verified serial connection provide recovery independent of Wi-Fi.
 Use the UART0 wiring below for the documented V1.2 board.
@@ -21,7 +22,7 @@ The normal Zero 3W DTB requests GPU startup at 600 MHz after the root mount, bef
 Single-user mode cannot prevent this startup. A spare kernel that uses the normal DTB is not an observe-only recovery path.
 For diagnosis, use a separate DTB that selects observe-only mode for both GPU and display.
 Select that DTB through an independent loader entry before kernel execution.
-Verify access to that entry through the actual loader before updating the normal bundle. The [update recipe](update.md) lists the checks.
+Verify access to that entry through the actual loader before updating the normal bundle. The [single-root update checks](update.md#before-any-change) cover this entry.
 Check that a failed diagnostic entry cannot silently continue into normal boot.
 A mode variable or a saved DTB file alone does not establish an independent recovery route.
 
