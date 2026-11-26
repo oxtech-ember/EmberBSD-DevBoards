@@ -1,0 +1,159 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-ethernet-dma-media-irq",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4; Allwinner A733; YT8531 PHY; direct 1000BASE-T full-duplex link to an arm64 macOS peer."
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 trial D boot image",
+      "revision": "6b5d618ba16f1a657e3fc72057f662de6130fcd5",
+      "sha256": "7fb7a35f900aeeb3ad07951f14f7143cd31a61fbced849f03c0f447089859df5",
+      "reference": null
+    },
+    {
+      "name": "Paired graphics DTB",
+      "revision": null,
+      "sha256": "5781d28284368f6990ece23be55fd231426f3d28599809926d169274423c83b9",
+      "reference": null
+    },
+    {
+      "name": "ESnet iperf3 source",
+      "revision": "3.22.1",
+      "sha256": "de018b5252e2a7068c89fac8b35a295d83334f2b7814aa9532a2a8107b04a4a9",
+      "reference": null
+    }
+  ],
+  "scenario": "Read cached hardware feature words and the installed DMA-tag choice. Poll SIOCGIFMEDIA from one process once per second during an IPv4 receive TCP flow. Repeat matched 8-second receive streams with the EQOS interrupt assigned to CPU0, CPU6, and restored CPU0.",
+  "expected": "Observe the programmed DMA tag, stable live media queries, and interrupt counts from only the assigned CPU for each trial.",
+  "observed": "HW_FEATURE0 was 0x0a7d71f7 and HW_FEATURE1 was 0x01024146. ADDR64 decoded to 40 bits. The driver did not install its 32-bit subregion. All 90 scheduled media ioctls returned active without errors. EQOS interruptions moved to CPU6 and returned to CPU0. Global busdma bounced mbuf loads, read bounces, and write bounces remained zero in these receive streams.",
+  "duration_seconds": 95,
+  "measurements": [
+    {
+      "name": "hardware-address-width",
+      "value": 40,
+      "unit": "bits"
+    },
+    {
+      "name": "installed-32-bit-driver-tag",
+      "value": 0,
+      "unit": "boolean"
+    },
+    {
+      "name": "available-physical-memory",
+      "value": 4256194560,
+      "unit": "bytes"
+    },
+    {
+      "name": "media-pulses",
+      "value": 90,
+      "unit": "requests"
+    },
+    {
+      "name": "active-media-pulses",
+      "value": 90,
+      "unit": "requests"
+    },
+    {
+      "name": "media-ioctl-errors",
+      "value": 0,
+      "unit": "errors"
+    },
+    {
+      "name": "media-ioctl-p50",
+      "value": 0.388,
+      "unit": "ms"
+    },
+    {
+      "name": "media-ioctl-p95",
+      "value": 1.599,
+      "unit": "ms"
+    },
+    {
+      "name": "media-ioctl-max",
+      "value": 1.737,
+      "unit": "ms"
+    },
+    {
+      "name": "media-max-sample-gap",
+      "value": 1.0112,
+      "unit": "s"
+    },
+    {
+      "name": "rx-throughput-during-media-pulse",
+      "value": 650.034,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "rx-largest-reporting-window",
+      "value": 110.002,
+      "unit": "ms"
+    },
+    {
+      "name": "rx-zero-windows-ge-80ms",
+      "value": 0,
+      "unit": "windows"
+    },
+    {
+      "name": "cpu0-before-interrupt-delta-cpu0",
+      "value": 913073,
+      "unit": "interrupts"
+    },
+    {
+      "name": "cpu0-before-interrupt-delta-cpu6",
+      "value": 0,
+      "unit": "interrupts"
+    },
+    {
+      "name": "cpu0-before-tcp-rx",
+      "value": 922.669,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu6-interrupt-delta-cpu0",
+      "value": 0,
+      "unit": "interrupts"
+    },
+    {
+      "name": "cpu6-interrupt-delta-cpu6",
+      "value": 1076587,
+      "unit": "interrupts"
+    },
+    {
+      "name": "cpu6-tcp-rx",
+      "value": 937.232,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu0-restored-interrupt-delta-cpu0",
+      "value": 916316,
+      "unit": "interrupts"
+    },
+    {
+      "name": "cpu0-restored-interrupt-delta-cpu6",
+      "value": 0,
+      "unit": "interrupts"
+    },
+    {
+      "name": "cpu0-restored-tcp-rx",
+      "value": 922.402,
+      "unit": "Mbit/s"
+    }
+  ],
+  "limits": [
+    "The hardware width and absence of the driver's 32-bit tag do not identify every downstream DMA window.",
+    "Media duration includes process scheduling. The largest TCP reporting window was 110 ms. Shorter receive gaps remain unresolved.",
+    "Interrupt placement and throughput are measurements on one board. No persistent affinity is qualified."
+  ],
+  "source_refs": [
+    "os-zero4-reference"
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-ethernet-tx-ioc",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4; Allwinner A733; YT8531 PHY; direct 1000BASE-T full-duplex link to an arm64 macOS peer."
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 trial D boot image",
+      "revision": "6b5d618ba16f1a657e3fc72057f662de6130fcd5",
+      "sha256": "7fb7a35f900aeeb3ad07951f14f7143cd31a61fbced849f03c0f447089859df5",
+      "reference": null
+    },
+    {
+      "name": "Paired graphics DTB",
+      "revision": null,
+      "sha256": "5781d28284368f6990ece23be55fd231426f3d28599809926d169274423c83b9",
+      "reference": null
+    },
+    {
+      "name": "ESnet iperf3 source",
+      "revision": "3.22.1",
+      "sha256": "de018b5252e2a7068c89fac8b35a295d83334f2b7814aa9532a2a8107b04a4a9",
+      "reference": null
+    }
+  ],
+  "scenario": "Set the transmit interrupt interval to 8 and leave RX interrupt policy at default. Compare short IPv4 streams to default. Run 512 individual 512-byte UDP request/echo pairs and an additional single datagram.",
+  "expected": "Reduce transmit interrupt rate with comparable IPv4 transmit throughput. Observe completion of the final packet and the queue idle state.",
+  "observed": "TCP transmit was 936.90 Mbit/s at default and 933.62 Mbit/s at interval 8. EQOS interrupts decreased from about 79,523 to 27,296 per second. All 512 echo pairs and the single datagram completed. A local queue sample reported zero outstanding TX descriptors after both runs.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "default-software-tx-receiver-throughput",
+      "value": 936.9,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-tx-eqos-irqs",
+      "value": 79523.3,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "default-software-rx-receiver-throughput",
+      "value": 914.38,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-rx-eqos-irqs",
+      "value": 100947.3,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "default-software-udp-tx-receiver-throughput",
+      "value": 299.86,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-udp-tx-eqos-irqs",
+      "value": 22739.9,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "default-software-udp-rx-receiver-throughput",
+      "value": 298.88,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-udp-rx-eqos-irqs",
+      "value": 23051.0,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "tx-ioc-tx-receiver-throughput",
+      "value": 933.62,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "tx-ioc-tx-eqos-irqs",
+      "value": 27296.0,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "tx-ioc-rx-receiver-throughput",
+      "value": 886.19,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "tx-ioc-rx-eqos-irqs",
+      "value": 94536.1,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "tx-ioc-udp-tx-receiver-throughput",
+      "value": 299.65,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "tx-ioc-udp-tx-eqos-irqs",
+      "value": 22308.5,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "tx-ioc-udp-rx-receiver-throughput",
+      "value": 298.58,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "tx-ioc-udp-rx-eqos-irqs",
+      "value": 22414.4,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "tx-packets",
+      "value": 512,
+      "unit": "datagrams"
+    },
+    {
+      "name": "tx-p50-ms",
+      "value": 0.4122,
+      "unit": "ms"
+    },
+    {
+      "name": "tx-p95-ms",
+      "value": 0.5432,
+      "unit": "ms"
+    },
+    {
+      "name": "tx-max-ms",
+      "value": 3.1517,
+      "unit": "ms"
+    },
+    {
+      "name": "tx-tx-idle",
+      "value": 1,
+      "unit": "boolean"
+    },
+    {
+      "name": "tx-single-packets",
+      "value": 1,
+      "unit": "datagrams"
+    },
+    {
+      "name": "tx-single-p50-ms",
+      "value": 0.4671,
+      "unit": "ms"
+    },
+    {
+      "name": "tx-single-p95-ms",
+      "value": 0.4671,
+      "unit": "ms"
+    },
+    {
+      "name": "tx-single-max-ms",
+      "value": 0.4671,
+      "unit": "ms"
+    },
+    {
+      "name": "tx-single-tx-idle",
+      "value": 1,
+      "unit": "boolean"
+    },
+    {
+      "name": "post-tx-packets",
+      "value": 512,
+      "unit": "datagrams"
+    },
+    {
+      "name": "post-tx-p50-ms",
+      "value": 0.4022,
+      "unit": "ms"
+    },
+    {
+      "name": "post-tx-p95-ms",
+      "value": 0.5527,
+      "unit": "ms"
+    },
+    {
+      "name": "post-tx-max-ms",
+      "value": 7.2959,
+      "unit": "ms"
+    },
+    {
+      "name": "post-tx-tx-idle",
+      "value": 1,
+      "unit": "boolean"
+    }
+  ],
+  "limits": [
+    "The single-datagram capture includes IPv6 neighbor discovery before the idle sample. It does not prove retirement without another packet.",
+    "The 512-pair capture contains no later board-MAC traffic after its final echo within the observed tail.",
+    "This scoped result does not qualify combining RX and TX moderation or changing the global default."
+  ],
+  "source_refs": [
+    "os-zero4-reference"
+  ]
+}

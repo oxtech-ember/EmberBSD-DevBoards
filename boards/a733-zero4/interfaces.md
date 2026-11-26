@@ -37,6 +37,9 @@ The [gigabit Ethernet baseline](evidence/ethernet-baseline.json) records TCP thr
 The [MDIO lock test](evidence/ethernet-mdio-lock.json) records paced echo timings and ten-minute receive runs with concurrent PHY queries.
 The [interrupt affinity test](evidence/ethernet-irq-affinity.json) compares TCP and UDP transfers on CPU0 and CPU6.
 The [Qt render loop comparison](evidence/plasma-qt-render-loop.json) measures Qt swaps and HDMI framebuffer changes with the threaded and basic loops.
+The [stock graphics profile test](evidence/graphics-720872134.json) records 2000 consecutive flips, both Qt workloads and the NPU output.
+The [EQOS hardware and interrupt test](evidence/ethernet-dma-media-irq.json) records DMA address width, PHY query times and interrupt counts per CPU.
+Separate tests cover the [receive watchdog](evidence/ethernet-rx-riwt.json), [transmit interrupt interval](evidence/ethernet-tx-ioc.json) and [IPv4 checksums](evidence/ethernet-ipv4-checksum.json).
 In a separate Qt/Vulkan test, the window produced approximately 1 to 1.3
 `frameSwapped` signals per second with KWin blur enabled. With blur disabled,
 it produced approximately 12 to 13. This result applies to the tested workload.

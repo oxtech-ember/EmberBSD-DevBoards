@@ -1,0 +1,214 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-ethernet-ipv4-checksum",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4; Allwinner A733; YT8531 PHY; direct 1000BASE-T full-duplex link to an arm64 macOS peer."
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 trial D boot image",
+      "revision": "6b5d618ba16f1a657e3fc72057f662de6130fcd5",
+      "sha256": "7fb7a35f900aeeb3ad07951f14f7143cd31a61fbced849f03c0f447089859df5",
+      "reference": null
+    },
+    {
+      "name": "Paired graphics DTB",
+      "revision": null,
+      "sha256": "5781d28284368f6990ece23be55fd231426f3d28599809926d169274423c83b9",
+      "reference": null
+    },
+    {
+      "name": "ESnet iperf3 source",
+      "revision": "3.22.1",
+      "sha256": "de018b5252e2a7068c89fac8b35a295d83334f2b7814aa9532a2a8107b04a4a9",
+      "reference": null
+    }
+  ],
+  "scenario": "Enable ordinary IPv4 header and TCP/UDP receive checksum flags. Run direct IPv4 TCP and UDP in both directions. In a distinct software, explicitly gated UDP transmit, and restored-software test, capture two checksum vectors on the receiving peer.",
+  "expected": "Deliver the IPv4 streams and keep valid wire checksums. Confirm target hardware UDP submissions only in the explicitly enabled phase.",
+  "observed": "All streams completed and target TCP and UDP bad-checksum counters remained unchanged at zero. The peer captured eight computed-zero vectors encoded as 0xffff and eight controls encoded as 0xfffe in every phase. Hardware UDP transmit submissions were 0, 16, 0.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "default-software-tx-receiver-throughput",
+      "value": 936.9,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-tx-eqos-irqs",
+      "value": 79523.3,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "default-software-rx-receiver-throughput",
+      "value": 914.38,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-rx-eqos-irqs",
+      "value": 100947.3,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "default-software-udp-tx-receiver-throughput",
+      "value": 299.86,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-udp-tx-eqos-irqs",
+      "value": 22739.9,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "default-software-udp-rx-receiver-throughput",
+      "value": 298.88,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-udp-rx-eqos-irqs",
+      "value": 23051.0,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "checksum-ipv4-tx-receiver-throughput",
+      "value": 918.13,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "checksum-ipv4-tx-eqos-irqs",
+      "value": 77312.0,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "checksum-ipv4-rx-receiver-throughput",
+      "value": 925.03,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "checksum-ipv4-rx-eqos-irqs",
+      "value": 108293.9,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "checksum-ipv4-udp-tx-receiver-throughput",
+      "value": 299.87,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "checksum-ipv4-udp-tx-eqos-irqs",
+      "value": 22908.9,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "checksum-ipv4-udp-rx-receiver-throughput",
+      "value": 299.41,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "checksum-ipv4-udp-rx-eqos-irqs",
+      "value": 22452.1,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "software-a-udp-hardware-submissions",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a-computed-zero-wire-0xffff",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a-nonzero-wire-0xfffe",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "hardware-udp-hardware-submissions",
+      "value": 16,
+      "unit": "datagrams"
+    },
+    {
+      "name": "hardware-computed-zero-wire-0xffff",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "hardware-nonzero-wire-0xfffe",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a2-udp-hardware-submissions",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a2-computed-zero-wire-0xffff",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a2-nonzero-wire-0xfffe",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "default-software-tx-target-iperf-cpu",
+      "value": 44.932,
+      "unit": "percent"
+    },
+    {
+      "name": "default-software-rx-target-iperf-cpu",
+      "value": 96.018,
+      "unit": "percent"
+    },
+    {
+      "name": "default-software-udp-tx-target-iperf-cpu",
+      "value": 13.856,
+      "unit": "percent"
+    },
+    {
+      "name": "default-software-udp-rx-target-iperf-cpu",
+      "value": 14.214,
+      "unit": "percent"
+    },
+    {
+      "name": "checksum-ipv4-tx-target-iperf-cpu",
+      "value": 48.261,
+      "unit": "percent"
+    },
+    {
+      "name": "checksum-ipv4-rx-target-iperf-cpu",
+      "value": 75.7,
+      "unit": "percent"
+    },
+    {
+      "name": "checksum-ipv4-udp-tx-target-iperf-cpu",
+      "value": 23.205,
+      "unit": "percent"
+    },
+    {
+      "name": "checksum-ipv4-udp-rx-target-iperf-cpu",
+      "value": 14.341,
+      "unit": "percent"
+    }
+  ],
+  "limits": [
+    "The IPv4 transmit UDP canary is explicit and was restored off. This is a narrow positive-vector result.",
+    "An intentionally omitted UDP checksum was not captured. IPv6 traffic from earlier trials does not exercise these IPv4 offloads.",
+    "Short iperf process CPU measurements do not establish a consistent lower system CPU cost. No global offload default is qualified."
+  ],
+  "source_refs": [
+    "os-zero4-reference"
+  ]
+}

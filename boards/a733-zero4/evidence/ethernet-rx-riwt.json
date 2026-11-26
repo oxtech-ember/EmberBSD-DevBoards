@@ -1,0 +1,214 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-ethernet-rx-riwt",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4; Allwinner A733; YT8531 PHY; direct 1000BASE-T full-duplex link to an arm64 macOS peer."
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 trial D boot image",
+      "revision": "6b5d618ba16f1a657e3fc72057f662de6130fcd5",
+      "sha256": "7fb7a35f900aeeb3ad07951f14f7143cd31a61fbced849f03c0f447089859df5",
+      "reference": null
+    },
+    {
+      "name": "Paired graphics DTB",
+      "revision": null,
+      "sha256": "5781d28284368f6990ece23be55fd231426f3d28599809926d169274423c83b9",
+      "reference": null
+    },
+    {
+      "name": "ESnet iperf3 source",
+      "revision": "3.22.1",
+      "sha256": "de018b5252e2a7068c89fac8b35a295d83334f2b7814aa9532a2a8107b04a4a9",
+      "reference": null
+    }
+  ],
+  "scenario": "Set RX interrupt watchdog to 64 with TX interrupt policy at default. Compare four 8-second IPv4 streams to default and run 512 individual 512-byte UDP request/echo pairs before, during and after the setting.",
+  "expected": "Receive isolated UDP packets without subsequent test traffic, observe non-IOC processing, and reduce receive interrupt rate.",
+  "observed": "All UDP sequences were returned in the three phases. During the trial 366 non-IOC receive frames were counted and none of the 512 request-to-echo windows contained other captured ingress. TCP receive increased from 914.38 to 923.76 Mbit/s while EQOS interrupts decreased from about 100,947 to 63,482 per second.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "default-software-tx-receiver-throughput",
+      "value": 936.9,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-tx-eqos-irqs",
+      "value": 79523.3,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "default-software-rx-receiver-throughput",
+      "value": 914.38,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-rx-eqos-irqs",
+      "value": 100947.3,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "default-software-udp-tx-receiver-throughput",
+      "value": 299.86,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-udp-tx-eqos-irqs",
+      "value": 22739.9,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "default-software-udp-rx-receiver-throughput",
+      "value": 298.88,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "default-software-udp-rx-eqos-irqs",
+      "value": 23051.0,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "rx-riwt-tx-receiver-throughput",
+      "value": 869.04,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "rx-riwt-tx-eqos-irqs",
+      "value": 72660.2,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "rx-riwt-rx-receiver-throughput",
+      "value": 923.76,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "rx-riwt-rx-eqos-irqs",
+      "value": 63481.6,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "rx-riwt-udp-tx-receiver-throughput",
+      "value": 299.69,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "rx-riwt-udp-tx-eqos-irqs",
+      "value": 21684.8,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "rx-riwt-udp-rx-receiver-throughput",
+      "value": 299.22,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "rx-riwt-udp-rx-eqos-irqs",
+      "value": 20642.4,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "idle-packets",
+      "value": 512,
+      "unit": "datagrams"
+    },
+    {
+      "name": "idle-p50-ms",
+      "value": 0.3044,
+      "unit": "ms"
+    },
+    {
+      "name": "idle-p95-ms",
+      "value": 0.4496,
+      "unit": "ms"
+    },
+    {
+      "name": "idle-max-ms",
+      "value": 5.5841,
+      "unit": "ms"
+    },
+    {
+      "name": "idle-tx-idle",
+      "value": 1,
+      "unit": "boolean"
+    },
+    {
+      "name": "riwt-packets",
+      "value": 512,
+      "unit": "datagrams"
+    },
+    {
+      "name": "riwt-p50-ms",
+      "value": 0.3126,
+      "unit": "ms"
+    },
+    {
+      "name": "riwt-p95-ms",
+      "value": 0.4462,
+      "unit": "ms"
+    },
+    {
+      "name": "riwt-max-ms",
+      "value": 5.2138,
+      "unit": "ms"
+    },
+    {
+      "name": "riwt-tx-idle",
+      "value": 1,
+      "unit": "boolean"
+    },
+    {
+      "name": "post-riwt-packets",
+      "value": 512,
+      "unit": "datagrams"
+    },
+    {
+      "name": "post-riwt-p50-ms",
+      "value": 0.3492,
+      "unit": "ms"
+    },
+    {
+      "name": "post-riwt-p95-ms",
+      "value": 0.4661,
+      "unit": "ms"
+    },
+    {
+      "name": "post-riwt-max-ms",
+      "value": 0.9232,
+      "unit": "ms"
+    },
+    {
+      "name": "post-riwt-tx-idle",
+      "value": 1,
+      "unit": "boolean"
+    },
+    {
+      "name": "rx-non-ioc-descriptors",
+      "value": 366,
+      "unit": "frames"
+    },
+    {
+      "name": "probe-windows-without-other-captured-ingress",
+      "value": 512,
+      "unit": "windows"
+    }
+  ],
+  "limits": [
+    "The board-MAC capture observed other ingress between test windows. No causal attribution to an individual descriptor was recorded.",
+    "These measurements cover one setting at a time. Combined moderation, repeated throughput A/B/A and production defaults are unqualified.",
+    "The interrupt reduction observed here was about 37 percent."
+  ],
+  "source_refs": [
+    "os-zero4-reference"
+  ]
+}
