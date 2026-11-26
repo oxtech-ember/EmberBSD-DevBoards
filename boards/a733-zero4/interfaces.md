@@ -34,6 +34,8 @@ A [paired MDIO comparison](evidence/plasma-hdmi-mdio.json) measured a lower
 95th percentile for native KMS intervals. It also records two Plasma workloads
 and a bidirectional Gigabit Ethernet transfer.
 The [gigabit Ethernet baseline](evidence/ethernet-baseline.json) records TCP throughput, UDP loss and interrupt rates with Plasma locked and stopped.
+The [MDIO lock test](evidence/ethernet-mdio-lock.json) records paced echo timings and ten-minute receive runs with concurrent PHY queries.
+The [interrupt affinity test](evidence/ethernet-irq-affinity.json) compares TCP and UDP transfers on CPU0 and CPU6.
 In a separate Qt/Vulkan test, the window produced approximately 1 to 1.3
 `frameSwapped` signals per second with KWin blur enabled. With blur disabled,
 it produced approximately 12 to 13. This result applies to the tested workload.

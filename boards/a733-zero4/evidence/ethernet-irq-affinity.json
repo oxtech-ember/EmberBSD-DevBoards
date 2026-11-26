@@ -1,0 +1,198 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-ethernet-irq-affinity",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, Motorcomm YT8531, direct 1000baseT full duplex"
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 boot image 093192ef2",
+      "revision": "093192ef2320b47a1bd0206e7e9cc84364f7b334",
+      "sha256": "cf2028395c43c4699ce8a1fff8026ce39038c5fe3d7a7fb82c7f6a9ebdbe9653",
+      "reference": null
+    },
+    {
+      "name": "Installed device tree",
+      "revision": null,
+      "sha256": "5781d28284368f6990ece23be55fd231426f3d28599809926d169274423c83b9",
+      "reference": null
+    },
+    {
+      "name": "ESnet iperf3 source",
+      "revision": "3.22.1",
+      "sha256": "de018b5252e2a7068c89fac8b35a295d83334f2b7814aa9532a2a8107b04a4a9",
+      "reference": null
+    }
+  ],
+  "measurements": [
+    {
+      "name": "cpu0-initial-tcp-tx-receiver",
+      "value": 907.4557,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu0-initial-tcp-tx-interrupt-rate",
+      "value": 88153.18725,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu0-initial-tcp-rx-receiver",
+      "value": 786.86437,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu0-initial-tcp-rx-interrupt-rate",
+      "value": 92813.33333,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu0-initial-udp-tx-receiver",
+      "value": 299.84592,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu0-initial-udp-tx-interrupt-rate",
+      "value": 25946.56032,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu0-initial-udp-tx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "cpu0-initial-udp-rx-receiver",
+      "value": 298.35774,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu0-initial-udp-rx-interrupt-rate",
+      "value": 26024.82552,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu0-initial-udp-rx-lost",
+      "value": 1426,
+      "unit": "datagrams"
+    },
+    {
+      "name": "cpu6-tcp-tx-receiver",
+      "value": 927.94151,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu6-tcp-tx-interrupt-rate",
+      "value": 90341.33466,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu6-tcp-rx-receiver",
+      "value": 927.11559,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu6-tcp-rx-interrupt-rate",
+      "value": 123789.45274,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu6-udp-tx-receiver",
+      "value": 295.86758,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu6-udp-tx-interrupt-rate",
+      "value": 25627.06693,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu6-udp-tx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "cpu6-udp-rx-receiver",
+      "value": 299.23001,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu6-udp-rx-interrupt-rate",
+      "value": 26040.37886,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu6-udp-rx-lost",
+      "value": 667,
+      "unit": "datagrams"
+    },
+    {
+      "name": "cpu0-restored-tcp-tx-receiver",
+      "value": 822.58594,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu0-restored-tcp-tx-interrupt-rate",
+      "value": 83507.16418,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu0-restored-tcp-rx-receiver",
+      "value": 783.21873,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu0-restored-tcp-rx-interrupt-rate",
+      "value": 90425.97015,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu0-restored-udp-tx-receiver",
+      "value": 299.57846,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu0-restored-udp-tx-interrupt-rate",
+      "value": 25983.34995,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu0-restored-udp-tx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "cpu0-restored-udp-rx-receiver",
+      "value": 298.74953,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "cpu0-restored-udp-rx-interrupt-rate",
+      "value": 26022.0339,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "cpu0-restored-udp-rx-lost",
+      "value": 1086,
+      "unit": "datagrams"
+    }
+  ],
+  "duration_seconds": null,
+  "source_refs": [
+    "os-zero4-reference"
+  ],
+  "scenario": "Use the MDIO-lock kernel and one unlocked Plasma session. Route the EQOS interrupt to CPU0, then CPU6, then CPU0 with intrctl. Run 10-second TCP streams and 300 Mbit/s UDP streams in both directions for each route. Verify the restored interrupt affinity after the last run.",
+  "expected": "Compare receive throughput, interrupt rates and UDP loss at each CPU selection, and restore the initial affinity.",
+  "observed": "TCP receive throughput measured 787, 927 and 783 Mbit/s in run order. At 300 Mbit/s, UDP receive loss measured 1426, 667 and 1086 datagrams. The final interrupt configuration selected CPU0. The desktop session stayed active.",
+  "limits": [
+    "One pass per CPU setting was measured. The results cover this gigabit link and workload.",
+    "The echo sender missed the specified 10 ms pacing in all three runs. They do not establish the effect of the CPU selection on round-trip latency."
+  ]
+}

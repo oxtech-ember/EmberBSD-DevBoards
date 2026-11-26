@@ -1,0 +1,480 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-ethernet-mdio-lock",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "inconclusive",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, Motorcomm YT8531, direct 1000baseT full duplex"
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 boot image 59290e709",
+      "revision": "59290e709fda952587af7bd6a78a20d26e14824c",
+      "sha256": "0c4ed96b6174bfef33e0bf915a5322510187b7877919866350747f215bc9c3e9",
+      "reference": null
+    },
+    {
+      "name": "EMBER64 boot image 093192ef2",
+      "revision": "093192ef2320b47a1bd0206e7e9cc84364f7b334",
+      "sha256": "cf2028395c43c4699ce8a1fff8026ce39038c5fe3d7a7fb82c7f6a9ebdbe9653",
+      "reference": null
+    },
+    {
+      "name": "Installed device tree",
+      "revision": null,
+      "sha256": "5781d28284368f6990ece23be55fd231426f3d28599809926d169274423c83b9",
+      "reference": null
+    },
+    {
+      "name": "ESnet iperf3 source",
+      "revision": "3.22.1",
+      "sha256": "de018b5252e2a7068c89fac8b35a295d83334f2b7814aa9532a2a8107b04a4a9",
+      "reference": null
+    }
+  ],
+  "measurements": [
+    {
+      "name": "before-plasma-on-ping-reply-count",
+      "value": 1000,
+      "unit": "replies"
+    },
+    {
+      "name": "before-plasma-on-ping-tx-span-s",
+      "value": 9.99112,
+      "unit": "s"
+    },
+    {
+      "name": "before-plasma-on-ping-p50-ms",
+      "value": 0.1629,
+      "unit": "ms"
+    },
+    {
+      "name": "before-plasma-on-ping-p95-ms",
+      "value": 0.21742,
+      "unit": "ms"
+    },
+    {
+      "name": "before-plasma-on-ping-p99-ms",
+      "value": 0.23858,
+      "unit": "ms"
+    },
+    {
+      "name": "before-plasma-on-ping-max-ms",
+      "value": 1.50737,
+      "unit": "ms"
+    },
+    {
+      "name": "before-plasma-on-tcp-tx-receiver",
+      "value": 878.88508,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "before-plasma-on-tcp-tx-interrupt-rate",
+      "value": 84425.39841,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "before-plasma-on-tcp-rx-receiver",
+      "value": 791.11772,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "before-plasma-on-tcp-rx-interrupt-rate",
+      "value": 93683.05085,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "before-plasma-on-udp-tx-receiver",
+      "value": 299.63447,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "before-plasma-on-udp-tx-interrupt-rate",
+      "value": 25941.07677,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "before-plasma-on-udp-tx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "before-plasma-on-udp-rx-receiver",
+      "value": 299.83704,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "before-plasma-on-udp-rx-interrupt-rate",
+      "value": 26015.25424,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "before-plasma-on-udp-rx-lost",
+      "value": 143,
+      "unit": "datagrams"
+    },
+    {
+      "name": "before-plasma-off-ping-reply-count",
+      "value": 1000,
+      "unit": "replies"
+    },
+    {
+      "name": "before-plasma-off-ping-tx-span-s",
+      "value": 9.99102,
+      "unit": "s"
+    },
+    {
+      "name": "before-plasma-off-ping-p50-ms",
+      "value": 0.19015,
+      "unit": "ms"
+    },
+    {
+      "name": "before-plasma-off-ping-p95-ms",
+      "value": 0.23054,
+      "unit": "ms"
+    },
+    {
+      "name": "before-plasma-off-ping-p99-ms",
+      "value": 0.25525,
+      "unit": "ms"
+    },
+    {
+      "name": "before-plasma-off-ping-max-ms",
+      "value": 0.39804,
+      "unit": "ms"
+    },
+    {
+      "name": "before-plasma-off-tcp-tx-receiver",
+      "value": 927.81385,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "before-plasma-off-tcp-tx-interrupt-rate",
+      "value": 89949.8008,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "before-plasma-off-tcp-rx-receiver",
+      "value": 799.37261,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "before-plasma-off-tcp-rx-interrupt-rate",
+      "value": 94246.01594,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "before-plasma-off-udp-tx-receiver",
+      "value": 299.65857,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "before-plasma-off-udp-tx-interrupt-rate",
+      "value": 25948.15553,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "before-plasma-off-udp-tx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "before-plasma-off-udp-rx-receiver",
+      "value": 299.65053,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "before-plasma-off-udp-rx-interrupt-rate",
+      "value": 26016.45065,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "before-plasma-off-udp-rx-lost",
+      "value": 304,
+      "unit": "datagrams"
+    },
+    {
+      "name": "after-plasma-on-ping-reply-count",
+      "value": 1000,
+      "unit": "replies"
+    },
+    {
+      "name": "after-plasma-on-ping-tx-span-s",
+      "value": 9.99104,
+      "unit": "s"
+    },
+    {
+      "name": "after-plasma-on-ping-p50-ms",
+      "value": 0.17344,
+      "unit": "ms"
+    },
+    {
+      "name": "after-plasma-on-ping-p95-ms",
+      "value": 0.2125,
+      "unit": "ms"
+    },
+    {
+      "name": "after-plasma-on-ping-p99-ms",
+      "value": 0.23571,
+      "unit": "ms"
+    },
+    {
+      "name": "after-plasma-on-ping-max-ms",
+      "value": 0.8105,
+      "unit": "ms"
+    },
+    {
+      "name": "after-plasma-on-tcp-tx-receiver",
+      "value": 902.88158,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "after-plasma-on-tcp-tx-interrupt-rate",
+      "value": 87833.96414,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "after-plasma-on-tcp-rx-receiver",
+      "value": 767.85732,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "after-plasma-on-tcp-rx-interrupt-rate",
+      "value": 89932.23881,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "after-plasma-on-udp-tx-receiver",
+      "value": 299.72722,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "after-plasma-on-udp-tx-interrupt-rate",
+      "value": 25898.70518,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "after-plasma-on-udp-tx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "after-plasma-on-udp-rx-receiver",
+      "value": 299.56529,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "after-plasma-on-udp-rx-interrupt-rate",
+      "value": 25968.29511,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "after-plasma-on-udp-rx-lost",
+      "value": 385,
+      "unit": "datagrams"
+    },
+    {
+      "name": "after-plasma-off-ping-reply-count",
+      "value": 1000,
+      "unit": "replies"
+    },
+    {
+      "name": "after-plasma-off-ping-tx-span-s",
+      "value": 9.99125,
+      "unit": "s"
+    },
+    {
+      "name": "after-plasma-off-ping-p50-ms",
+      "value": 0.18794,
+      "unit": "ms"
+    },
+    {
+      "name": "after-plasma-off-ping-p95-ms",
+      "value": 0.22125,
+      "unit": "ms"
+    },
+    {
+      "name": "after-plasma-off-ping-p99-ms",
+      "value": 0.23633,
+      "unit": "ms"
+    },
+    {
+      "name": "after-plasma-off-ping-max-ms",
+      "value": 0.31371,
+      "unit": "ms"
+    },
+    {
+      "name": "after-plasma-off-tcp-tx-receiver",
+      "value": 683.58107,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "after-plasma-off-tcp-tx-interrupt-rate",
+      "value": 74753.48606,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "after-plasma-off-tcp-rx-receiver",
+      "value": 797.21083,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "after-plasma-off-tcp-rx-interrupt-rate",
+      "value": 91869.32271,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "after-plasma-off-udp-tx-receiver",
+      "value": 299.78071,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "after-plasma-off-udp-tx-interrupt-rate",
+      "value": 25954.83549,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "after-plasma-off-udp-tx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "after-plasma-off-udp-rx-receiver",
+      "value": 299.94431,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "after-plasma-off-udp-rx-interrupt-rate",
+      "value": 26028.21535,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "after-plasma-off-udp-rx-lost",
+      "value": 49,
+      "unit": "datagrams"
+    },
+    {
+      "name": "stress-plasma-on-seconds",
+      "value": 600.01565,
+      "unit": "s"
+    },
+    {
+      "name": "stress-plasma-on-receiver-mbps",
+      "value": 801.03,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "stress-plasma-on-polls-active",
+      "value": 490,
+      "unit": "queries"
+    },
+    {
+      "name": "stress-plasma-on-media-polls",
+      "value": 490,
+      "unit": "queries"
+    },
+    {
+      "name": "stress-plasma-on-pulse-max-gap-s-at-hz100",
+      "value": 19.08,
+      "unit": "s"
+    },
+    {
+      "name": "stress-plasma-on-observed-link-nonup-events",
+      "value": 0,
+      "unit": "events"
+    },
+    {
+      "name": "stress-plasma-on-iperf-max-interval-s",
+      "value": 5.14591,
+      "unit": "s"
+    },
+    {
+      "name": "stress-plasma-on-zero-rx-measured-intervals-at-least-900ms",
+      "value": 0,
+      "unit": "intervals"
+    },
+    {
+      "name": "stress-plasma-on-new-phy-timeouts",
+      "value": 0,
+      "unit": "messages"
+    },
+    {
+      "name": "stress-plasma-off-seconds",
+      "value": 600.01831,
+      "unit": "s"
+    },
+    {
+      "name": "stress-plasma-off-receiver-mbps",
+      "value": 810.59267,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "stress-plasma-off-polls-active",
+      "value": 500,
+      "unit": "queries"
+    },
+    {
+      "name": "stress-plasma-off-media-polls",
+      "value": 500,
+      "unit": "queries"
+    },
+    {
+      "name": "stress-plasma-off-pulse-max-gap-s-at-hz100",
+      "value": 8.59,
+      "unit": "s"
+    },
+    {
+      "name": "stress-plasma-off-observed-link-nonup-events",
+      "value": 0,
+      "unit": "events"
+    },
+    {
+      "name": "stress-plasma-off-iperf-max-interval-s",
+      "value": 1.15531,
+      "unit": "s"
+    },
+    {
+      "name": "stress-plasma-off-zero-rx-measured-intervals-at-least-900ms",
+      "value": 0,
+      "unit": "intervals"
+    },
+    {
+      "name": "stress-plasma-off-new-phy-timeouts",
+      "value": 0,
+      "unit": "messages"
+    },
+    {
+      "name": "after-plasma-off-tcp-tx-repeat-1",
+      "value": 656.25283,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "after-plasma-off-tcp-tx-repeat-2",
+      "value": 651.50399,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "after-plasma-off-tcp-tx-repeat-3",
+      "value": 739.11432,
+      "unit": "Mbit/s"
+    }
+  ],
+  "duration_seconds": null,
+  "source_refs": [
+    "os-zero4-reference"
+  ],
+  "scenario": "Compare two kernels on the same board and device tree. The second kernel separates MDIO, media and packet locks. Send 1000 paced IPv6 echo requests from the peer. Run 10-second TCP and 300 Mbit/s UDP streams in both directions. Test with Plasma unlocked and with its service stopped. Then use the second kernel for two 600-second TCP receive tests with concurrent media queries.",
+  "expected": "Observe an active link without new PHY timeouts or interrupted receive intervals during periodic media queries.",
+  "observed": "All four paced runs received 1000 replies. Each took 9.99 seconds to send the requests. Every completed media query reported an active link. The link monitor recorded no down events. Both stress runs received traffic in every reported interval. The probes missed some sample deadlines.",
+  "limits": [
+    "The longest gaps between media probes were 19.08 s with Plasma running and 8.59 s with it stopped. Throughput bins also exceeded one second. These measurements cannot exclude shorter pauses.",
+    "Board TCP transmit throughput with Plasma stopped fell from 928 to 684 Mbit/s. Three further runs on the second kernel gave 656, 652 and 739 Mbit/s. Each sampled CPU0 at zero idle. The scheduler did not hold the sender on the same CPU across the two kernels. The cause remains open.",
+    "Only the second kernel ran the 600-second stress test. TX and RX describe the direction at the board. Each throughput result covers one connection. This test did not measure display frame rate."
+  ]
+}
