@@ -1,0 +1,239 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-plasma-qt-render-loop-c",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733"
+  },
+  "inputs": [
+    {
+      "name": "C netbsd.img, EMBER64",
+      "revision": "093192ef2320b47a1bd0206e7e9cc84364f7b334",
+      "sha256": "cf2028395c43c4699ce8a1fff8026ce39038c5fe3d7a7fb82c7f6a9ebdbe9653",
+      "reference": null
+    },
+    {
+      "name": "Paired HDMI and PowerVR IRQ device tree",
+      "revision": null,
+      "sha256": "5781d28284368f6990ece23be55fd231426f3d28599809926d169274423c83b9",
+      "reference": null
+    },
+    {
+      "name": "Stock libkwin.so.6.8.3",
+      "revision": "6.8.3",
+      "sha256": "dd0e1c3de7f312f873d842c2a0a6dbbf41602c7c7a3532e005c6a66358c4a770",
+      "reference": null
+    },
+    {
+      "name": "Stock PowerVR Vulkan driver",
+      "revision": "26.3.0",
+      "sha256": "f5044bba8fe8521c75b7b54eeacd7c86bb73c424a1d023fd9a2c38b040cfb147",
+      "reference": null
+    }
+  ],
+  "scenario": "Run one stock Plasma Wayland session and three consecutive warmed Qt Quick Vulkan fixed-size window scenes for 60 seconds each. Qt scene graph loop is automatic, basic, then automatic. Independently observe CRTC framebuffer IDs around each display vblank.",
+  "expected": "Identify whether changing the client renderer loop increases Qt swaps and HDMI CRTC framebuffer changes towards 60 per second.",
+  "observed": "The basic loop did not improve swap rate or observed framebuffer change rate. All three scenes retained 33 ms median Qt intervals and about 30 swaps and CRTC changes per second. The normal Plasma session remained running after the probe.",
+  "duration_seconds": 180,
+  "measurements": [
+    {
+      "name": "hdmi-active-width",
+      "value": 1280,
+      "unit": "pixels"
+    },
+    {
+      "name": "hdmi-active-height",
+      "value": 1024,
+      "unit": "pixels"
+    },
+    {
+      "name": "hdmi-mode-refresh",
+      "value": 60.02,
+      "unit": "Hz"
+    },
+    {
+      "name": "a-qml-seconds",
+      "value": 60,
+      "unit": "s"
+    },
+    {
+      "name": "a-frame-swapped",
+      "value": 1802,
+      "unit": "signals"
+    },
+    {
+      "name": "a-frame-swapped-hz",
+      "value": 30.033,
+      "unit": "signals/s"
+    },
+    {
+      "name": "a-frame-swapped-p50-ms",
+      "value": 33,
+      "unit": "ms"
+    },
+    {
+      "name": "a-frame-swapped-p95-ms",
+      "value": 38,
+      "unit": "ms"
+    },
+    {
+      "name": "a-crtc-samples",
+      "value": 1200,
+      "unit": "samples"
+    },
+    {
+      "name": "a-crtc-changes",
+      "value": 599,
+      "unit": "changes"
+    },
+    {
+      "name": "a-crtc-span-seconds",
+      "value": 19.976799,
+      "unit": "s"
+    },
+    {
+      "name": "a-crtc-changes-hz",
+      "value": 29.985,
+      "unit": "changes/s"
+    },
+    {
+      "name": "a-observer-interval-p50-ms",
+      "value": 16.6612,
+      "unit": "ms"
+    },
+    {
+      "name": "a-observer-interval-max-ms",
+      "value": 17.2226,
+      "unit": "ms"
+    },
+    {
+      "name": "b-qml-seconds",
+      "value": 60,
+      "unit": "s"
+    },
+    {
+      "name": "b-frame-swapped",
+      "value": 1800,
+      "unit": "signals"
+    },
+    {
+      "name": "b-frame-swapped-hz",
+      "value": 30.0,
+      "unit": "signals/s"
+    },
+    {
+      "name": "b-frame-swapped-p50-ms",
+      "value": 33,
+      "unit": "ms"
+    },
+    {
+      "name": "b-frame-swapped-p95-ms",
+      "value": 39,
+      "unit": "ms"
+    },
+    {
+      "name": "b-crtc-samples",
+      "value": 1200,
+      "unit": "samples"
+    },
+    {
+      "name": "b-crtc-changes",
+      "value": 599,
+      "unit": "changes"
+    },
+    {
+      "name": "b-crtc-span-seconds",
+      "value": 19.976797,
+      "unit": "s"
+    },
+    {
+      "name": "b-crtc-changes-hz",
+      "value": 29.985,
+      "unit": "changes/s"
+    },
+    {
+      "name": "b-observer-interval-p50-ms",
+      "value": 16.6612,
+      "unit": "ms"
+    },
+    {
+      "name": "b-observer-interval-max-ms",
+      "value": 17.0023,
+      "unit": "ms"
+    },
+    {
+      "name": "a2-qml-seconds",
+      "value": 60,
+      "unit": "s"
+    },
+    {
+      "name": "a2-frame-swapped",
+      "value": 1799,
+      "unit": "signals"
+    },
+    {
+      "name": "a2-frame-swapped-hz",
+      "value": 29.983,
+      "unit": "signals/s"
+    },
+    {
+      "name": "a2-frame-swapped-p50-ms",
+      "value": 33,
+      "unit": "ms"
+    },
+    {
+      "name": "a2-frame-swapped-p95-ms",
+      "value": 40,
+      "unit": "ms"
+    },
+    {
+      "name": "a2-crtc-samples",
+      "value": 1200,
+      "unit": "samples"
+    },
+    {
+      "name": "a2-crtc-changes",
+      "value": 599,
+      "unit": "changes"
+    },
+    {
+      "name": "a2-crtc-span-seconds",
+      "value": 19.976791,
+      "unit": "s"
+    },
+    {
+      "name": "a2-crtc-changes-hz",
+      "value": 29.985,
+      "unit": "changes/s"
+    },
+    {
+      "name": "a2-observer-interval-p50-ms",
+      "value": 16.661,
+      "unit": "ms"
+    },
+    {
+      "name": "a2-observer-interval-max-ms",
+      "value": 18.1465,
+      "unit": "ms"
+    }
+  ],
+  "limits": [
+    "The tested Qt setting applies only to the application process. This does not test KWin render or commit scheduling.",
+    "frameSwapped is a Qt signal. The read-only CRTC framebuffer observations cover the whole HDMI output and do not prove optical panel updates or client-specific presentations.",
+    "The CRTC observer internally rejected zero and non-increasing DRM sequence values. This binary did not print the individual sequence values. Timing and framebuffer IDs remain available from each public WAIT_VBLANK observation.",
+    "The controller checked zero DRM and display engine faults before and after all three arms. Individual arm fault counts were not acquired.",
+    "The result applies to one fixed-size Qt scene on this exact kernel and display profile."
+  ],
+  "source_refs": [
+    "os-a733-hdmi-native",
+    "os-zero4-graphics-mode",
+    "os-zero4-pvr-render-check"
+  ]
+}
