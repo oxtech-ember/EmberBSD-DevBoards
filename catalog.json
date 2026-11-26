@@ -79,6 +79,14 @@
         "esp32s31-mosaico"
       ],
       "profile": "boards/esp-mosaico/board.json"
+    },
+    {
+      "id": "rk3506b-lyra-zero-w",
+      "aliases": [
+        "luckfox-lyra-zero-w",
+        "lyra-zero-w"
+      ],
+      "profile": "boards/rk3506b-lyra-zero-w/board.json"
     }
   ],
   "carriers": [
@@ -115,6 +123,10 @@
     {
       "id": "espressif-esp32-s31",
       "document": "socs/esp32-s31.md"
+    },
+    {
+      "id": "rockchip-rk3506b",
+      "document": "socs/rockchip-rk3506b.md"
     }
   ]
 }

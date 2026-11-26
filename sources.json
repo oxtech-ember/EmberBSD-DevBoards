@@ -2336,6 +2336,94 @@
       "revision": "e120f07b8276e317e7bcb549de2816d0b49f5d84",
       "reviewed_at": "2026-11-24",
       "sha256": null
+    },
+    {
+      "id": "lyra-zero-w-spec",
+      "title": "Luckfox Lyra Zero W specifications",
+      "url": "https://www.luckfox.com/Luckfox-Lyra-Zero-W",
+      "revision": null,
+      "reviewed_at": "2026-11-26",
+      "sha256": null
+    },
+    {
+      "id": "lyra-zero-w-schematic",
+      "title": "Luckfox Lyra Zero W schematic",
+      "url": "https://github.com/LuckfoxTECH/Luckfox-Lyra-docs/blob/4d6c261ba996937b420e19494a6ff8e5cd0ccbbb/Hardware/Schematic/Luckfox-Lyra-Zero-W.pdf",
+      "revision": "4d6c261ba996937b420e19494a6ff8e5cd0ccbbb",
+      "reviewed_at": "2026-11-26",
+      "sha256": "84b0a55e122bad78997ee38e0acee51605a3532f2635d33c68cc014a2a445e88"
+    },
+    {
+      "id": "rk3506b-datasheet",
+      "title": "Rockchip RK3506B data sheet, revision 1.0",
+      "url": "https://github.com/LuckfoxTECH/Luckfox-Lyra-docs/blob/4d6c261ba996937b420e19494a6ff8e5cd0ccbbb/Docs/datasheets/Rockchip-RK3506B-Datasheet.pdf",
+      "revision": "4d6c261ba996937b420e19494a6ff8e5cd0ccbbb",
+      "reviewed_at": "2026-11-26",
+      "sha256": "f5d39c3a1a5c7fb6705263f006f7bbea73e018ed8be982edcd403f435de0bf6a"
+    },
+    {
+      "id": "lyra-sdk-snapshot",
+      "title": "Community snapshot of the Luckfox RK3506 vendor SDK",
+      "url": "https://github.com/EliSofke/LuckfoxLyraSDK/tree/6dcbca0d8a517d79bd8fb4205ca4966b136604bc",
+      "revision": "6dcbca0d8a517d79bd8fb4205ca4966b136604bc",
+      "reviewed_at": "2026-11-26",
+      "sha256": null
+    },
+    {
+      "id": "lyra-zero-w-radio",
+      "title": "Luckfox Lyra Zero W Wi-Fi, Bluetooth and antenna selection",
+      "url": "https://wiki.luckfox.com/Luckfox-Lyra/Luckfox-Lyra-Zero-W/WIFI-BT/",
+      "revision": null,
+      "reviewed_at": "2026-11-26",
+      "sha256": null
+    },
+    {
+      "id": "lyra-recovery",
+      "title": "Luckfox model-specific boot media and recovery modes",
+      "url": "https://wiki.luckfox.com/Luckfox-Lyra/Getting-Started/overview/",
+      "revision": null,
+      "reviewed_at": "2026-11-26",
+      "sha256": null
+    },
+    {
+      "id": "lyra-ubuntu-sd",
+      "title": "Community Ubuntu Zero W microSD image, October 2026",
+      "url": "https://github.com/onepiecettt/luckfox-ubuntu-images/releases/download/v0.0.2/Ubuntu_Luckfox_Lyra_Zero_W_MicroSD_202610.img.xz",
+      "revision": "v0.0.2 (release asset SHA256)",
+      "reviewed_at": "2026-11-26",
+      "sha256": "72b62d7ffdd18cae17013af04d7139c4f1095ab125f27701c39cf2ed9cd78c35"
+    },
+    {
+      "id": "lyra-armbian-uboot",
+      "title": "Armbian Zero W U-Boot package for armhf",
+      "url": "https://apt.armbian.com/pool/main/l/linux-u-boot-luckfox-lyra-zero-w-vendor/linux-u-boot-luckfox-lyra-zero-w-vendor_26.8.3_armhf__2025.10-rc4-S0b8e-P9381-H8371-V40a4-B5da4-R448a.deb",
+      "revision": "26.8.3",
+      "reviewed_at": "2026-11-26",
+      "sha256": "4507e3db849f3c1297d6334cbc61e9cb596750988bc95511faad969e7edbc9f5"
+    },
+    {
+      "id": "lyra-kwiboo-uboot",
+      "title": "Zero W U-Boot source configuration before Armbian patches",
+      "url": "https://github.com/Kwiboo/u-boot-rockchip/blob/0b8e25bd9e16e8043b600e8f49b926b95572dc47/configs/luckfox-lyra-zero-w-rk3506b_defconfig",
+      "revision": "0b8e25bd9e16e8043b600e8f49b926b95572dc47",
+      "reviewed_at": "2026-11-26",
+      "sha256": null
+    },
+    {
+      "id": "os-aicwf-sdio-match",
+      "title": "EmberBSD AIC8800D80 SDIO attachment",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/5789d27f00d9c1694b5085730b067e32cd846915/sys/dev/sdmmc/if_aicwf.c",
+      "revision": "5789d27f00d9c1694b5085730b067e32cd846915",
+      "reviewed_at": "2026-11-26",
+      "sha256": null
+    },
+    {
+      "id": "rk3506-trm-boot",
+      "title": "Rockchip RK3506 TRM, part 1, section 1.2, boot sequence",
+      "url": "https://rockchip.fr/Rockchip%20RK3506%20TRM%20V1.2%20Part1.pdf",
+      "revision": "V1.2",
+      "reviewed_at": "2026-11-26",
+      "sha256": "df5693bd964cfdff28dbaae4ee620fe21c2b718a945e902dac26b8e96f8b7344"
     }
   ]
 }

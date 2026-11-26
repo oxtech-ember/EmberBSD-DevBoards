@@ -12,6 +12,7 @@ The catalog is an index. Each board profile names its sources and the limits of 
 
 | Reference platform | Useful starting point | Read first |
 |---|---|---|
+| Rockchip RK3506B SBC, vendor model `Luckfox Lyra Zero W` | Recoverable microSD boot, UART0 and USB Wi-Fi integration | [Profile](boards/rk3506b-lyra-zero-w/README.md) |
 | HamGeek PlutoSDR Nano | Zynq-7010 and AD9363 receive research | [Profile](boards/hamgeek-plutosdr-nano/README.md) |
 | BCM2710A1 SBC, vendor model `Zero 2 W` | Compact native-firmware boot and wireless research | [Profile](boards/bcm2710-zero2w/README.md) |
 | Allwinner A733 SBC, vendor model `Zero 4` | Gigabit Ethernet, thermal and wireless integration | [Profile](boards/a733-zero4/README.md) |

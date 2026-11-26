@@ -1,0 +1,67 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "lyra-zero-w-sd-boot-inputs",
+  "target_id": "rk3506b-lyra-zero-w",
+  "recorded_at": "2026-11-26",
+  "layer": "source",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Luckfox Lyra Zero W, RK3506B, microSD"
+  },
+  "inputs": [
+    {
+      "name": "Armbian armhf U-Boot package",
+      "revision": "26.8.3",
+      "sha256": "4507e3db849f3c1297d6334cbc61e9cb596750988bc95511faad969e7edbc9f5",
+      "reference": null
+    },
+    {
+      "name": "u-boot-rockchip.bin",
+      "revision": "Armbian 26.8.3, U-Boot 2025.10-rc4 with patches",
+      "sha256": "7a53323b5f2948caa377ae28a3d7a2971e2c28d5d4bb4328a473f0a1ccaba815",
+      "reference": null
+    },
+    {
+      "name": "First 4194304 compressed bytes of Ubuntu_Luckfox_Lyra_Zero_W_MicroSD_202610.img.xz",
+      "revision": "v0.0.2",
+      "sha256": "e7a4e8fbadfddac6f03d1236d25d45768b470654a4ed15dd4c0407a85a89859a",
+      "reference": null
+    },
+    {
+      "name": "Ubuntu card boot FIT, fdt payload",
+      "revision": "v0.0.2",
+      "sha256": "f36052f9ed687873840b2c5a6ffaffa25c3778e2dfbac7c7b3b8b668dc79a511",
+      "reference": null
+    }
+  ],
+  "scenario": "Extract the Armbian package without installing it. Inspect its control data, loader configuration and install script. Decompress the published Ubuntu XZ prefix. Read the primary GPT, ID block magic and both FIT headers. Hash the selected DTB and compare it with its FIT hash.",
+  "expected": "The Armbian package selects the Zero W defconfig and a single image at LBA 64. The Ubuntu card follows the vendor GPT offsets and names the exact board.",
+  "observed": "The Armbian package contains a combined image and selects bootflow scan -lb. The Ubuntu image has RKNS at LBA 64, U-Boot and OP-TEE at 8192, the OS FIT at 16384 and rootfs at 65536. The DTB model is Luckfox Lyra Zero W and its SHA256 matches the FIT.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "armbian-combined-image-size",
+      "value": 9074176,
+      "unit": "bytes"
+    },
+    {
+      "name": "linux-fit-dtb-size",
+      "value": 68801,
+      "unit": "bytes"
+    }
+  ],
+  "limits": [
+    "Package and file inspection only. Board revision, ROM boot order, cold boot, EmberBSD kernel and radio operation were not tested.",
+    "Only the Ubuntu image prefix and embedded board DTB were read. The full compressed asset SHA256 in the source catalog comes from its publisher."
+  ],
+  "source_refs": [
+    "lyra-armbian-uboot",
+    "lyra-kwiboo-uboot",
+    "lyra-ubuntu-sd",
+    "lyra-sdk-snapshot"
+  ]
+}

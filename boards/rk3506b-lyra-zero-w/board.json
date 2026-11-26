@@ -1,0 +1,77 @@
+{
+  "format_version": 1,
+  "id": "rk3506b-lyra-zero-w",
+  "kind": "sbc",
+  "vendor_model": "Luckfox Lyra Zero W",
+  "soc": "rockchip-rk3506b",
+  "board_revision": null,
+  "reviewed_at": "2026-11-26",
+  "carrier_ids": [],
+  "documents": {
+    "overview": "boards/rk3506b-lyra-zero-w/README.md",
+    "boot": "boards/rk3506b-lyra-zero-w/boot.md",
+    "interfaces": "boards/rk3506b-lyra-zero-w/interfaces.md",
+    "design": "boards/rk3506b-lyra-zero-w/design.md"
+  },
+  "source_refs": [
+    "lyra-zero-w-spec",
+    "lyra-zero-w-schematic",
+    "rk3506b-datasheet",
+    "lyra-sdk-snapshot",
+    "lyra-zero-w-radio",
+    "lyra-recovery",
+    "lyra-ubuntu-sd",
+    "lyra-armbian-uboot",
+    "lyra-kwiboo-uboot",
+    "os-aicwf-sdio-match",
+    "rk3506-trm-boot"
+  ],
+  "capabilities": [
+    {
+      "id": "sd-boot",
+      "hardware": "present",
+      "emberbsd": "unknown",
+      "scope": "Two bootloader layouts identified. No physical EmberBSD microSD boot or root mount recorded.",
+      "source_refs": [
+        "lyra-armbian-uboot",
+        "lyra-kwiboo-uboot",
+        "lyra-sdk-snapshot",
+        "lyra-ubuntu-sd",
+        "rk3506-trm-boot"
+      ]
+    },
+    {
+      "id": "console",
+      "hardware": "present",
+      "emberbsd": "unknown",
+      "scope": "UART0 wiring and loader rate identified. EmberBSD console operation needs a target check.",
+      "source_refs": [
+        "lyra-zero-w-schematic",
+        "rk3506b-datasheet",
+        "lyra-sdk-snapshot"
+      ]
+    },
+    {
+      "id": "wifi",
+      "hardware": "present",
+      "emberbsd": "unsupported",
+      "scope": "The onboard USB AIC8800DC needs a USB adapter and DC firmware support in EmberBSD. The current aicwf driver attaches to SDIO AIC8800D80.",
+      "source_refs": [
+        "lyra-zero-w-schematic",
+        "lyra-zero-w-radio",
+        "lyra-sdk-snapshot",
+        "os-aicwf-sdio-match"
+      ]
+    },
+    {
+      "id": "bluetooth",
+      "hardware": "present",
+      "emberbsd": "unknown",
+      "scope": "The USB radio includes Bluetooth 5.2/BLE. No EmberBSD controller or HCI exchange recorded.",
+      "source_refs": [
+        "lyra-zero-w-spec",
+        "lyra-zero-w-radio"
+      ]
+    }
+  ]
+}
