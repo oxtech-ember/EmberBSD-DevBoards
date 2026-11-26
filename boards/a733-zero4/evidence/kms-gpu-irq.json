@@ -1,0 +1,449 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-kms-gpu-irq",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, HDMI 1280 × 1024 at 60.020 Hz"
+  },
+  "inputs": [
+    {
+      "name": "Polling EMBER64 boot image",
+      "revision": "1f75810120de1fe04a5e08400c55abf28a00606b",
+      "sha256": "6e82f2364495703727a7fdbdc7f93b17c955538085bea5f3e54a8506af9645be",
+      "reference": null
+    },
+    {
+      "name": "GPU interrupt EMBER64 boot image",
+      "revision": "59290e709fda952587af7bd6a78a20d26e14824c",
+      "sha256": "0c4ed96b6174bfef33e0bf915a5322510187b7877919866350747f215bc9c3e9",
+      "reference": null
+    },
+    {
+      "name": "Shared graphics DTB",
+      "revision": null,
+      "sha256": "5781d28284368f6990ece23be55fd231426f3d28599809926d169274423c83b9",
+      "reference": null
+    },
+    {
+      "name": "Native KMS test source",
+      "revision": null,
+      "sha256": "b9c4d4e6369dfdc2294d8b07cc9e80268b931aeb2270d4fb6a9799b294e0b5b7",
+      "reference": null
+    },
+    {
+      "name": "Explicit GPU submission test source",
+      "revision": null,
+      "sha256": "3c68325a22324a300a79ffeef819ff679058321da512abe0d1f86298a5e8c625",
+      "reference": null
+    },
+    {
+      "name": "Steady Qt scene",
+      "revision": null,
+      "sha256": "4240912adca548bc67ea8f9863a6967c341b97fb046544e883447e87925ca1f9",
+      "reference": null
+    },
+    {
+      "name": "Resize Qt scene",
+      "revision": null,
+      "sha256": "11749fd64826a5d3bc9fd296a288120ab7e27be87fce01c1c3ceb75eb59d41d4",
+      "reference": null
+    },
+    {
+      "name": "Memory-buffered native KMS test source",
+      "revision": null,
+      "sha256": "5596163bba1806b01ac94f66830d614d43040de354ef441dbf23b68cb7f86cd7",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot each image with the same DTB. Stop Plasma and alternate two CPU-filled dumb buffers for 2000 nonblocking atomic page flips. Repeat with 2000 explicit GPU submissions. Restore the installed KWin and run the previously measured Qt Quick Vulkan scenes. Measure each scene for 60 seconds after warm-up. Compare the kernel GPU submission worker and its interrupt counters.",
+  "expected": "For native KMS, complete 2000 events in about 33 seconds with a median near 16.7 ms and zero DRM and DE errors. With GPU interrupts, observe hardware interrupts, lower submission worker CPU time and no regression in the two Qt interval percentiles.",
+  "observed": "Both kernels completed every native flip. The polling and interrupt images took 34.027 and 34.205 seconds. On the same interrupt image a second native run buffered the event log in memory and paused remote SSH polling. All 1999 event sequence increments were one. The event span was 33.305769 s. Each had 1999 fast dumb-buffer updates and one guarded update. Plasma returned on both boots. The Qt Quick clients used Vulkan on PowerVR and reported about 30 swaps per second. KWin composited with OpenGL ES through Zink on the same GPU. In a separate NPU compute check, each image produced 3456 NPU interrupts and the same reference output digest.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "polling-native-events",
+      "value": 2000,
+      "unit": "events"
+    },
+    {
+      "name": "polling-native-wall",
+      "value": 34.027,
+      "unit": "s"
+    },
+    {
+      "name": "polling-native-event-span",
+      "value": 33.92224,
+      "unit": "s"
+    },
+    {
+      "name": "polling-native-p50",
+      "value": 16.661,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-native-p95",
+      "value": 16.662,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-native-max",
+      "value": 299.899,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-native-missed-fields",
+      "value": 37,
+      "unit": "fields"
+    },
+    {
+      "name": "polling-native-one-field-intervals",
+      "value": 1995,
+      "unit": "intervals"
+    },
+    {
+      "name": "polling-gpu-events",
+      "value": 2000,
+      "unit": "events"
+    },
+    {
+      "name": "polling-gpu-wall",
+      "value": 34.06504993,
+      "unit": "s"
+    },
+    {
+      "name": "polling-gpu-event-span",
+      "value": 34.022208,
+      "unit": "s"
+    },
+    {
+      "name": "polling-gpu-p50",
+      "value": 16.661,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-gpu-p95",
+      "value": 16.662,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-gpu-max",
+      "value": 349.882,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-gpu-missed-fields",
+      "value": 43,
+      "unit": "fields"
+    },
+    {
+      "name": "polling-gpu-one-field-intervals",
+      "value": 1995,
+      "unit": "intervals"
+    },
+    {
+      "name": "polling-qt-steady-swaps",
+      "value": 1799,
+      "unit": "swaps"
+    },
+    {
+      "name": "polling-qt-steady-p50",
+      "value": 33,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-qt-steady-p95",
+      "value": 39,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-qt-steady-submit-worker-cpu",
+      "value": 15.24,
+      "unit": "s"
+    },
+    {
+      "name": "polling-qt-steady-irq-fired",
+      "value": 0,
+      "unit": "count"
+    },
+    {
+      "name": "polling-qt-steady-irq-waits",
+      "value": 0,
+      "unit": "count"
+    },
+    {
+      "name": "polling-qt-steady-irq-timeouts",
+      "value": 0,
+      "unit": "count"
+    },
+    {
+      "name": "polling-qt-steady-irq-faults",
+      "value": 0,
+      "unit": "count"
+    },
+    {
+      "name": "polling-qt-resize-swaps",
+      "value": 1796,
+      "unit": "swaps"
+    },
+    {
+      "name": "polling-qt-resize-p50",
+      "value": 33,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-qt-resize-p95",
+      "value": 39,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-qt-resize-submit-worker-cpu",
+      "value": 15.18,
+      "unit": "s"
+    },
+    {
+      "name": "polling-qt-resize-irq-fired",
+      "value": 0,
+      "unit": "count"
+    },
+    {
+      "name": "polling-qt-resize-irq-waits",
+      "value": 0,
+      "unit": "count"
+    },
+    {
+      "name": "polling-qt-resize-irq-timeouts",
+      "value": 0,
+      "unit": "count"
+    },
+    {
+      "name": "polling-qt-resize-irq-faults",
+      "value": 0,
+      "unit": "count"
+    },
+    {
+      "name": "irq-native-events",
+      "value": 2000,
+      "unit": "events"
+    },
+    {
+      "name": "irq-native-wall",
+      "value": 34.205,
+      "unit": "s"
+    },
+    {
+      "name": "irq-native-event-span",
+      "value": 34.105098,
+      "unit": "s"
+    },
+    {
+      "name": "irq-native-p50",
+      "value": 16.661,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-native-p95",
+      "value": 16.662,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-native-max",
+      "value": 449.854,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-native-missed-fields",
+      "value": 48,
+      "unit": "fields"
+    },
+    {
+      "name": "irq-native-one-field-intervals",
+      "value": 1994,
+      "unit": "intervals"
+    },
+    {
+      "name": "irq-gpu-events",
+      "value": 2000,
+      "unit": "events"
+    },
+    {
+      "name": "irq-gpu-wall",
+      "value": 33.98394672,
+      "unit": "s"
+    },
+    {
+      "name": "irq-gpu-event-span",
+      "value": 33.939284,
+      "unit": "s"
+    },
+    {
+      "name": "irq-gpu-p50",
+      "value": 16.661,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-gpu-p95",
+      "value": 16.663,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-gpu-max",
+      "value": 266.577,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-gpu-missed-fields",
+      "value": 38,
+      "unit": "fields"
+    },
+    {
+      "name": "irq-gpu-one-field-intervals",
+      "value": 1994,
+      "unit": "intervals"
+    },
+    {
+      "name": "irq-qt-steady-swaps",
+      "value": 1800,
+      "unit": "swaps"
+    },
+    {
+      "name": "irq-qt-steady-p50",
+      "value": 33,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-qt-steady-p95",
+      "value": 38,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-qt-steady-submit-worker-cpu",
+      "value": 5.49,
+      "unit": "s"
+    },
+    {
+      "name": "irq-qt-steady-irq-fired",
+      "value": 47539,
+      "unit": "count"
+    },
+    {
+      "name": "irq-qt-steady-irq-waits",
+      "value": 5307,
+      "unit": "count"
+    },
+    {
+      "name": "irq-qt-steady-irq-timeouts",
+      "value": 2043,
+      "unit": "count"
+    },
+    {
+      "name": "irq-qt-steady-irq-faults",
+      "value": 0,
+      "unit": "count"
+    },
+    {
+      "name": "irq-qt-resize-swaps",
+      "value": 1799,
+      "unit": "swaps"
+    },
+    {
+      "name": "irq-qt-resize-p50",
+      "value": 33,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-qt-resize-p95",
+      "value": 38,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-qt-resize-submit-worker-cpu",
+      "value": 5.53,
+      "unit": "s"
+    },
+    {
+      "name": "irq-qt-resize-irq-fired",
+      "value": 47721,
+      "unit": "count"
+    },
+    {
+      "name": "irq-qt-resize-irq-waits",
+      "value": 6748,
+      "unit": "count"
+    },
+    {
+      "name": "irq-qt-resize-irq-timeouts",
+      "value": 2844,
+      "unit": "count"
+    },
+    {
+      "name": "irq-qt-resize-irq-faults",
+      "value": 0,
+      "unit": "count"
+    },
+    {
+      "name": "irq-buffered-native-events",
+      "value": 2000,
+      "unit": "events"
+    },
+    {
+      "name": "irq-buffered-native-wall",
+      "value": 33.408,
+      "unit": "s"
+    },
+    {
+      "name": "irq-buffered-native-event-span",
+      "value": 33.305769,
+      "unit": "s"
+    },
+    {
+      "name": "irq-buffered-native-one-field-intervals",
+      "value": 1999,
+      "unit": "intervals"
+    },
+    {
+      "name": "irq-buffered-native-p50",
+      "value": 16.661,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-buffered-native-p95",
+      "value": 16.662,
+      "unit": "ms"
+    },
+    {
+      "name": "irq-buffered-native-max",
+      "value": 16.672,
+      "unit": "ms"
+    },
+    {
+      "name": "polling-gpu-worker-cpu-per-batch",
+      "value": 1970,
+      "unit": "us"
+    },
+    {
+      "name": "irq-gpu-worker-cpu-per-batch",
+      "value": 1850,
+      "unit": "us"
+    }
+  ],
+  "limits": [
+    "Both images include the same fast display path. Their difference measures GPU interrupt handling. The previous 118.342 s native result comes from an earlier image and test session.",
+    "The native run missed 37 refresh intervals on the polling image and 48 on the interrupt image. Four and five intervals longer than one refresh account for these misses, respectively. The median alone does not establish continuous presentation.",
+    "Qt frameSwapped counts describe the application. The separate CRTC observer polls at a lower rate than the HDMI refresh. Neither measurement gives optical display latency.",
+    "The GPU CPU counters cover the complete workload window. The Qt window includes the warm-up and observation overhead. An IRQ wait can time out without a DRM or DE fault.",
+    "The buffered native run also changed SSH polling. This comparison measures their combined effect. It cannot identify the cause of the periodic pauses.",
+    "The NPU workload ran separately from the graphics workload. Its output SHA-256 was e6e8f6d823cc10b77a6db35de3eb587975dbed440648a536f5819ea790216b59."
+  ],
+  "source_refs": [
+    "os-a733-hdmi-native",
+    "os-zero4-graphics-mode",
+    "os-zero4-npu-native-tile"
+  ]
+}

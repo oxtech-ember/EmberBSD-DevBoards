@@ -12,6 +12,8 @@ frame with the fixed INT8 model. A separate [combined graphics and NPU run](evid
 covers on-demand NPU preparation and two clip runs in an accelerated virtual Plasma session.
 The `normal` loader mode leaves the NPU disabled.
 A [physical Plasma test](evidence/plasma-hdmi.json) verified HDMI output and USB-C pointer input.
+A [KMS and GPU interrupt comparison](evidence/kms-gpu-irq.json) measured 2000 native flips and two Qt scenes.
+One buffered run presented a new buffer at every 60 Hz refresh. The Qt clients reported about 30 swaps/s.
 The board revision is unknown.
 
 Source for the original platform baseline: `os-zero4-reference` in [sources.json](../../sources.json).
