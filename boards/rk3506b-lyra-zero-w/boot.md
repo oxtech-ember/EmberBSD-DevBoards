@@ -40,6 +40,8 @@ Power off before changing the card. Removing the test card restores access to th
 The [ROM normally checks SPI NAND before microSD](../../socs/rockchip-rk3506b.md). The first loader can select another medium.
 On this schematic, BOOT connects to SARADC_IN1. With both media populated, identify the first loader and its selected U-Boot on UART0.
 
+With the slot empty, the factory SPL tried MMC1 and then loaded U-Boot from MTD1. Linux reached its login prompt. [Reset observation](evidence/factory-reset-uart.json)
+
 Luckfox documents USB Loader mode separately from the card reader. With power disconnected, hold BOOT while connecting H3 to the host.
 Release BOOT after the host detects a Loader device. With power already present, hold RESET and BOOT, release RESET, then release BOOT after detection.
 Check the reported mode before choosing an operation. The vendor USB flash path targets the internal SPI NAND.

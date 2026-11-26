@@ -28,7 +28,7 @@ The vendor DTS sets OTG0 to peripheral mode on H3 and OTG1 to host mode.
 OTG1 feeds the CH334F hub (U4). Hub port 1 connects to the radio (U10), port 2 to the USB-C host connector (H1),
 and port 3 to the four-contact USB header (H5). The schematic identifies U10 as `SKI.WB800DCS.2`.
 Luckfox identifies its wireless chip as AIC8800DC. The USB driver matches `a69c:88dc` and the Wi-Fi interface class/subclass/protocol `ff/ff/ff`.
-Record USB descriptors on the target to confirm enumeration. [Schematic](https://github.com/LuckfoxTECH/Luckfox-Lyra-docs/blob/4d6c261ba996937b420e19494a6ff8e5cd0ccbbb/Hardware/Schematic/Luckfox-Lyra-Zero-W.pdf) · [SDK USB driver](https://github.com/EliSofke/LuckfoxLyraSDK/tree/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/external/rkwifibt/drivers/aic8800/aic8800/aic8800_fdrv)
+The factory Linux log shows the hub at 1-1 and a device at 1-1.1. Its wireless service selected AIC8800DC and reported successful initialization. [Reset observation](evidence/factory-reset-uart.json) [Schematic](https://github.com/LuckfoxTECH/Luckfox-Lyra-docs/blob/4d6c261ba996937b420e19494a6ff8e5cd0ccbbb/Hardware/Schematic/Luckfox-Lyra-Zero-W.pdf) · [SDK USB driver](https://github.com/EliSofke/LuckfoxLyraSDK/tree/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/external/rkwifibt/drivers/aic8800/aic8800/aic8800_fdrv)
 
 U12 supplies the radio with 3.3 V from the 5 V system rail. GPIO1_C5 controls `WIFI_PWRKEY` at U10 pin 12 (`WL_DIS#`).
 R77 pulls it high to enable the radio. GPIO1_C7 controls RF switch U9. Low selects the external antenna socket, the default.

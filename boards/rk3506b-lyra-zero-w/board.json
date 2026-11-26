@@ -44,7 +44,7 @@
       "id": "console",
       "hardware": "present",
       "emberbsd": "unknown",
-      "scope": "UART0 wiring and loader rate identified. EmberBSD console operation needs a target check.",
+      "scope": "UART0 carried factory SPL, U-Boot and Linux output through the login prompt. EmberBSD console operation needs a target check.",
       "source_refs": [
         "lyra-zero-w-schematic",
         "rk3506b-datasheet",

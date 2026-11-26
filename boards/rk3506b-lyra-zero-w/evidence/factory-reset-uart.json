@@ -1,0 +1,71 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "lyra-zero-w-factory-reset-uart",
+  "target_id": "rk3506b-lyra-zero-w",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Luckfox Lyra Zero W with 512 MiB DDR3 and 256 MiB Winbond SPI NAND."
+  },
+  "inputs": [
+    {
+      "name": "Installed DDR initialization",
+      "revision": "v1.04, 0ac6b06a19",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Installed SPL and U-Boot",
+      "revision": "2017.09-g9e6285f-dirty, May 24 2025",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Installed Luckfox Linux",
+      "revision": "6.1.99",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "USB-to-TTL receiver",
+      "revision": "FT232R, 1500000 baud, 8N1",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Leave the microSD slot empty. Capture UART0. Press RESET with BOOT released. Read the log through the vendor login prompt.",
+  "expected": "Identify the loader, the selected boot medium, the board model and the USB radio detected by the factory system.",
+  "observed": "SPL tried MMC1, reported an initialization error and tried MTD1. U-Boot reported mtd 1. Linux identified the Luckfox Lyra Zero W and 256 MiB Winbond SPI NAND. DWC2 enumerated a hub and a downstream USB device. The factory Wi-Fi service selected AIC8800DC (a69c:88dc), reported successful initialization and reached the login prompt.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "uart-rate",
+      "value": 1500000,
+      "unit": "baud"
+    },
+    {
+      "name": "ddr-size",
+      "value": 512,
+      "unit": "MiB"
+    },
+    {
+      "name": "spi-nand-size",
+      "value": 256,
+      "unit": "MiB"
+    }
+  ],
+  "limits": [
+    "The observation covers one reset with an empty microSD slot. The board revision was not read.",
+    "An EmberBSD boot, selection of an inserted card, Wi-Fi association and a network login require separate tests."
+  ],
+  "source_refs": [
+    "lyra-zero-w-schematic",
+    "lyra-zero-w-radio",
+    "lyra-sdk-snapshot"
+  ]
+}
