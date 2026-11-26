@@ -1,0 +1,49 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "lyra-zero-w-radio-usb-descriptors",
+  "target_id": "rk3506b-lyra-zero-w",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Luckfox Lyra Zero W with 512 MiB DDR3 and 256 MiB Winbond SPI NAND."
+  },
+  "inputs": [
+    {
+      "name": "Installed Luckfox Linux",
+      "revision": "6.1.99",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "USB device and configuration descriptors",
+      "revision": "USB 2.0, bcdDevice 0100, factory driver active",
+      "sha256": "4b9682c5e5397531c93e2f70630bc84b6438b0698393fc4110b4af6dfde7cf15",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the factory system. From its UART console, read /sys/bus/usb/devices/1-1.1/descriptors and list /sys/class/net.",
+  "expected": "Identify the radio and the interfaces and endpoints that the active factory system exposes.",
+  "observed": "The radio reported a69c:88dc and configuration 1. The Bluetooth function grouped interfaces 0 and 1. Interface 2, alternate setting 0, had class ff/ff/ff and four bulk endpoints. The addresses were 0x01, 0x81, 0x02 and 0x82. All four had a maximum packet size of 512 bytes. The factory system exposed wlan0.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "usb-descriptor-length",
+      "value": 240,
+      "unit": "bytes"
+    }
+  ],
+  "limits": [
+    "The sample covers the radio after the factory driver initialized it. Its descriptors before firmware initialization require another measurement.",
+    "Chip silicon revision, EmberBSD driver attachment and Wi-Fi association require separate checks."
+  ],
+  "source_refs": [
+    "lyra-zero-w-schematic",
+    "lyra-zero-w-radio",
+    "lyra-sdk-snapshot"
+  ]
+}
