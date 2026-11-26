@@ -25,7 +25,8 @@
     "lyra-kwiboo-uboot",
     "os-aicwf-sdio-match",
     "rk3506-trm-boot",
-    "emberbsd-lyra-sd-console"
+    "emberbsd-lyra-sd-console",
+    "emberbsd-aic8800dc-usb-probe"
   ],
   "capabilities": [
     {
@@ -57,14 +58,15 @@
     {
       "id": "wifi",
       "hardware": "present",
-      "emberbsd": "unsupported",
-      "scope": "The ARMv7 kernel enumerated the onboard AIC8800DC on USB as ugen0. A Wi-Fi interface and an association need driver support and a target check.",
+      "emberbsd": "partial",
+      "scope": "On RESET, uaicfw attached to the onboard WLAN USB interface and read the silicon ID, sub-ID and FullMAC version. Wi-Fi association and data transfer require further driver support.",
       "source_refs": [
         "lyra-zero-w-schematic",
         "lyra-zero-w-radio",
         "lyra-sdk-snapshot",
         "os-aicwf-sdio-match",
-        "emberbsd-lyra-sd-console"
+        "emberbsd-lyra-sd-console",
+        "emberbsd-aic8800dc-usb-probe"
       ]
     },
     {

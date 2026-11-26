@@ -2432,6 +2432,14 @@
       "revision": "2e18754663890c4521a77443843fc2346c8c5ae8",
       "reviewed_at": "2026-11-26",
       "sha256": null
+    },
+    {
+      "id": "emberbsd-aic8800dc-usb-probe",
+      "title": "EmberBSD AIC8800DC USB interface identification",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/245c7fd6c06d40560cbff2e0491c400545e17c39/sys/dev/usb/uaicfw.c",
+      "revision": "245c7fd6c06d40560cbff2e0491c400545e17c39",
+      "reviewed_at": "2026-11-26",
+      "sha256": null
     }
   ]
 }

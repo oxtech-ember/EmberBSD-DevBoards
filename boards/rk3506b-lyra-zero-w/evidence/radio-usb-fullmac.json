@@ -1,0 +1,50 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "lyra-zero-w-usb-fullmac-identity",
+  "target_id": "rk3506b-lyra-zero-w",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Luckfox Lyra Zero W, RK3506B, populated USB radio"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD evbarm GENERIC uImage",
+      "revision": "Kernel inputs match 245c7fd6. ARMv7, hard-float userland ABI.",
+      "sha256": "aaa68543efa0c388c4d2d537522401fe0933f3fe005b7d80938c67f88338955a",
+      "reference": null
+    },
+    {
+      "name": "RK3506B Zero W DTB",
+      "revision": "e6bfde18",
+      "sha256": "8a37c29b1da9824a8e17723efd18db6da2fd3b7f82a7ef2ac309046ca5e1de48",
+      "reference": null
+    },
+    {
+      "name": "Armbian U-Boot",
+      "revision": "2025.10-rc4, package 26.8.3",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Start from an EmberBSD console on microSD. Press RESET. Use U-Boot loady on UART0 to receive the kernel into RAM. Compare its byte count and CRC32 with the host file. Boot this kernel with the board DTB and the original FFS root. Read the USB attachment and firmware replies on UART0.",
+  "expected": "The WLAN interface selects uaicfw and returns both silicon identifiers and the FullMAC version.",
+  "observed": "The kernel attached uaicfw0 at hub port 1, configuration 1, interface 2. The radio returned chip ID 0x07, sub-ID 0x01, FullMAC version 0x06040301 and feature bits 0xb011fa5f. The kernel mounted the FFS root on dk1. The UART shell executed a command.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "The run followed a RESET with power connected. It does not establish the radio state after a complete loss of power.",
+    "The test exercised the USB command channel. No Wi-Fi association, DHCP lease or network login was observed."
+  ],
+  "source_refs": [
+    "emberbsd-lyra-sd-console",
+    "emberbsd-aic8800dc-usb-probe",
+    "lyra-zero-w-radio",
+    "lyra-sdk-snapshot"
+  ]
+}
