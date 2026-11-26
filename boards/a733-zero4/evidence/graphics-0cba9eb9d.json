@@ -1,0 +1,172 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-graphics-0cba9eb9d",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, HDMI 1280 × 1024 at 60.020 Hz"
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 U-Boot Image",
+      "revision": "0cba9eb9ddcae4b74d976aec8fc71cbae9dda686",
+      "sha256": "8a94de614fa660660d9458c9587c83a93af35d95cbb9affa80bd9ee5109fbbd2",
+      "reference": null
+    },
+    {
+      "name": "Zero 4 graphics DTB",
+      "revision": null,
+      "sha256": "731c80906fe108aab8f8409e6b50053e361ddb1641433360141a795a98df9abf",
+      "reference": null
+    },
+    {
+      "name": "Installed stock libkwin",
+      "revision": "6.8.3",
+      "sha256": "dd0e1c3de7f312f873d842c2a0a6dbbf41602c7c7a3532e005c6a66358c4a770",
+      "reference": null
+    },
+    {
+      "name": "Installed stock PowerVR Vulkan ICD",
+      "revision": "Mesa 26.3.0",
+      "sha256": "f5044bba8fe8521c75b7b54eeacd7c86bb73c424a1d023fd9a2c38b040cfb147",
+      "reference": null
+    },
+    {
+      "name": "Memory-buffered KMS test source",
+      "revision": null,
+      "sha256": "889dc015018c607fc5e3058c82451d8a5be64a45f2b938cba79a6d1ea6dab3d3",
+      "reference": null
+    },
+    {
+      "name": "Memory-buffered KMS AArch64 executable",
+      "revision": null,
+      "sha256": "ff01edef9e1f51cadf7803f25eeb717b5d387b260e30a7de439c35a5e9cec6ef",
+      "reference": null
+    },
+    {
+      "name": "Steady Qt Quick scene",
+      "revision": null,
+      "sha256": "4240912adca548bc67ea8f9863a6967c341b97fb046544e883447e87925ca1f9",
+      "reference": null
+    },
+    {
+      "name": "Resize Qt Quick scene",
+      "revision": null,
+      "sha256": "11749fd64826a5d3bc9fd296a288120ab7e27be87fce01c1c3ceb75eb59d41d4",
+      "reference": null
+    },
+    {
+      "name": "NPU contour compute executable",
+      "revision": null,
+      "sha256": "bb40467a568e1b1a4ec5e70d887041833f3e48612c604fa32ce41db8155db97c",
+      "reference": null
+    },
+    {
+      "name": "NPU contour input",
+      "revision": null,
+      "sha256": "7a39112dc68833cd57a82b33960aa81e38084b0261cd601e5e5d6c351b92e0cb",
+      "reference": null
+    },
+    {
+      "name": "EMBER64 ELF build output",
+      "revision": "0cba9eb9ddcae4b74d976aec8fc71cbae9dda686",
+      "sha256": "73f1ccf99d2bf0b200705f1909c9e09f9dfcd2ddc457c48d1b88edcf4b3ea90e",
+      "reference": null
+    }
+  ],
+  "duration_seconds": null,
+  "measurements": [
+    {"name": "ordinary-first-flips", "value": 2000, "unit": "frames"},
+    {"name": "ordinary-first-wall", "value": 33.453, "unit": "seconds"},
+    {"name": "ordinary-first-p50", "value": 16.661, "unit": "ms"},
+    {"name": "ordinary-first-p95", "value": 16.662, "unit": "ms"},
+    {"name": "ordinary-first-max", "value": 33.322, "unit": "ms"},
+    {"name": "ordinary-first-sequence-plus-one", "value": 1997, "unit": "intervals"},
+    {"name": "ordinary-first-sequence-plus-two", "value": 2, "unit": "intervals"},
+    {"name": "ordinary-first-missed-fields", "value": 2, "unit": "fields"},
+    {"name": "ordinary-repeat-flips", "value": 2000, "unit": "frames"},
+    {"name": "ordinary-repeat-wall", "value": 33.422, "unit": "seconds"},
+    {"name": "ordinary-repeat-p50", "value": 16.661, "unit": "ms"},
+    {"name": "ordinary-repeat-p95", "value": 16.662, "unit": "ms"},
+    {"name": "ordinary-repeat-max", "value": 16.672, "unit": "ms"},
+    {"name": "ordinary-repeat-sequence-plus-one", "value": 1999, "unit": "intervals"},
+    {"name": "ordinary-repeat-sequence-plus-two", "value": 0, "unit": "intervals"},
+    {"name": "ordinary-repeat-missed-fields", "value": 0, "unit": "fields"},
+    {"name": "qt-steady-frame-swaps", "value": 2695, "unit": "frames"},
+    {"name": "qt-steady-measurement-window", "value": 60, "unit": "seconds"},
+    {"name": "qt-steady-p50", "value": 22, "unit": "ms"},
+    {"name": "qt-steady-p95", "value": 34, "unit": "ms"},
+    {"name": "qt-steady-resize-steps", "value": 0, "unit": "steps"},
+    {"name": "qt-steady-combined-crtc-samples", "value": 900, "unit": "samples"},
+    {"name": "qt-steady-combined-crtc-observed-fb-id-changes", "value": 617, "unit": "changes"},
+    {"name": "qt-steady-combined-crtc-sample-span", "value": 54.215721, "unit": "seconds"},
+    {"name": "qt-steady-combined-crtc-observed-changes-per-second", "value": 11.38, "unit": "changes/s"},
+    {"name": "qt-steady-e2-reference-crtc-samples", "value": 900, "unit": "samples"},
+    {"name": "qt-steady-e2-reference-crtc-observed-fb-id-changes", "value": 584, "unit": "changes"},
+    {"name": "qt-steady-e2-reference-crtc-sample-span", "value": 54.409544, "unit": "seconds"},
+    {"name": "qt-steady-e2-reference-crtc-observed-changes-per-second", "value": 10.733, "unit": "changes/s"},
+    {"name": "qt-resize-frame-swaps", "value": 2249, "unit": "frames"},
+    {"name": "qt-resize-measurement-window", "value": 60, "unit": "seconds"},
+    {"name": "qt-resize-p50", "value": 22, "unit": "ms"},
+    {"name": "qt-resize-p95", "value": 51, "unit": "ms"},
+    {"name": "qt-resize-resize-steps", "value": 16, "unit": "steps"},
+    {"name": "qt-resize-combined-crtc-samples", "value": 900, "unit": "samples"},
+    {"name": "qt-resize-combined-crtc-observed-fb-id-changes", "value": 751, "unit": "changes"},
+    {"name": "qt-resize-combined-crtc-sample-span", "value": 54.136507, "unit": "seconds"},
+    {"name": "qt-resize-combined-crtc-observed-changes-per-second", "value": 13.872, "unit": "changes/s"},
+    {"name": "qt-resize-e2-reference-crtc-samples", "value": 900, "unit": "samples"},
+    {"name": "qt-resize-e2-reference-crtc-observed-fb-id-changes", "value": 746, "unit": "changes"},
+    {"name": "qt-resize-e2-reference-crtc-sample-span", "value": 54.210586, "unit": "seconds"},
+    {"name": "qt-resize-e2-reference-crtc-observed-changes-per-second", "value": 13.761, "unit": "changes/s"},
+    {"name": "npu-frames", "value": 24, "unit": "frames"},
+    {"name": "npu-tiles", "value": 3456, "unit": "tiles"},
+    {"name": "npu-positions", "value": 221184, "unit": "positions"},
+    {"name": "npu-interrupts", "value": 3456, "unit": "interrupts"},
+    {"name": "pvr-irq-activated", "value": 1, "unit": "events"},
+    {"name": "pvr-irq-faults", "value": 0, "unit": "events"},
+    {"name": "pvr-irq-retired", "value": 0, "unit": "events"},
+    {"name": "pvr-irq-fired", "value": 207019, "unit": "events"},
+    {"name": "tcp-control-a-tx-throughput", "value": 940.973, "unit": "Mbit/s"},
+    {"name": "tcp-control-a-tx-busy-cpu", "value": 1.086, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-control-a-tx-interrupt-cpu", "value": 0.554, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-control-a-tx-retransmits", "value": 0, "unit": "segments"},
+    {"name": "tcp-control-a-rx-throughput", "value": 932.914, "unit": "Mbit/s"},
+    {"name": "tcp-control-a-rx-busy-cpu", "value": 1.742, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-control-a-rx-interrupt-cpu", "value": 1.034, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-control-a-rx-retransmits", "value": 0, "unit": "segments"},
+    {"name": "tcp-combined-b-tx-throughput", "value": 940.976, "unit": "Mbit/s"},
+    {"name": "tcp-combined-b-tx-busy-cpu", "value": 1.199, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-combined-b-tx-interrupt-cpu", "value": 0.517, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-combined-b-tx-retransmits", "value": 0, "unit": "segments"},
+    {"name": "tcp-combined-b-rx-throughput", "value": 937.836, "unit": "Mbit/s"},
+    {"name": "tcp-combined-b-rx-busy-cpu", "value": 1.369, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-combined-b-rx-interrupt-cpu", "value": 0.651, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-combined-b-rx-retransmits", "value": 0, "unit": "segments"},
+    {"name": "tcp-control-a2-tx-throughput", "value": 940.774, "unit": "Mbit/s"},
+    {"name": "tcp-control-a2-tx-busy-cpu", "value": 1.246, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-control-a2-tx-interrupt-cpu", "value": 0.629, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-control-a2-tx-retransmits", "value": 0, "unit": "segments"},
+    {"name": "tcp-control-a2-rx-throughput", "value": 939.483, "unit": "Mbit/s"},
+    {"name": "tcp-control-a2-rx-busy-cpu", "value": 1.971, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-control-a2-rx-interrupt-cpu", "value": 1.045, "unit": "CPU-s/Gbit"},
+    {"name": "tcp-control-a2-rx-retransmits", "value": 0, "unit": "segments"}
+  ],
+  "source_refs": [
+    "os-zero4-reference"
+  ],
+  "scenario": "Boot the shared PowerVR and DRM kernel with the tested Zero 4 graphics DTB and stock Plasma. Run an ordinary 2000-flip CPU-filled KMS test twice. Run the original steady and resize Qt/Vulkan scenes and the NPU reference case. Compare six direct IPv4 TCP flows on EQOS CPU6 and restore the initial policy.",
+  "expected": "Complete 2000 ordinary native flips near one field per update and restore Plasma. Run both Qt/Vulkan workloads and verify NPU output and IRQ activity. Preserve the stock network policy after the TCP comparison.",
+  "observed": "The ordinary runs took 33.453 and 33.422 seconds. The first had two skipped field steps. The quiet repeat had 1999 of 1999 consecutive sequence intervals. Plasma restored after both runs. Qt reported 2695 steady and 2249 resize frameSwapped signals, with p95 intervals of 34 and 51 ms. NPU output matched its reference and issued 3456 interrupts. All TCP flows completed without retransmissions. PVR IRQ was active with no reported fault or retirement.",
+  "limits": [
+    "The CRTC observer sampled at about 60 ms intervals. Its observed FB_ID change rate can miss intermediate states and does not measure visible pixels. The E2 comparison uses separate boots.",
+    "Six short CPU6 TCP flows support an RX CPU reduction within the tested pair of controls. The TX CPU result stays within control variability. No UDP or long-duration Ethernet claim is added.",
+    "Passing one every-field run does not erase the two skipped fields in the first run. No cold boot, hotplug, or sustained display claim is added.",
+    "This is a physical A733 result. It does not qualify A133 hardware."
+  ]
+}
