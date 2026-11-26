@@ -1,0 +1,207 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-graphics-073d12427",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, HDMI 1280 \u00d7 1024 at 60.020 Hz"
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 U-Boot Image",
+      "revision": "073d124278cf1f0f0f7f00248adc20308bd87619",
+      "sha256": "dff0381f2c3ebe243a3bf0fc070020d1684c75e5491a8ac98837524c8fe70bc9",
+      "reference": null
+    },
+    {
+      "name": "Zero 4 graphics DTB",
+      "revision": null,
+      "sha256": "731c80906fe108aab8f8409e6b50053e361ddb1641433360141a795a98df9abf",
+      "reference": null
+    },
+    {
+      "name": "Installed stock libkwin",
+      "revision": "6.8.3",
+      "sha256": "dd0e1c3de7f312f873d842c2a0a6dbbf41602c7c7a3532e005c6a66358c4a770",
+      "reference": null
+    },
+    {
+      "name": "Installed stock PowerVR Vulkan ICD",
+      "revision": "Mesa 26.3.0",
+      "sha256": "f5044bba8fe8521c75b7b54eeacd7c86bb73c424a1d023fd9a2c38b040cfb147",
+      "reference": null
+    },
+    {
+      "name": "Memory-buffered KMS test source",
+      "revision": null,
+      "sha256": "889dc015018c607fc5e3058c82451d8a5be64a45f2b938cba79a6d1ea6dab3d3",
+      "reference": null
+    },
+    {
+      "name": "Memory-buffered KMS AArch64 executable",
+      "revision": null,
+      "sha256": "ff01edef9e1f51cadf7803f25eeb717b5d387b260e30a7de439c35a5e9cec6ef",
+      "reference": null
+    },
+    {
+      "name": "Steady Qt Quick scene",
+      "revision": null,
+      "sha256": "4240912adca548bc67ea8f9863a6967c341b97fb046544e883447e87925ca1f9",
+      "reference": null
+    },
+    {
+      "name": "Resize Qt Quick scene",
+      "revision": null,
+      "sha256": "11749fd64826a5d3bc9fd296a288120ab7e27be87fce01c1c3ceb75eb59d41d4",
+      "reference": null
+    },
+    {
+      "name": "NPU contour compute executable",
+      "revision": null,
+      "sha256": "bb40467a568e1b1a4ec5e70d887041833f3e48612c604fa32ce41db8155db97c",
+      "reference": null
+    },
+    {
+      "name": "NPU contour input",
+      "revision": null,
+      "sha256": "7a39112dc68833cd57a82b33960aa81e38084b0261cd601e5e5d6c351b92e0cb",
+      "reference": null
+    },
+    {
+      "name": "EMBER64 ELF build output",
+      "revision": "073d124278cf1f0f0f7f00248adc20308bd87619",
+      "sha256": "2f8b732522edda47e24138220130a7cfdf755c447d020937c6082d9a7243775f",
+      "reference": null
+    }
+  ],
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "native-events",
+      "value": 2000,
+      "unit": "events"
+    },
+    {
+      "name": "native-wall-seconds",
+      "value": 33.408,
+      "unit": "s"
+    },
+    {
+      "name": "native-event-span-seconds",
+      "value": 33.305776,
+      "unit": "s"
+    },
+    {
+      "name": "native-p50-ms",
+      "value": 16.661,
+      "unit": "ms"
+    },
+    {
+      "name": "native-p95-ms",
+      "value": 16.662,
+      "unit": "ms"
+    },
+    {
+      "name": "native-max-ms",
+      "value": 16.675,
+      "unit": "ms"
+    },
+    {
+      "name": "native-missed-fields",
+      "value": 0,
+      "unit": "fields"
+    },
+    {
+      "name": "native-p50-ioctl-ms",
+      "value": 0.009,
+      "unit": "ms"
+    },
+    {
+      "name": "native-p50-event-to-read-ms",
+      "value": 3.544,
+      "unit": "ms"
+    },
+    {
+      "name": "native-contiguous-intervals",
+      "value": 1999,
+      "unit": "intervals"
+    },
+    {
+      "name": "qt-steady-measured-swaps",
+      "value": 2719,
+      "unit": "swaps"
+    },
+    {
+      "name": "qt-steady-p50-ms",
+      "value": 21.0,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-steady-p95-ms",
+      "value": 34.0,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-steady-gpu-worker-cpu",
+      "value": 8.58,
+      "unit": "s"
+    },
+    {
+      "name": "qt-steady-gpu-irqs",
+      "value": 70912,
+      "unit": "interrupts"
+    },
+    {
+      "name": "qt-resize-measured-swaps",
+      "value": 2236,
+      "unit": "swaps"
+    },
+    {
+      "name": "qt-resize-p50-ms",
+      "value": 22.0,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-resize-p95-ms",
+      "value": 51.0,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-resize-gpu-worker-cpu",
+      "value": 7.21,
+      "unit": "s"
+    },
+    {
+      "name": "qt-resize-gpu-irqs",
+      "value": 59209,
+      "unit": "interrupts"
+    },
+    {
+      "name": "npu-task-irqs",
+      "value": 3456,
+      "unit": "interrupts"
+    },
+    {
+      "name": "npu-model-pass",
+      "value": 1,
+      "unit": "boolean"
+    }
+  ],
+  "source_refs": [
+    "os-zero4-reference"
+  ],
+  "scenario": "Boot the Zero 4 graphics profile. Stop Plasma and alternate two separately mapped CPU-filled dumb buffers using 2000 ordinary atomic page flips. Hold per-frame output in RAM until the producer closes DRM. Resume the installed desktop and run the stock Qt Quick Vulkan steady and resize scenes for 60 seconds each. Run the NPU contour workload separately.",
+  "expected": "Complete 2000 sequential DRM events with no missed fields. Resume the stock desktop and run both Qt scenes with an active GPU interrupt route. Obtain the reference output from the NPU.",
+  "observed": "All 2000 ordinary DRM page flips completed in 33.408 seconds. Every adjacent event advanced by one field. The installed KWin and PowerVR ICD resumed. The Qt scenes reported 2719 and 2236 swaps. KWin composited through Zink on PowerVR. The GPU interrupt route fired during both scenes without retirement or IRQ faults. NPU compute produced 3456 interrupts and matched the reference output digest e6e8f6d823cc10b77a6db35de3eb587975dbed440648a536f5819ea790216b59. DRM and display engine fault counters remained zero.",
+  "limits": [
+    "DRM events provide presentation timing. The panel was not measured optically.",
+    "The two native images were initialized before the flip loop. Qt counts are client swaps for the measured scenes.",
+    "These measurements cover a single Zero 4 graphics build and boot. They do not quantify the effect of GPU interrupts by themselves."
+  ]
+}

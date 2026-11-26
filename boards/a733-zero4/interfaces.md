@@ -2,7 +2,7 @@
 
 | Function | Current bounded evidence |
 |---|---|
-| Ethernet | Gigabit with Motorcomm YT8531; board RGMII delays measured with random data |
+| Ethernet | Gigabit full-duplex YT8531 with measured RGMII delays. The combined CPU6 graphics profile sustained TCP above 933 Mbit/s. One short UDP receive trial lost 180 datagrams at the socket-buffer boundary. |
 | Wi-Fi | AIC8800D80 WPA2/CCMP, 2.4 and 5 GHz, one-stream 802.11n up to 40 MHz; 30–48 Mbit/s through SSH at 5 GHz |
 | Bluetooth | Classic inquiry, service query, Secure Connections pairing and stored-key reconnect; BLE unsupported in the cited implementation |
 | CPU and temperature | Eight cores, five calibrated sensors and speed-grade 0x04 voltage/frequency operation |
@@ -15,7 +15,7 @@
 | Audio and fan | No accepted audio or fan-control path |
 | GPU | The opt-in graphics DTB enabled PowerVR firmware service at 600 MHz. BVNC 36.56.104.183 and the native DRM driver were verified. Mesa 26.3.0 read back 256 expected RGBA8 pixels through its PowerVR Vulkan ICD without a display. |
 | Plasma | A separate Virtual-0 test captured the desktop and completed logout. The physical test showed active KWin composition through Zink and OpenGL ES 3.1 on PowerVR B-Series BXM-4-64 MC1. |
-| HDMI | Plasma ran on a physical monitor. After reboot on EmberBSD `e29c9e337`, KWin reported 1280 × 1024 at 60.02 Hz. A separate native KMS run completed 2000 flips. Earlier diagnostic tests reproduced RCQ and TV0 retirement timeouts. Cold boot, display hotplug and longer operation remain unqualified. |
+| HDMI | Stock Plasma ran on physical HDMI at 1280 × 1024 and 60.020 Hz. On EmberBSD 073d12427, a separate CPU-filled KMS workload completed 2000 flips in 33.408 seconds without skipped sequence steps. Cold boot, hotplug, and extended display operation remain unqualified. |
 | NPU | The opt-in DTB and privileged tile ioctl ran the fixed INT8 profile at 300 MHz. The 24-frame 96 × 96 clip and cold and warm runs of a 720 × 540 frame matched the CPU reference. |
 
 Wi-Fi requires `fmacfw_8800d80_u02.bin`; Bluetooth requires four vendor patch files.
@@ -37,7 +37,8 @@ The [gigabit Ethernet baseline](evidence/ethernet-baseline.json) records TCP thr
 The [MDIO lock test](evidence/ethernet-mdio-lock.json) records paced echo timings and ten-minute receive runs with concurrent PHY queries.
 The [interrupt affinity test](evidence/ethernet-irq-affinity.json) compares TCP and UDP transfers on CPU0 and CPU6.
 The [Qt render loop comparison](evidence/plasma-qt-render-loop.json) measures Qt swaps and HDMI framebuffer changes with the threaded and basic loops.
-The [stock graphics profile test](evidence/graphics-720872134.json) records 2000 consecutive flips, both Qt workloads and the NPU output.
+The [graphics-only build](evidence/graphics-720872134.json) and the [build with the combined Ethernet profile](evidence/graphics-073d12427.json) each completed 2000 consecutive flips, both Qt workloads, and the NPU test.
+The [combined Ethernet test](evidence/ethernet-combined-073d12427.json) records CPU6 interrupt placement, IPv4 throughput and process CPU, a single TX tail, and wire checksums.
 The [EQOS hardware and interrupt test](evidence/ethernet-dma-media-irq.json) records DMA address width, PHY query times and interrupt counts per CPU.
 Separate tests cover the [receive watchdog](evidence/ethernet-rx-riwt.json), [transmit interrupt interval](evidence/ethernet-tx-ioc.json) and [IPv4 checksums](evidence/ethernet-ipv4-checksum.json).
 In a separate Qt/Vulkan test, the window produced approximately 1 to 1.3

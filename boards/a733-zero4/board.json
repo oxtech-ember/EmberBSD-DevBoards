@@ -38,7 +38,7 @@
       "id": "ethernet",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "Gigabit YT8531 path with measured board delays.",
+      "scope": "Gigabit full-duplex YT8531 with measured RGMII delays. The combined CPU6 graphics profile sustained TCP above 933 Mbit/s. One short UDP receive trial lost 180 datagrams at the socket-buffer boundary.",
       "source_refs": [
         "os-zero4-reference"
       ]
@@ -77,7 +77,7 @@
       "id": "hdmi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "Plasma displayed on a physical monitor. After reboot on EmberBSD e29c9e337, KWin reported 1280 × 1024 at 60.02 Hz. A separate native KMS run completed 2000 flips. Earlier diagnostic runs encountered RCQ and TV0 retirement timeouts.",
+      "scope": "Stock Plasma ran on physical HDMI at 1280 × 1024 and 60.020 Hz. On EmberBSD 073d12427, a separate CPU-filled KMS workload completed 2000 flips in 33.408 seconds without skipped sequence steps. Cold boot, hotplug, and extended display operation remain unqualified.",
       "source_refs": [
         "os-zero4-aarch64-release",
         "os-zero4-graphics-mode",

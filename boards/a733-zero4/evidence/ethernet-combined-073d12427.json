@@ -1,0 +1,493 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-ethernet-combined-073d12427",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, YT8531 PHY, direct 1000BASE-T full-duplex link to an arm64 macOS peer."
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 U-Boot Image",
+      "revision": "073d124278cf1f0f0f7f00248adc20308bd87619",
+      "sha256": "dff0381f2c3ebe243a3bf0fc070020d1684c75e5491a8ac98837524c8fe70bc9",
+      "reference": null
+    },
+    {
+      "name": "Zero 4 graphics DTB",
+      "revision": null,
+      "sha256": "731c80906fe108aab8f8409e6b50053e361ddb1641433360141a795a98df9abf",
+      "reference": null
+    },
+    {
+      "name": "ESnet iperf3 source",
+      "revision": "3.22.1",
+      "sha256": "de018b5252e2a7068c89fac8b35a295d83334f2b7814aa9532a2a8107b04a4a9",
+      "reference": null
+    }
+  ],
+  "scenario": "With stock Plasma running, compare an IPv4 control, the combined profile, and the restored control at fixed EQOS interrupt affinity CPU6. Each phase uses four eight-second iperf3 transfers and 128 paced 512-byte UDP echo pairs. The combined profile sets receive watchdog count 64, transmit IOC interval 8, and ordinary IPv4 header and TCP checksum flags plus UDP receive checksum. Run separate single-echo transmit retirement and peer checksum checks. Restore the initial graphics DTB Ethernet policy.",
+  "expected": "The combined profile preserves delivery and reduces process CPU for TCP in both directions. The peer sees valid checksums on ordinary UDP and preserves an explicitly omitted IPv4 UDP checksum.",
+  "observed": "TCP receiver throughput stayed above 933 Mbit/s with zero retransmissions. Board iperf3 CPU fell for TCP receive and rose for TCP transmit. Combined UDP receive lost 180 of 205998 datagrams, all in one interval near 5–6 seconds. The target UDP full-socket-buffer counter rose by 180. Bad checksum, bad length, and no-socket deltas were zero. All 128 echo pairs arrived in each phase. The single transmit tail reached local q0 idle. The peer saw the expected 0xffff, 0xfffe, and explicit 0x0000 UDP checksums.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "control-a-tcp-tx-receiver-throughput",
+      "value": 940.4,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "control-a-tcp-tx-target-iperf-cpu",
+      "value": 54.61,
+      "unit": "percent"
+    },
+    {
+      "name": "control-a-tcp-tx-retransmits",
+      "value": 0,
+      "unit": "segments"
+    },
+    {
+      "name": "control-a-tcp-rx-receiver-throughput",
+      "value": 936.49,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "control-a-tcp-rx-target-iperf-cpu",
+      "value": 74.43,
+      "unit": "percent"
+    },
+    {
+      "name": "control-a-tcp-rx-retransmits",
+      "value": 0,
+      "unit": "segments"
+    },
+    {
+      "name": "control-a-udp-tx-receiver-throughput",
+      "value": 299.66,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "control-a-udp-tx-target-iperf-cpu",
+      "value": 18.6,
+      "unit": "percent"
+    },
+    {
+      "name": "control-a-udp-tx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "control-a-udp-tx-total",
+      "value": 205525,
+      "unit": "datagrams"
+    },
+    {
+      "name": "control-a-udp-rx-receiver-throughput",
+      "value": 300.01,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "control-a-udp-rx-target-iperf-cpu",
+      "value": 11.59,
+      "unit": "percent"
+    },
+    {
+      "name": "control-a-udp-rx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "control-a-udp-rx-total",
+      "value": 206001,
+      "unit": "datagrams"
+    },
+    {
+      "name": "control-a-echo-p50",
+      "value": 0.247,
+      "unit": "ms"
+    },
+    {
+      "name": "control-a-echo-p95",
+      "value": 0.344,
+      "unit": "ms"
+    },
+    {
+      "name": "control-a-echo-requests",
+      "value": 128,
+      "unit": "frames"
+    },
+    {
+      "name": "control-a-echo-replies",
+      "value": 128,
+      "unit": "frames"
+    },
+    {
+      "name": "control-a-echo-background-frames",
+      "value": 0,
+      "unit": "frames"
+    },
+    {
+      "name": "control-a-echo-duplicate-test-frames",
+      "value": 0,
+      "unit": "frames"
+    },
+    {
+      "name": "control-a-cpu6-eqos-rx-stage-interrupts",
+      "value": 1074874,
+      "unit": "interrupts"
+    },
+    {
+      "name": "control-a-other-cpu-eqos-rx-stage-interrupts",
+      "value": 0,
+      "unit": "interrupts"
+    },
+    {
+      "name": "control-a-echo-rx-non-ioc-delta",
+      "value": 0,
+      "unit": "frames"
+    },
+    {
+      "name": "combined-b-tcp-tx-receiver-throughput",
+      "value": 940.67,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "combined-b-tcp-tx-target-iperf-cpu",
+      "value": 60.09,
+      "unit": "percent"
+    },
+    {
+      "name": "combined-b-tcp-tx-retransmits",
+      "value": 0,
+      "unit": "segments"
+    },
+    {
+      "name": "combined-b-tcp-rx-receiver-throughput",
+      "value": 933.4,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "combined-b-tcp-rx-target-iperf-cpu",
+      "value": 53.24,
+      "unit": "percent"
+    },
+    {
+      "name": "combined-b-tcp-rx-retransmits",
+      "value": 0,
+      "unit": "segments"
+    },
+    {
+      "name": "combined-b-udp-tx-receiver-throughput",
+      "value": 299.66,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "combined-b-udp-tx-target-iperf-cpu",
+      "value": 18.95,
+      "unit": "percent"
+    },
+    {
+      "name": "combined-b-udp-tx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "combined-b-udp-tx-total",
+      "value": 205794,
+      "unit": "datagrams"
+    },
+    {
+      "name": "combined-b-udp-rx-receiver-throughput",
+      "value": 299.74,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "combined-b-udp-rx-target-iperf-cpu",
+      "value": 13.34,
+      "unit": "percent"
+    },
+    {
+      "name": "combined-b-udp-rx-lost",
+      "value": 180,
+      "unit": "datagrams"
+    },
+    {
+      "name": "combined-b-udp-rx-total",
+      "value": 205998,
+      "unit": "datagrams"
+    },
+    {
+      "name": "combined-b-echo-p50",
+      "value": 0.298,
+      "unit": "ms"
+    },
+    {
+      "name": "combined-b-echo-p95",
+      "value": 0.352,
+      "unit": "ms"
+    },
+    {
+      "name": "combined-b-echo-requests",
+      "value": 128,
+      "unit": "frames"
+    },
+    {
+      "name": "combined-b-echo-replies",
+      "value": 128,
+      "unit": "frames"
+    },
+    {
+      "name": "combined-b-echo-background-frames",
+      "value": 4,
+      "unit": "frames"
+    },
+    {
+      "name": "combined-b-echo-duplicate-test-frames",
+      "value": 0,
+      "unit": "frames"
+    },
+    {
+      "name": "combined-b-cpu6-eqos-rx-stage-interrupts",
+      "value": 686708,
+      "unit": "interrupts"
+    },
+    {
+      "name": "combined-b-other-cpu-eqos-rx-stage-interrupts",
+      "value": 0,
+      "unit": "interrupts"
+    },
+    {
+      "name": "combined-b-echo-rx-non-ioc-delta",
+      "value": 215,
+      "unit": "frames"
+    },
+    {
+      "name": "control-a2-tcp-tx-receiver-throughput",
+      "value": 938.95,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "control-a2-tcp-tx-target-iperf-cpu",
+      "value": 56.47,
+      "unit": "percent"
+    },
+    {
+      "name": "control-a2-tcp-tx-retransmits",
+      "value": 0,
+      "unit": "segments"
+    },
+    {
+      "name": "control-a2-tcp-rx-receiver-throughput",
+      "value": 937.5,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "control-a2-tcp-rx-target-iperf-cpu",
+      "value": 79.92,
+      "unit": "percent"
+    },
+    {
+      "name": "control-a2-tcp-rx-retransmits",
+      "value": 0,
+      "unit": "segments"
+    },
+    {
+      "name": "control-a2-udp-tx-receiver-throughput",
+      "value": 299.62,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "control-a2-udp-tx-target-iperf-cpu",
+      "value": 18.58,
+      "unit": "percent"
+    },
+    {
+      "name": "control-a2-udp-tx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "control-a2-udp-tx-total",
+      "value": 205768,
+      "unit": "datagrams"
+    },
+    {
+      "name": "control-a2-udp-rx-receiver-throughput",
+      "value": 300.01,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "control-a2-udp-rx-target-iperf-cpu",
+      "value": 14.98,
+      "unit": "percent"
+    },
+    {
+      "name": "control-a2-udp-rx-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "control-a2-udp-rx-total",
+      "value": 205756,
+      "unit": "datagrams"
+    },
+    {
+      "name": "control-a2-echo-p50",
+      "value": 0.263,
+      "unit": "ms"
+    },
+    {
+      "name": "control-a2-echo-p95",
+      "value": 0.326,
+      "unit": "ms"
+    },
+    {
+      "name": "control-a2-echo-requests",
+      "value": 128,
+      "unit": "frames"
+    },
+    {
+      "name": "control-a2-echo-replies",
+      "value": 128,
+      "unit": "frames"
+    },
+    {
+      "name": "control-a2-echo-background-frames",
+      "value": 0,
+      "unit": "frames"
+    },
+    {
+      "name": "control-a2-echo-duplicate-test-frames",
+      "value": 0,
+      "unit": "frames"
+    },
+    {
+      "name": "control-a2-cpu6-eqos-rx-stage-interrupts",
+      "value": 1076034,
+      "unit": "interrupts"
+    },
+    {
+      "name": "control-a2-other-cpu-eqos-rx-stage-interrupts",
+      "value": 0,
+      "unit": "interrupts"
+    },
+    {
+      "name": "control-a2-echo-rx-non-ioc-delta",
+      "value": 0,
+      "unit": "frames"
+    },
+    {
+      "name": "single-tx-tail-first-local-idle-sample",
+      "value": 16.205,
+      "unit": "ms"
+    },
+    {
+      "name": "single-tx-tail-other-frames",
+      "value": 0,
+      "unit": "frames"
+    },
+    {
+      "name": "combined-udp-rx-loss-interval-start",
+      "value": 5.02,
+      "unit": "seconds"
+    },
+    {
+      "name": "combined-udp-rx-loss-interval-end",
+      "value": 6.02,
+      "unit": "seconds"
+    },
+    {
+      "name": "combined-udp-rx-target-socket-buffers-full",
+      "value": 180,
+      "unit": "datagrams"
+    },
+    {
+      "name": "combined-udp-rx-target-bad-checksum",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "combined-udp-rx-target-bad-length",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "combined-udp-rx-target-no-socket",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a-udp-hardware-submissions",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a-udp-wire-0xffff",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a-udp-wire-0xfffe",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "hardware-udp-hardware-submissions",
+      "value": 16,
+      "unit": "datagrams"
+    },
+    {
+      "name": "hardware-udp-wire-0xffff",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "hardware-udp-wire-0xfffe",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a2-udp-hardware-submissions",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a2-udp-wire-0xffff",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "software-a2-udp-wire-0xfffe",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "raw-omitted-udp-wire-0x0000",
+      "value": 8,
+      "unit": "datagrams"
+    },
+    {
+      "name": "raw-omitted-udp-global-hardware-submission-delta",
+      "value": 1,
+      "unit": "datagrams"
+    }
+  ],
+  "limits": [
+    "The UDP receive loss is localized to the socket-buffer counter in this run. The result gives no evidence of an RX ring loss.",
+    "The three short trials measure iperf3 process CPU on the board. They do not establish total system CPU or a sustained profile benefit.",
+    "The combined echo capture includes four background frames. The receive-stage per-CPU interrupt totals include bulk traffic.",
+    "The single tail time is the first local idle sample. It does not give the exact descriptor retirement time.",
+    "UDP transmit offload requires the explicit canary and was restored off. The raw omitted checksum sample has eight valid IPv4 wire packets and a global hardware submissions delta of one. That counter cannot attribute an offload to individual packets.",
+    "This sample covers one physical board and a direct Gigabit peer with stock Plasma running."
+  ],
+  "source_refs": [
+    "os-zero4-reference",
+    "os-zero4-graphics-dts"
+  ]
+}
