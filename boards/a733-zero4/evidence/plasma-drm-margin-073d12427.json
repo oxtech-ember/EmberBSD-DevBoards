@@ -1,0 +1,185 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-plasma-drm-margin-073d12427",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, HDMI 1280 × 1024 at 60.020 Hz"
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 U-Boot Image",
+      "revision": "073d124278cf1f0f0f7f00248adc20308bd87619",
+      "sha256": "dff0381f2c3ebe243a3bf0fc070020d1684c75e5491a8ac98837524c8fe70bc9",
+      "reference": null
+    },
+    {
+      "name": "Zero 4 graphics DTB",
+      "revision": null,
+      "sha256": "731c80906fe108aab8f8409e6b50053e361ddb1641433360141a795a98df9abf",
+      "reference": null
+    },
+    {
+      "name": "Installed stock libkwin",
+      "revision": "6.8.3",
+      "sha256": "dd0e1c3de7f312f873d842c2a0a6dbbf41602c7c7a3532e005c6a66358c4a770",
+      "reference": null
+    },
+    {
+      "name": "Installed stock PowerVR Vulkan ICD",
+      "revision": "Mesa 26.3.0",
+      "sha256": "f5044bba8fe8521c75b7b54eeacd7c86bb73c424a1d023fd9a2c38b040cfb147",
+      "reference": null
+    },
+    {
+      "name": "Fixed-size Qt Quick Vulkan scene source",
+      "revision": null,
+      "sha256": "ec01562c9925d2b54d664d5193ba5d4378239270f2d20a981c0331d3f7ce0727",
+      "reference": null
+    },
+    {
+      "name": "Read-only CRTC observer source",
+      "revision": null,
+      "sha256": "6856792303f3df0db38c9d338c72c56b960cb90213df3dd78d0d571dc1a911af",
+      "reference": null
+    },
+    {
+      "name": "Read-only CRTC observer AArch64 executable",
+      "revision": null,
+      "sha256": "2b455facc8ee3e999ebb1f2bb811bb4c5e1d282c267db073287592c0cf041b4b",
+      "reference": null
+    }
+  ],
+  "scenario": "Run the same fixed-size Qt Quick Vulkan window for 60 measured seconds per setting on stock Plasma Wayland. Set KWIN_DRM_OVERRIDE_SAFETY_MARGIN to 10000 and then 1000 for KWin. Observe the whole HDMI CRTC independently through DRM WAIT_VBLANK and GETCRTC.",
+  "expected": "Assess whether the 1000 microsecond setting increases both Qt swap rate and CRTC framebuffer change rate.",
+  "observed": "The 1000 microsecond setting reduced Qt swaps from 44.80 to 28.88 per second and CRTC framebuffer changes from 31.330 to 28.659 per second. Both CRTC windows covered 2000 consecutive vblank intervals.",
+  "duration_seconds": 120,
+  "measurements": [
+    {
+      "name": "a-margin",
+      "value": 10000,
+      "unit": "us"
+    },
+    {
+      "name": "a-qt-window",
+      "value": 60,
+      "unit": "s"
+    },
+    {
+      "name": "a-qt-swap-count",
+      "value": 2688,
+      "unit": "signals"
+    },
+    {
+      "name": "a-qt-swap-rate",
+      "value": 44.8,
+      "unit": "signals/s"
+    },
+    {
+      "name": "a-qt-swap-interval-p50",
+      "value": 21,
+      "unit": "ms"
+    },
+    {
+      "name": "a-qt-swap-interval-p95",
+      "value": 34,
+      "unit": "ms"
+    },
+    {
+      "name": "a-crtc-vblank-intervals",
+      "value": 2000,
+      "unit": "intervals"
+    },
+    {
+      "name": "a-crtc-vblank-missed",
+      "value": 0,
+      "unit": "intervals"
+    },
+    {
+      "name": "a-crtc-observation-window",
+      "value": 33.322451,
+      "unit": "s"
+    },
+    {
+      "name": "a-crtc-fb-changes",
+      "value": 1044,
+      "unit": "changes"
+    },
+    {
+      "name": "a-crtc-fb-change-rate",
+      "value": 31.33,
+      "unit": "changes/s"
+    },
+    {
+      "name": "b-margin",
+      "value": 1000,
+      "unit": "us"
+    },
+    {
+      "name": "b-qt-window",
+      "value": 60,
+      "unit": "s"
+    },
+    {
+      "name": "b-qt-swap-count",
+      "value": 1733,
+      "unit": "signals"
+    },
+    {
+      "name": "b-qt-swap-rate",
+      "value": 28.883,
+      "unit": "signals/s"
+    },
+    {
+      "name": "b-qt-swap-interval-p50",
+      "value": 33,
+      "unit": "ms"
+    },
+    {
+      "name": "b-qt-swap-interval-p95",
+      "value": 50,
+      "unit": "ms"
+    },
+    {
+      "name": "b-crtc-vblank-intervals",
+      "value": 2000,
+      "unit": "intervals"
+    },
+    {
+      "name": "b-crtc-vblank-missed",
+      "value": 0,
+      "unit": "intervals"
+    },
+    {
+      "name": "b-crtc-observation-window",
+      "value": 33.322447,
+      "unit": "s"
+    },
+    {
+      "name": "b-crtc-fb-changes",
+      "value": 955,
+      "unit": "changes"
+    },
+    {
+      "name": "b-crtc-fb-change-rate",
+      "value": 28.659,
+      "unit": "changes/s"
+    }
+  ],
+  "limits": [
+    "This result covers one fixed-size window scene at 1280 × 1024 and 60.020 Hz. Both measured settings ran on the same boot.",
+    "Qt frameSwapped is a client signal. CRTC framebuffer ID changes measure the whole HDMI output. Neither measures optical panel updates.",
+    "The planned return arm did not start. The service reported stop and start, then SSH became unavailable. The start acknowledgement does not establish that the new compositor opened DRM.",
+    "The cause of the lost connection remains unknown. This experiment does not establish a kernel failure."
+  ],
+  "source_refs": [
+    "os-a733-hdmi-native",
+    "os-zero4-graphics-mode"
+  ]
+}

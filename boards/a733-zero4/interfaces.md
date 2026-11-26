@@ -33,6 +33,7 @@ The [physical Plasma evidence](evidence/plasma-hdmi.json) covers the monitor and
 A [paired MDIO comparison](evidence/plasma-hdmi-mdio.json) measured a lower
 95th percentile for native KMS intervals. It also records two Plasma workloads
 and a bidirectional Gigabit Ethernet transfer.
+The [KWin DRM margin test](evidence/plasma-drm-margin-073d12427.json) records lower Qt and CRTC rates at 1000 µs in one fixed-size window scene.
 The [gigabit Ethernet baseline](evidence/ethernet-baseline.json) records TCP throughput, UDP loss and interrupt rates with Plasma locked and stopped.
 The [MDIO lock test](evidence/ethernet-mdio-lock.json) records paced echo timings and ten-minute receive runs with concurrent PHY queries.
 The [interrupt affinity test](evidence/ethernet-irq-affinity.json) compares TCP and UDP transfers on CPU0 and CPU6.
