@@ -1,0 +1,239 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-ethernet-baseline",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, YT8531, direct 1000baseT full-duplex Ethernet"
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 boot image",
+      "revision": "fa1ab7fb2c18c568c6bd8caa2da13071007c2f6e",
+      "sha256": "0a603c0e4321e3071a89d15ad92fd52f48fe3cc43756599cbbefe28b99dd4aab",
+      "reference": null
+    },
+    {
+      "name": "Installed graphics DTB",
+      "revision": null,
+      "sha256": "0f6b5415e40d095bb656bdf687a218d55818524748e83fd52f1c7e915d30694b",
+      "reference": null
+    },
+    {
+      "name": "ESnet iperf3 source archive",
+      "revision": "3.22.1",
+      "sha256": "de018b5252e2a7068c89fac8b35a295d83334f2b7814aa9532a2a8107b04a4a9",
+      "reference": null
+    }
+  ],
+  "scenario": "Connect eqos0 directly to an arm64 macOS peer. Use IPv6 link-local addresses and iperf3 3.22.1 at each end. Request 1000 echoes at a nominal 10 ms interval, one 10-second TCP stream in each direction, then UDP at 300 Mbit/s in each direction. Take EQOS interrupt counters before and after each stream. Repeat with the Plasma service stopped and restore the service. TX and RX are relative to the board.",
+  "expected": "Collect bidirectional transfer rates, UDP loss and interrupt rates on the same boot in both service states.",
+  "observed": "The gigabit link delivered all 1000 echo replies in each run. In the TCP receive test CPU0 spent 100% of one sample in interrupts with Plasma locked and 99.5% with Plasma stopped. The board restored the desktop after the measurements. DRM and DE reported zero errors.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "plasma-locked-ping-sent",
+      "value": 1000,
+      "unit": "requests"
+    },
+    {
+      "name": "plasma-locked-ping-reply-count",
+      "value": 1000,
+      "unit": "replies"
+    },
+    {
+      "name": "plasma-locked-ping-section-elapsed-s-at-hz100",
+      "value": 10.16,
+      "unit": "s"
+    },
+    {
+      "name": "plasma-locked-ping-p50-ms",
+      "value": 0.275,
+      "unit": "ms"
+    },
+    {
+      "name": "plasma-locked-ping-p95-ms",
+      "value": 0.385,
+      "unit": "ms"
+    },
+    {
+      "name": "plasma-locked-ping-p99-ms",
+      "value": 0.492,
+      "unit": "ms"
+    },
+    {
+      "name": "plasma-locked-ping-max-ms",
+      "value": 236.293,
+      "unit": "ms"
+    },
+    {
+      "name": "plasma-locked-tcp-tx-throughput",
+      "value": 833.849,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "plasma-locked-tcp-tx-eqos-interrupt-rate",
+      "value": 84143.4,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "plasma-locked-tcp-rx-throughput",
+      "value": 781.198,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "plasma-locked-tcp-rx-eqos-interrupt-rate",
+      "value": 91612.9,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "plasma-locked-udp-tx-throughput",
+      "value": 299.761,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "plasma-locked-udp-tx-eqos-interrupt-rate",
+      "value": 25965.4,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "plasma-locked-udp-tx-datagrams-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "plasma-locked-udp-tx-loss",
+      "value": 0,
+      "unit": "percent"
+    },
+    {
+      "name": "plasma-locked-udp-rx-throughput",
+      "value": 299.622,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "plasma-locked-udp-rx-eqos-interrupt-rate",
+      "value": 26000.2,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "plasma-locked-udp-rx-datagrams-lost",
+      "value": 329,
+      "unit": "datagrams"
+    },
+    {
+      "name": "plasma-locked-udp-rx-loss",
+      "value": 0.12616,
+      "unit": "percent"
+    },
+    {
+      "name": "plasma-stopped-ping-sent",
+      "value": 1000,
+      "unit": "requests"
+    },
+    {
+      "name": "plasma-stopped-ping-reply-count",
+      "value": 1000,
+      "unit": "replies"
+    },
+    {
+      "name": "plasma-stopped-ping-section-elapsed-s-at-hz100",
+      "value": 1.9,
+      "unit": "s"
+    },
+    {
+      "name": "plasma-stopped-ping-p50-ms",
+      "value": 0.8495,
+      "unit": "ms"
+    },
+    {
+      "name": "plasma-stopped-ping-p95-ms",
+      "value": 1.521,
+      "unit": "ms"
+    },
+    {
+      "name": "plasma-stopped-ping-p99-ms",
+      "value": 1.581,
+      "unit": "ms"
+    },
+    {
+      "name": "plasma-stopped-ping-max-ms",
+      "value": 1.748,
+      "unit": "ms"
+    },
+    {
+      "name": "plasma-stopped-tcp-tx-throughput",
+      "value": 813.155,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "plasma-stopped-tcp-tx-eqos-interrupt-rate",
+      "value": 82757.1,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "plasma-stopped-tcp-rx-throughput",
+      "value": 799.486,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "plasma-stopped-tcp-rx-eqos-interrupt-rate",
+      "value": 93195.8,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "plasma-stopped-udp-tx-throughput",
+      "value": 299.786,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "plasma-stopped-udp-tx-eqos-interrupt-rate",
+      "value": 25907.1,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "plasma-stopped-udp-tx-datagrams-lost",
+      "value": 0,
+      "unit": "datagrams"
+    },
+    {
+      "name": "plasma-stopped-udp-tx-loss",
+      "value": 0,
+      "unit": "percent"
+    },
+    {
+      "name": "plasma-stopped-udp-rx-throughput",
+      "value": 299.947,
+      "unit": "Mbit/s"
+    },
+    {
+      "name": "plasma-stopped-udp-rx-eqos-interrupt-rate",
+      "value": 25747.8,
+      "unit": "interrupts/s"
+    },
+    {
+      "name": "plasma-stopped-udp-rx-datagrams-lost",
+      "value": 49,
+      "unit": "datagrams"
+    },
+    {
+      "name": "plasma-stopped-udp-rx-loss",
+      "value": 0.01879,
+      "unit": "percent"
+    }
+  ],
+  "limits": [
+    "The active Plasma session had a locked screen. It did not run an interactive desktop workload.",
+    "The elapsed ping sections differed (10.16 s and 1.90 s). They do not support a same-rate comparison between service states. The single 236.293 ms RTT has no matching trace that identifies a cause.",
+    "CPU values are individual samples. This baseline does not establish the cause of a display pause or the effect of an Ethernet driver change."
+  ],
+  "source_refs": [
+    "os-zero4-reference"
+  ]
+}
