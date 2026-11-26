@@ -2258,6 +2258,22 @@
       "sha256": null
     },
     {
+      "id": "os-zero4-hz1000-profile",
+      "title": "Orange Pi Zero 4 board-specific kernel build and 1000 Hz timer profile",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/b66333b443fb39bf107529422f9f44d84486788c/ember/development/kernel.md",
+      "revision": "b66333b443fb39bf107529422f9f44d84486788c",
+      "reviewed_at": "2026-11-26",
+      "sha256": "36ee88fd47ec3b9bb70bba409e3bd2d842ef75f48dbbfc34f46c85e3d4378571"
+    },
+    {
+      "id": "os-zero4-sd-profile",
+      "title": "Create a Zero 4 graphics microSD image",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/12cff61f4dcc04dfe04c3ce7c435801e78d7f848/distrib/utils/embedded/README.a733.md",
+      "revision": "12cff61f4dcc04dfe04c3ce7c435801e78d7f848",
+      "reviewed_at": "2026-11-26",
+      "sha256": "fa657a47c5696dbb24d03717a59de5beae80a20df5448ca6098646d81ff88c86"
+    },
+    {
       "id": "os-zero4-graphics-mode",
       "title": "EmberBSD A733 boot mode selection and recovery",
       "url": "https://github.com/oxtech-ember/EmberBSD/blob/9e63456660e5bafc5c75e5555446b5b32b0a1816/sys/arch/arm/sunxi/docs/a733-boot-modes.md",

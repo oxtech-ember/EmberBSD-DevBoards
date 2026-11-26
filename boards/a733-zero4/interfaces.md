@@ -41,6 +41,8 @@ The [interrupt affinity test](evidence/ethernet-irq-affinity.json) compares TCP 
 The [Qt render loop comparison](evidence/plasma-qt-render-loop.json) measures Qt swaps and HDMI framebuffer changes with the threaded and basic loops.
 The [graphics-only build](evidence/graphics-720872134.json) and the [build with the combined Ethernet profile](evidence/graphics-073d12427.json) each completed 2000 consecutive flips, both Qt workloads, and the NPU test.
 The [shared PowerVR and DRM build](evidence/graphics-0cba9eb9d.json) repeats those workloads, records both native KMS runs, and compares sampled CRTC states and CPU6 Ethernet.
+The [board-specific 1000 Hz check](evidence/graphics-b66333b44.json) verifies native KMS, two stock Plasma workloads, reference NPU compute, and Ethernet and Wi-Fi transfers.
+A separate [100 Hz and 1000 Hz comparison](evidence/graphics-hz1000-comparison.json) records shorter timer wake delays, a higher sampled CRTC rate, and fewer Qt swaps in one scene.
 The [combined Ethernet test](evidence/ethernet-combined-073d12427.json) records CPU6 interrupt placement, IPv4 throughput and process CPU, a single TX tail, and wire checksums.
 The [follow-up Ethernet tests](evidence/ethernet-followup-073d12427.json) compare UDP socket drops at two buffer sizes and whole-board TCP CPU per delivered gigabit.
 The [EQOS hardware and interrupt test](evidence/ethernet-dma-media-irq.json) records DMA address width, PHY query times and interrupt counts per CPU.

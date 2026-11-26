@@ -1,0 +1,111 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-graphics-hz1000-comparison",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "inconclusive",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, HDMI 1280 × 1024 at 60.020 Hz"
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 U-Boot Image",
+      "revision": "0cba9eb9ddcae4b74d976aec8fc71cbae9dda686",
+      "sha256": "8a94de614fa660660d9458c9587c83a93af35d95cbb9affa80bd9ee5109fbbd2",
+      "reference": null
+    },
+    {
+      "name": "Experimental EMBER64 U-Boot Image with HZ=1000",
+      "revision": "5117977e902b9191d3a3a717711f7cc098ca4894",
+      "sha256": "01c1608434ac690844edf8f9d2bda1aad66d511e693dcc67ca71147b7f623ac3",
+      "reference": null
+    },
+    {
+      "name": "Zero 4 graphics DTB",
+      "revision": null,
+      "sha256": "731c80906fe108aab8f8409e6b50053e361ddb1641433360141a795a98df9abf",
+      "reference": null
+    },
+    {
+      "name": "Installed stock libkwin",
+      "revision": "6.8.3",
+      "sha256": "dd0e1c3de7f312f873d842c2a0a6dbbf41602c7c7a3532e005c6a66358c4a770",
+      "reference": null
+    },
+    {
+      "name": "Installed stock PowerVR Vulkan ICD",
+      "revision": "Mesa 26.3.0",
+      "sha256": "f5044bba8fe8521c75b7b54eeacd7c86bb73c424a1d023fd9a2c38b040cfb147",
+      "reference": null
+    },
+    {
+      "name": "Steady Qt Quick scene",
+      "revision": null,
+      "sha256": "ec01562c9925d2b54d664d5193ba5d4378239270f2d20a981c0331d3f7ce0727",
+      "reference": null
+    },
+    {
+      "name": "AArch64 CRTC observer",
+      "revision": null,
+      "sha256": "2b455facc8ee3e999ebb1f2bb811bb4c5e1d282c267db073287592c0cf041b4b",
+      "reference": null
+    }
+  ],
+  "scenario": "Compare 100 Hz, 1000 Hz and restored 100 Hz with the same fixed-size 60-second Qt Quick Vulkan scene and stock KWin. Use a separate boot in each arm, the same graphics DTB, and a 10000 microsecond DRM safety margin.",
+  "expected": "Check the reported timer rate. Measure condition-variable wake overshoot, Qt frame swaps and sampled CRTC framebuffer changes separately.",
+  "observed": "The 1 ms condition-variable timeout overshoot median fell from 19.006 and 18.999 ms in the controls to 0.999 ms at 1000 Hz. Sampled CRTC framebuffer changes increased to 33.341 per second. Qt frame swaps fell to 33.783 per second. The results do not establish a general desktop frame-rate improvement.",
+  "duration_seconds": null,
+  "measurements": [
+    {"name": "a-timer", "value": 100, "unit": "Hz"},
+    {"name": "a-window", "value": 60, "unit": "seconds"},
+    {"name": "a-qt-swaps", "value": 43.45, "unit": "swaps/s"},
+    {"name": "a-qt-p50", "value": 22, "unit": "ms"},
+    {"name": "a-qt-p95", "value": 39, "unit": "ms"},
+    {"name": "a-crtc-intervals", "value": 2000, "unit": "intervals"},
+    {"name": "a-crtc-changes", "value": 1039, "unit": "changes"},
+    {"name": "a-crtc-rate", "value": 31.178, "unit": "changes/s"},
+    {"name": "a-crtc-p50", "value": 33.322, "unit": "ms"},
+    {"name": "a-crtc-p95", "value": 49.986, "unit": "ms"},
+    {"name": "a-condvar-1ms-overshoot-p50", "value": 19.006, "unit": "ms"},
+    {"name": "a-condvar-1ms-overshoot-p95", "value": 19.046, "unit": "ms"},
+    {"name": "b-timer", "value": 1000, "unit": "Hz"},
+    {"name": "b-window", "value": 60, "unit": "seconds"},
+    {"name": "b-qt-swaps", "value": 33.783, "unit": "swaps/s"},
+    {"name": "b-qt-p50", "value": 33, "unit": "ms"},
+    {"name": "b-qt-p95", "value": 50, "unit": "ms"},
+    {"name": "b-crtc-intervals", "value": 2000, "unit": "intervals"},
+    {"name": "b-crtc-changes", "value": 1111, "unit": "changes"},
+    {"name": "b-crtc-rate", "value": 33.341, "unit": "changes/s"},
+    {"name": "b-crtc-p50", "value": 33.323, "unit": "ms"},
+    {"name": "b-crtc-p95", "value": 33.333, "unit": "ms"},
+    {"name": "b-condvar-1ms-overshoot-p50", "value": 0.999, "unit": "ms"},
+    {"name": "b-condvar-1ms-overshoot-p95", "value": 0.999, "unit": "ms"},
+    {"name": "a2-timer", "value": 100, "unit": "Hz"},
+    {"name": "a2-window", "value": 60, "unit": "seconds"},
+    {"name": "a2-qt-swaps", "value": 43.167, "unit": "swaps/s"},
+    {"name": "a2-qt-p50", "value": 22, "unit": "ms"},
+    {"name": "a2-qt-p95", "value": 35, "unit": "ms"},
+    {"name": "a2-crtc-intervals", "value": 2000, "unit": "intervals"},
+    {"name": "a2-crtc-changes", "value": 1050, "unit": "changes"},
+    {"name": "a2-crtc-rate", "value": 31.513, "unit": "changes/s"},
+    {"name": "a2-crtc-p50", "value": 33.317, "unit": "ms"},
+    {"name": "a2-crtc-p95", "value": 49.97, "unit": "ms"},
+    {"name": "a2-condvar-1ms-overshoot-p50", "value": 18.999, "unit": "ms"},
+    {"name": "a2-condvar-1ms-overshoot-p95", "value": 21.727, "unit": "ms"}
+  ],
+  "limits": [
+    "The 1000 Hz arm used an experimental change to the shared kernel configuration. It is separate from the production Zero 4 board kernel.",
+    "One 60-second scene and one 1000 Hz boot provide the measured comparison.",
+    "CRTC FB_ID reports sampled accepted state. It and Qt frameSwapped have separate meanings. Neither measures optical output.",
+    "Temperature and clock reads only bracket the workloads."
+  ],
+  "source_refs": [
+    "os-zero4-reference",
+    "os-zero4-graphics-mode"
+  ]
+}

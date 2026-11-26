@@ -9,12 +9,36 @@ The related Zero 3W uses a board-specific tree with Ethernet disabled; do not ex
 No physical power button is populated in the source record; the PMIC power-key pads were not exercised.
 Power-off uses PSCI. Exact connector and recovery-control wiring remain unspecified.
 
+## Zero 4 kernel selection
+
+The [Zero 4 kernel build](https://github.com/oxtech-ember/EmberBSD/blob/b66333b443fb39bf107529422f9f44d84486788c/ember/development/kernel.md#orange-pi-zero-4)
+selects `EMBER64_ORANGEPI_ZERO4` with `HZ=1000`. This setting applies to
+that kernel configuration. The shared AArch64 `EMBER64` and Zero 3W
+configurations retain their existing timer settings.
+
+For a Zero 4 update, use a verified signed board set and its matching DTB.
+The graphics installer keeps the established `netbsd-EMBER64.img`
+artifact name for the raw Zero 4 image. It can stage the matching ELF as
+`netbsd-EMBER64`. For offline builds, use the configuration-specific ELF
+and raw image from the Zero 4 builder. Preserve the old pair and card
+recovery entry. Verify the running build and the reported `kern.clockrate`
+after startup. The timer change leaves the firmware chain and DTB selection
+in place.
+
+For a fresh microSD, follow the [Zero 4 image procedure](https://github.com/oxtech-ember/EmberBSD/blob/12cff61f4dcc04dfe04c3ce7c435801e78d7f848/distrib/utils/embedded/README.a733.md#orange-pi-zero-4-image).
+Select `mkimage -h orangepi-zero4` and pass the board kernel output directory
+with `-K`. Supply the verified vendor boot0 and boot-package for this board.
+The generated `boot.scr` selects the named Zero 4 graphics DTB by default.
+It uses the shared board check and existing FAT/FFS layout.
+This graphics profile enables HDMI and on-demand NPU preparation.
+Keep a separate verified recovery card.
+
 ## Graphics mode and recovery
 
-Normal boot selects the standard Zero 4 DTB. It leaves the display path disabled
-and uses observation-only GPU diagnostics. The graphics DTB is an explicit opt-in
-for this board. It enables native PowerVR firmware service and the DE3.52 and HDMI
-providers. With a kernel and DTB that support on-demand NPU preparation, it also
+The shared selector's `normal` mode selects the standard Zero 4 DTB. It leaves
+the display path disabled and uses observation-only GPU diagnostics. The dedicated
+Zero 4 graphics image selects the `graphics` mode at startup. This mode enables
+native PowerVR firmware service and the DE3.52 and HDMI providers. With a kernel and DTB that support on-demand NPU preparation, it also
 attaches the NPU at stage 0. The first admitted privileged tile ioctl prepares
 the NPU. Later calls use the same interface and retain the warm context.
 Use a kernel, DTB and PowerVR firmware that match the

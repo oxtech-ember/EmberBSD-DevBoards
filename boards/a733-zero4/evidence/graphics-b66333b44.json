@@ -1,0 +1,148 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-graphics-b66333b44",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, HDMI 1280 × 1024 at 60.020 Hz"
+  },
+  "inputs": [
+    {
+      "name": "EMBER64_ORANGEPI_ZERO4 U-Boot Image",
+      "revision": "b66333b443fb39bf107529422f9f44d84486788c",
+      "sha256": "daef98a1a8978e10f14faadb04f9aed2922ce5538c3ba9275c40e3d3e9cd0303",
+      "reference": null
+    },
+    {
+      "name": "EMBER64_ORANGEPI_ZERO4 ELF build output",
+      "revision": "b66333b443fb39bf107529422f9f44d84486788c",
+      "sha256": "62703439b4ae372ecc29be64132ce9d7d07a1cb6ca5e7bd9a98628b6718405e2",
+      "reference": null
+    },
+    {
+      "name": "Zero 4 graphics DTB",
+      "revision": null,
+      "sha256": "731c80906fe108aab8f8409e6b50053e361ddb1641433360141a795a98df9abf",
+      "reference": null
+    },
+    {
+      "name": "Installed stock libkwin",
+      "revision": "6.8.3",
+      "sha256": "dd0e1c3de7f312f873d842c2a0a6dbbf41602c7c7a3532e005c6a66358c4a770",
+      "reference": null
+    },
+    {
+      "name": "Installed stock PowerVR Vulkan ICD",
+      "revision": "Mesa 26.3.0",
+      "sha256": "f5044bba8fe8521c75b7b54eeacd7c86bb73c424a1d023fd9a2c38b040cfb147",
+      "reference": null
+    },
+    {
+      "name": "Memory-buffered KMS test source",
+      "revision": null,
+      "sha256": "889dc015018c607fc5e3058c82451d8a5be64a45f2b938cba79a6d1ea6dab3d3",
+      "reference": null
+    },
+    {
+      "name": "Memory-buffered KMS AArch64 executable",
+      "revision": null,
+      "sha256": "ff01edef9e1f51cadf7803f25eeb717b5d387b260e30a7de439c35a5e9cec6ef",
+      "reference": null
+    },
+    {
+      "name": "NPU contour compute executable",
+      "revision": null,
+      "sha256": "bb40467a568e1b1a4ec5e70d887041833f3e48612c604fa32ce41db8155db97c",
+      "reference": null
+    },
+    {
+      "name": "NPU contour input",
+      "revision": null,
+      "sha256": "7a39112dc68833cd57a82b33960aa81e38084b0261cd601e5e5d6c351b92e0cb",
+      "reference": null
+    },
+    {
+      "name": "Steady Qt Quick scene",
+      "revision": null,
+      "sha256": "ec01562c9925d2b54d664d5193ba5d4378239270f2d20a981c0331d3f7ce0727",
+      "reference": null
+    },
+    {
+      "name": "Resize Qt Quick scene",
+      "revision": null,
+      "sha256": "225e7e63b53ddc73bc47e5c198d7fe85e1199e974a38f9e40104a3131286fa09",
+      "reference": null
+    },
+    {
+      "name": "AArch64 CRTC observer",
+      "revision": null,
+      "sha256": "2b455facc8ee3e999ebb1f2bb811bb4c5e1d282c267db073287592c0cf041b4b",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the board-specific kernel with the established Zero 4 graphics DTB and stock Plasma. Verify the timer, ordinary native KMS and Qt Quick Vulkan output. Confirm reference NPU compute, GPU IRQ status and Ethernet.",
+  "expected": "Observe kern.clockrate at 1000 Hz and a working stock Wayland desktop. Complete 2000 CPU-filled KMS flips near one field per update and run both Qt scenes. Verify the NPU output and test data integrity on Ethernet and Wi-Fi.",
+  "observed": "The board reported 1000 Hz. The native test completed 2000 flips in 33.463 seconds with three skipped fields. Stock Plasma resumed. The steady Qt scene gave 1989 swaps and the resize scene gave 2544 swaps, each over 60 seconds. The observers counted 1109 and 1368 framebuffer changes over 2000 consecutive intervals per scene. The NPU matched 24 reference frames. The wired gigabit and Wi-Fi paths delivered matching 4 MiB test transfers. DRM, display engine and GPU IRQ fault counts stayed at zero.",
+  "duration_seconds": null,
+  "measurements": [
+    {"name": "timer-frequency", "value": 1000, "unit": "Hz"},
+    {"name": "ordinary-flips", "value": 2000, "unit": "frames"},
+    {"name": "ordinary-wall", "value": 33.463, "unit": "seconds"},
+    {"name": "ordinary-event-span", "value": 33.355763, "unit": "seconds"},
+    {"name": "ordinary-p50", "value": 16.661, "unit": "ms"},
+    {"name": "ordinary-p95", "value": 16.662, "unit": "ms"},
+    {"name": "ordinary-max", "value": 33.323, "unit": "ms"},
+    {"name": "ordinary-sequence-plus-one", "value": 1996, "unit": "intervals"},
+    {"name": "ordinary-sequence-plus-two", "value": 3, "unit": "intervals"},
+    {"name": "ordinary-missed-fields", "value": 3, "unit": "fields"},
+    {"name": "qt-steady-frame-swaps", "value": 1989, "unit": "frames"},
+    {"name": "qt-steady-measurement-window", "value": 60, "unit": "seconds"},
+    {"name": "qt-steady-rate", "value": 33.15, "unit": "swaps/s"},
+    {"name": "qt-steady-p50", "value": 33, "unit": "ms"},
+    {"name": "qt-steady-p95", "value": 50, "unit": "ms"},
+    {"name": "qt-steady-crtc-intervals", "value": 2000, "unit": "intervals"},
+    {"name": "qt-steady-crtc-observed-fb-id-changes", "value": 1109, "unit": "changes"},
+    {"name": "qt-steady-crtc-observed-changes-per-second", "value": 33.281, "unit": "changes/s"},
+    {"name": "qt-steady-crtc-p50", "value": 33.322, "unit": "ms"},
+    {"name": "qt-steady-crtc-p95", "value": 33.332, "unit": "ms"},
+    {"name": "qt-resize-frame-swaps", "value": 2544, "unit": "frames"},
+    {"name": "qt-resize-measurement-window", "value": 60, "unit": "seconds"},
+    {"name": "qt-resize-rate", "value": 42.4, "unit": "swaps/s"},
+    {"name": "qt-resize-p50", "value": 17, "unit": "ms"},
+    {"name": "qt-resize-p95", "value": 37, "unit": "ms"},
+    {"name": "qt-resize-steps", "value": 16, "unit": "steps"},
+    {"name": "qt-resize-crtc-intervals", "value": 2000, "unit": "intervals"},
+    {"name": "qt-resize-crtc-observed-fb-id-changes", "value": 1368, "unit": "changes"},
+    {"name": "qt-resize-crtc-observed-changes-per-second", "value": 41.053, "unit": "changes/s"},
+    {"name": "qt-resize-crtc-p50", "value": 16.676, "unit": "ms"},
+    {"name": "qt-resize-crtc-p95", "value": 33.324, "unit": "ms"},
+    {"name": "npu-frames", "value": 24, "unit": "frames"},
+    {"name": "npu-tiles", "value": 3456, "unit": "tiles"},
+    {"name": "npu-interrupts", "value": 3456, "unit": "interrupts"},
+    {"name": "npu-reference-positions", "value": 221184, "unit": "positions"},
+    {"name": "npu-wall", "value": 34.64, "unit": "seconds"},
+    {"name": "ethernet-link-rate", "value": 1000, "unit": "Mbit/s"},
+    {"name": "ethernet-verified-transfer", "value": 4194304, "unit": "bytes"},
+    {"name": "wifi-verified-transfer", "value": 4194304, "unit": "bytes"},
+    {"name": "drm-faults", "value": 0, "unit": "events"},
+    {"name": "display-engine-faults", "value": 0, "unit": "events"},
+    {"name": "gpu-irq-faults", "value": 0, "unit": "events"},
+    {"name": "gpu-irq-retired", "value": 0, "unit": "events"}
+  ],
+  "limits": [
+    "The measurements cover one boot of the board-specific kernel with the graphics DTB. The native KMS test stopped and restored Plasma. Other tests used the restored stock session.",
+    "The ordinary KMS run reached the duration and median interval targets. It did not present a new buffer on every field.",
+    "Qt frameSwapped and sampled CRTC FB_ID measure separate stages. CRTC sampling observes accepted KMS state. Optical output was not measured.",
+    "The network checks verify link and transfer integrity. They do not measure throughput, latency or coverage of other access points."
+  ],
+  "source_refs": [
+    "os-zero4-hz1000-profile",
+    "os-zero4-reference"
+  ]
+}
