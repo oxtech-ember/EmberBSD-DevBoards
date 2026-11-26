@@ -12,6 +12,14 @@ Follow the shared [efiboot artifact contract](../../bootloaders/efiboot.md) for 
 | EmberBSD loader/kernel | Root device, ELF image and ACPI interfaces | Record kernel hash and matching modules |
 | Userland | Root filesystem, services and firmware files | Prove the required device operation separately |
 
+## Trial reset
+
+The CM5 ACPI image profile uses the BCM2712 PM watchdog across the EFI handoff.
+A physical trial kernel accepted the 15-second hardware timer.
+When the trial remained unconfirmed, the module restarted and booted the previous kernel.
+The update image also needs two FFS roots and the matching release profile.
+[CM5 profile](https://github.com/oxtech-ember/EmberBSD/blob/60b41b5842a/ember/image/os-profiles/bcm2712-cm5.json) · [Loader contract](../../bootloaders/efiboot.md#one-time-ffs-selection)
+
 ## USB recovery access
 
 For inaccessible eMMC, the module supports USB boot with a RAM recovery environment.

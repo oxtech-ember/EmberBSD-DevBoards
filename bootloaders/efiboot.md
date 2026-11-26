@@ -16,6 +16,13 @@ Keep normal boot, one checked recovery entry and a command prompt in the regular
 Keep experimental entries in a separate diagnostic profile.
 See the [OS loader identity guide](https://github.com/oxtech-ember/EmberBSD/blob/main/usr.sbin/sysinst/docs/installer-branding.md).
 
+## One-time FFS selection
+
+An enrolled ESP holds one menu for each FFS root. The loader consumes and reads back the one-time selector before trial boot.
+Unattended trials also require a reset provider that remains active after EFI boot services exit.
+Each hardware profile names its reset provider. The board reference records the tested hardware behavior. An ordinary EFI menu still uses its configured boot entry.
+[OS loader and image contract](https://github.com/oxtech-ember/EmberBSD/blob/main/distrib/utils/embedded/README.efiboot.md) · [System updates](https://github.com/oxtech-ember/EmberBSD-Docs/blob/main/modules/updates.md)
+
 ## Match the artifact to the selected entry
 
 For this loader path, `boot.cfg` selects a device, partition and kernel filename.
