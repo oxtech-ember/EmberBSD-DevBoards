@@ -38,7 +38,7 @@ R77 pulls it high to enable the radio. GPIO1_C7 controls RF switch U9. Low selec
 High selects the onboard antenna. The vendor Linux number for GPIO1_C7 is 55. [Luckfox Zero W radio guide](https://wiki.luckfox.com/Luckfox-Lyra/Luckfox-Lyra-Zero-W/WIFI-BT/)
 
 EmberBSD's `aicwf` driver matches AIC8800D80 SDIO function 1 with ID `c8a1:0082`.
-The Zero W needs the RK3506 USB PHY and DWC2 host, hub enumeration, a USB AIC8800DC transport and matching DC firmware patches.
+The EmberBSD GENERIC kernel attached the RK3506 USB PHY and DWC2 host. It found the hub and the AIC8800DC at hub port 1. The radio attached as `ugen0`. [Physical USB and console observation](evidence/sd-console.json)
 The SDK supplies revision-specific radio patches and calibration files. Establish the chip revision and firmware inputs before testing association.
 Bluetooth has a separate USB interface and needs its own check.
 [EmberBSD SDIO match](https://github.com/oxtech-ember/EmberBSD/blob/5789d27f00d9c1694b5085730b067e32cd846915/sys/dev/sdmmc/if_aicwf.c) · [SDK DC firmware inventory](https://github.com/EliSofke/LuckfoxLyraSDK/tree/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/external/rkwifibt/firmware/aicsemi/aic8800DC)

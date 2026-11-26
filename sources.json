@@ -2424,6 +2424,14 @@
       "revision": "V1.2",
       "reviewed_at": "2026-11-26",
       "sha256": "df5693bd964cfdff28dbaae4ee620fe21c2b718a945e902dac26b8e96f8b7344"
+    },
+    {
+      "id": "emberbsd-lyra-sd-console",
+      "title": "EmberBSD RK3506B SD image builder and inputs",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/2e18754663890c4521a77443843fc2346c8c5ae8/distrib/utils/embedded/README.rk3506.md",
+      "revision": "2e18754663890c4521a77443843fc2346c8c5ae8",
+      "reviewed_at": "2026-11-26",
+      "sha256": null
     }
   ]
 }

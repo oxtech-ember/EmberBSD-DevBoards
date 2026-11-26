@@ -1,0 +1,72 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "lyra-zero-w-sd-console",
+  "target_id": "rk3506b-lyra-zero-w",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Luckfox Lyra Zero W, RK3506B, factory SPI NAND"
+  },
+  "inputs": [
+    {
+      "name": "Factory SPL",
+      "revision": "2017.09-g9e6285f-dirty, May 24 2025",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Armbian combined loader",
+      "revision": "26.8.3",
+      "sha256": "7a53323b5f2948caa377ae28a3d7a2971e2c28d5d4bb4328a473f0a1ccaba815",
+      "reference": null
+    },
+    {
+      "name": "FIT for the factory SPL",
+      "revision": "EmberBSD SD layout at 2e187546",
+      "sha256": "7cc3d0b5d0807118b8b5b65c2719d1025b31405698c5e5626f4569710f487a53",
+      "reference": null
+    },
+    {
+      "name": "EmberBSD evbarm GENERIC uImage",
+      "revision": "e6bfde18, earmv7hf",
+      "sha256": "a6ab4974476c753f4a2a9d71b5014eed3c82c6cdf93bad3d27fea596e85b72c0",
+      "reference": null
+    },
+    {
+      "name": "RK3506B Zero W DTB",
+      "revision": "e6bfde18",
+      "sha256": "8a37c29b1da9824a8e17723efd18db6da2fd3b7f82a7ef2ac309046ca5e1de48",
+      "reference": null
+    }
+  ],
+  "scenario": "Prepare the SD image with the named uboot partition, the board DTB, GENERIC kernel and an FFS root with static init and sh. Insert the card with power off. Apply power and capture UART0 at 1500000 baud, 8N1. Read the ELF headers in the shell and execute /bin/sh.",
+  "expected": "The factory SPL starts the second-stage U-Boot. EmberBSD boots from microSD, mounts FFS and accepts commands on UART0.",
+  "observed": "The factory SPL checked three SHA-256 digests at sector 0x5000. OP-TEE reported the U-Boot entry at 0x00100000. Armbian U-Boot 2025.10-rc4 ran /boot.scr on MMC partition 1. GENERIC attached three Cortex-A7 CPUs, UART0 and the SD card. It mounted netbsd-root on dk1 as FFS. The shell read the ELF headers of /netbsd, /sbin/init and /bin/sh and executed a second shell. The USB host enumerated the AIC8800DC as ugen0.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "cpu-cores-attached",
+      "value": 3,
+      "unit": "cores"
+    },
+    {
+      "name": "kernel-reported-memory",
+      "value": 511,
+      "unit": "MiB"
+    }
+  ],
+  "limits": [
+    "One cold boot with the specified components. The PCB revision is unknown.",
+    "This console root has static init and sh. Wi-Fi association, DHCP, multi-user startup and network login require separate tests."
+  ],
+  "source_refs": [
+    "emberbsd-lyra-sd-console",
+    "lyra-sdk-snapshot",
+    "lyra-armbian-uboot"
+  ]
+}

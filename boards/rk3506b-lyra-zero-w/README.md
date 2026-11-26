@@ -9,4 +9,4 @@ to distinguish a boot failure from a USB or antenna problem. See [design transfe
 
 The [source evidence](evidence/sd-boot-inputs.json) covers the bootloader package and a Linux card image.
 A [factory reset trace](evidence/factory-reset-uart.json) identifies the installed SPL, SPI NAND boot and USB radio.
-The [capability record](board.json) gives the limits for EmberBSD. Cold boot, SD root and SSH over the onboard radio require physical validation.
+The [cold boot test](evidence/sd-console.json) reached the EmberBSD shell on the FFS root. The [capability record](board.json) gives the limits for the onboard radio.

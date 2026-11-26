@@ -24,43 +24,47 @@
     "lyra-armbian-uboot",
     "lyra-kwiboo-uboot",
     "os-aicwf-sdio-match",
-    "rk3506-trm-boot"
+    "rk3506-trm-boot",
+    "emberbsd-lyra-sd-console"
   ],
   "capabilities": [
     {
       "id": "sd-boot",
       "hardware": "present",
-      "emberbsd": "unknown",
-      "scope": "Factory SPL read the Armbian 26.8.3 FIT from microSD. UART output ended in OP-TEE before the second-stage U-Boot banner. EmberBSD kernel boot and root mount need a target check.",
+      "emberbsd": "verified-scenario",
+      "scope": "Factory SPL selected the uboot GPT partition on microSD. U-Boot ran boot.scr. The ARMv7 GENERIC kernel mounted netbsd-root as FFS and started the static shell.",
       "source_refs": [
         "lyra-armbian-uboot",
         "lyra-kwiboo-uboot",
         "lyra-sdk-snapshot",
         "lyra-ubuntu-sd",
-        "rk3506-trm-boot"
+        "rk3506-trm-boot",
+        "emberbsd-lyra-sd-console"
       ]
     },
     {
       "id": "console",
       "hardware": "present",
-      "emberbsd": "unknown",
-      "scope": "UART0 carried factory SPL, U-Boot and Linux output through the login prompt. EmberBSD console operation needs a target check.",
+      "emberbsd": "verified-scenario",
+      "scope": "UART0 at 1500000 baud, 8N1 carried factory SPL, U-Boot and kernel output. The single-user shell accepted commands and returned their output.",
       "source_refs": [
         "lyra-zero-w-schematic",
         "rk3506b-datasheet",
-        "lyra-sdk-snapshot"
+        "lyra-sdk-snapshot",
+        "emberbsd-lyra-sd-console"
       ]
     },
     {
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "unsupported",
-      "scope": "The onboard USB AIC8800DC needs a USB adapter and DC firmware support in EmberBSD. The current aicwf driver attaches to SDIO AIC8800D80.",
+      "scope": "The ARMv7 kernel enumerated the onboard AIC8800DC on USB as ugen0. A Wi-Fi interface and an association need driver support and a target check.",
       "source_refs": [
         "lyra-zero-w-schematic",
         "lyra-zero-w-radio",
         "lyra-sdk-snapshot",
-        "os-aicwf-sdio-match"
+        "os-aicwf-sdio-match",
+        "emberbsd-lyra-sd-console"
       ]
     },
     {
