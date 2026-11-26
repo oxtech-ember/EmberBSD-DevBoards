@@ -42,6 +42,9 @@ On this schematic, BOOT connects to SARADC_IN1. With both media populated, ident
 
 With the slot empty, the factory SPL tried MMC1 and then loaded U-Boot from MTD1. Linux reached its login prompt. [Reset observation](evidence/factory-reset-uart.json)
 
+For MMC, the vendor SDK SPL first looks up the GPT name `uboot`, then tries raw sector `0x4000` with its Rockchip defaults. The selected Armbian loader places its second-stage FIT at that sector when written at LBA 64. Its FIT hashes match the U-Boot, OP-TEE and Zero W DTB payloads. A boot with the card inserted must confirm the handoff on the tested unit.
+[Vendor SPL MMC path](https://github.com/EliSofke/LuckfoxLyraSDK/blob/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/u-boot/common/spl/spl_mmc.c) · [Rockchip sector defaults](https://github.com/EliSofke/LuckfoxLyraSDK/blob/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/u-boot/common/spl/Kconfig)
+
 Luckfox documents USB Loader mode separately from the card reader. With power disconnected, hold BOOT while connecting H3 to the host.
 Release BOOT after the host detects a Loader device. With power already present, hold RESET and BOOT, release RESET, then release BOOT after detection.
 Check the reported mode before choosing an operation. The vendor USB flash path targets the internal SPI NAND.
