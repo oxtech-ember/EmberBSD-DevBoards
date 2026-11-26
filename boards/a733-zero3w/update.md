@@ -5,13 +5,14 @@ For OS updates on microSD with vendor U-Boot, select the procedure for the card'
 
 ## Two-slot microSD
 
-For a fresh card, select `-h a733-update` in the [A733 image builder](https://github.com/oxtech-ember/EmberBSD/blob/c3bed3cee4443b38dea6d781f8913f88c29a2fd9/distrib/utils/embedded/README.a733.md#zero-3w-two-slot-image).
+For a fresh card, select the hardware with `-h orangepi-zero3w`. Pass the [Zero 3W update profile](https://github.com/oxtech-ember/EmberBSD/blob/4786829fa46/ember/image/os-profiles/orangepi-zero3w.json) with `-U`.
+Follow the [common image build procedure](https://github.com/oxtech-ember/EmberBSD/blob/4786829fa46/ember/tools/docs/automatic-system-update.md#build-an-image-with-automatic-updates).
 This profile uses the normal Zero 3W device tree and the stock `EMBER64` kernel with the minimal no-LDAP userland and `comp`.
 The card has an EFI boot partition and two FFS roots, `netbsd-root` (A) and `ember-root-b` (B).
 Reserve both roots for the OS. The updater rebuilds the inactive root for each trial.
 
 On an existing card that already has these dedicated wedges, boot slot A and keep the normal `boot.scr`.
-Follow the [one-time setup for an existing card](https://github.com/oxtech-ember/EmberBSD/blob/c3bed3cee4443b38dea6d781f8913f88c29a2fd9/distrib/utils/embedded/README.a733.md#enable-an-already-provisioned-card).
+Follow the [one-time setup for an existing card](https://github.com/oxtech-ember/EmberBSD/blob/4786829fa46/ember/tools/docs/uboot-ffs-slots.md#enable-an-already-provisioned-card).
 Keep a separate recovery card. [UART0](boot.md#uart0-console-v12) provides a console for recovery.
 
 For routine updates, follow the [automatic OS service procedure](https://github.com/oxtech-ember/EmberBSD/blob/main/ember/tools/docs/automatic-system-update.md).
