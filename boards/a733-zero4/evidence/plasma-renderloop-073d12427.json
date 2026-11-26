@@ -1,0 +1,250 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-plasma-renderloop-073d12427",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, HDMI 1280 × 1024 at 60.020 Hz"
+  },
+  "inputs": [
+    {
+      "name": "EMBER64 U-Boot Image",
+      "revision": "073d124278cf1f0f0f7f00248adc20308bd87619",
+      "sha256": "dff0381f2c3ebe243a3bf0fc070020d1684c75e5491a8ac98837524c8fe70bc9",
+      "reference": null
+    },
+    {
+      "name": "Zero 4 graphics DTB",
+      "revision": null,
+      "sha256": "731c80906fe108aab8f8409e6b50053e361ddb1641433360141a795a98df9abf",
+      "reference": null
+    },
+    {
+      "name": "Installed stock libkwin",
+      "revision": "6.8.3",
+      "sha256": "dd0e1c3de7f312f873d842c2a0a6dbbf41602c7c7a3532e005c6a66358c4a770",
+      "reference": null
+    },
+    {
+      "name": "Installed stock PowerVR Vulkan ICD",
+      "revision": "Mesa 26.3.0",
+      "sha256": "f5044bba8fe8521c75b7b54eeacd7c86bb73c424a1d023fd9a2c38b040cfb147",
+      "reference": null
+    },
+    {
+      "name": "Fixed-size Qt Quick Vulkan scene source",
+      "revision": null,
+      "sha256": "ec01562c9925d2b54d664d5193ba5d4378239270f2d20a981c0331d3f7ce0727",
+      "reference": null
+    },
+    {
+      "name": "Read-only CRTC observer source",
+      "revision": null,
+      "sha256": "6856792303f3df0db38c9d338c72c56b960cb90213df3dd78d0d571dc1a911af",
+      "reference": null
+    },
+    {
+      "name": "Read-only CRTC observer AArch64 executable",
+      "revision": null,
+      "sha256": "2b455facc8ee3e999ebb1f2bb811bb4c5e1d282c267db073287592c0cf041b4b",
+      "reference": null
+    },
+    {
+      "name": "Instrumented KWin library for schedule trace",
+      "revision": "KWin 6.8.3",
+      "sha256": "ac48a63d2e669605fb424613052a7c6c12f50233381f7697924124207e515ea8",
+      "reference": null
+    },
+    {
+      "name": "Frame timeline observer for schedule trace",
+      "revision": "KWin 6.8.3",
+      "sha256": "93b47b34f6c7698fff2a97b37a0e97b7ee4ef9906b77f9e21ef3de2bd9450fa6",
+      "reference": null
+    },
+    {
+      "name": "Instrumented KWin library for render time trace",
+      "revision": "KWin 6.8.3",
+      "sha256": "972f8ea9c6b599c52fe4d40ac87f60e57371ebee648e018f59a2c60550b6489d",
+      "reference": null
+    },
+    {
+      "name": "Frame timeline observer for render time trace",
+      "revision": "KWin 6.8.3",
+      "sha256": "16e717e2227a6590e782d9753a71206a43c8527972e14967943dea4441acf313",
+      "reference": null
+    }
+  ],
+  "scenario": "Run a fixed-size Qt Quick Vulkan window in Plasma Wayland. Keep the 10000 microsecond DRM setting and the installed PowerVR ICD. In two sessions, instrument the scheduling decisions and then the render time samples. Match the primary frame to the page flip event and read the active CRTC framebuffer at consecutive vblanks.",
+  "expected": "Display a new framebuffer on each refresh and identify where long intervals occur.",
+  "observed": "The CRTC changed framebuffer about 30 times per second in both samples. KWin selected a two-period render budget. In long intervals an earlier frame with an eligible target often failed the buffer readiness check and was later dropped.",
+  "duration_seconds": 120,
+  "measurements": [
+    {
+      "name": "schedule-qt-swaps",
+      "value": 43.92,
+      "unit": "signals/s"
+    },
+    {
+      "name": "schedule-qt-interval-p50",
+      "value": 22,
+      "unit": "ms"
+    },
+    {
+      "name": "schedule-qt-interval-p95",
+      "value": 34,
+      "unit": "ms"
+    },
+    {
+      "name": "schedule-crtc-fb-rate",
+      "value": 29.76,
+      "unit": "changes/s"
+    },
+    {
+      "name": "schedule-crtc-vblank-samples",
+      "value": 360,
+      "unit": "samples"
+    },
+    {
+      "name": "schedule-crtc-vblank-samples-missed",
+      "value": 0,
+      "unit": "samples"
+    },
+    {
+      "name": "schedule-matched-intervals",
+      "value": 177,
+      "unit": "intervals"
+    },
+    {
+      "name": "schedule-three-period-intervals",
+      "value": 85,
+      "unit": "intervals"
+    },
+    {
+      "name": "schedule-prior-frames-dropped-after-schedule",
+      "value": 80,
+      "unit": "frames"
+    },
+    {
+      "name": "journal-qt-swaps",
+      "value": 44.52,
+      "unit": "signals/s"
+    },
+    {
+      "name": "journal-qt-interval-p50",
+      "value": 22,
+      "unit": "ms"
+    },
+    {
+      "name": "journal-qt-interval-p95",
+      "value": 33,
+      "unit": "ms"
+    },
+    {
+      "name": "journal-crtc-fb-rate",
+      "value": 30.43,
+      "unit": "changes/s"
+    },
+    {
+      "name": "journal-crtc-vblank-samples",
+      "value": 360,
+      "unit": "samples"
+    },
+    {
+      "name": "journal-crtc-vblank-samples-missed",
+      "value": 0,
+      "unit": "samples"
+    },
+    {
+      "name": "journal-matched-intervals",
+      "value": 181,
+      "unit": "intervals"
+    },
+    {
+      "name": "journal-three-period-intervals",
+      "value": 86,
+      "unit": "intervals"
+    },
+    {
+      "name": "journal-prior-frames-dropped-after-schedule",
+      "value": 85,
+      "unit": "frames"
+    },
+    {
+      "name": "journal-single-cpu-time-query",
+      "value": 181,
+      "unit": "frames"
+    },
+    {
+      "name": "journal-cpu-wall-p50",
+      "value": 10.006,
+      "unit": "ms"
+    },
+    {
+      "name": "journal-cpu-wall-p95",
+      "value": 13.085,
+      "unit": "ms"
+    },
+    {
+      "name": "compositor-thread-cpu-p50",
+      "value": 7.604,
+      "unit": "ms"
+    },
+    {
+      "name": "compositor-thread-cpu-p95",
+      "value": 8.829,
+      "unit": "ms"
+    },
+    {
+      "name": "journal-mean-p50",
+      "value": 10.128,
+      "unit": "ms"
+    },
+    {
+      "name": "journal-double-variation-term-p50",
+      "value": 13.379,
+      "unit": "ms"
+    },
+    {
+      "name": "journal-prediction-p50",
+      "value": 23.578,
+      "unit": "ms"
+    },
+    {
+      "name": "schedule-verified-early-readiness-rejections",
+      "value": 78,
+      "unit": "frames"
+    },
+    {
+      "name": "schedule-readiness-check-lead-p50",
+      "value": 13.011,
+      "unit": "ms"
+    },
+    {
+      "name": "journal-verified-early-readiness-rejections",
+      "value": 83,
+      "unit": "frames"
+    },
+    {
+      "name": "journal-readiness-check-lead-p50",
+      "value": 13.007,
+      "unit": "ms"
+    }
+  ],
+  "limits": [
+    "Qt frameSwapped measures the client. The CRTC sample covers the full output. Neither measurement observes light from the panel.",
+    "Each scene took 60 seconds. Each CRTC trace contains 360 samples within its scene. Matched intervals use both an observed framebuffer change and a page flip event.",
+    "The CPU render query measures elapsed time on the steady clock. Thread CPU accounting excludes time the compositor thread spent off CPU. These traces do not measure GPU execution time.",
+    "The stricter dropped-frame join requires a single queued candidate, its own eligible target, a matching worker readiness check and two consecutive field timestamps 16 to 17 ms apart. It excludes two intervals in each trace.",
+    "A failed buffer readiness check does not give the time a particular producer fence became ready. Both runs retained the installed scheduling policy."
+  ],
+  "source_refs": [
+    "os-a733-hdmi-native",
+    "os-zero4-graphics-mode"
+  ]
+}
