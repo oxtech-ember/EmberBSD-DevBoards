@@ -1,0 +1,443 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "a733-zero4-graphics-367ee48ed",
+  "target_id": "a733-zero4",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Orange Pi Zero 4, Allwinner A733, HDMI 1280 × 1024 at 60.020 Hz"
+  },
+  "inputs": [
+    {
+      "name": "EMBER64_ORANGEPI_ZERO4 U-Boot Image",
+      "sha256": "71d6e04706d069495453bdd2f7bc09d984e9cd4e0a2aa0aeade2dc018c9b0fa7",
+      "revision": "367ee48ed04a5b20f23b1b203df6c4bc3c81301b",
+      "reference": null
+    },
+    {
+      "name": "EMBER64_ORANGEPI_ZERO4 ELF build output",
+      "sha256": "8dfbc7c0860a1b8b71d229e07e4e1957124bf325efde2dbdde78fa84718ed7f8",
+      "revision": "367ee48ed04a5b20f23b1b203df6c4bc3c81301b",
+      "reference": null
+    },
+    {
+      "name": "Zero 4 graphics DTB",
+      "sha256": "731c80906fe108aab8f8409e6b50053e361ddb1641433360141a795a98df9abf",
+      "revision": null,
+      "reference": null
+    },
+    {
+      "name": "Installed stock libkwin",
+      "revision": "6.8.3",
+      "sha256": "dd0e1c3de7f312f873d842c2a0a6dbbf41602c7c7a3532e005c6a66358c4a770",
+      "reference": null
+    },
+    {
+      "name": "Installed stock PowerVR Vulkan ICD",
+      "revision": "Mesa 26.3.0",
+      "sha256": "f5044bba8fe8521c75b7b54eeacd7c86bb73c424a1d023fd9a2c38b040cfb147",
+      "reference": null
+    },
+    {
+      "name": "Memory-buffered ordinary KMS producer",
+      "revision": null,
+      "sha256": "ff01edef9e1f51cadf7803f25eeb717b5d387b260e30a7de439c35a5e9cec6ef",
+      "reference": null
+    },
+    {
+      "name": "Steady Qt Quick scene",
+      "revision": null,
+      "sha256": "ec01562c9925d2b54d664d5193ba5d4378239270f2d20a981c0331d3f7ce0727",
+      "reference": null
+    },
+    {
+      "name": "Resize Qt Quick scene",
+      "revision": null,
+      "sha256": "225e7e63b53ddc73bc47e5c198d7fe85e1199e974a38f9e40104a3131286fa09",
+      "reference": null
+    },
+    {
+      "name": "CRTC observer",
+      "revision": null,
+      "sha256": "2b455facc8ee3e999ebb1f2bb811bb4c5e1d282c267db073287592c0cf041b4b",
+      "reference": null
+    },
+    {
+      "name": "Pipeline timing diagnostic",
+      "revision": "b6d55467bf8e16a63074bc54838ff2f0356b0c75",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "CCU aperture timing diagnostic",
+      "revision": "c31228f429dee37f275c2bbe0367584733293bea",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Earlier experimental native GPU queue",
+      "revision": "413202cb910aeea9336c7bed003a72c47d639887",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the production CCU aperture cache with the standard graphics DTB. Run native KMS, stock Plasma Qt Quick Vulkan, NPU reference compute and network integrity checks.",
+  "expected": "Observe 1000 Hz, 2000 ordinary flips with a median near one field, valid stock Qt output, matching NPU tiles and good link integrity.",
+  "observed": "The native test delivered 2000 CPU-filled flips in 33.408 seconds and missed 0 fields. Stock Plasma resumed. The steady and resize Qt scenes gave 2393 and 2412 swaps in 60 seconds. They had 1329 and 1284 sampled CRTC FB ID changes over 2000 intervals. The direct PowerVR test drew and submitted 2000 new frames at 56.889 frames/s. It delivered 1889 of 1999 intervals in one field. The separate 120-frame test matched all sampled GPU attachment markers. The NPU matched 24 reference frames. Ethernet and Wi-Fi transferred matching 4 MiB payloads. DRM, display engine and GPU IRQ fault counters remained at zero. In the diagnostic comparison, the median display preparation and DMA sync interval fell from 5.261 to 1.440 ms. The median RCQ verification to provider return fell from 3.106 to 0.581 ms.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "ordinary-flips",
+      "value": 2000,
+      "unit": "frames"
+    },
+    {
+      "name": "ordinary-wall",
+      "value": 33.408,
+      "unit": "seconds"
+    },
+    {
+      "name": "ordinary-event-span",
+      "value": 33.305867,
+      "unit": "seconds"
+    },
+    {
+      "name": "ordinary-p50",
+      "value": 16.661,
+      "unit": "ms"
+    },
+    {
+      "name": "ordinary-p95",
+      "value": 16.662,
+      "unit": "ms"
+    },
+    {
+      "name": "ordinary-max",
+      "value": 16.666,
+      "unit": "ms"
+    },
+    {
+      "name": "ordinary-sequence-plus-one",
+      "value": 1999,
+      "unit": "intervals"
+    },
+    {
+      "name": "ordinary-sequence-plus-two",
+      "value": 0,
+      "unit": "intervals"
+    },
+    {
+      "name": "ordinary-sequence-over-two",
+      "value": 0,
+      "unit": "intervals"
+    },
+    {
+      "name": "ordinary-missed-fields",
+      "value": 0,
+      "unit": "fields"
+    },
+    {
+      "name": "qt-steady-frame-swaps",
+      "value": 2393,
+      "unit": "frames"
+    },
+    {
+      "name": "qt-steady-measurement-window",
+      "value": 60.0,
+      "unit": "seconds"
+    },
+    {
+      "name": "qt-steady-rate",
+      "value": 39.883,
+      "unit": "swaps/s"
+    },
+    {
+      "name": "qt-steady-p50",
+      "value": 25,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-steady-p95",
+      "value": 35,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-steady-crtc-intervals",
+      "value": 2000,
+      "unit": "intervals"
+    },
+    {
+      "name": "qt-steady-crtc-observed-fb-id-changes",
+      "value": 1329,
+      "unit": "changes"
+    },
+    {
+      "name": "qt-steady-crtc-observed-changes-per-second",
+      "value": 39.883,
+      "unit": "changes/s"
+    },
+    {
+      "name": "qt-steady-crtc-p50",
+      "value": 33.317,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-steady-crtc-p95",
+      "value": 33.326,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-resize-frame-swaps",
+      "value": 2412,
+      "unit": "frames"
+    },
+    {
+      "name": "qt-resize-measurement-window",
+      "value": 60.0,
+      "unit": "seconds"
+    },
+    {
+      "name": "qt-resize-rate",
+      "value": 40.2,
+      "unit": "swaps/s"
+    },
+    {
+      "name": "qt-resize-p50",
+      "value": 22,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-resize-p95",
+      "value": 35,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-resize-crtc-intervals",
+      "value": 2000,
+      "unit": "intervals"
+    },
+    {
+      "name": "qt-resize-crtc-observed-fb-id-changes",
+      "value": 1284,
+      "unit": "changes"
+    },
+    {
+      "name": "qt-resize-crtc-observed-changes-per-second",
+      "value": 38.533,
+      "unit": "changes/s"
+    },
+    {
+      "name": "qt-resize-crtc-p50",
+      "value": 33.319,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-resize-crtc-p95",
+      "value": 33.324,
+      "unit": "ms"
+    },
+    {
+      "name": "qt-resize-steps",
+      "value": 16,
+      "unit": "steps"
+    },
+    {
+      "name": "prime-proof-frames",
+      "value": 120,
+      "unit": "frames"
+    },
+    {
+      "name": "prime-proof-event-span",
+      "value": 5.931398,
+      "unit": "seconds"
+    },
+    {
+      "name": "prime-proof-event-rate",
+      "value": 20.063,
+      "unit": "frames/s"
+    },
+    {
+      "name": "prime-proof-p50",
+      "value": 49.984,
+      "unit": "ms"
+    },
+    {
+      "name": "prime-proof-p95",
+      "value": 66.645,
+      "unit": "ms"
+    },
+    {
+      "name": "prime-proof-one-field-intervals",
+      "value": 0,
+      "unit": "intervals"
+    },
+    {
+      "name": "prime-proof-skipped-fields",
+      "value": 237,
+      "unit": "fields"
+    },
+    {
+      "name": "prime-cadence-frames",
+      "value": 2000,
+      "unit": "frames"
+    },
+    {
+      "name": "prime-cadence-event-span",
+      "value": 35.138522,
+      "unit": "seconds"
+    },
+    {
+      "name": "prime-cadence-event-rate",
+      "value": 56.889,
+      "unit": "frames/s"
+    },
+    {
+      "name": "prime-cadence-p50",
+      "value": 16.661,
+      "unit": "ms"
+    },
+    {
+      "name": "prime-cadence-p95",
+      "value": 33.322,
+      "unit": "ms"
+    },
+    {
+      "name": "prime-cadence-one-field-intervals",
+      "value": 1889,
+      "unit": "intervals"
+    },
+    {
+      "name": "prime-cadence-skipped-fields",
+      "value": 110,
+      "unit": "fields"
+    },
+    {
+      "name": "timer-frequency",
+      "value": 1000,
+      "unit": "Hz"
+    },
+    {
+      "name": "npu-frames",
+      "value": 24,
+      "unit": "frames"
+    },
+    {
+      "name": "npu-tiles",
+      "value": 3456,
+      "unit": "tiles"
+    },
+    {
+      "name": "npu-interrupts",
+      "value": 3456,
+      "unit": "interrupts"
+    },
+    {
+      "name": "npu-reference-positions",
+      "value": 221184,
+      "unit": "positions"
+    },
+    {
+      "name": "ethernet-verified-transfer",
+      "value": 4194304,
+      "unit": "bytes"
+    },
+    {
+      "name": "wifi-verified-transfer",
+      "value": 4194304,
+      "unit": "bytes"
+    },
+    {
+      "name": "drm-faults",
+      "value": 0,
+      "unit": "events"
+    },
+    {
+      "name": "display-engine-faults",
+      "value": 0,
+      "unit": "events"
+    },
+    {
+      "name": "gpu-irq-faults",
+      "value": 0,
+      "unit": "events"
+    },
+    {
+      "name": "gpu-irq-retired",
+      "value": 0,
+      "unit": "events"
+    },
+    {
+      "name": "diagnostic-b6d55467b-de-prepare-dma-p50",
+      "value": 5.261,
+      "unit": "ms"
+    },
+    {
+      "name": "diagnostic-b6d55467b-de-prepare-dma-p95",
+      "value": 6.063,
+      "unit": "ms"
+    },
+    {
+      "name": "diagnostic-b6d55467b-rcq-verified-to-provider-return-p50",
+      "value": 3.106,
+      "unit": "ms"
+    },
+    {
+      "name": "diagnostic-b6d55467b-rcq-verified-to-provider-return-p95",
+      "value": 3.118,
+      "unit": "ms"
+    },
+    {
+      "name": "diagnostic-b6d55467b-samples",
+      "value": 182,
+      "unit": "frames"
+    },
+    {
+      "name": "diagnostic-c31228f42-de-prepare-dma-p50",
+      "value": 1.44,
+      "unit": "ms"
+    },
+    {
+      "name": "diagnostic-c31228f42-de-prepare-dma-p95",
+      "value": 1.721,
+      "unit": "ms"
+    },
+    {
+      "name": "diagnostic-c31228f42-rcq-verified-to-provider-return-p50",
+      "value": 0.581,
+      "unit": "ms"
+    },
+    {
+      "name": "diagnostic-c31228f42-rcq-verified-to-provider-return-p95",
+      "value": 0.583,
+      "unit": "ms"
+    },
+    {
+      "name": "diagnostic-c31228f42-samples",
+      "value": 200,
+      "unit": "frames"
+    },
+    {
+      "name": "experimental-e6-sequence-plus-one",
+      "value": 119,
+      "unit": "intervals"
+    }
+  ],
+  "limits": [
+    "Native flip pacing used CPU-filled buffers. Qt frameSwapped and sampled CRTC FB ID observe separate software stages. No optical output was measured.",
+    "The diagnostic kernel pair measured whole intervals with traces enabled. Production repeats acceptance with the cache but has no diagnostic tracer. Each arm used one boot.",
+    "Direct Qt Vulkan enumerated a display and plane but failed when DRM_SET_MASTER returned EACCES for the session user. EGLFS had selected llvmpipe on the diagnostic kernel. These runs give no direct hardware Qt frame rate.",
+    "The independent direct PowerVR test renders simple markers. It does not measure Qt Quick or application performance. The earlier experimental E6 native queue reported 119 of 119 one-field intervals on a separate kernel and workload.",
+    "Network tests established transfer integrity at the tested links. They did not measure maximum network performance.",
+    "The boot log contained one PowerVR DMA map allocation failure for 8192 bytes. Both Qt workloads completed. Their log snapshots showed no additional allocation failures.",
+    "A separate experiment prepared the next GPU frame during the previous display request and also tested Vulkan display acquisition. The board stopped answering over both network connections before the logs were collected. The failing stage and the desktop recovery status at the end of this experiment are unknown."
+  ],
+  "source_refs": [
+    "os-zero4-hz1000-profile",
+    "os-zero4-reference"
+  ]
+}
