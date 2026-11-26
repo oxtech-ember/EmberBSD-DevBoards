@@ -42,8 +42,14 @@ On this schematic, BOOT connects to SARADC_IN1. With both media populated, ident
 
 With the slot empty, the factory SPL tried MMC1 and then loaded U-Boot from MTD1. Linux reached its login prompt. [Reset observation](evidence/factory-reset-uart.json)
 
-For MMC, the vendor SDK SPL first looks up the GPT name `uboot`, then tries raw sector `0x4000` with its Rockchip defaults. The selected Armbian loader places its second-stage FIT at that sector when written at LBA 64. Its FIT hashes match the U-Boot, OP-TEE and Zero W DTB payloads. A boot with the card inserted must confirm the handoff on the tested unit.
+For MMC, the vendor SDK SPL first looks up the GPT name `uboot`, then tries raw sector `0x4000` with its Rockchip defaults. The selected Armbian loader places its second-stage FIT at that sector when written at LBA 64.
 [Vendor SPL MMC path](https://github.com/EliSofke/LuckfoxLyraSDK/blob/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/u-boot/common/spl/spl_mmc.c) · [Rockchip sector defaults](https://github.com/EliSofke/LuckfoxLyraSDK/blob/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/u-boot/common/spl/Kconfig)
+
+On a Zero W with factory SPL 2017.09, the SPL read the Armbian 26.8.3 FIT from microSD at sector `0x4000`.
+It reported a valid SHA-256 for OP-TEE, U-Boot and the loader DTB. U-Boot loaded at `0x00100000`.
+OP-TEE reported its next entry at `0x03f011a7`. UART0 output ended before the U-Boot banner.
+With the slot empty, the same SPL passed the NAND U-Boot entry at `0x00200000` to OP-TEE and reached Linux.
+[MicroSD handoff observation](evidence/factory-spl-armbian-fit.json)
 
 Luckfox documents USB Loader mode separately from the card reader. With power disconnected, hold BOOT while connecting H3 to the host.
 Release BOOT after the host detects a Loader device. With power already present, hold RESET and BOOT, release RESET, then release BOOT after detection.

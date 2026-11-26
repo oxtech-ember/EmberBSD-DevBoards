@@ -1,0 +1,43 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "lyra-zero-w-factory-spl-armbian-fit",
+  "target_id": "rk3506b-lyra-zero-w",
+  "recorded_at": "2026-11-26",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Luckfox Lyra Zero W, RK3506B, 512 MiB DDR3 and factory SPI NAND"
+  },
+  "inputs": [
+    {
+      "name": "Factory SPL",
+      "revision": "2017.09-g9e6285f-dirty, May 24 2025",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Armbian u-boot-rockchip.bin",
+      "revision": "26.8.3, Luckfox Lyra Zero W",
+      "sha256": "7a53323b5f2948caa377ae28a3d7a2971e2c28d5d4bb4328a473f0a1ccaba815",
+      "reference": null
+    }
+  ],
+  "scenario": "Place the combined loader at LBA 64 on a microSD with a FAT boot partition at LBA 32768. Omit a named uboot partition. Read back the card, insert it with power off, then apply power and capture UART0 at 1500000 baud, 8N1.",
+  "expected": "The second-stage U-Boot prints its banner on UART0 after the OP-TEE handoff.",
+  "observed": "Factory SPL selected MMC1 and read the FIT at sector 0x4000. All three payloads passed their SHA-256 checks. SPL loaded U-Boot at 0x00100000 and reported a jump to 0x00001000. OP-TEE reported its next entry at 0x03f011a7. Its switch to normal world was the last UART line.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "This observation covers the specified factory SPL and card FIT on one Zero W. The PCB revision is unknown.",
+    "The capture includes no second-stage U-Boot banner, EmberBSD kernel output or root mount."
+  ],
+  "source_refs": [
+    "lyra-sdk-snapshot",
+    "lyra-armbian-uboot",
+    "lyra-kwiboo-uboot"
+  ]
+}

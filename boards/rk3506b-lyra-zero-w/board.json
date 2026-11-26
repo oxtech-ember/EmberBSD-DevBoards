@@ -31,7 +31,7 @@
       "id": "sd-boot",
       "hardware": "present",
       "emberbsd": "unknown",
-      "scope": "Two bootloader layouts identified. No physical EmberBSD microSD boot or root mount recorded.",
+      "scope": "Factory SPL read the Armbian 26.8.3 FIT from microSD. UART output ended in OP-TEE before the second-stage U-Boot banner. EmberBSD kernel boot and root mount need a target check.",
       "source_refs": [
         "lyra-armbian-uboot",
         "lyra-kwiboo-uboot",
