@@ -54,11 +54,17 @@
       "revision": "Zero W MicroSD 261020, same radio modules and firmware, with counted build text and calibration request comparisons",
       "sha256": "78c6cdca844f95fa132a31c6fb5c7d4c86aa5af9fc8a3ef3e7dc74acc96c5065",
       "reference": null
+    },
+    {
+      "name": "Luckfox Linux diagnostic FIT with firmware file access checks",
+      "revision": "Zero W MicroSD 261020, original radio modules and firmware, USB metadata observer and file access time checks in RAM",
+      "sha256": "8c8e8846499e5ee317c5f6327fa1c5b0916dd8101471ad90c52286c4765fcfb4",
+      "reference": null
     }
   ],
-  "scenario": "Boot the diagnostic FIT into RAM. Select the onboard antenna with GPIO55. Load the two AIC8800DC modules from the matching vendor rootfs. Flush the BSS cache with wpa_cli and request a new scan. Associate through wpa_supplicant and obtain a DHCP lease. In three separate RAM boots, record command identifiers, parameter lengths and timestamps at the Linux USB host. Load the same radio modules and bring wlan0 up once per boot. In the last two boots, record the byte count after the calibration confirmation header. In the third boot, compare the counted firmware build text and the calibration request parameters with the EmberBSD diagnostic inputs. Reboot from the third RAM test to the installed microSD system.",
+  "scenario": "Boot the diagnostic FIT into RAM. Select the onboard antenna with GPIO55. Load the two AIC8800DC modules from the matching vendor rootfs. Flush the BSS cache with wpa_cli and request a new scan. Associate through wpa_supplicant and obtain a DHCP lease. In four separate RAM boots, record command identifiers, parameter lengths and timestamps at the Linux USB host. Load the same radio modules and bring wlan0 up once per boot. In the last three boots, record the byte count after the calibration confirmation header. In the third and fourth boots, compare the counted firmware build text and the calibration request parameters with the EmberBSD diagnostic inputs. Before module load in the fourth boot, reset the access times of three firmware files in RAM. After the first interface open, check the same files and the read and idle controls. Reboot to the installed microSD system.",
   "expected": "The onboard antenna receives scan results. The station completes WPA3-SAE association and obtains a DHCP lease.",
-  "observed": "Linux ran from an initramfs. GPIO55 read back as an output at logic high. The fresh scan returned 19 BSS entries. The station completed WPA3-SAE association on 2.4 GHz. The DHCP client bound a lease. In each observer run, Linux completed 16 request and confirmation pairs from module load through the first interface open. Each of the four MM_SET_RF_CONFIG requests declared 260 parameter bytes. Each confirmation declared zero. The MM_SET_RF_CALIB request (0x0069) declared 24 parameter bytes. Confirmation 0x006a declared zero parameter bytes in all three runs. The last two observers measured a four-byte USB record header and 12 bytes of IPC framing with no data after them. In the third run, the counted 36-byte firmware build text and all 24 calibration request bytes matched the EmberBSD inputs. MM_START then returned a confirmation with zero parameter bytes. MM_ADD_IF returned a confirmation with two parameter bytes. Linux brought wlan0 up in all three runs. After the third run, U-Boot read the microSD boot script. EmberBSD mounted dk1 and reached the login prompt.",
+  "observed": "Linux ran from an initramfs. GPIO55 read back as an output at logic high. The fresh scan returned 19 BSS entries. The station completed WPA3-SAE association on 2.4 GHz. The DHCP client bound a lease. In each observer run, Linux completed 16 request and confirmation pairs from module load through the first interface open. Each of the four MM_SET_RF_CONFIG requests declared 260 parameter bytes. Each confirmation declared zero. The MM_SET_RF_CALIB request (0x0069) declared 24 parameter bytes. Confirmation 0x006a declared zero parameter bytes in all four runs. The last three observers measured a four-byte USB record header and 12 bytes of IPC framing with no data after them. In the third and fourth runs, the counted 36-byte firmware build text and all 24 calibration request parameter bytes matched the EmberBSD inputs. MM_START then returned a confirmation with zero parameter bytes. MM_ADD_IF returned a confirmation with two parameter bytes. Linux brought wlan0 up in all four runs. In the fourth run, the access times showed reads of fmacfw_calib_8800dc_u02.bin, fmacfw_patch_8800dc_u02.bin and fmacfw_patch_tbl_8800dc_u02.bin. Both control files behaved as expected. After the third and fourth runs, U-Boot read the microSD boot script. EmberBSD mounted dk1 and reached the login prompt.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -80,12 +86,18 @@
       "name": "calibration-request-to-confirmation-third-run",
       "value": 276624,
       "unit": "us"
+    },
+    {
+      "name": "calibration-request-to-confirmation-fourth-run",
+      "value": 276641,
+      "unit": "us"
     }
   ],
   "limits": [
-    "The station test used the published Luckfox Linux kernel in RAM. The three reference kernels added a host USB observer. All four boots used the same 261020 radio modules and firmware. These differ from the factory NAND sample.",
+    "The station test used the published Luckfox Linux kernel in RAM. The four diagnostic FITs used a host USB observer. All five boots used the same 261020 radio modules and firmware. These differ from the factory NAND sample.",
     "The BSS count describes this scan. With driver log mask 3, dmesg showed no firmware build text. The vendor ethtool 6.6 reported driver usb, version 6.1.99 and an empty firmware-version field.",
     "The build text and request comparisons cover only those fields. The state of the radio at calibration remains unknown.",
+    "File access times establish reads on the RAM filesystem. Firmware execution and the values of calibration coefficients were outside this measurement.",
     "This result covers the Linux station. EmberBSD station creation and scan results are recorded separately."
   ],
   "source_refs": [
