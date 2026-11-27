@@ -45,10 +45,11 @@ The downstream hub and WLAN interface enumerated. Firmware returned status 1 to 
 The diagnostic recorded no scan completion or beacon. The kernel exposed no WLAN interface to WPA or DHCP.
 Multi-user init started `mdnsd` and `sshd`. SSH over Wi-Fi still requires a working association and IP configuration. [Cold boot observation](evidence/sd-multiuser.json)
 
-After a software reboot from the serial shell, a RAM-loaded kernel attached the receive-only station `aicwf0` to `uaicfw0`.
+After `/sbin/shutdown -r now`, the kernel loaded from microSD attached the receive-only station `aicwf0` to `uaicfw0`.
 At the root console, `ifconfig aicwf0 up` succeeded. The scan command is `ifconfig aicwf0 list scan`.
 It returned status 0 and printed zero rows. The interface reported `status: no network`.
-Beacon reception remains unverified. Association and data transfer require revision-specific radio startup.
+A host authenticated by SSH public key through a UART relay to the board loopback interface.
+Wi-Fi beacon reception remains unverified. Association and data transfer require revision-specific radio startup.
 [Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sbin/ifconfig/ieee80211.c)
 
 Bluetooth has a separate USB interface and needs its own check.

@@ -15,13 +15,19 @@
   "inputs": [
     {
       "name": "EmberBSD evbarm GENERIC uImage",
-      "revision": "43b21cc0f147281408f01d159c02906506854374 with the receive-only station, USB queue and VIF cleanup changes integrated at ac98551b89980170d2cb34757ad5477be38943c0",
-      "sha256": "838f0ca27550445f15dfdcdad1e4b2f9f2d43a334f79cf623eacbebdd2ade3a9",
+      "revision": "f0cb3f4225531f4c5487bbdbffa0b3c4af74e82f",
+      "sha256": "65bacaf9c722eb1238a05734c3bd5777b16cca415b3b0bd1e48e65539af57789",
+      "reference": null
+    },
+    {
+      "name": "EmberBSD evbarm GENERIC kernel ELF on FFS",
+      "revision": "f0cb3f4225531f4c5487bbdbffa0b3c4af74e82f",
+      "sha256": "ee0a161eaa8c8ba364af9cde8264197b2187d6fd13834d3299a8a437517bdc7b",
       "reference": null
     },
     {
       "name": "RK3506B Zero W DTB",
-      "revision": "43b21cc0f147281408f01d159c02906506854374",
+      "revision": "f0cb3f4225531f4c5487bbdbffa0b3c4af74e82f",
       "sha256": "8a37c29b1da9824a8e17723efd18db6da2fd3b7f82a7ef2ac309046ca5e1de48",
       "reference": null
     },
@@ -38,9 +44,9 @@
       "reference": null
     }
   ],
-  "scenario": "Reboot from the multi-user serial shell with /sbin/reboot. Keep the microSD installed. Load the GENERIC kernel into RAM over UART0 with U-Boot loady. Check the received byte count and CRC32. Boot with the board DTB and microSD root. From the local root console, run ifconfig -l, ifconfig aicwf0 up, ifconfig aicwf0 list scan and ifconfig aicwf0.",
+  "scenario": "Keep the previous kernel pair. Rename the staged ELF to /netbsd on FFS and the staged uImage to netbsd-GENERIC.ub on FAT. Remount FAT read-only and verify the installed and previous pairs by SHA-256. Run /sbin/shutdown -r now from the serial shell. Let U-Boot run /boot.scr from microSD. At the local root console, run ifconfig -l, ifconfig aicwf0 up, ifconfig aicwf0 list scan and ifconfig aicwf0. Test SSH public-key login from a host through a UART relay to the board loopback interface.",
   "expected": "The station appears in the interface list and comes up. A scan result for an access point would confirm radio reception.",
-  "observed": "The kernel mounted dk1 as FFS and attached aicwf0 at uaicfw0. The interface list included aicwf0. Bringing it up succeeded. The explicit scan command exited with status 0 and printed zero rows. The interface reported status: no network.",
+  "observed": "The shutdown service saved entropy. U-Boot ran /boot.scr and read the 11308316-byte kernel image from microSD. The kernel mounted dk1 as FFS and attached aicwf0 at uaicfw0. The system restored entropy before starting sshd. The interface list included aicwf0. Bringing it up succeeded. The scan exited with status 0 and printed zero rows. The interface reported status: no network. The host verified the SSH host key and completed public-key login through the UART relay.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -50,9 +56,9 @@
     }
   ],
   "limits": [
-    "One software reboot followed by a RAM-loaded kernel. The PCB revision is unknown.",
-    "The firmware status of the station creation request was not reported in this run. The command can read cached results even if the request for a new scan fails.",
-    "A zero-row result does not establish beacon reception. The receive-only driver has no association or data path. DHCP and SSH over Wi-Fi remain unverified."
+    "One software reboot from the installed microSD. The PCB revision is unknown. A separate UART RAM boot also brought up aicwf0 and returned zero scan rows.",
+    "Neither receive-only kernel reported the firmware station creation status. The scan command can print cached results if the request for a new scan fails.",
+    "The radio showed no association. Beacon reception and a DHCP lease remain unverified. The UART relay exercised the local SSH service. A separate SSH attempt from the host stopped during name resolution."
   ],
   "source_refs": [
     "emberbsd-lyra-sd-console",
