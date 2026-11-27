@@ -42,6 +42,8 @@ It retains a high output from an earlier boot stage. An input held high by R77 s
 A RAM boot of Luckfox Linux confirmed GPIO55 high and 19 BSS entries after a fresh scan.
 The station completed WPA3-SAE association on 2.4 GHz and obtained a DHCP lease. [Vendor Linux station check](evidence/radio-oem-station.json)
 
+On Linux, the same USB WLAN interface reopened after driver unbind and bind. Both probes read the WLAN patch and its table.
+The observer recorded a read of the U02 calibration program only during the first probe. This is consistent with reuse of the on-chip DPD result during rebind. [Factory WLAN rebind](evidence/radio-oem-rebind.json)
 
 EmberBSD's `aicwf` driver matches AIC8800D80 SDIO function 1 with ID `c8a1:0082`.
 The EmberBSD GENERIC kernel attached the RK3506 USB PHY and DWC2 host. It found the hub and the AIC8800DC at hub port 1. The first console kernel attached the radio as `ugen0`. [Physical USB and console observation](evidence/sd-console.json)
