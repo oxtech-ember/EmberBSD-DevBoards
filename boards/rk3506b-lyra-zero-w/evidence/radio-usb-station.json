@@ -14,25 +14,49 @@
   },
   "inputs": [
     {
-      "name": "Installed EmberBSD evbarm GENERIC uImage on FAT",
+      "name": "Installed GENERIC uImage on FAT",
+      "revision": "fb17c849f50162762a0c4ce14647bf049cc9518c",
+      "sha256": "cc3aa04a70816e49113e3bfc6f3b7a51cfb4c41a480a55f94041fd871b6e157b",
+      "reference": null
+    },
+    {
+      "name": "Installed GENERIC kernel ELF on FFS",
+      "revision": "fb17c849f50162762a0c4ce14647bf049cc9518c",
+      "sha256": "e02ab5d721fce70d9161b0b3cea0e4c23ec484c4680703e6357a81063cba4a13",
+      "reference": null
+    },
+    {
+      "name": "Installed board DTB with the WLAN enable signal",
+      "revision": "fb17c849f50162762a0c4ce14647bf049cc9518c",
+      "sha256": "59f9bf8670097d4de7cb3dfd082ca9ff4305daf7b04fd26b7b44ed2bdade2e64",
+      "reference": null
+    },
+    {
+      "name": "Rollback GENERIC uImage, netbsd-prior.ub on FAT",
       "revision": "3c6ed98049b39b6d2b958c8d6862b5cdd2979f16",
       "sha256": "f0ef6ce92a3c455354a1b28e229289ff4a7ba19bfaf1cdb65397b7105e299e6e",
       "reference": null
     },
     {
-      "name": "Installed EmberBSD evbarm GENERIC ELF on FFS",
+      "name": "Rollback GENERIC ELF, /netbsd.previous on FFS",
       "revision": "3c6ed98049b39b6d2b958c8d6862b5cdd2979f16",
       "sha256": "e68a0604f32974f9e9d1e8c5a1c03fd111ea0f3cb378f3792e30004fa1dcd791",
       "reference": null
     },
     {
-      "name": "Previous GENERIC uImage, netbsd-prior.ub on FAT",
+      "name": "Rollback board DTB, rk3506-lyra-prior.dtb on FAT",
+      "revision": "3c6ed98049b39b6d2b958c8d6862b5cdd2979f16",
+      "sha256": "8a37c29b1da9824a8e17723efd18db6da2fd3b7f82a7ef2ac309046ca5e1de48",
+      "reference": null
+    },
+    {
+      "name": "Earlier GENERIC uImage on FAT",
       "revision": "661090c1bda5d772d8e9c46b23c32225435a321a",
       "sha256": "26e86b9d95a33871e1974f0c3124741c57aa611c5d251ad11a4a64de4592714b",
       "reference": null
     },
     {
-      "name": "Previous GENERIC ELF, /netbsd.previous on FFS",
+      "name": "Earlier GENERIC ELF on FFS",
       "revision": "661090c1bda5d772d8e9c46b23c32225435a321a",
       "sha256": "7397d2dc8d5ef1ad556272295ebc4b5f165c5bcbbddc67216d6a70e6e41f0451",
       "reference": null
@@ -86,9 +110,9 @@
       "reference": null
     }
   ],
-  "scenario": "Keep the previous kernel pair. Rename the staged ELF to /netbsd on FFS and the staged uImage to netbsd-GENERIC.ub on FAT. Remount FAT read-only and verify the installed and previous pairs by SHA-256. Run /sbin/shutdown -r now from the serial shell. Let U-Boot run /boot.scr from microSD. At the local root console, run ifconfig -l, ifconfig aicwf0 up, ifconfig aicwf0 list scan and ifconfig aicwf0. Test SSH public-key login from a host through a UART relay to the board loopback interface. Load the diagnostic kernel into RAM through UART0. Bring up aicwf0 and request two scans with the matching ifconfig. Repeat the test after a software reboot from a working Luckfox Linux station. For each later installation, boot the standard GENERIC kernel in RAM first. Verify the new files and retain the preceding kernel pair. Reboot from microSD, request two fresh scans and try direct SSH from the host. Check the supplicant state, network addresses and service processes.",
+  "scenario": "Keep the previous kernel pair. Rename the staged ELF to /netbsd on FFS and the staged uImage to netbsd-GENERIC.ub on FAT. Remount FAT read-only and verify the installed and previous pairs by SHA-256. Run /sbin/shutdown -r now from the serial shell. Let U-Boot run /boot.scr from microSD. At the local root console, run ifconfig -l, ifconfig aicwf0 up, ifconfig aicwf0 list scan and ifconfig aicwf0. Test SSH public-key login from a host through a UART relay to the board loopback interface. Load the diagnostic kernel into RAM through UART0. Bring up aicwf0 and request two scans with the matching ifconfig. Repeat the test after a software reboot from a working Luckfox Linux station. For each later installation, boot the standard GENERIC kernel in RAM first. Verify the new files and retain the preceding kernel pair. Reboot from microSD, request two fresh scans and try direct SSH from the host. Check the supplicant state, network addresses and service processes. For fb17c849, boot the staged kernel and tree from FAT into RAM before changing the default files. Verify both the installed files and the previous kernel and tree. Reboot with the normal boot script.",
   "expected": "The station appears in the interface list and comes up. A scan result for an access point would confirm radio reception.",
-  "observed": "In the f0cb3f42 installation, the shutdown service saved entropy. U-Boot ran /boot.scr and read the 11308316-byte kernel image from microSD. The kernel mounted dk1 as FFS and attached aicwf0 at uaicfw0. The system restored entropy before starting sshd. The interface list included aicwf0. Bringing it up succeeded. The scan exited with status 0 and printed zero rows. The interface reported status: no network. The host verified the SSH host key and completed public-key login through the UART relay. Before and after the reboot from Luckfox Linux, MM_GET_FW_VERSION returned the same 36 bytes. Each reply contained the ASCII string \"zh Aug 08 2022 14:54:51 - gcf79227\" and two trailing NUL bytes. In each RAM boot, both MM_ADD_IF confirmations returned status 1. All four attempts ended before the firmware scan request. Each ifconfig invocation returned exit status 1 and reported EIO. The interface reported no network in both boots. For 661090c1, U-Boot reported CRC32 ddeca5ff for the RAM image. After shutdown it read the 11308892-byte uImage from FAT. The station attached but both scans stopped at MM_ADD_IF status 1 with EIO. The supplicant stayed disconnected. Direct SSH stopped at name resolution. U-Boot verified CRC32 dee5c448 for the 11309148-byte 3c6ed980 RAM image. The kernel mounted the microSD root and attached aicwf0 at uaicfw0. Two scan requests returned EIO. After installation, U-Boot ran /boot.scr and read the same 11309148-byte uImage from FAT. The kernel mounted dk1 as FFS and attached aicwf0. The system restored entropy before sshd started and reached the serial login prompt. SHA-256 readback verified the new FAT and FFS files and the previous 661090c1 pair at the standard recovery paths. Both installed scan commands exited with status 1 and EIO. Firmware returned MM_ADD_IF status 1 before scan submission. The supplicant reported DISCONNECTED. The station had no IPv4 or global IPv6 address. The sshd, mdnsd, dhcpcd and wpa_supplicant processes were running. Direct SSH from the host exited with status 255 during name resolution.",
+  "observed": "In the f0cb3f42 installation, the shutdown service saved entropy. U-Boot ran /boot.scr and read the 11308316-byte kernel image from microSD. The kernel mounted dk1 as FFS and attached aicwf0 at uaicfw0. The system restored entropy before starting sshd. The interface list included aicwf0. Bringing it up succeeded. The scan exited with status 0 and printed zero rows. The interface reported status: no network. The host verified the SSH host key and completed public-key login through the UART relay. Before and after the reboot from Luckfox Linux, MM_GET_FW_VERSION returned the same 36 bytes. Each reply contained the ASCII string \"zh Aug 08 2022 14:54:51 - gcf79227\" and two trailing NUL bytes. In each RAM boot, both MM_ADD_IF confirmations returned status 1. All four attempts ended before the firmware scan request. Each ifconfig invocation returned exit status 1 and reported EIO. The interface reported no network in both boots. For 661090c1, U-Boot reported CRC32 ddeca5ff for the RAM image. After shutdown it read the 11308892-byte uImage from FAT. The station attached but both scans stopped at MM_ADD_IF status 1 with EIO. The supplicant stayed disconnected. Direct SSH stopped at name resolution. U-Boot verified CRC32 dee5c448 for the 11309148-byte 3c6ed980 RAM image. The kernel mounted the microSD root and attached aicwf0 at uaicfw0. Two scan requests returned EIO. After installation, U-Boot ran /boot.scr and read the same 11309148-byte uImage from FAT. The kernel mounted dk1 as FFS and attached aicwf0. The system restored entropy before sshd started and reached the serial login prompt. SHA-256 readback verified the new FAT and FFS files and the previous 661090c1 pair at the standard recovery paths. Both installed scan commands exited with status 1 and EIO. Firmware returned MM_ADD_IF status 1 before scan submission. The supplicant reported DISCONNECTED. The station had no IPv4 or global IPv6 address. The sshd, mdnsd, dhcpcd and wpa_supplicant processes were running. Direct SSH from the host exited with status 255 during name resolution. U-Boot loaded the 7096-byte board tree and 11309340-byte kernel for fb17c849. The kernel completed the WLAN enable sequence before DWC2 attached. The USB driver identified DC U02, attached aicwf0 and reached the multi-user FFS root. The normal scan client returned EIO with MM_ADD_IF status 1. The trial and the installed system reached the same result. The installed supplicant reported DISCONNECTED. The station lacked IPv4 and a routable IPv6 address. The OpenSSH service was running on the board. A direct SSH connection from the host stopped at name resolution.",
   "duration_seconds": null,
   "measurements": [
     {

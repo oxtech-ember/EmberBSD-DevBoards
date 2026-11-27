@@ -36,6 +36,9 @@ Its four bulk endpoints have a maximum packet size of 512 bytes. The vendor driv
 U12 supplies the radio with 3.3 V from the 5 V system rail. GPIO1_C5 controls `WIFI_PWRKEY` at U10 pin 12 (`WL_DIS#`).
 R77 pulls it high to enable the radio. GPIO1_C7 controls RF switch U9. Low selects the external antenna socket, the default.
 High selects the onboard antenna. The vendor Linux number for GPIO1_C7 is 55. [Luckfox Zero W radio guide](https://wiki.luckfox.com/Luckfox-Lyra/Luckfox-Lyra-Zero-W/WIFI-BT/)
+The EmberBSD board driver controls GPIO1_C5 before DWC2 attaches. It holds the signal low for 20 ms and waits 20 ms after driving it high.
+It retains a high output from an earlier boot stage. An input held high by R77 still requires the enable sequence. [EmberBSD board driver](https://github.com/oxtech-ember/EmberBSD/blob/fb17c849f50162762a0c4ce14647bf049cc9518c/sys/arch/arm/rockchip/rk3506_radio.c)
+
 A RAM boot of Luckfox Linux confirmed GPIO55 high and 19 BSS entries after a fresh scan.
 The station completed WPA3-SAE association on 2.4 GHz and obtained a DHCP lease. [Vendor Linux station check](evidence/radio-oem-station.json)
 
@@ -54,8 +57,8 @@ With the earlier f0cb3f42 kernel, ifconfig returned status 0 and printed zero ro
 A host authenticated by SSH public key through a UART relay to the board loopback interface.
 The native diagnostic kernel ran before and after a software reboot from a working Luckfox Linux station.
 In each boot, both scan attempts stopped at station creation with firmware status 1. The matching ifconfig reported `EIO`.
-The installed standard GENERIC kernel at `661090c1` booted from microSD, attached `aicwf0` and started `sshd`.
-Both fresh scans returned exit status 1 and `EIO`. Firmware rejected station creation before each scan.
+The installed GENERIC kernel at `fb17c849` booted from microSD, sequenced the WLAN enable signal before DWC2, attached `aicwf0` and started `sshd`.
+Both fresh scan commands returned exit status 1 and `EIO`. The kernel reported firmware status 1 during station creation.
 The supplicant remained disconnected. Wi-Fi had no DHCP lease. A direct SSH attempt stopped at host name resolution.
 [Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/e485e7de2689b7c1226b4803c1934adabdd7f071/sbin/ifconfig/ieee80211.c)
 
