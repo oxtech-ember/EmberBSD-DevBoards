@@ -27,14 +27,20 @@
     },
     {
       "name": "Linux 6.1.99 diagnostic FIT",
-      "revision": "Original modules, firmware and base DTB. The RAM root disables access to microSD and SPI NAND.",
+      "revision": "Original modules, firmware and base DTB. The device-tree overlay disables the microSD and SPI NAND controllers.",
       "sha256": "679828ce91b4caab718e3cc5479262691db499af6e435c5d160970680582947b",
+      "reference": null
+    },
+    {
+      "name": "Duplicate rebind test with ARM call frame sampling",
+      "revision": "Same factory module and initramfs. Record only named driver functions during file reads and waits.",
+      "sha256": "e31b0e5b99656e16114a3f055bd2c3a223128733572ea65c7864b942959f5c17",
       "reference": null
     }
   ],
   "scenario": "On the factory RAM system, observe successful kernel reads of four named files during probe of WLAN interface 2. Bring wlan0 up, then down. Unbind and bind the same WLAN interface through sysfs. Check the parent USB bus and device numbers, configuration, USB runtime power status and driver identity. Bring wlan0 up again.",
   "expected": "The two probes identify the same USB device. Both probes return success and wlan0 opens after each bind.",
-  "observed": "Both probes returned success. Both interface opens succeeded. The first probe read the U02 WLAN patch, its table, the calibration program and board settings. The second probe read the patch, table and settings. The observer recorded no read of the calibration program during that probe. The parent bus and device numbers remained the same.",
+  "observed": "Both probes returned success. Both interface opens succeeded. The first probe read the U02 WLAN patch, its table, the calibration program and board settings. The second probe read the patch, table and settings. The observer recorded no read of the calibration program during that probe. The parent bus and device numbers remained the same. A second RAM boot reproduced both successful probes, interface opens and file sequences. During both probes the observer identified the DPD validity check, DPD calibration and the later RF calibration request. In the first probe the calibration program read took place inside aicwf_dpd_calib_8800dc. In the second probe that function ran without an observed read of the calibration program. Both table reads took place inside the factory patch configuration function.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -46,11 +52,21 @@
       "name": "second-usb-probe-duration",
       "value": 468993,
       "unit": "us"
+    },
+    {
+      "name": "first-usb-probe-duration-with-call-frame-sampling",
+      "value": 934445,
+      "unit": "us"
+    },
+    {
+      "name": "second-usb-probe-duration-with-call-frame-sampling",
+      "value": 597556,
+      "unit": "us"
     }
   ],
   "limits": [
-    "These observations cover two probes during one Linux boot. The first probe followed a system reboot. The second followed interface close and rebind. The test kept board power on and used no USB reset command. The factory driver can reset its MAC when closing an interface.",
-    "The second file sequence is consistent with the factory driver reusing a DPD result in radio RAM. The kernel observer could not identify any of the selected call frames on this build. Only the USB probe return and file read results were measured. Individual coefficients and clock state were outside the measurement.",
+    "These observations cover two probes per Linux boot. The first probe followed a system reboot. The second followed interface close and rebind. The test kept board power on and used no USB reset command. The factory driver can reset its MAC when closing an interface.",
+    "The first diagnostic kernel could not identify the selected call frames. The second kernel identified the parent USB probe and the DPD functions. Only the outer USB probe return code was recorded. The internal validity flag, function return values and individual DPD coefficients remain unknown. The second file sequence is consistent with reuse of the DPD result in radio RAM.",
     "The test checked interface open. It did not test association, DHCP or native EmberBSD operation."
   ],
   "source_refs": [
