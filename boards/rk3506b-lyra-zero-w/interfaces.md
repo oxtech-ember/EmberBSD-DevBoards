@@ -50,11 +50,13 @@ Multi-user init started `mdnsd` and `sshd`. SSH over Wi-Fi still requires a work
 
 After `/sbin/shutdown -r now`, the kernel loaded from microSD attached the receive-only station `aicwf0` to `uaicfw0`.
 At the root console, `ifconfig aicwf0 up` succeeded. The scan command is `ifconfig aicwf0 list scan`.
-The installed ifconfig returned status 0 and printed zero rows. The interface reported `status: no network`.
+With the earlier f0cb3f42 kernel, ifconfig returned status 0 and printed zero rows. The interface reported `status: no network`.
 A host authenticated by SSH public key through a UART relay to the board loopback interface.
 The native diagnostic kernel ran before and after a software reboot from a working Luckfox Linux station.
 In each boot, both scan attempts stopped at station creation with firmware status 1. The matching ifconfig reported `EIO`.
-EmberBSD beacon reception and association remain unverified.
+The installed standard GENERIC kernel at `661090c1` booted from microSD, attached `aicwf0` and started `sshd`.
+Both fresh scans returned exit status 1 and `EIO`. Firmware rejected station creation before each scan.
+The supplicant remained disconnected. Wi-Fi had no DHCP lease. A direct SSH attempt stopped at host name resolution.
 [Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/e485e7de2689b7c1226b4803c1934adabdd7f071/sbin/ifconfig/ieee80211.c)
 
 A later EmberBSD RAM diagnostic read GPIO1_C5 high as an input and GPIO1_C7 high as an output after root mount.
@@ -63,7 +65,9 @@ The first calibration request timed out after four seconds. A repeat after a suc
 One subsequent firmware version query timed out after four seconds. Neither bulk IN endpoint returned a valid configuration record during those twelve seconds.
 The radio stayed attached to USB in both captures. EmberBSD stopped before station attachment.
 In a separate run without RF setup, the radio answered the MAC address query. During the reset request, the driver reported an error and USB enumerated the radio again.
-[Native RF initialization checks](evidence/radio-usb-calibration.json)
+After the calibration timeout, Linux scanned again without a power cycle. In a separate handoff test, Linux brought its wireless interface down and kept the USB driver bound.
+After the software reboot, EmberBSD reported a bulk IN error during the first station start (`MM_START`). The radio enumerated again.
+Only `lo0` appeared in single-user mode. Station creation and scan did not run. [Native initialization and handoff checks](evidence/radio-usb-calibration.json)
 
 Bluetooth has a separate USB interface and needs its own check.
 [EmberBSD SDIO match](https://github.com/oxtech-ember/EmberBSD/blob/5789d27f00d9c1694b5085730b067e32cd846915/sys/dev/sdmmc/if_aicwf.c) · [SDK DC firmware inventory](https://github.com/EliSofke/LuckfoxLyraSDK/tree/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/external/rkwifibt/firmware/aicsemi/aic8800DC)

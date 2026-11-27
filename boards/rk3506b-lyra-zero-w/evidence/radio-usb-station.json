@@ -14,6 +14,24 @@
   },
   "inputs": [
     {
+      "name": "Installed EmberBSD evbarm GENERIC uImage on FAT",
+      "revision": "661090c1bda5d772d8e9c46b23c32225435a321a",
+      "sha256": "26e86b9d95a33871e1974f0c3124741c57aa611c5d251ad11a4a64de4592714b",
+      "reference": null
+    },
+    {
+      "name": "Installed EmberBSD evbarm GENERIC ELF on FFS",
+      "revision": "661090c1bda5d772d8e9c46b23c32225435a321a",
+      "sha256": "7397d2dc8d5ef1ad556272295ebc4b5f165c5bcbbddc67216d6a70e6e41f0451",
+      "reference": null
+    },
+    {
+      "name": "Installed /sbin/ifconfig",
+      "revision": "earmv7hf executable used with the 661090c1 GENERIC kernel",
+      "sha256": "0f56b88ae0e08775b01b2e74a2387d3ddccaabd1bfc72541079d52681589fb90",
+      "reference": null
+    },
+    {
       "name": "EmberBSD evbarm GENERIC uImage",
       "revision": "f0cb3f4225531f4c5487bbdbffa0b3c4af74e82f",
       "sha256": "65bacaf9c722eb1238a05734c3bd5777b16cca415b3b0bd1e48e65539af57789",
@@ -56,9 +74,9 @@
       "reference": null
     }
   ],
-  "scenario": "Keep the previous kernel pair. Rename the staged ELF to /netbsd on FFS and the staged uImage to netbsd-GENERIC.ub on FAT. Remount FAT read-only and verify the installed and previous pairs by SHA-256. Run /sbin/shutdown -r now from the serial shell. Let U-Boot run /boot.scr from microSD. At the local root console, run ifconfig -l, ifconfig aicwf0 up, ifconfig aicwf0 list scan and ifconfig aicwf0. Test SSH public-key login from a host through a UART relay to the board loopback interface. Load the diagnostic kernel into RAM through UART0. Bring up aicwf0 and request two scans with the matching ifconfig. Repeat the test after a software reboot from a working Luckfox Linux station.",
+  "scenario": "Keep the previous kernel pair. Rename the staged ELF to /netbsd on FFS and the staged uImage to netbsd-GENERIC.ub on FAT. Remount FAT read-only and verify the installed and previous pairs by SHA-256. Run /sbin/shutdown -r now from the serial shell. Let U-Boot run /boot.scr from microSD. At the local root console, run ifconfig -l, ifconfig aicwf0 up, ifconfig aicwf0 list scan and ifconfig aicwf0. Test SSH public-key login from a host through a UART relay to the board loopback interface. Load the diagnostic kernel into RAM through UART0. Bring up aicwf0 and request two scans with the matching ifconfig. Repeat the test after a software reboot from a working Luckfox Linux station. For the later installation, boot the standard GENERIC kernel in RAM first. Verify the installed FAT uImage and FFS ELF by SHA-256 and retain the f0cb3f42 pair. Reboot from microSD, request two fresh scans with the installed ifconfig and try direct SSH from the host.",
   "expected": "The station appears in the interface list and comes up. A scan result for an access point would confirm radio reception.",
-  "observed": "The shutdown service saved entropy. U-Boot ran /boot.scr and read the 11308316-byte kernel image from microSD. The kernel mounted dk1 as FFS and attached aicwf0 at uaicfw0. The system restored entropy before starting sshd. The interface list included aicwf0. Bringing it up succeeded. The scan exited with status 0 and printed zero rows. The interface reported status: no network. The host verified the SSH host key and completed public-key login through the UART relay. Before and after the reboot from Luckfox Linux, MM_GET_FW_VERSION returned the same 36 bytes. Each reply contained the ASCII string \"zh Aug 08 2022 14:54:51 - gcf79227\" and two trailing NUL bytes. In each RAM boot, both MM_ADD_IF confirmations returned status 1. All four attempts ended before the firmware scan request. Each ifconfig invocation returned exit status 1 and reported EIO. The interface reported no network in both boots.",
+  "observed": "In the f0cb3f42 installation, the shutdown service saved entropy. U-Boot ran /boot.scr and read the 11308316-byte kernel image from microSD. The kernel mounted dk1 as FFS and attached aicwf0 at uaicfw0. The system restored entropy before starting sshd. The interface list included aicwf0. Bringing it up succeeded. The scan exited with status 0 and printed zero rows. The interface reported status: no network. The host verified the SSH host key and completed public-key login through the UART relay. Before and after the reboot from Luckfox Linux, MM_GET_FW_VERSION returned the same 36 bytes. Each reply contained the ASCII string \"zh Aug 08 2022 14:54:51 - gcf79227\" and two trailing NUL bytes. In each RAM boot, both MM_ADD_IF confirmations returned status 1. All four attempts ended before the firmware scan request. Each ifconfig invocation returned exit status 1 and reported EIO. The interface reported no network in both boots. For 661090c1, U-Boot reported CRC32 ddeca5ff for the RAM image. After shutdown it read the 11308892-byte uImage from FAT. The kernel mounted dk1 as FFS. The system restored entropy, reached the local console and started sshd. The kernel attached aicwf0. Both fresh scan commands exited with status 1 and reported EIO. Firmware returned MM_ADD_IF status 1 before scan submission each time. The supplicant reported DISCONNECTED. Wi-Fi had no DHCP lease. The host could not resolve the board name for a direct SSH connection.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -70,7 +88,7 @@
   "limits": [
     "The PCB revision is unknown. The original microSD test used a software reboot. The diagnostic kernel ran before and after a software reboot from the working Linux station.",
     "The earlier kernel and ifconfig returned zero rows without a scan error. The diagnostic driver requested station creation before the normal MAC initialization sequence. The matching build text and error status do not establish whether radio calibration or firmware state survived reboot.",
-    "The radio showed no association. Beacon reception and a DHCP lease remain unverified. The UART relay exercised the local SSH service. A separate SSH attempt from the host stopped during name resolution."
+    "The two installed kernels were standard GENERIC builds. The earlier UART relay verified the local SSH service. Beacon reception, association, DHCP and an authenticated SSH session over EmberBSD Wi-Fi remain unverified."
   ],
   "source_refs": [
     "emberbsd-lyra-sd-console",

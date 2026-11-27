@@ -32,6 +32,12 @@
       "reference": null
     },
     {
+      "name": "EmberBSD evbarm GENERIC diagnostic uImage for the first station after Linux",
+      "revision": "d8225213015d28e32c5322bbdbc3c5e6d11478f0 with one first-interface MM_START attempt per USB port",
+      "sha256": "06e3d981c94dea2e88ceabcb40ea26cd02602df771ce6a1af8449f3cba2bac14",
+      "reference": null
+    },
+    {
       "name": "RK3506B Zero W DTB",
       "revision": "d8225213015d28e32c5322bbdbc3c5e6d11478f0",
       "sha256": "8a37c29b1da9824a8e17723efd18db6da2fd3b7f82a7ef2ac309046ca5e1de48",
@@ -48,16 +54,22 @@
       "revision": "aic8800dc_u02_tables.bin from the vendor driver tables, with the matching board power configuration",
       "sha256": "7e934020dd15a26c162628132e59db8746ec9e23ef2086027071303a16b97025",
       "reference": null
+    },
+    {
+      "name": "Luckfox Linux 261020 diagnostic FIT with external initramfs",
+      "revision": "RAM-only root, microSD and SPI NAND controllers disabled by a DT overlay",
+      "sha256": "60baef6fe4936e735c98daf4ecf8eab5677b4114734a79d40a595a89a542273f",
+      "reference": null
     }
   ],
-  "scenario": "Read the radio control pins in U-Boot. Transfer each diagnostic kernel to RAM over UART0 and check its CRC32. Boot with the board DTB and the microSD root. In the RF test, read both pins after root mount and record the first RF initialization attempt. Repeat the RF test after booting the vendor Linux station and verifying association and DHCP. Allow one more interval for the original calibration reply, then request MM_VERSION once. In the separate MAC test, query the MAC address and request a MAC reset without RF setup.",
-  "expected": "The radio returns the RF calibration confirmation. Initialization can then continue to station setup.",
-  "observed": "U-Boot read GPIO1_C5 as input high and GPIO1_C7 as input low. After root mount, EmberBSD read GPIO1_C5 (WL_DIS#) as input high and GPIO1_C7 (antenna select) as output high. MM_SET_STACK_START returned 0x007c with two bytes and the 5 GHz flag clear. MM_SET_TXPWR_IDX_LVL returned 0x0078 with zero bytes. Each MM_SET_RF_CONFIG command for TX0, TX1, RX20 and RX40 returned 0x0068 with zero bytes. MM_SET_RF_CALIB timed out after four seconds while waiting for 0x006a with 16 bytes. USB kept the radio attached during this capture. The driver stopped before station attachment and scan. Before the repeat, Luckfox Linux found 10 BSS entries, completed SAE association with PMF and CCMP, and obtained a DHCP lease. EmberBSD again received the stack, transmit power and four RF table confirmations. The original calibration request received no confirmation during either four-second interval. The single MM_VERSION query also timed out after four seconds. Both bulk IN endpoints returned zero valid configuration records in each of the three intervals. The radio remained attached throughout the capture. EmberBSD created no station interface. In the separate MAC test, MM_GET_MAC_ADDR returned 0x0074 with six bytes. MM_RESET reported INVAL while waiting for 0x0001 with zero bytes. The radio then detached and enumerated again.",
+  "scenario": "Read the radio control pins in U-Boot. Transfer each diagnostic kernel to RAM over UART0 and check its CRC32. Boot with the board DTB and the microSD root. In the RF test, read both pins after root mount and record the first RF initialization attempt. Repeat the RF test after booting the vendor Linux station and verifying association and DHCP. Allow one more interval for the original calibration reply, then request MM_VERSION once. In the separate MAC test, query the MAC address and request a MAC reset without RF setup. After the calibration timeout, boot Luckfox Linux without removing power and scan again. For the handoff test, start the vendor station without loading network profiles or keys. Request a disconnect, terminate the supplicant and bring the wireless interface down. Check its state and USB driver binding. Reboot directly into the first-interface diagnostic kernel.",
+  "expected": "The radio returns the RF calibration confirmation. Initialization can then continue to station setup. In the handoff test, MM_START succeeds before the driver creates a station and starts a passive scan.",
+  "observed": "U-Boot read GPIO1_C5 as input high and GPIO1_C7 as input low. After root mount, EmberBSD read GPIO1_C5 (WL_DIS#) as input high and GPIO1_C7 (antenna select) as output high. MM_SET_STACK_START returned 0x007c with two bytes and the 5 GHz flag clear. MM_SET_TXPWR_IDX_LVL returned 0x0078 with zero bytes. Each MM_SET_RF_CONFIG command for TX0, TX1, RX20 and RX40 returned 0x0068 with zero bytes. MM_SET_RF_CALIB timed out after four seconds while waiting for 0x006a with 16 bytes. USB kept the radio attached during this capture. The driver stopped before station attachment and scan. Before the repeat, Luckfox Linux found 10 BSS entries, completed SAE association with PMF and CCMP, and obtained a DHCP lease. EmberBSD again received the stack, transmit power and four RF table confirmations. The original calibration request received no confirmation during either four-second interval. The single MM_VERSION query also timed out after four seconds. Both bulk IN endpoints returned zero valid configuration records in each of the three intervals. The radio remained attached throughout the capture. EmberBSD created no station interface. In the separate MAC test, MM_GET_MAC_ADDR returned 0x0074 with six bytes. MM_RESET reported INVAL while waiting for 0x0001 with zero bytes. The radio then detached and enumerated again. Linux recovered the radio without a power cycle. A fresh scan found 10 BSS entries, including one match for a saved network. In the separate handoff test, Linux completed the disconnect, supplicant shutdown and interface-down commands. Its only wireless interface was down. The aic8800_fdrv driver remained bound to interface 2 of a69c:88dc. After the software reboot, EmberBSD sent MM_START. Bulk IN endpoint 0x81 reported INVAL while the driver waited for confirmation 0x0003 with zero bytes. The radio disconnected and enumerated again. The driver skipped a second attempt on that USB port. Only lo0 appeared in single-user mode. Station creation and scan did not run.",
   "duration_seconds": null,
   "measurements": [],
   "limits": [
     "The PCB revision is unknown. The binaries are diagnostic builds. The GPIO values describe the two sampling points.",
-    "The causes of the calibration timeout and the USB disconnect in the separate MAC test remain unknown.",
+    "The Linux interface state and USB driver binding were observed on the host. Firmware acknowledgement of interface shutdown and the causes of the native timeouts and USB disconnects remain unknown.",
     "EmberBSD beacon reception, association, DHCP and SSH over Wi-Fi remain unverified."
   ],
   "source_refs": [
