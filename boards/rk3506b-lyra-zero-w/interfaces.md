@@ -43,7 +43,8 @@ A RAM boot of Luckfox Linux confirmed GPIO55 high and 19 BSS entries after a fre
 The station completed WPA3-SAE association on 2.4 GHz and obtained a DHCP lease. [Vendor Linux station check](evidence/radio-oem-station.json)
 
 On Linux, the same USB WLAN interface reopened after driver unbind and bind. Both probes read the WLAN patch and its table.
-The driver checked DPD during both probes. The observer recorded the U02 calibration program read inside the DPD function only during the first probe. With one USB device reset between binds, the driver read the calibration program inside the DPD function on both probes. All interface opens succeeded. [Factory WLAN rebind](evidence/radio-oem-rebind.json)
+On ordinary rebind, the second probe checked DPD and reopened the interface with the calibration file held aside.
+After a USB device reset, the second probe failed with that file held aside. With the complete kit, it read the file and opened the interface. [Factory WLAN rebind](evidence/radio-oem-rebind.json)
 
 EmberBSD's `aicwf` driver matches AIC8800D80 SDIO function 1 with ID `c8a1:0082`.
 The EmberBSD GENERIC kernel attached the RK3506 USB PHY and DWC2 host. It found the hub and the AIC8800DC at hub port 1. The first console kernel attached the radio as `ugen0`. [Physical USB and console observation](evidence/sd-console.json)
@@ -60,8 +61,9 @@ With the earlier f0cb3f42 kernel, ifconfig returned status 0 and printed zero ro
 A host authenticated by SSH public key through a UART relay to the board loopback interface.
 The native diagnostic kernel ran before and after a software reboot from a working Luckfox Linux station.
 In each boot, both scan attempts stopped at station creation with firmware status 1. The matching ifconfig reported `EIO`.
-The GENERIC kernel from main commit `905ef7b7` booted from microSD, sequenced WLAN enable before DWC2, attached `aicwf0` and started `sshd`.
-It reported that both factory USB and BBPLL setup conditions were false. The preceding kernel with the `c6531633` sources and its device tree provide the rollback.
+The GENERIC kernel from main commit `637b5fba` booted from microSD, sequenced WLAN enable before DWC2, attached `aicwf0` and started `sshd`.
+It reported that neither factory USB nor BBPLL setup condition was met. The initial clock selector was zero, as in the original factory boot log. The chip ID selected the extended PMU mask.
+The selector and mask do not establish the clock frequency or completion of power setup. The preceding kernel and device tree from `905ef7b7` provide the rollback.
 Both trial scans returned `EIO`. After the normal boot, a new scan exited with status 1. Firmware returned status 1 during station creation.
 The supplicant remained disconnected. Wi-Fi had no DHCP lease. A direct SSH attempt stopped at host name resolution.
 [Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/e485e7de2689b7c1226b4803c1934adabdd7f071/sbin/ifconfig/ieee80211.c)
