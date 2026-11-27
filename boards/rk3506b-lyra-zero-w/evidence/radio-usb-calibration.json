@@ -1,0 +1,63 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "lyra-zero-w-native-radio-calibration",
+  "target_id": "rk3506b-lyra-zero-w",
+  "recorded_at": "2026-11-27",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Luckfox Lyra Zero W, RK3506B, populated USB radio"
+  },
+  "inputs": [
+    {
+      "name": "EmberBSD evbarm GENERIC diagnostic uImage with one RF initialization attempt",
+      "revision": "d8225213015d28e32c5322bbdbc3c5e6d11478f0 with DC U02 RF setup and GPIO readback",
+      "sha256": "a5108f88dbd3c2739256e9734b10e0d16cfb93825c0a975739814cf33230da9e",
+      "reference": null
+    },
+    {
+      "name": "EmberBSD evbarm GENERIC diagnostic uImage for the separate MAC test",
+      "revision": "d8225213015d28e32c5322bbdbc3c5e6d11478f0 with the DC U02 MAC probe and GPIO readback",
+      "sha256": "e44b9cf9a666b7ec9b4a2ba8f35e16d8e5d8516bd615c0a1b232a6a5718dec08",
+      "reference": null
+    },
+    {
+      "name": "RK3506B Zero W DTB",
+      "revision": "d8225213015d28e32c5322bbdbc3c5e6d11478f0",
+      "sha256": "8a37c29b1da9824a8e17723efd18db6da2fd3b7f82a7ef2ac309046ca5e1de48",
+      "reference": null
+    },
+    {
+      "name": "Armbian U-Boot",
+      "revision": "2025.10-rc4, package 26.8.3",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "AIC8800DC U02 normal-mode radio tables",
+      "revision": "aic8800dc_u02_tables.bin from the vendor driver tables, with the matching board power configuration",
+      "sha256": "7e934020dd15a26c162628132e59db8746ec9e23ef2086027071303a16b97025",
+      "reference": null
+    }
+  ],
+  "scenario": "Read the radio control pins in U-Boot. Transfer each diagnostic kernel to RAM over UART0 and check its CRC32. Boot with the board DTB and the microSD root. In the RF test, read both pins after root mount and record the first RF initialization attempt. In the other test, query the MAC address and request a MAC reset without RF setup.",
+  "expected": "The radio returns the RF calibration confirmation. Initialization can then continue to station setup.",
+  "observed": "U-Boot read GPIO1_C5 as input high and GPIO1_C7 as input low. After root mount, EmberBSD read GPIO1_C5 (WL_DIS#) as input high and GPIO1_C7 (antenna select) as output high. MM_SET_STACK_START returned 0x007c with two bytes and the 5 GHz flag clear. MM_SET_TXPWR_IDX_LVL returned 0x0078 with zero bytes. Each MM_SET_RF_CONFIG command for TX0, TX1, RX20 and RX40 returned 0x0068 with zero bytes. MM_SET_RF_CALIB timed out after four seconds while waiting for 0x006a with 16 bytes. USB kept the radio attached during this capture. The driver stopped before station attachment and scan. In the separate MAC test, MM_GET_MAC_ADDR returned 0x0074 with six bytes. MM_RESET reported INVAL while waiting for 0x0001 with zero bytes. The radio then detached and enumerated again.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "The PCB revision is unknown. The binaries are diagnostic builds. The GPIO values describe the two sampling points.",
+    "The causes of the calibration timeout and the USB disconnect in the separate MAC test remain unknown.",
+    "EmberBSD beacon reception, association, DHCP and SSH over Wi-Fi remain unverified."
+  ],
+  "source_refs": [
+    "lyra-zero-w-schematic",
+    "lyra-zero-w-radio",
+    "lyra-sdk-snapshot",
+    "emberbsd-aic8800dc-usb-probe"
+  ]
+}

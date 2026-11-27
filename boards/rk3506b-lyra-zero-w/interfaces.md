@@ -57,5 +57,11 @@ In each boot, both scan attempts stopped at station creation with firmware statu
 EmberBSD beacon reception and association remain unverified.
 [Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/e485e7de2689b7c1226b4803c1934adabdd7f071/sbin/ifconfig/ieee80211.c)
 
+A later EmberBSD RAM diagnostic read GPIO1_C5 high as an input and GPIO1_C7 high as an output after root mount.
+The onboard antenna was selected. The radio confirmed stack start, the transmit power setting and four RF table commands.
+The calibration request timed out after four seconds. The radio stayed on USB throughout this capture. The driver stopped before station attachment.
+In a separate run without RF setup, the radio answered the MAC address query. During the reset request, the driver reported an error and USB enumerated the radio again.
+[Native RF initialization checks](evidence/radio-usb-calibration.json)
+
 Bluetooth has a separate USB interface and needs its own check.
 [EmberBSD SDIO match](https://github.com/oxtech-ember/EmberBSD/blob/5789d27f00d9c1694b5085730b067e32cd846915/sys/dev/sdmmc/if_aicwf.c) · [SDK DC firmware inventory](https://github.com/EliSofke/LuckfoxLyraSDK/tree/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/external/rkwifibt/firmware/aicsemi/aic8800DC)
