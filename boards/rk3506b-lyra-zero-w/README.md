@@ -9,4 +9,5 @@ to distinguish a boot failure from a USB or antenna problem. See [design transfe
 
 The [source evidence](evidence/sd-boot-inputs.json) covers the bootloader package and a Linux card image.
 A [factory reset trace](evidence/factory-reset-uart.json) identifies the installed SPL, SPI NAND boot and USB radio.
-The [cold boot test](evidence/sd-console.json) reached the EmberBSD shell on the FFS root. The [capability record](board.json) gives the limits for the onboard radio.
+A [cold boot from microSD](evidence/sd-multiuser.json) reached multi-user init and a local root login on UART0.
+The [radio checks](interfaces.md#usb-wi-fi-and-antenna-selection) distinguish USB command replies from Wi-Fi reception and network access.

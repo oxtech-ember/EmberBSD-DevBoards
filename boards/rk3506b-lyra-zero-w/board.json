@@ -5,7 +5,7 @@
   "vendor_model": "Luckfox Lyra Zero W",
   "soc": "rockchip-rk3506b",
   "board_revision": null,
-  "reviewed_at": "2026-11-26",
+  "reviewed_at": "2026-11-27",
   "carrier_ids": [],
   "documents": {
     "overview": "boards/rk3506b-lyra-zero-w/README.md",
@@ -26,14 +26,16 @@
     "os-aicwf-sdio-match",
     "rk3506-trm-boot",
     "emberbsd-lyra-sd-console",
-    "emberbsd-aic8800dc-usb-probe"
+    "emberbsd-aic8800dc-usb-probe",
+    "emberbsd-lyra-dwc2-port-reset",
+    "emberbsd-aic8800dc-station-survey"
   ],
   "capabilities": [
     {
       "id": "sd-boot",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "Factory SPL selected the uboot GPT partition on microSD. U-Boot ran boot.scr. The ARMv7 GENERIC kernel mounted netbsd-root as FFS and started the static shell.",
+      "scope": "The factory SPL selected the uboot GPT partition on microSD. Armbian U-Boot ran boot.scr. The ARMv7 GENERIC kernel mounted netbsd-root as FFS and started multi-user init.",
       "source_refs": [
         "lyra-armbian-uboot",
         "lyra-kwiboo-uboot",
@@ -47,7 +49,7 @@
       "id": "console",
       "hardware": "present",
       "emberbsd": "verified-scenario",
-      "scope": "UART0 at 1500000 baud, 8N1 carried factory SPL, U-Boot and kernel output. The single-user shell accepted commands and returned their output.",
+      "scope": "UART0 at 1500000 baud, 8N1 carried SPL, U-Boot and kernel output. A cold boot reached the multi-user constty login and a local root shell.",
       "source_refs": [
         "lyra-zero-w-schematic",
         "rk3506b-datasheet",
@@ -59,14 +61,16 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "On RESET, uaicfw attached to the onboard WLAN USB interface and read the silicon ID, sub-ID and FullMAC version. Wi-Fi association and data transfer require further driver support.",
+      "scope": "The onboard USB WLAN interface answered silicon and FullMAC queries on RESET and on cold boot. Firmware rejected the passive diagnostic station request with status 1. Beacon reception, association and network access remain unverified.",
       "source_refs": [
         "lyra-zero-w-schematic",
         "lyra-zero-w-radio",
         "lyra-sdk-snapshot",
         "os-aicwf-sdio-match",
         "emberbsd-lyra-sd-console",
-        "emberbsd-aic8800dc-usb-probe"
+        "emberbsd-aic8800dc-usb-probe",
+        "emberbsd-lyra-dwc2-port-reset",
+        "emberbsd-aic8800dc-station-survey"
       ]
     },
     {

@@ -53,8 +53,8 @@ With the slot empty, the same SPL passed the NAND U-Boot entry at `0x00200000` t
 
 With a FIT in the GPT partition named `uboot` at LBA 20480, the factory SPL passed the U-Boot entry at `0x00100000` to OP-TEE.
 Armbian U-Boot 2025.10-rc4 found `/boot.scr` on the FAT partition.
-The ARMv7 GENERIC kernel mounted `netbsd-root` as FFS. Its static shell accepted commands on UART0.
-[Physical console test](evidence/sd-console.json) · [OS image builder](https://github.com/oxtech-ember/EmberBSD/blob/2e18754663890c4521a77443843fc2346c8c5ae8/distrib/utils/embedded/README.rk3506.md)
+The ARMv7 GENERIC kernel mounted `netbsd-root` on `dk1` as FFS. A multi-user root started init and accepted a local root login on UART0.
+[Cold boot to multi-user login](evidence/sd-multiuser.json) · [Static console root](evidence/sd-console.json) · [OS image builder](https://github.com/oxtech-ember/EmberBSD/blob/2e18754663890c4521a77443843fc2346c8c5ae8/distrib/utils/embedded/README.rk3506.md)
 
 Luckfox documents USB Loader mode separately from the card reader. With power disconnected, hold BOOT while connecting H3 to the host.
 Release BOOT after the host detects a Loader device. With power already present, hold RESET and BOOT, release RESET, then release BOOT after detection.

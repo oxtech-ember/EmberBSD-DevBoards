@@ -39,6 +39,15 @@ High selects the onboard antenna. The vendor Linux number for GPIO1_C7 is 55. [L
 
 EmberBSD's `aicwf` driver matches AIC8800D80 SDIO function 1 with ID `c8a1:0082`.
 The EmberBSD GENERIC kernel attached the RK3506 USB PHY and DWC2 host. It found the hub and the AIC8800DC at hub port 1. The first console kernel attached the radio as `ugen0`. [Physical USB and console observation](evidence/sd-console.json)
-After interface matching was enabled, `uaicfw0` selected configuration 1, interface 2. The radio reported chip ID `0x07`, sub-ID `0x01`, FullMAC version `0x06040301` and feature bits `0xb011fa5f`. The SDK supplies revision-specific radio patches and calibration files. [USB command-channel test after RESET](evidence/radio-usb-fullmac.json)
+The `uaicfw0` driver selected configuration 1, interface 2. The radio reported chip ID `0x07`, sub-ID `0x01`, FullMAC version `0x06040301` and feature bits `0xb011fa5f`. The SDK supplies revision-specific radio patches and calibration files. [USB command-channel test after RESET](evidence/radio-usb-fullmac.json)
+On cold boot, the diagnostic kernel read the same radio IDs and FullMAC version. The DWC2 root hub reported `illegal enable change`.
+The downstream hub and WLAN interface enumerated. Firmware returned status 1 to the request to create a station (`MM_ADD_IF_REQ`).
+The diagnostic recorded no scan completion or beacon. The kernel exposed no WLAN interface to WPA or DHCP.
+Multi-user init started `mdnsd` and `sshd`. SSH over Wi-Fi still requires a working association and IP configuration. [Cold boot observation](evidence/sd-multiuser.json)
+
+With the separate receive-only station driver, check that `ifconfig aicwf0 up` succeeds, then run `ifconfig aicwf0 scan`.
+A completed scan with a valid beacon would establish radio reception on this board. Association and data transfer require the revision-specific radio startup.
+[Station driver and scan procedure](https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sys/dev/ic/docs/aicwf-fullmac.md)
+
 Bluetooth has a separate USB interface and needs its own check.
 [EmberBSD SDIO match](https://github.com/oxtech-ember/EmberBSD/blob/5789d27f00d9c1694b5085730b067e32cd846915/sys/dev/sdmmc/if_aicwf.c) · [SDK DC firmware inventory](https://github.com/EliSofke/LuckfoxLyraSDK/tree/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/external/rkwifibt/firmware/aicsemi/aic8800DC)

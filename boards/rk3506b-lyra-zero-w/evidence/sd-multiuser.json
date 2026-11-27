@@ -1,0 +1,69 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "lyra-zero-w-sd-multiuser",
+  "target_id": "rk3506b-lyra-zero-w",
+  "recorded_at": "2026-11-27",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Luckfox Lyra Zero W, RK3506B, factory SPI NAND"
+  },
+  "inputs": [
+    {
+      "name": "Factory SPL",
+      "revision": "2017.09-g9e6285f-dirty, May 24 2025",
+      "sha256": null,
+      "reference": null
+    },
+    {
+      "name": "Armbian combined loader",
+      "revision": "26.8.3",
+      "sha256": "7a53323b5f2948caa377ae28a3d7a2971e2c28d5d4bb4328a473f0a1ccaba815",
+      "reference": null
+    },
+    {
+      "name": "FIT for the factory SPL",
+      "revision": "EmberBSD SD layout at 2e187546",
+      "sha256": "7cc3d0b5d0807118b8b5b65c2719d1025b31405698c5e5626f4569710f487a53",
+      "reference": null
+    },
+    {
+      "name": "EmberBSD evbarm GENERIC uImage",
+      "revision": "e42a978e86e7855bc1706cc026a250ad588ecd7a with the one-shot USB passive scan diagnostic, earmv7hf",
+      "sha256": "ca93e35de31c7e719227b35dc5a76682ee3a83204ab3de5f98edf73951b69f0f",
+      "reference": null
+    },
+    {
+      "name": "RK3506B Zero W DTB",
+      "revision": "e42a978e86e7855bc1706cc026a250ad588ecd7a",
+      "sha256": "8a37c29b1da9824a8e17723efd18db6da2fd3b7f82a7ef2ac309046ca5e1de48",
+      "reference": null
+    },
+    {
+      "name": "EmberBSD multi-user FFS root",
+      "revision": "earmv7hf with init, console login, mdnsd, sshd, wpa_supplicant and dhcpcd",
+      "sha256": null,
+      "reference": null
+    }
+  ],
+  "scenario": "Insert the microSD with power off. Apply power, record UART0 at 1500000 baud, 8N1, and log in at the console. The diagnostic kernel requests a temporary station interface during USB attachment.",
+  "expected": "The kernel mounts the microSD root as FFS, starts multi-user init and accepts a local console login.",
+  "observed": "The factory SPL selected the FIT at sector 0x5000 and entered U-Boot through OP-TEE. Armbian U-Boot ran /boot.scr. GENERIC mounted netbsd-root on dk1 as FFS. The downstream hub and its radio attached. uaicfw0 selected USB configuration 1, interface 2, and read chip ID 0x07, sub-ID 0x01, FullMAC version 0x06040301 and features 0xb011fa5f. The radio returned status 1 to MM_ADD_IF_REQ. The root hub reported an illegal enable change. The system started mdnsd and sshd. The constty login opened a local root shell.",
+  "duration_seconds": null,
+  "measurements": [],
+  "limits": [
+    "One board with an unknown PCB revision. The multi-user root is described by its services.",
+    "The radio rejected station creation before the passive scan started. The diagnostic kernel exposed no WLAN interface. WPA and DHCP startup failed. Beacon reception, association, an IP lease and SSH over Wi-Fi remain unverified."
+  ],
+  "source_refs": [
+    "emberbsd-lyra-sd-console",
+    "emberbsd-lyra-dwc2-port-reset",
+    "emberbsd-aic8800dc-usb-probe",
+    "lyra-armbian-uboot",
+    "lyra-sdk-snapshot"
+  ]
+}

@@ -2440,6 +2440,22 @@
       "revision": "245c7fd6c06d40560cbff2e0491c400545e17c39",
       "reviewed_at": "2026-11-26",
       "sha256": null
+    },
+    {
+      "id": "emberbsd-lyra-dwc2-port-reset",
+      "title": "EmberBSD DWC2 root port reset handling",
+      "url": "https://github.com/oxtech-ember/EmberBSD/commit/e42a978e86e7855bc1706cc026a250ad588ecd7a",
+      "revision": "e42a978e86e7855bc1706cc026a250ad588ecd7a",
+      "reviewed_at": "2026-11-27",
+      "sha256": null
+    },
+    {
+      "id": "emberbsd-aic8800dc-station-survey",
+      "title": "EmberBSD AIC8800DC receive-only station and passive scan contract",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sys/dev/ic/docs/aicwf-fullmac.md",
+      "revision": "ac98551b89980170d2cb34757ad5477be38943c0",
+      "reviewed_at": "2026-11-27",
+      "sha256": null
     }
   ]
 }
