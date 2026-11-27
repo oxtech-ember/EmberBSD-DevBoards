@@ -29,7 +29,8 @@
     "emberbsd-aic8800dc-usb-probe",
     "emberbsd-lyra-dwc2-port-reset",
     "emberbsd-aic8800dc-station-survey",
-    "emberbsd-ifconfig-wireless-scan"
+    "emberbsd-ifconfig-wireless-scan",
+    "luckfox-zero-w-buildroot-261020"
   ],
   "capabilities": [
     {
@@ -62,7 +63,7 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "The USB radio returned its silicon ID and FullMAC version on cold boot. The installed microSD kernel attached aicwf0. Bringing it up succeeded. An explicit passive scan returned zero rows. Beacon reception, association and Wi-Fi data transfer remain unverified.",
+      "scope": "The installed EmberBSD kernel attached aicwf0. The diagnostic kernel reported rejected station creation requests before scanning in two RAM boots. EmberBSD reception and association remain unverified. Luckfox Linux completed WPA3-SAE association and DHCP with the onboard antenna.",
       "source_refs": [
         "lyra-zero-w-schematic",
         "lyra-zero-w-radio",
@@ -72,7 +73,8 @@
         "emberbsd-aic8800dc-usb-probe",
         "emberbsd-lyra-dwc2-port-reset",
         "emberbsd-aic8800dc-station-survey",
-        "emberbsd-ifconfig-wireless-scan"
+        "emberbsd-ifconfig-wireless-scan",
+        "luckfox-zero-w-buildroot-261020"
       ]
     },
     {

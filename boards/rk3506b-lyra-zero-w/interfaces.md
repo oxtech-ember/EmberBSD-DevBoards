@@ -36,6 +36,9 @@ Its four bulk endpoints have a maximum packet size of 512 bytes. The vendor driv
 U12 supplies the radio with 3.3 V from the 5 V system rail. GPIO1_C5 controls `WIFI_PWRKEY` at U10 pin 12 (`WL_DIS#`).
 R77 pulls it high to enable the radio. GPIO1_C7 controls RF switch U9. Low selects the external antenna socket, the default.
 High selects the onboard antenna. The vendor Linux number for GPIO1_C7 is 55. [Luckfox Zero W radio guide](https://wiki.luckfox.com/Luckfox-Lyra/Luckfox-Lyra-Zero-W/WIFI-BT/)
+A RAM boot of Luckfox Linux confirmed GPIO55 high and 19 BSS entries after a fresh scan.
+The station completed WPA3-SAE association on 2.4 GHz and obtained a DHCP lease. [Vendor Linux station check](evidence/radio-oem-station.json)
+
 
 EmberBSD's `aicwf` driver matches AIC8800D80 SDIO function 1 with ID `c8a1:0082`.
 The EmberBSD GENERIC kernel attached the RK3506 USB PHY and DWC2 host. It found the hub and the AIC8800DC at hub port 1. The first console kernel attached the radio as `ugen0`. [Physical USB and console observation](evidence/sd-console.json)
@@ -47,10 +50,12 @@ Multi-user init started `mdnsd` and `sshd`. SSH over Wi-Fi still requires a work
 
 After `/sbin/shutdown -r now`, the kernel loaded from microSD attached the receive-only station `aicwf0` to `uaicfw0`.
 At the root console, `ifconfig aicwf0 up` succeeded. The scan command is `ifconfig aicwf0 list scan`.
-It returned status 0 and printed zero rows. The interface reported `status: no network`.
+The installed ifconfig returned status 0 and printed zero rows. The interface reported `status: no network`.
 A host authenticated by SSH public key through a UART relay to the board loopback interface.
-Wi-Fi beacon reception remains unverified. Association and data transfer require revision-specific radio startup.
-[Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sbin/ifconfig/ieee80211.c)
+The native diagnostic kernel ran before and after a software reboot from a working Luckfox Linux station.
+In each boot, both scan attempts stopped at station creation with firmware status 1. The matching ifconfig reported `EIO`.
+EmberBSD beacon reception and association remain unverified.
+[Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/e485e7de2689b7c1226b4803c1934adabdd7f071/sbin/ifconfig/ieee80211.c)
 
 Bluetooth has a separate USB interface and needs its own check.
 [EmberBSD SDIO match](https://github.com/oxtech-ember/EmberBSD/blob/5789d27f00d9c1694b5085730b067e32cd846915/sys/dev/sdmmc/if_aicwf.c) · [SDK DC firmware inventory](https://github.com/EliSofke/LuckfoxLyraSDK/tree/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/external/rkwifibt/firmware/aicsemi/aic8800DC)

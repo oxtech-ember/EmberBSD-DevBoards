@@ -2452,16 +2452,24 @@
     {
       "id": "emberbsd-aic8800dc-station-survey",
       "title": "EmberBSD AIC8800DC receive-only station and scan implementation",
-      "url": "https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sys/dev/ic/aicwf.c",
-      "revision": "ac98551b89980170d2cb34757ad5477be38943c0",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/e485e7de2689b7c1226b4803c1934adabdd7f071/sys/dev/ic/aicwf.c",
+      "revision": "e485e7de2689b7c1226b4803c1934adabdd7f071",
       "reviewed_at": "2026-11-27",
       "sha256": null
     },
     {
       "id": "emberbsd-ifconfig-wireless-scan",
       "title": "EmberBSD ifconfig wireless scan request and result handling",
-      "url": "https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sbin/ifconfig/ieee80211.c",
-      "revision": "ac98551b89980170d2cb34757ad5477be38943c0",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/e485e7de2689b7c1226b4803c1934adabdd7f071/sbin/ifconfig/ieee80211.c",
+      "revision": "e485e7de2689b7c1226b4803c1934adabdd7f071",
+      "reviewed_at": "2026-11-27",
+      "sha256": null
+    },
+    {
+      "id": "luckfox-zero-w-buildroot-261020",
+      "title": "Luckfox Lyra Zero W MicroSD Buildroot distribution",
+      "url": "https://drive.google.com/file/d/1HSjmugHpn-NdMtcl6A87aGXbGLNmF-8a/view",
+      "revision": "Luckfox_Lyra_Zero_W_MicroSD_261020.zip",
       "reviewed_at": "2026-11-27",
       "sha256": null
     }

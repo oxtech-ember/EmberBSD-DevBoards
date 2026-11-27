@@ -1,0 +1,62 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "lyra-zero-w-oem-station",
+  "target_id": "rk3506b-lyra-zero-w",
+  "recorded_at": "2026-11-27",
+  "layer": "physical",
+  "result": "pass",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Luckfox Lyra Zero W, RK3506B, populated USB radio and onboard antenna"
+  },
+  "inputs": [
+    {
+      "name": "Luckfox Linux ARM zImage",
+      "revision": "6.1.99, Zero W MicroSD 261020",
+      "sha256": "fc528d394d37e9de6f32f89654cb1995af4c3bce9807b2a524ac59c18838cdf1",
+      "reference": null
+    },
+    {
+      "name": "Luckfox Zero W base DTB",
+      "revision": "Zero W MicroSD 261020",
+      "sha256": "847ba8194d09b6229d6d60080af3c90fb4e14fab2611d4fb0f75e5faaf98c680",
+      "reference": null
+    },
+    {
+      "name": "Luckfox Buildroot image with AIC8800DC modules and firmware",
+      "revision": "Zero W MicroSD 261020",
+      "sha256": "64bc294ac6d4fd13225ff82e81be6505ab90129b0f18f8f5a9e18e70c4dfe110",
+      "reference": null
+    },
+    {
+      "name": "Diagnostic FIT with the original kernel, base DTB and external initramfs",
+      "revision": "RAM-only root, microSD and SPI NAND controllers disabled by a DT overlay",
+      "sha256": "60baef6fe4936e735c98daf4ecf8eab5677b4114734a79d40a595a89a542273f",
+      "reference": null
+    }
+  ],
+  "scenario": "Boot the diagnostic FIT into RAM. Select the onboard antenna with GPIO55. Load the two AIC8800DC modules from the matching vendor rootfs. Flush the BSS cache with wpa_cli and request a new scan. Associate through wpa_supplicant and obtain a DHCP lease.",
+  "expected": "The onboard antenna receives scan results. The station completes WPA3-SAE association and obtains a DHCP lease.",
+  "observed": "Linux ran from an initramfs. GPIO55 read back as an output at logic high. The fresh scan returned 19 BSS entries. The station completed WPA3-SAE association on 2.4 GHz. The DHCP client bound a lease.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "fresh-scan-bss-count",
+      "value": 19,
+      "unit": "entries"
+    }
+  ],
+  "limits": [
+    "The test used the published Luckfox Linux kernel, modules and firmware in RAM. The driver and firmware set differ from those on the factory NAND sample.",
+    "The BSS count describes this scan. With driver log mask 3, dmesg showed no firmware build text. The vendor ethtool 6.6 reported driver usb, version 6.1.99 and an empty firmware-version field.",
+    "This result covers the Linux station. EmberBSD station creation and scan results are recorded separately."
+  ],
+  "source_refs": [
+    "luckfox-zero-w-buildroot-261020",
+    "lyra-zero-w-radio",
+    "lyra-armbian-uboot"
+  ]
+}
