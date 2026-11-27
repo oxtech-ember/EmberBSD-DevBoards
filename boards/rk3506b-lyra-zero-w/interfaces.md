@@ -60,8 +60,9 @@ With the earlier f0cb3f42 kernel, ifconfig returned status 0 and printed zero ro
 A host authenticated by SSH public key through a UART relay to the board loopback interface.
 The native diagnostic kernel ran before and after a software reboot from a working Luckfox Linux station.
 In each boot, both scan attempts stopped at station creation with firmware status 1. The matching ifconfig reported `EIO`.
-The installed GENERIC kernel at `fb17c849` booted from microSD, sequenced the WLAN enable signal before DWC2, attached `aicwf0` and started `sshd`.
-Both fresh scan commands returned exit status 1 and `EIO`. The kernel reported firmware status 1 during station creation.
+The GENERIC kernel with the `c6531633` kernel sources booted from microSD, sequenced WLAN enable before DWC2, attached `aicwf0` and started `sshd`.
+It reported that both factory USB and BBPLL setup conditions were false. The preceding `fb17c849` kernel and device tree provide the rollback.
+Both trial scans returned `EIO`. After the normal boot, a new scan exited with status 1. Firmware returned status 1 during station creation.
 The supplicant remained disconnected. Wi-Fi had no DHCP lease. A direct SSH attempt stopped at host name resolution.
 [Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/e485e7de2689b7c1226b4803c1934adabdd7f071/sbin/ifconfig/ieee80211.c)
 
