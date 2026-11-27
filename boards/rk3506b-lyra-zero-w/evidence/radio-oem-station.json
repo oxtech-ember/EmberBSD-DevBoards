@@ -66,11 +66,23 @@
       "revision": "Zero W MicroSD 261020, original radio modules and firmware, read events and USB stack message timestamps in RAM",
       "sha256": "51798375c41cac018ec11e5779dff89dfaca0d91cf27fd1ccfb3ca43239e657f",
       "reference": null
+    },
+    {
+      "name": "Luckfox Linux diagnostic FIT with normal RF request comparisons",
+      "revision": "Zero W MicroSD 261020 modules and firmware with a USB comparison on the host controller",
+      "sha256": "d3e166a0a7f05c6bdc712e4b34f77ad7583ab313d0430ab0004e58125637acdf",
+      "reference": null
+    },
+    {
+      "name": "EmberBSD diagnostic uImage with the RF request parameters used for comparison",
+      "revision": "d8225213015d28e32c5322bbdbc3c5e6d11478f0 with the measured Linux RF sequence",
+      "sha256": "060b26f5f22478784778e7829650f4bf72f4c4179cd93c777dcdb2d1d4d87900",
+      "reference": null
     }
   ],
-  "scenario": "Boot the diagnostic FIT into RAM. Select the onboard antenna with GPIO55. Load the two AIC8800DC modules from the matching vendor rootfs. Flush the BSS cache with wpa_cli and request a new scan. Associate through wpa_supplicant and obtain a DHCP lease. In four separate RAM boots, record command identifiers, parameter lengths and timestamps at the Linux USB host. Load the same radio modules and bring wlan0 up once per boot. In the last three boots, record the byte count after the calibration confirmation header. In the third and fourth boots, compare the counted firmware build text and the calibration request parameters with the EmberBSD diagnostic inputs. Before module load in the fourth boot, reset the access times of three firmware files in RAM. After the first interface open, check the same files and the read and idle controls. Reboot to the installed microSD system. On a fifth diagnostic boot, observe reads of four specific factory files and the first stack request on the same boot clock. Open the first station interface.",
+  "scenario": "Boot the diagnostic FIT into RAM. Select the onboard antenna with GPIO55. Load the two AIC8800DC modules from the matching vendor rootfs. Flush the BSS cache with wpa_cli and request a new scan. Associate through wpa_supplicant and obtain a DHCP lease. In four separate RAM boots, record command identifiers, parameter lengths and timestamps at the Linux USB host. Load the same radio modules and bring wlan0 up once per boot. In diagnostic boots two through four, record the byte count after the calibration confirmation header. In the third and fourth boots, compare the counted firmware build text and the calibration request parameters with the EmberBSD diagnostic inputs. Before module load in the fourth boot, reset the access times of three firmware files in RAM. After the first interface open, check the same files and the read and idle controls. Reboot to the installed microSD system. On a fifth diagnostic boot, observe reads of four specific factory files and the first stack request on the same boot clock. Open the first station interface. In a sixth diagnostic boot, compare the stack start request, transmit power request and four RF configuration requests with the parameters from the tested EmberBSD image. Compare both fields of the stack confirmation with the values accepted by the diagnostic kernel.",
   "expected": "The onboard antenna receives scan results. The station completes WPA3-SAE association and obtains a DHCP lease.",
-  "observed": "Linux ran from an initramfs. GPIO55 read back as an output at logic high. The fresh scan returned 19 BSS entries. The station completed WPA3-SAE association on 2.4 GHz. The DHCP client bound a lease. In each of the first four observer runs, Linux completed 16 request and confirmation pairs from module load through the first interface open. Each of the four MM_SET_RF_CONFIG requests declared 260 parameter bytes. Each confirmation declared zero. The MM_SET_RF_CALIB request (0x0069) declared 24 parameter bytes. Confirmation 0x006a declared zero parameter bytes in all four runs. Observers two through four measured a four-byte USB record header and 12 bytes of IPC framing with no data after them. In the third and fourth runs, the counted 36-byte firmware build text and all 24 calibration request parameter bytes matched the EmberBSD inputs. MM_START then returned a confirmation with zero parameter bytes. MM_ADD_IF returned a confirmation with two parameter bytes. Linux brought wlan0 up in all four runs. In the fourth run, the access times showed reads of fmacfw_calib_8800dc_u02.bin, fmacfw_patch_8800dc_u02.bin and fmacfw_patch_tbl_8800dc_u02.bin. Both control files behaved as expected. After the third and fourth runs, U-Boot read the microSD boot script. EmberBSD mounted dk1 and reached the login prompt. The fifth diagnostic boot recorded reads of the WLAN patch, patch table, calibration file and board settings, in that order. All four observations preceded the stack start request. The stack confirmation appeared 253 us after the request. The first interface opened.",
+  "observed": "Linux ran from an initramfs. GPIO55 read back as an output at logic high. The fresh scan returned 19 BSS entries. The station completed WPA3-SAE association on 2.4 GHz. The DHCP client bound a lease. In each of the first four observer runs, Linux completed 16 request and confirmation pairs from module load through the first interface open. Each of the four MM_SET_RF_CONFIG requests declared 260 parameter bytes. Each confirmation declared zero. The MM_SET_RF_CALIB request (0x0069) declared 24 parameter bytes. Confirmation 0x006a declared zero parameter bytes in all four runs. Observers two through four measured a four-byte USB record header and 12 bytes of IPC framing with no data after them. In the third and fourth runs, the counted 36-byte firmware build text and all 24 calibration request parameter bytes matched the EmberBSD inputs. MM_START then returned a confirmation with zero parameter bytes. MM_ADD_IF returned a confirmation with two parameter bytes. Linux brought wlan0 up in all four runs. In the fourth run, the access times showed reads of fmacfw_calib_8800dc_u02.bin, fmacfw_patch_8800dc_u02.bin and fmacfw_patch_tbl_8800dc_u02.bin. Both control files behaved as expected. After the third and fourth runs, U-Boot read the microSD boot script. EmberBSD mounted dk1 and reached the login prompt. The fifth diagnostic boot recorded reads of the WLAN patch, patch table, calibration file and board settings, in that order. All four observations preceded the stack start request. The stack confirmation appeared 253 us after the request. The first interface opened. The sixth boot matched the order and size of all six outgoing requests and all 1139 parameter bytes. Both stack confirmation fields matched. Linux opened the first interface, then rebooted into the installed EmberBSD system.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -117,15 +129,21 @@
       "name": "board-settings-read-observation-to-stack-request",
       "value": 4922,
       "unit": "us"
+    },
+    {
+      "name": "outgoing-requests-with-matching-parameters-sixth-run",
+      "value": 6,
+      "unit": "requests"
     }
   ],
   "limits": [
-    "The station test used the published Luckfox Linux kernel in RAM. The five diagnostic FITs used a host USB observer. All six boots used the same 261020 radio modules and firmware. These differ from the factory NAND sample.",
+    "The station test used the published Luckfox Linux kernel in RAM. The six diagnostic FITs used a host USB observer. All seven boots used the same 261020 radio modules and firmware. These differ from the factory NAND sample.",
     "The BSS count describes this scan. With driver log mask 3, dmesg showed no firmware build text. The vendor ethtool 6.6 reported driver usb, version 6.1.99 and an empty firmware-version field.",
     "The build text and request comparisons cover only those fields. The state of the radio at calibration remains unknown.",
     "File access times establish reads on the RAM filesystem. Firmware execution and the values of calibration coefficients were outside this measurement.",
     "This result covers the Linux station. EmberBSD station creation and scan results are recorded separately.",
-    "File timestamps on the fifth diagnostic boot are upper bounds on the read times. The observer did not measure firmware execution or verify the resulting calibration coefficients."
+    "File timestamps on the fifth diagnostic boot are upper bounds on the read times. The observer did not measure firmware execution or verify the resulting calibration coefficients.",
+    "The sixth boot compared normal RF request parameters and two stack confirmation fields. It did not observe firmware patch application or the resulting DPD state."
   ],
   "source_refs": [
     "luckfox-zero-w-buildroot-261020",

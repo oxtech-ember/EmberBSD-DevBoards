@@ -64,6 +64,7 @@ The supplicant remained disconnected. Wi-Fi had no DHCP lease. A direct SSH atte
 
 A later EmberBSD RAM diagnostic read GPIO1_C5 high as an input and GPIO1_C7 high as an output after root mount.
 The onboard antenna was selected. The radio confirmed stack start, the transmit power setting and four RF table commands.
+A factory comparison matched the outgoing stack request, transmit power and four RF settings byte for byte. Both fields in the stack confirmation also matched. [Factory command comparisons](evidence/radio-oem-station.json)
 The first calibration request timed out after four seconds. A repeat after a successful Linux association waited eight seconds for calibration.
 One subsequent firmware version query timed out after four seconds. Neither bulk IN endpoint returned a valid configuration record during those twelve seconds.
 The radio stayed attached to USB in both captures. EmberBSD stopped before station attachment.
