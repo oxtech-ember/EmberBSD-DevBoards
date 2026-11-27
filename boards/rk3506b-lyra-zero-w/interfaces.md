@@ -48,6 +48,7 @@ The driver checked DPD during both probes. The observer recorded the U02 calibra
 EmberBSD's `aicwf` driver matches AIC8800D80 SDIO function 1 with ID `c8a1:0082`.
 The EmberBSD GENERIC kernel attached the RK3506 USB PHY and DWC2 host. It found the hub and the AIC8800DC at hub port 1. The first console kernel attached the radio as `ugen0`. [Physical USB and console observation](evidence/sd-console.json)
 The `uaicfw0` driver selected configuration 1, interface 2. The radio reported chip ID `0x07`, sub-ID `0x01`, FullMAC version `0x06040301` and feature bits `0xb011fa5f`. The SDK supplies revision-specific radio patches and calibration files. [USB command-channel test after RESET](evidence/radio-usb-fullmac.json)
+On the tested U02 radio, EmberBSD read the factory USB and baseband PLL conditions after the WLAN enable sequence. The factory conditions called for skipping both branches. The clock check reported no CPU crystal. [Native startup conditions](evidence/radio-usb-calibration.json)
 On cold boot, the diagnostic kernel read the same radio IDs and FullMAC version. The DWC2 root hub reported `illegal enable change`.
 The downstream hub and WLAN interface enumerated. Firmware returned status 1 to the request to create a station (`MM_ADD_IF_REQ`).
 The diagnostic recorded no scan completion or beacon. The kernel exposed no WLAN interface to WPA or DHCP.
