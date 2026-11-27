@@ -1,0 +1,84 @@
+{
+  "format_version": 1,
+  "kind": "evidence",
+  "id": "lyra-zero-w-native-radio-kexec",
+  "target_id": "rk3506b-lyra-zero-w",
+  "recorded_at": "2026-11-27",
+  "layer": "physical",
+  "result": "fail",
+  "hardware": {
+    "revision": null,
+    "carrier_id": null,
+    "carrier_revision": null,
+    "variant": "Luckfox Lyra Zero W, RK3506B, populated USB radio and onboard antenna"
+  },
+  "inputs": [
+    {
+      "name": "Luckfox Buildroot image with AIC8800DC modules and firmware",
+      "revision": "Zero W MicroSD 261020",
+      "sha256": "64bc294ac6d4fd13225ff82e81be6505ab90129b0f18f8f5a9e18e70c4dfe110",
+      "reference": null
+    },
+    {
+      "name": "aic8800_fdrv.ko",
+      "revision": "Original Luckfox 261020 module",
+      "sha256": "67c7324a1bb37a0c440ae4d4ad73f8451e39ffe6005a80bc892c6a7dd7159e73",
+      "reference": null
+    },
+    {
+      "name": "Linux 6.1.99 kexec FIT with LYRA_HANDOFF",
+      "revision": "Original USB WLAN module and files. Linux runs in RAM. The second kernel uses the EmberBSD microSD root.",
+      "sha256": "16e7bc48ae2e0e320a9300bb811704e7e70e3267747df7574c1b2932e220ac7d",
+      "reference": null
+    },
+    {
+      "name": "LYRA_HANDOFF uImage",
+      "revision": "First station start after closure of the last factory interface. Board WLAN enable from fb17c849.",
+      "sha256": "6f7e4bf70819d3510a4758d7f4f8c4eebab65199bc822c4ca9661d07a7a01e40",
+      "reference": null
+    },
+    {
+      "name": "Linux 6.1.99 kexec FIT with LYRA_FACTORY",
+      "revision": "Original Luckfox 261020 WLAN driver and files in Linux. Same board, direct handoff to the native measured RF startup.",
+      "sha256": "fcd7041919ff42af407af050a5127d183549faedc5452494b874211d8c7e08e2",
+      "reference": null
+    },
+    {
+      "name": "LYRA_FACTORY uImage",
+      "revision": "Native normal RF comparison, using the original NAND station file set on the EmberBSD root.",
+      "sha256": "cc08a2cb6525166b84afdccdd657957f3b4c531dfb3ba87b0a0bf05b90af43cd",
+      "reference": null
+    }
+  ],
+  "scenario": "Bring up the factory WLAN interface in Linux and close it. Verify that the original driver stays bound to USB interface 2. Use the standard ARM kexec loader and pass the EmberBSD board tree. Let EmberBSD probe the USB radio and try to start the station. Repeat the Linux interface open, close and direct kexec using the native normal RF sequence. Count confirmations and check both USB inputs during RF calibration and a subsequent version request.",
+  "expected": "The second kernel retains the WLAN enable signal and receives the station start confirmation. The native RF sequence gets a calibration confirmation and proceeds to station setup.",
+  "observed": "Linux opened and closed the WLAN interface and verified the driver binding. Direct kexec reached EmberBSD multi-user mode from microSD. WL_DIS# stayed high. The hub and DC U02 enumerated. During MM_START, the bulk IN completion on endpoint 0x81 reported INVAL before the native frame parser ran. The station did not attach. The radio then enumerated again and the one-shot probe stopped. Only lo0 was present. Direct SSH from the host stopped at name resolution. In the second run the new kernel retained WL_DIS# high and mounted the microSD root. Firmware confirmed stack start, the build query, transmit power and four gain tables. Across three four-second intervals, neither USB input delivered a configuration record. Both RF calibration and the subsequent version query timed out. Only lo0 was present. Direct named SSH failed.",
+  "duration_seconds": null,
+  "measurements": [
+    {
+      "name": "startup-confirmations-before-rf-calibration",
+      "value": 7,
+      "unit": "confirmations"
+    },
+    {
+      "name": "usb-configuration-records-during-calibration-and-version-wait",
+      "value": 0,
+      "unit": "records"
+    },
+    {
+      "name": "combined-calibration-and-version-wait",
+      "value": 12,
+      "unit": "s"
+    }
+  ],
+  "limits": [
+    "The transfer did not run U-Boot or deliberately cycle power. The EmberBSD USB host still enumerated the hub and downstream device. The test did not measure whether DPD coefficients or the WLAN patch survived this transition.",
+    "The firmware version and the requested confirmation ID identify the exchange. They do not establish the cause of the bulk IN error.",
+    "The two native kernels exercised different startup paths. Linux used the 261020 kit. The native RF test used the factory NAND files on microSD. The earlier six request comparisons covered normal RF parameters. These experiments did not prove that either native kernel loaded the factory WLAN patch."
+  ],
+  "source_refs": [
+    "luckfox-zero-w-buildroot-261020",
+    "lyra-sdk-snapshot",
+    "lyra-zero-w-radio"
+  ]
+}

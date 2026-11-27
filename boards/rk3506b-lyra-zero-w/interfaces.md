@@ -76,5 +76,7 @@ After the calibration timeout, Linux scanned again without a power cycle. In a s
 After the software reboot, EmberBSD reported a bulk IN error during the first station start (`MM_START`). The radio enumerated again.
 Only `lo0` appeared in single-user mode. Station creation and scan did not run. [Native initialization and handoff checks](evidence/radio-usb-calibration.json)
 
+Direct ARM kexec also retained WL_DIS# high. One native kernel encountered a bulk IN error during first station start. A second received seven startup confirmations, then timed out at RF calibration. Both kernels mounted the EmberBSD root. [Direct handoff and radio checks](evidence/radio-kexec.json)
+
 Bluetooth has a separate USB interface and needs its own check.
 [EmberBSD SDIO match](https://github.com/oxtech-ember/EmberBSD/blob/5789d27f00d9c1694b5085730b067e32cd846915/sys/dev/sdmmc/if_aicwf.c) · [SDK DC firmware inventory](https://github.com/EliSofke/LuckfoxLyraSDK/tree/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/external/rkwifibt/firmware/aicsemi/aic8800DC)
