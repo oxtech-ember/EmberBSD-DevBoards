@@ -36,11 +36,17 @@
       "revision": "Same factory module and initramfs. Record only named driver functions during file reads and waits.",
       "sha256": "e31b0e5b99656e16114a3f055bd2c3a223128733572ea65c7864b942959f5c17",
       "reference": null
+    },
+    {
+      "name": "DPD observer with one USB device reset",
+      "revision": "Same Linux observer, original WLAN module and 261020 firmware. After interface close and unbind, reset only the identified USB WLAN device.",
+      "sha256": "3e07f9655af90a9243ef890aae869e35075d70589ab5c6739366e3f7a970913d",
+      "reference": null
     }
   ],
-  "scenario": "On the factory RAM system, observe successful kernel reads of four named files during probe of WLAN interface 2. Bring wlan0 up, then down. Unbind and bind the same WLAN interface through sysfs. Check the parent USB bus and device numbers, configuration, USB runtime power status and driver identity. Bring wlan0 up again.",
+  "scenario": "On the factory RAM system, observe successful kernel reads of four named files during probe of WLAN interface 2. Bring wlan0 up, then down. Unbind and bind the same WLAN interface through sysfs. Check the parent USB bus and device numbers, configuration, USB runtime power status and driver identity. Bring wlan0 up again. In a third RAM boot add one standard USB device reset between unbind and bind. Check the original hub, port and unbound device identity before reset.",
   "expected": "The two probes identify the same USB device. Both probes return success and wlan0 opens after each bind.",
-  "observed": "Both probes returned success. Both interface opens succeeded. The first probe read the U02 WLAN patch, its table, the calibration program and board settings. The second probe read the patch, table and settings. The observer recorded no read of the calibration program during that probe. The parent bus and device numbers remained the same. A second RAM boot reproduced both successful probes, interface opens and file sequences. During both probes the observer identified the DPD validity check, DPD calibration and the later RF calibration request. In the first probe the calibration program read took place inside aicwf_dpd_calib_8800dc. In the second probe that function ran without an observed read of the calibration program. Both table reads took place inside the factory patch configuration function.",
+  "observed": "Both probes returned success. Both interface opens succeeded. The first probe read the U02 WLAN patch, its table, the calibration program and board settings. The second probe read the patch, table and settings. The observer recorded no read of the calibration program during that probe. The parent bus and device numbers remained the same. A second RAM boot reproduced both successful probes, interface opens and file sequences. During both probes the observer identified the DPD validity check, DPD calibration and the later RF calibration request. In the first probe the calibration program read took place inside aicwf_dpd_calib_8800dc. In the second probe that function ran without an observed read of the calibration program. Both table reads took place inside the factory patch configuration function. With one USB device reset between binds, both probes read the calibration program inside aicwf_dpd_calib_8800dc. Both probes returned success and both interface opens succeeded.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -62,12 +68,23 @@
       "name": "second-usb-probe-duration-with-call-frame-sampling",
       "value": 597556,
       "unit": "us"
+    },
+    {
+      "name": "initial-probe-duration-in-device-reset-test",
+      "value": 929465,
+      "unit": "us"
+    },
+    {
+      "name": "probe-duration-after-one-usb-device-reset",
+      "value": 923467,
+      "unit": "us"
     }
   ],
   "limits": [
-    "These observations cover two probes per Linux boot. The first probe followed a system reboot. The second followed interface close and rebind. The test kept board power on and used no USB reset command. The factory driver can reset its MAC when closing an interface.",
+    "These observations cover two probes per Linux boot. The first probe followed a system reboot. The second followed interface close and rebind. Board power stayed on throughout. The first two boots used only interface unbind and bind. The third added one USB device reset. The factory driver can reset its MAC when closing an interface.",
     "The first diagnostic kernel could not identify the selected call frames. The second kernel identified the parent USB probe and the DPD functions. Only the outer USB probe return code was recorded. The internal validity flag, function return values and individual DPD coefficients remain unknown. The second file sequence is consistent with reuse of the DPD result in radio RAM.",
-    "The test checked interface open. It did not test association, DHCP or native EmberBSD operation."
+    "The test checked interface open. It did not test association, DHCP or native EmberBSD operation.",
+    "The additional reset changed the observed calibration file use on the second bind. No measurement establishes which coefficients or patch state survived the reset. A USB device reset in Linux does not reproduce every step of a new host controller attachment."
   ],
   "source_refs": [
     "luckfox-zero-w-buildroot-261020",
