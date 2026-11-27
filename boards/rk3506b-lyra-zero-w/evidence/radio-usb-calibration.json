@@ -20,6 +20,12 @@
       "reference": null
     },
     {
+      "name": "EmberBSD evbarm GENERIC diagnostic uImage for the extended calibration wait",
+      "revision": "d8225213015d28e32c5322bbdbc3c5e6d11478f0 with one RF setup attempt, two calibration wait intervals and a version query",
+      "sha256": "6748e6efd3dbbd0c6d864c12bcc9ef5695dc1cc5b8f1f7d5d83522a7459c65ec",
+      "reference": null
+    },
+    {
       "name": "EmberBSD evbarm GENERIC diagnostic uImage for the separate MAC test",
       "revision": "d8225213015d28e32c5322bbdbc3c5e6d11478f0 with the DC U02 MAC probe and GPIO readback",
       "sha256": "e44b9cf9a666b7ec9b4a2ba8f35e16d8e5d8516bd615c0a1b232a6a5718dec08",
@@ -44,9 +50,9 @@
       "reference": null
     }
   ],
-  "scenario": "Read the radio control pins in U-Boot. Transfer each diagnostic kernel to RAM over UART0 and check its CRC32. Boot with the board DTB and the microSD root. In the RF test, read both pins after root mount and record the first RF initialization attempt. In the other test, query the MAC address and request a MAC reset without RF setup.",
+  "scenario": "Read the radio control pins in U-Boot. Transfer each diagnostic kernel to RAM over UART0 and check its CRC32. Boot with the board DTB and the microSD root. In the RF test, read both pins after root mount and record the first RF initialization attempt. Repeat the RF test after booting the vendor Linux station and verifying association and DHCP. Allow one more interval for the original calibration reply, then request MM_VERSION once. In the separate MAC test, query the MAC address and request a MAC reset without RF setup.",
   "expected": "The radio returns the RF calibration confirmation. Initialization can then continue to station setup.",
-  "observed": "U-Boot read GPIO1_C5 as input high and GPIO1_C7 as input low. After root mount, EmberBSD read GPIO1_C5 (WL_DIS#) as input high and GPIO1_C7 (antenna select) as output high. MM_SET_STACK_START returned 0x007c with two bytes and the 5 GHz flag clear. MM_SET_TXPWR_IDX_LVL returned 0x0078 with zero bytes. Each MM_SET_RF_CONFIG command for TX0, TX1, RX20 and RX40 returned 0x0068 with zero bytes. MM_SET_RF_CALIB timed out after four seconds while waiting for 0x006a with 16 bytes. USB kept the radio attached during this capture. The driver stopped before station attachment and scan. In the separate MAC test, MM_GET_MAC_ADDR returned 0x0074 with six bytes. MM_RESET reported INVAL while waiting for 0x0001 with zero bytes. The radio then detached and enumerated again.",
+  "observed": "U-Boot read GPIO1_C5 as input high and GPIO1_C7 as input low. After root mount, EmberBSD read GPIO1_C5 (WL_DIS#) as input high and GPIO1_C7 (antenna select) as output high. MM_SET_STACK_START returned 0x007c with two bytes and the 5 GHz flag clear. MM_SET_TXPWR_IDX_LVL returned 0x0078 with zero bytes. Each MM_SET_RF_CONFIG command for TX0, TX1, RX20 and RX40 returned 0x0068 with zero bytes. MM_SET_RF_CALIB timed out after four seconds while waiting for 0x006a with 16 bytes. USB kept the radio attached during this capture. The driver stopped before station attachment and scan. Before the repeat, Luckfox Linux found 10 BSS entries, completed SAE association with PMF and CCMP, and obtained a DHCP lease. EmberBSD again received the stack, transmit power and four RF table confirmations. The original calibration request received no confirmation during either four-second interval. The single MM_VERSION query also timed out after four seconds. Both bulk IN endpoints returned zero valid configuration records in each of the three intervals. The radio remained attached throughout the capture. EmberBSD created no station interface. In the separate MAC test, MM_GET_MAC_ADDR returned 0x0074 with six bytes. MM_RESET reported INVAL while waiting for 0x0001 with zero bytes. The radio then detached and enumerated again.",
   "duration_seconds": null,
   "measurements": [],
   "limits": [
@@ -58,6 +64,7 @@
     "lyra-zero-w-schematic",
     "lyra-zero-w-radio",
     "lyra-sdk-snapshot",
-    "emberbsd-aic8800dc-usb-probe"
+    "emberbsd-aic8800dc-usb-probe",
+    "luckfox-zero-w-buildroot-261020"
   ]
 }

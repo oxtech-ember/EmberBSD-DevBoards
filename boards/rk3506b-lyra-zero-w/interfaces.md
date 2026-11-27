@@ -59,7 +59,9 @@ EmberBSD beacon reception and association remain unverified.
 
 A later EmberBSD RAM diagnostic read GPIO1_C5 high as an input and GPIO1_C7 high as an output after root mount.
 The onboard antenna was selected. The radio confirmed stack start, the transmit power setting and four RF table commands.
-The calibration request timed out after four seconds. The radio stayed on USB throughout this capture. The driver stopped before station attachment.
+The first calibration request timed out after four seconds. A repeat after a successful Linux association waited eight seconds for calibration.
+One subsequent firmware version query timed out after four seconds. Neither bulk IN endpoint returned a valid configuration record during those twelve seconds.
+The radio stayed attached to USB in both captures. EmberBSD stopped before station attachment.
 In a separate run without RF setup, the radio answered the MAC address query. During the reset request, the driver reported an error and USB enumerated the radio again.
 [Native RF initialization checks](evidence/radio-usb-calibration.json)
 
