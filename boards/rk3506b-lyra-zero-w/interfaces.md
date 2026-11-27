@@ -45,9 +45,11 @@ The downstream hub and WLAN interface enumerated. Firmware returned status 1 to 
 The diagnostic recorded no scan completion or beacon. The kernel exposed no WLAN interface to WPA or DHCP.
 Multi-user init started `mdnsd` and `sshd`. SSH over Wi-Fi still requires a working association and IP configuration. [Cold boot observation](evidence/sd-multiuser.json)
 
-With the separate receive-only station driver, check that `ifconfig aicwf0 up` succeeds, then run `ifconfig aicwf0 scan`.
-A completed scan with a valid beacon would establish radio reception on this board. Association and data transfer require the revision-specific radio startup.
-[Station driver and scan procedure](https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sys/dev/ic/docs/aicwf-fullmac.md)
+After a software reboot from the serial shell, a RAM-loaded kernel attached the receive-only station `aicwf0` to `uaicfw0`.
+At the root console, `ifconfig aicwf0 up` succeeded. The scan command is `ifconfig aicwf0 list scan`.
+It returned status 0 and printed zero rows. The interface reported `status: no network`.
+Beacon reception remains unverified. Association and data transfer require revision-specific radio startup.
+[Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sbin/ifconfig/ieee80211.c)
 
 Bluetooth has a separate USB interface and needs its own check.
 [EmberBSD SDIO match](https://github.com/oxtech-ember/EmberBSD/blob/5789d27f00d9c1694b5085730b067e32cd846915/sys/dev/sdmmc/if_aicwf.c) · [SDK DC firmware inventory](https://github.com/EliSofke/LuckfoxLyraSDK/tree/6dcbca0d8a517d79bd8fb4205ca4966b136604bc/external/rkwifibt/firmware/aicsemi/aic8800DC)

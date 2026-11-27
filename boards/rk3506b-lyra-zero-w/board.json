@@ -28,7 +28,8 @@
     "emberbsd-lyra-sd-console",
     "emberbsd-aic8800dc-usb-probe",
     "emberbsd-lyra-dwc2-port-reset",
-    "emberbsd-aic8800dc-station-survey"
+    "emberbsd-aic8800dc-station-survey",
+    "emberbsd-ifconfig-wireless-scan"
   ],
   "capabilities": [
     {
@@ -61,7 +62,7 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "The onboard USB WLAN interface answered silicon and FullMAC queries on RESET and on cold boot. Firmware rejected the passive diagnostic station request with status 1. Beacon reception, association and network access remain unverified.",
+      "scope": "The USB radio returned its silicon ID and FullMAC version on cold boot. After a software reboot, a RAM-loaded receive-only driver attached aicwf0 and brought it up. The explicit passive scan returned zero rows. Beacon reception, association and data transfer remain unverified.",
       "source_refs": [
         "lyra-zero-w-schematic",
         "lyra-zero-w-radio",
@@ -70,7 +71,8 @@
         "emberbsd-lyra-sd-console",
         "emberbsd-aic8800dc-usb-probe",
         "emberbsd-lyra-dwc2-port-reset",
-        "emberbsd-aic8800dc-station-survey"
+        "emberbsd-aic8800dc-station-survey",
+        "emberbsd-ifconfig-wireless-scan"
       ]
     },
     {

@@ -2451,8 +2451,16 @@
     },
     {
       "id": "emberbsd-aic8800dc-station-survey",
-      "title": "EmberBSD AIC8800DC receive-only station and passive scan contract",
-      "url": "https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sys/dev/ic/docs/aicwf-fullmac.md",
+      "title": "EmberBSD AIC8800DC receive-only station and scan implementation",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sys/dev/ic/aicwf.c",
+      "revision": "ac98551b89980170d2cb34757ad5477be38943c0",
+      "reviewed_at": "2026-11-27",
+      "sha256": null
+    },
+    {
+      "id": "emberbsd-ifconfig-wireless-scan",
+      "title": "EmberBSD ifconfig wireless scan request and result handling",
+      "url": "https://github.com/oxtech-ember/EmberBSD/blob/ac98551b89980170d2cb34757ad5477be38943c0/sbin/ifconfig/ieee80211.c",
       "revision": "ac98551b89980170d2cb34757ad5477be38943c0",
       "reviewed_at": "2026-11-27",
       "sha256": null
