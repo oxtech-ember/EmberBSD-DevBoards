@@ -3,7 +3,7 @@
   "kind": "evidence",
   "id": "lyra-zero-w-factory-reset-uart",
   "target_id": "rk3506b-lyra-zero-w",
-  "recorded_at": "2026-11-26",
+  "recorded_at": "2026-11-28",
   "layer": "physical",
   "result": "pass",
   "hardware": {
@@ -26,9 +26,9 @@
       "reference": null
     },
     {
-      "name": "Installed Luckfox Linux",
-      "revision": "6.1.99",
-      "sha256": null,
+      "name": "Installed Luckfox Linux zImage",
+      "revision": "6.1.99 #15, May 22 2025, 4785008 bytes",
+      "sha256": "7018b92742a0abe820f9c78b4fc0f7caa5d41fa8195ddae70150647673ba452f",
       "reference": null
     },
     {
@@ -36,11 +36,23 @@
       "revision": "FT232R, 1500000 baud, 8N1",
       "sha256": null,
       "reference": null
+    },
+    {
+      "name": "Factory Zero W DTB",
+      "revision": "41037 bytes in the installed boot FIT",
+      "sha256": "9e68480321a26cbd0cf434de197a35f9fcbee7bf8b49c2894e0fac9aae8f1c81",
+      "reference": null
+    },
+    {
+      "name": "Factory boot FIT from SPI NAND",
+      "revision": "6285312 bytes including the resource image",
+      "sha256": "19b4b3a9b83abca7f5c67aecda9cc1fd16ca7b7f43d6f6e83af2730538125d63",
+      "reference": null
     }
   ],
-  "scenario": "Leave the microSD slot empty. Capture UART0. Press RESET with BOOT released. Read the log through the vendor login prompt.",
+  "scenario": "Leave the microSD slot empty. Capture UART0. Press RESET with BOOT released. Read the log through the vendor login prompt. On November 28, use the U-Boot on microSD to read the factory boot partition into RAM. Check all three FIT hashes in U-Boot and verify the copy on the host.",
   "expected": "Identify the loader, the selected boot medium, the board model and the USB radio detected by the factory system.",
-  "observed": "SPL tried MMC1, reported an initialization error and tried MTD1. U-Boot reported mtd 1. Linux identified the Luckfox Lyra Zero W and 256 MiB Winbond SPI NAND. DWC2 enumerated a hub and a downstream USB device. The factory Wi-Fi service selected AIC8800DC (a69c:88dc), reported successful initialization and reached the login prompt.",
+  "observed": "SPL tried MMC1, reported an initialization error and tried MTD1. U-Boot reported mtd 1. Linux identified the Luckfox Lyra Zero W and 256 MiB Winbond SPI NAND. DWC2 enumerated a hub and a downstream USB device. The factory Wi-Fi service selected AIC8800DC (a69c:88dc), reported successful initialization and reached the login prompt. The kernel and DTB hashes matched the original factory boot log. The first 0x49ae00 bytes contain the header, DTB and kernel. The resource image starts there and adds 1456640 bytes. All three hashes matched when the complete FIT was present.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -60,7 +72,7 @@
     }
   ],
   "limits": [
-    "The observation covers one reset with an empty microSD slot. The board revision was not read.",
+    "The factory boot observation covers one reset with the slot empty. The later FIT read used the installed microSD bootloader. Board revision is unknown.",
     "An EmberBSD boot, selection of an inserted card, Wi-Fi association and a network login require separate tests."
   ],
   "source_refs": [
