@@ -40,7 +40,8 @@ The EmberBSD board driver controls GPIO1_C5 before DWC2 attaches. It holds the s
 It retains a high output from an earlier boot stage. An input held high by R77 still requires the enable sequence. [EmberBSD board driver](https://github.com/oxtech-ember/EmberBSD/blob/fb17c849f50162762a0c4ce14647bf049cc9518c/sys/arch/arm/rockchip/rk3506_radio.c)
 
 A RAM boot of Luckfox Linux confirmed GPIO55 high and 19 BSS entries after a fresh scan.
-The station completed WPA3-SAE association on 2.4 GHz and obtained a DHCP lease. [Vendor Linux station check](evidence/radio-oem-station.json)
+The matched 261020 station completed WPA3-SAE association on 2.4 GHz and obtained a DHCP lease.
+A separate test with the NAND WLAN module and its firmware on the 261020 kernel stopped before the WLAN control socket opened. [Vendor Linux station check](evidence/radio-oem-station.json)
 
 On Linux, the same USB WLAN interface reopened after driver unbind and bind. Both probes read the WLAN patch and its table.
 On ordinary rebind, the second probe checked DPD and reopened the interface with the calibration file held aside.

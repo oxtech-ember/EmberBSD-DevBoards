@@ -143,7 +143,8 @@
     "File access times establish reads on the RAM filesystem. Firmware execution and the values of calibration coefficients were outside this measurement.",
     "This result covers the Linux station. EmberBSD station creation and scan results are recorded separately.",
     "File timestamps on the fifth diagnostic boot are upper bounds on the read times. The observer did not measure firmware execution or verify the resulting calibration coefficients.",
-    "The sixth boot compared normal RF request parameters and two stack confirmation fields. It did not observe firmware patch application or the resulting DPD state."
+    "The sixth boot compared normal RF request parameters and two stack confirmation fields. It did not observe firmware patch application or the resulting DPD state.",
+    "A separate RAM boot used the original g0a86431 NAND WLAN module and matching radio files with the 261020 Linux kernel and its USB loader. The five non-H station files matched the installed EmberBSD root. Although the module version string and imported symbol names matched the host, the kernel stopped before the WLAN control socket became available. This mixed-kernel test provides no DPD, association or DHCP result for the NAND kit. The successful association above used the matched 261020 installation."
   ],
   "source_refs": [
     "luckfox-zero-w-buildroot-261020",
