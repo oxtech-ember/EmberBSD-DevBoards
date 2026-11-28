@@ -3,7 +3,7 @@
   "kind": "evidence",
   "id": "lyra-zero-w-oem-wlan-rebind",
   "target_id": "rk3506b-lyra-zero-w",
-  "recorded_at": "2026-11-27",
+  "recorded_at": "2026-11-28",
   "layer": "physical",
   "result": "pass",
   "hardware": {
@@ -54,11 +54,23 @@
       "revision": "Original 261020 WLAN driver. Move the verified calibration program aside after unbind. Restore it before leaving RAM.",
       "sha256": "dfb8369ff57850b117d2aaadbeacc873dfb05dacf809208290982991bfce76ac",
       "reference": null
+    },
+    {
+      "name": "Luckfox 261020 RAM FIT for two station driver probes",
+      "revision": "Factory kernel, DTB and radio files. The rebuilt station module reports its normal return values. Storage controllers disabled.",
+      "sha256": "705fa23e57e5a530a282c3e06d78a04116f48cf88d165512d70c8fcb5dc44b1c",
+      "reference": null
+    },
+    {
+      "name": "Rebuilt 261020 AIC8800DC station module",
+      "revision": "rkwifibt 223f24790d1ba8f96d35d19367ab933f81f82aa7 with reporting for the patch, configuration tables and DPD decision",
+      "sha256": "91cf6bb951f1efeb7c3b26edf97a057219859547af63b7f58aa956f8caa7da97",
+      "reference": null
     }
   ],
-  "scenario": "On the factory RAM system, observe successful kernel reads of four named files during probe of WLAN interface 2. Bring wlan0 up, then down. Unbind and bind the same WLAN interface through sysfs. Check the parent USB bus and device numbers, configuration, USB runtime power status and driver identity. Bring wlan0 up again. In a third RAM boot add one standard USB device reset between unbind and bind. Check the original hub, port and unbound device identity before reset. In two further RAM boots, bring wlan0 down and unbind it after the first successful open. Rename the U02 calibration program in the RAM filesystem. Bind again, either directly or after one standard USB device reset. Restore the file before reboot. Record the probe result, interface open and the initial clock selector printed by the driver.",
+  "scenario": "On the factory RAM system, observe successful kernel reads of four named files during probe of WLAN interface 2. Bring wlan0 up, then down. Unbind and bind the same WLAN interface through sysfs. Check the parent USB bus and device numbers, configuration, USB runtime power status and driver identity. Bring wlan0 up again. In a third RAM boot add one standard USB device reset between unbind and bind. Check the original hub, port and unbound device identity before reset. In two further RAM boots, bring wlan0 down and unbind it after the first successful open. Rename the U02 calibration program in the RAM filesystem. Bind again, either directly or after one standard USB device reset. Restore the file before reboot. Record the probe result, interface open and the initial clock selector printed by the driver. In a separate RAM boot, open the interface, close it, rebind the same USB function without a reset, then open it again. During each probe, record the existing driver returns and its DPD reuse decision.",
   "expected": "The two probes identify the same USB device. With all files present, both probes return success and wlan0 opens after each bind. Holding the calibration file aside tests whether the second probe requires the file in each USB lifecycle.",
-  "observed": "Both probes returned success. Both interface opens succeeded. The first probe read the U02 WLAN patch, its table, the calibration program and board settings. The second probe read the patch, table and settings. The observer recorded no read of the calibration program during that probe. The parent bus and device numbers remained the same. A second RAM boot reproduced both successful probes, interface opens and file sequences. During both probes the observer identified the DPD validity check, DPD calibration and the later RF calibration request. In the first probe the calibration program read took place inside aicwf_dpd_calib_8800dc. In the second probe that function ran without an observed read of the calibration program. Both table reads took place inside the factory patch configuration function. With one USB device reset between binds, both probes read the calibration program inside aicwf_dpd_calib_8800dc. Both probes returned success and both interface opens succeeded. With the file held aside, the second direct bind succeeded and wlan0 opened. With one device reset, the second bind failed and the interface did not open. Both second probes read the patch and table. The OEM logged the initial clock selector as zero in both first probes. The second sample matched the final factory setting after direct rebind and was zero after reset. Both runs restored the file. In the earlier reset control with the file present, both probes and interface opens succeeded.",
+  "observed": "Both probes returned success. Both interface opens succeeded. The first probe read the U02 WLAN patch, its table, the calibration program and board settings. The second probe read the patch, table and settings. The observer recorded no read of the calibration program during that probe. The parent bus and device numbers remained the same. A second RAM boot reproduced both successful probes, interface opens and file sequences. During both probes the observer identified the DPD validity check, DPD calibration and the later RF calibration request. In the first probe the calibration program read took place inside aicwf_dpd_calib_8800dc. In the second probe that function ran without an observed read of the calibration program. Both table reads took place inside the factory patch configuration function. With one USB device reset between binds, both probes read the calibration program inside aicwf_dpd_calib_8800dc. Both probes returned success and both interface opens succeeded. With the file held aside, the second direct bind succeeded and wlan0 opened. With one device reset, the second bind failed and the interface did not open. Both second probes read the patch and table. The OEM logged the initial clock selector as zero in both first probes. The second sample matched the final factory setting after direct rebind and was zero after reset. Both runs restored the file. In the earlier reset control with the file present, both probes and interface opens succeeded. Both opens succeeded with the rebuilt module. At both probes, WLAN patch loading returned zero. The table descriptor and all 110 rows completed without a reported error. The driver accepted 1340 LDPC bytes in three blocks, 2048 AGC bytes in four blocks and 384 TX gain bytes in one block. The DPD check returned valid=0 on the first probe and valid=1 on the next, and the module reported that the DPD base matched the first probe. The board then booted EmberBSD from microSD.",
   "duration_seconds": null,
   "measurements": [
     {
@@ -94,7 +106,7 @@
   ],
   "limits": [
     "These observations cover two probes per Linux boot. The first probe followed a system reboot. The second followed interface close and rebind. Board power stayed on throughout. The first two boots used only interface unbind and bind. The third added one USB device reset. The factory driver can reset its MAC when closing an interface.",
-    "The first diagnostic kernel could not identify the selected call frames. The second kernel identified the parent USB probe and the DPD functions. Only the outer USB probe return code was recorded. The internal validity flag, function return values and individual DPD coefficients remain unknown. The second file sequence is consistent with reuse of the DPD result in radio RAM.",
+    "The captures with the original WLAN module sampled the call path and file reads. Only the rebuilt 261020 module reported the DPD reuse decision directly. The decision applies to that probe and radio. The coefficients and destination capacities were not measured.",
     "The test checked interface open. It did not test association, DHCP or native EmberBSD operation.",
     "The additional reset changed the observed calibration file use on the second bind. No measurement establishes which coefficients or patch state survived the reset. A USB device reset in Linux does not reproduce every step of a new host controller attachment.",
     "A missing file can fail to open before a kernel read. The trace records the outer USB probe result. The OEM prints its clock sample before testing the read status. This log does not measure clock frequency, coefficient contents or association."

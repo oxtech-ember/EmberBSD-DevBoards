@@ -45,7 +45,9 @@ A separate test with the NAND WLAN module and its firmware on the 261020 kernel 
 
 On Linux, the same USB WLAN interface reopened after driver unbind and bind. Both probes read the WLAN patch and its table.
 On ordinary rebind, the second probe checked DPD and reopened the interface with the calibration file held aside.
-After a USB device reset, the second probe failed with that file held aside. With the complete kit, it read the file and opened the interface. [Factory WLAN rebind](evidence/radio-oem-rebind.json)
+After a USB device reset, the second probe failed with that file held aside. With the complete kit, it read the file and opened the interface.
+A rebuilt 261020 module reported success for the patch and all 110 table rows on both binds.
+The DPD reuse check changed from invalid on the first bind to valid on the second. Both interface opens succeeded. [Factory WLAN rebind](evidence/radio-oem-rebind.json)
 
 EmberBSD's `aicwf` driver matches AIC8800D80 SDIO function 1 with ID `c8a1:0082`.
 The EmberBSD GENERIC kernel attached the RK3506 USB PHY and DWC2 host. It found the hub and the AIC8800DC at hub port 1. The first console kernel attached the radio as `ugen0`. [Physical USB and console observation](evidence/sd-console.json)
