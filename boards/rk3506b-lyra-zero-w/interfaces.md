@@ -41,7 +41,8 @@ It retains a high output from an earlier boot stage. An input held high by R77 s
 
 A RAM boot of Luckfox Linux confirmed GPIO55 high and 19 BSS entries after a fresh scan.
 The matched 261020 station completed WPA3-SAE association on 2.4 GHz and obtained a DHCP lease.
-A separate test with the NAND WLAN module and its firmware on the 261020 kernel stopped before the WLAN control socket opened. [Vendor Linux station check](evidence/radio-oem-station.json)
+A separate test with the NAND WLAN module and its firmware on the 261020 kernel stopped before the WLAN control socket opened.
+With the original NAND kernel, USB and WLAN modules, the factory station opened twice in RAM, before and after rebind. [Vendor Linux station check](evidence/radio-oem-station.json)
 
 On Linux, the same USB WLAN interface reopened after driver unbind and bind. Both probes read the WLAN patch and its table.
 On ordinary rebind, the second probe checked DPD and reopened the interface with the calibration file held aside.
