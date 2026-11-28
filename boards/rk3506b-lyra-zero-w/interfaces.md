@@ -50,7 +50,10 @@ After a USB device reset, the second probe failed with that file held aside. Wit
 EmberBSD's `aicwf` driver matches AIC8800D80 SDIO function 1 with ID `c8a1:0082`.
 The EmberBSD GENERIC kernel attached the RK3506 USB PHY and DWC2 host. It found the hub and the AIC8800DC at hub port 1. The first console kernel attached the radio as `ugen0`. [Physical USB and console observation](evidence/sd-console.json)
 The `uaicfw0` driver selected configuration 1, interface 2. The radio reported chip ID `0x07`, sub-ID `0x01`, FullMAC version `0x06040301` and feature bits `0xb011fa5f`. The SDK supplies revision-specific radio patches and calibration files. [USB command-channel test after RESET](evidence/radio-usb-fullmac.json)
-On the tested U02 radio, EmberBSD read the factory USB and baseband PLL conditions after the WLAN enable sequence. The factory conditions called for skipping both branches. The clock check reported no CPU crystal. [Native startup conditions](evidence/radio-usb-calibration.json)
+On the tested U02 radio, EmberBSD read the factory USB and baseband PLL conditions after the WLAN enable sequence. The factory conditions called for skipping both branches. The clock check reported no CPU crystal.
+In a RAM boot, the radio confirmed both clock settings and all 15 PMU settings. The kernel attached `aicwf0`.
+Two scans stopped at `MM_ADD_IF` with firmware status 1 and returned `EIO`.
+In a separate 261020 RAM boot, all three OEM divider confirmations echoed the requested address and reported divider 2 with `DENOM_UPDATE` clear. The factory driver completed its first interface open. [Native and OEM startup measurements](evidence/radio-usb-calibration.json) · [Driver confirmation checks](https://github.com/oxtech-ember/EmberBSD/blob/2d7a76aefdf6c3fbd1232cf05142bf058377f158/ember/tools/aic8800dc-u02/README.md#configure-the-onboard-clock-and-pmu)
 On cold boot, the diagnostic kernel read the same radio IDs and FullMAC version. The DWC2 root hub reported `illegal enable change`.
 The downstream hub and WLAN interface enumerated. Firmware returned status 1 to the request to create a station (`MM_ADD_IF_REQ`).
 The diagnostic recorded no scan completion or beacon. The kernel exposed no WLAN interface to WPA or DHCP.
@@ -62,11 +65,12 @@ With the earlier f0cb3f42 kernel, ifconfig returned status 0 and printed zero ro
 A host authenticated by SSH public key through a UART relay to the board loopback interface.
 The native diagnostic kernel ran before and after a software reboot from a working Luckfox Linux station.
 In each boot, both scan attempts stopped at station creation with firmware status 1. The matching ifconfig reported `EIO`.
-The GENERIC kernel from main commit `637b5fba` booted from microSD, sequenced WLAN enable before DWC2, attached `aicwf0` and started `sshd`.
-It reported that neither factory USB nor BBPLL setup condition was met. The initial clock selector was zero, as in the original factory boot log. The chip ID selected the extended PMU mask.
-The selector and mask do not establish the clock frequency or completion of power setup. The preceding kernel and device tree from `905ef7b7` provide the rollback.
-Both trial scans returned `EIO`. After the normal boot, a new scan exited with status 1. Firmware returned status 1 during station creation.
-The supplicant remained disconnected. Wi-Fi had no DHCP lease. A direct SSH attempt stopped at host name resolution.
+With kernel source from main commit `2d7a76ae`, the FAT trial verified the uImage and device tree. Both trial scans returned `EIO`.
+After an orderly reboot, `/boot.scr` loaded the same files from microSD. The kernel mounted the FFS root on `dk1`.
+The onboard radio confirmed both clock settings and all 15 PMU settings. The kernel attached `aicwf0` and started `sshd`.
+The installed scan stopped at `MM_ADD_IF` with firmware status 1. The interface reported `no network`.
+The supplicant remained disconnected. The interface had no IPv4 or routable IPv6 address. A direct SSH attempt stopped at host name resolution.
+Readback verified the `637b5fba` rollback kernel, uImage and device tree.
 [Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/e485e7de2689b7c1226b4803c1934adabdd7f071/sbin/ifconfig/ieee80211.c)
 
 A later EmberBSD RAM diagnostic read GPIO1_C5 high as an input and GPIO1_C7 high as an output after root mount.
