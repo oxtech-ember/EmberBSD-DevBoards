@@ -79,6 +79,8 @@ A factory comparison matched the outgoing stack request, transmit power and four
 The first calibration request timed out after four seconds. A repeat after a successful Linux association waited eight seconds for calibration.
 One subsequent firmware version query timed out after four seconds. Neither bulk IN endpoint returned a valid configuration record during those twelve seconds.
 The radio stayed attached to USB in both captures. EmberBSD stopped before station attachment.
+A separate EmberBSD RAM boot completed all 17 clock and PMU settings before the same normal RF sequence.
+Seven commands received confirmations. Neither USB input returned a configuration record during the single 12-second wait for RF calibration.
 In a separate run without RF setup, the radio answered the MAC address query. During the reset request, the driver reported an error and USB enumerated the radio again.
 After the calibration timeout, Linux scanned again without a power cycle. In a separate handoff test, Linux brought its wireless interface down and kept the USB driver bound.
 After the software reboot, EmberBSD reported a bulk IN error during the first station start (`MM_START`). The radio enumerated again.
