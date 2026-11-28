@@ -63,7 +63,7 @@
       "id": "wifi",
       "hardware": "present",
       "emberbsd": "partial",
-      "scope": "The standard 661090c1 kernel booted from microSD and attached aicwf0. Both scan attempts stopped at station creation with firmware status 1. A RAM diagnostic timed out during RF calibration. EmberBSD beacon reception, association, DHCP and SSH over Wi-Fi remain unverified. Luckfox Linux completed WPA3-SAE association and DHCP.",
+      "scope": "EmberBSD attaches aicwf0. Kernel c0f75680 verified the six factory NAND station files on microSD. Both scan attempts stopped at station creation with firmware status 1. A RAM diagnostic timed out during RF calibration. EmberBSD beacon reception, association, DHCP and SSH over Wi-Fi remain unverified. Luckfox Linux completed WPA3-SAE association and DHCP.",
       "source_refs": [
         "lyra-zero-w-schematic",
         "lyra-zero-w-radio",

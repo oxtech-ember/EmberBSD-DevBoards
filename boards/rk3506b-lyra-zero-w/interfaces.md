@@ -74,6 +74,9 @@ The onboard radio confirmed both clock settings and all 15 PMU settings. The ker
 The installed scan stopped at `MM_ADD_IF` with firmware status 1. The interface reported `no network`.
 The supplicant remained disconnected. The interface had no IPv4 or routable IPv6 address. A direct SSH attempt stopped at host name resolution.
 Readback verified the `637b5fba` rollback kernel, uImage and device tree.
+The installed kernel `c0f75680` verified the six factory files at root mount. It identified NAND build `g0a86431` and 96 patch table rows.
+One card boot stopped on a CPU heartbeat timeout. After recovery, two orderly card boots reached multi-user mode and started SSH.
+Both scans stopped at station creation. The rollback pair is `2d7a76ae`.
 [Physical station check](evidence/radio-usb-station.json) · [EmberBSD ifconfig implementation](https://github.com/oxtech-ember/EmberBSD/blob/e485e7de2689b7c1226b4803c1934adabdd7f071/sbin/ifconfig/ieee80211.c)
 
 A later EmberBSD RAM diagnostic read GPIO1_C5 high as an input and GPIO1_C7 high as an output after root mount.
